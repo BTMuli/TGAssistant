@@ -1,0 +1,37 @@
+{
+  "name": "tg-assisstant",
+  "version": "1.0.0",
+  "description": "The assisstant for Tauri.Genshin",
+  "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BTMuli/TGAssistent.git"
+  },
+  "keywords": [
+    "BTMuli",
+    "Genshin",
+    "Assistent",
+    "Tools"
+  ],
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "author": "BTMuli <bt-muli@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BTMuli/TGAssistent/issues"
+  },
+  "homepage": "https://github.com/BTMuli/TGAssistent#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "global": "^4.4.0",
+    "jsdom": "^21.1.1",
+    "node-fetch": "^3.3.0",
+    "request": "^2.88.2",
+    "sharp": "^0.31.3"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.7"
+  }
+}

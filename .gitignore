@@ -1,0 +1,14 @@
+# JetBrains IDE config
+.idea
+# Node modules
+node_modules
+# temp
+temp
+# source
+oriData
+oriSource
+source
+data
+# out
+source
+out
