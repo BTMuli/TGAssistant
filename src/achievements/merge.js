@@ -134,7 +134,7 @@ logger.info("[成就][合并] 保存成就系列数据");
 fs.writeFileSync(saveData.series.savePath, JSON.stringify(saveData.series.data, null, 2));
 logger.info("[成就][合并] 保存成就系列数据完成");
 
-logger.info("[成就][合并] merge.js 运行完成，请执行 update.js 更新成就系列数据");
+logger.info("[成就][合并] merge.js 运行完成，请执行 namecard/update.js 更新成就系列数据");
 
 // 用到的函数
 

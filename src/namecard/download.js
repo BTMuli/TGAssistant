@@ -1,0 +1,345 @@
+/**
+ * @file namecard download.js
+ * @description 下载图像资源，获取原始数据文件
+ * @author BTMuli<bt-muli@outlook.com>
+ * @since 1.1.0
+ */
+
+// Node
+import path from "node:path";
+import fs from "node:fs";
+import log4js from "log4js";
+import axios from "axios";
+import sharp from "sharp";
+import { load } from "cheerio";
+// TGAssistant
+import logger from "../tools/logger.js";
+import pathList from "../../root.js";
+import { fileCheck, fileExist } from "../tools/utils.js";
+
+const consoleLog = log4js.getLogger("console");
+logger.info("[名片][下载] 正在运行 downloadImg.js");
+
+const srcImgDir = path.resolve(pathList.src.img, "namecard");
+const outImgDir = path.resolve(pathList.out.img, "namecard");
+const srcJsonDir = path.resolve(pathList.src.json, "namecard");
+const dataPaths = {
+	src: path.resolve(srcJsonDir, "namecard.json"),
+	out: path.resolve(pathList.out.json, "namecard.json"),
+};
+const dataList = [
+	{
+		name: "名片-icon",
+		type: "icon",
+		srcDir: path.resolve(srcImgDir, "icon"),
+		outDir: path.resolve(outImgDir, "icon"),
+	},
+	{
+		name: "名片-bg",
+		type: "bg",
+		srcDir: path.resolve(srcImgDir, "bg"),
+		outDir: path.resolve(outImgDir, "bg"),
+	},
+	{
+		name: "名片-profile",
+		type: "profile",
+		srcDir: path.resolve(srcImgDir, "profile"),
+		outDir: path.resolve(outImgDir, "profile"),
+	}
+];
+const urlList = {
+	pre: "https://genshin.honeyhunterworld.com/img/i_7",
+	curr: "https://genshin.honeyhunterworld.com/img/i_n210",
+};
+
+// 检测目录是否存在
+fileCheck(srcImgDir);
+fileCheck(outImgDir);
+fileCheck(srcJsonDir);
+dataList.forEach(data => {
+	fileCheck(data.srcDir);
+	fileCheck(data.outDir);
+});
+
+// 下载图像
+logger.info("[名片][下载] 开始下载图像");
+for (let i = 1; i <= 163; i++) {
+	if (i <= 117) {
+		await downloadImgByIndex(i, "pre");
+	} else if (i >= 122) {
+		await downloadImgByIndex(i, "curr");
+	} else {
+		consoleLog.info(`[名片][下载][${i}] 不存在, 跳过`);
+	}
+}
+logger.info("[名片][下载] 图像下载完成");
+
+logger.info("[名片][下载] 开始获取原始数据");
+let nameCardsData;
+try {
+	nameCardsData = JSON.parse(fs.readFileSync(dataPaths.src, "utf-8"));
+	nameCardsData = nameCardsData.filter(item => item !== null);
+	fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
+} catch (error) {
+	nameCardsData = [];
+}
+const nameCardSet = new Set();
+nameCardsData.map(item => nameCardSet.add(item.index));
+for (let i = 1; i <= 163; i++) {
+	if (i <= 117) {
+		if (nameCardSet.has(i)) {
+			consoleLog.info(`[名片][下载][${i}] 已存在, 跳过`);
+			continue;
+		}
+		const dataGet = await getNameCardByIndex(i, "pre");
+		nameCardsData.push(dataGet);
+		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
+	} else if (i >= 122) {
+		if (nameCardSet.has(i)) {
+			consoleLog.info(`[名片][下载][${i}] 已存在, 跳过`);
+			continue;
+		}
+		const dataGet = await getNameCardByIndex(i, "curr");
+		nameCardsData.push(dataGet);
+		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
+	}
+}
+logger.info("[名片][下载] 获取原始数据完成，开始处理数据");
+const nameCardsDataOut = [];
+nameCardsData.forEach(item => {
+	if (item !== undefined) {
+		nameCardsDataOut.push(convertNameCard(item));
+	}
+});
+logger.info("[名片][下载] 对数据进行排序");
+nameCardsDataOut.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
+logger.info("[名片][下载] 保存数据");
+fs.writeFileSync(dataPaths.out, JSON.stringify(nameCardsDataOut, null, 4));
+
+logger.info("[名片][下载] 开始转换名片图像");
+nameCardsData.map(item => {
+	if (item !== undefined) {
+		convertImg(item);
+	}
+});
+
+logger.info("[名片][下载] downloadImg.js 运行完成，请执行 achievement/update.js 更新成就系列数据");
+
+// 使用的函数
+
+/**
+ * @description 获取文件保存路径
+ * @param {string} fileType 文件类型
+ * @param {number} index 文件索引
+ * @returns {string} 文件保存路径
+ */
+function getSavePath(fileType, index) {
+	return path.resolve(srcImgDir, fileType, `${index}.webp`);
+}
+
+/**
+ * @description 下载图像
+ * @param {string} url 图像链接
+ * @param {number} index 图像索引
+ * @param {string} imgType 图像类型
+ * @returns {Promise<void>} 无返回值
+ */
+async function downloadImg(url, index, imgType) {
+	const savePath = getSavePath(imgType, index);
+	if (fileExist(savePath)) {
+		consoleLog.info(`[名片][下载][${index}] ${imgType} 已存在, 跳过`);
+		return;
+	}
+	try {
+		await axios.get(url, {
+			responseType: "arraybuffer",
+		}).then(res => {
+			sharp(res.data).webp().toFile(savePath, (err, info) => {
+				if (err) {
+					logger.error(`[名片][下载][${index}] ${imgType} 下载失败`);
+				} else {
+					logger.info(`[名片][下载][${index}] ${imgType} 下载成功，大小为 ${info.size}`);
+				}
+			});
+		});
+	} catch (e) {
+		logger.error(`[名片][下载][${index}] ${index} 下载失败`);
+	}
+}
+
+/**
+ * @description 获取下载链接
+ * @param {string} baseUrl 基础链接
+ * @param {number} index 图像索引
+ * @returns {[{type: string, url: string}]} 下载链接列表
+ */
+function getDownloadUrls(baseUrl, index) {
+	const indexStr = index.toString().padStart(3, "0");
+	return [
+		{
+			type: "icon",
+			url: `${baseUrl}${indexStr}_70.webp`,
+		},
+		{
+			type: "bg",
+			url: `${baseUrl}${indexStr}_back.webp`,
+		},
+		{
+			type: "profile",
+			url: `${baseUrl}${indexStr}_profile.webp`,
+		}
+	];
+}
+
+/**
+ * @description 根据 index 和 urlType 下载图像
+ * @param {number} index 图像索引
+ * @param {string} urlType 图像类型
+ * @returns {Promise<void>} 无返回值
+ */
+async function downloadImgByIndex(index, urlType) {
+	let baseUrl = "";
+	if (urlType === "pre") {
+		baseUrl = urlList.pre;
+	} else if (urlType === "curr") {
+		baseUrl = urlList.curr;
+	} else {
+		logger.error(`[名片][下载][${index}] 图像类型错误`);
+		return;
+	}
+	const downloadList = getDownloadUrls(baseUrl, index);
+	downloadList.map(async item => await downloadImg(item.url, index, item.type));
+}
+
+/**
+ * @description 根据 url 获取名片对应 table 的 html
+ * @param {string} url 名片链接
+ * @param {number} index 名片索引
+ * @returns {Promise<srcData.NameCard>} 名片对应 table 的 html
+ */
+async function getNameCard(url, index) {
+	try {
+		const html = (await axios.get(url)).data;
+		const tbSelector = "body > div.wp-site-blocks > div.wp-block-columns > div:nth-child(3) > div.entry-content.wp-block-post-content > table";
+		const htmlDom = load(html);
+		const trsGet = htmlDom(tbSelector).find("tr");
+		let nameCard = {
+			index: index,
+			name: "",
+			description: "",
+			source: "",
+		};
+		trsGet.each((i, tr) => {
+			const tds = htmlDom(tr).find("td");
+			if (tds.length === 3) {
+				if (htmlDom(tds[1]).text().trim() === "Name") {
+					nameCard.name = htmlDom(tds[2]).text().trim();
+				}
+			}
+			if (tds.length === 2) {
+				const tdsFirst = htmlDom(tds[0]).text().trim();
+				if (tdsFirst.startsWith("Description")) {
+					nameCard.description = htmlDom(tds[1]).text().trim();
+				}
+				if (tdsFirst.startsWith("Item Source")) {
+					nameCard.source = htmlDom(tds[1]).text().trim();
+				}
+			}
+		});
+		if (nameCard.name !== "？？？") {
+			logger.info(`[名片][下载][${index}] 名片 ${nameCard.name} 解析成功`);
+		} else {
+			logger.warn(`[名片][下载][${index}] 名片 ${nameCard.name} 数据不完整`);
+		}
+		return nameCard;
+	} catch (e) {
+		logger.error(`[名片][下载][${index}] 获取 html 失败`);
+	}
+}
+
+
+/**
+ * @description 根据 index 获取名片数据
+ * @param {number} index 名片索引
+ * @param {string} urlType 图像类型
+ * @returns {Promise<srcData.NameCard|void>} 名片数据
+ */
+async function getNameCardByIndex(index, urlType) {
+	let url = "";
+	if (urlType === "pre") {
+		url = `${urlList.pre}${index.toString().padStart(3, "0")}/?lang=CHS`;
+	} else if (urlType === "curr") {
+		url = `${urlList.curr}${index.toString().padStart(3, "0")}/?lang=CHS`;
+	} else {
+		logger.error(`[名片][下载][${index}] 图像类型错误`);
+		return;
+	}
+	return await getNameCard(url, index);
+}
+
+/**
+ * @description 获取名片 type
+ * @param {srcData.NameCard} nameCard 名片数据
+ * @returns {number} 名片 type
+ */
+function getNameCardType(nameCard) {
+	let sourceStr = "";
+	try {
+		sourceStr = nameCard.source.toString();
+	} catch (e) {
+		logger.error(`[名片][下载][${nameCard.index}] 名片 ${nameCard.name} source 数据类型错误`);
+	}
+	if (sourceStr.includes("成就")) {
+		return 1;
+	} else if (sourceStr.includes("纪行")) {
+		return 3;
+	} else if (sourceStr.includes("活动") || sourceStr.includes("庆典")) {
+		return 4;
+	} else if (sourceStr.includes("好感")) {
+		return 2;
+	} else {
+		return 0;
+	}
+}
+
+/**
+ * @description 转换名片数据
+ * @param {srcData.NameCard} nameCard 名片数据
+ * @returns {outData.NameCard} 转换后的名片数据
+ */
+function convertNameCard(nameCard) {
+	const type = getNameCardType(nameCard);
+	return {
+		name: nameCard.name,
+		type: type,
+		description: nameCard.description,
+		source: nameCard.source,
+		icon: `/source/nameCard/icon/${nameCard.name}.webp`,
+		bg: `/source/nameCard/bg/${nameCard.name}.webp`,
+		profile: `/source/nameCard/profile/${nameCard.name}.webp`,
+	};
+}
+
+/**
+ * @description 转换图像
+ * @param {srcData.NameCard} nameCard 名片数据
+ * @returns {void} 无返回值
+ */
+function convertImg(nameCard) {
+	logger.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} 开始转换`);
+	dataList.map(item => {
+		// 查找 item.srcDir/index.webp
+		if (!fs.existsSync(`${item.srcDir}/${nameCard.index}.webp`)) {
+			logger.error(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像不存在`);
+			return;
+		}
+		// 查找 item.outDir/name.webp
+		if (fs.existsSync(`${item.outDir}/${nameCard.name}.webp`)) {
+			consoleLog.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像已存在，跳过`);
+			return;
+		}
+		// item.srcDir/index.webp -> item.outDir/name.webp
+		fs.copyFileSync(`${item.srcDir}/${nameCard.index}.webp`, `${item.outDir}/${nameCard.name}.webp`);
+		logger.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像转换成功`);
+	});
+}

@@ -15,9 +15,7 @@ import gitDownload from "../tools/gitDownload.js";
 
 logger.info("[成就][下载] 正在运行 download.js");
 
-// 检测目录是否存在
 const srcDir = path.resolve(pathList.src.json, "achievements");
-
 const dataList = [
 	{
 		name: "胡桃-成就",
