@@ -24,14 +24,7 @@ const dataList = [
 		repo: pathList.repo.SH,
 		file: "Output/CHS/Achievement.json",
 		tree: "main",
-		savePath: path.resolve(srcDir, "SH-Item.json"),
-	},
-	{
-		name: "胡桃-成就系列",
-		repo: pathList.repo.SH,
-		file: "Output/CHS/AchievementGoal.json",
-		tree: "main",
-		savePath: path.resolve(srcDir, "SH-Goal.json"),
+		savePath: path.resolve(srcDir, "SnapHutao.json"),
 	},
 	{
 		name: "Paimon.moe-成就",

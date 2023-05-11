@@ -1,7 +1,6 @@
 /**
  * @file achievements merge.js
  * @description 合并成就数据，生成目标数据文件
- * @todo 清除一些不必要的数据
  * @author BTMuli<bt-muli@outlook.com>
  * @since 1.1.0
  */
@@ -29,12 +28,7 @@ fileCheck(dataDir);
 const srcList = [
 	{
 		name: "胡桃-成就",
-		file: path.resolve(srcDir, "SH-Item.json"),
-		data: {},
-	},
-	{
-		name: "胡桃-成就系列",
-		file: path.resolve(srcDir, "SH-Goal.json"),
+		file: path.resolve(srcDir, "SnapHutao.json"),
 		data: {},
 	},
 	{
@@ -86,7 +80,7 @@ srcList.forEach((src) => {
 
 // 处理 Paimon.moe 的数据
 logger.info("[成就][合并] 处理 Paimon.moe 的数据");
-await Object.entries(srcList[2].data).forEach(([key, series]) => {
+await Object.entries(srcList[1].data).forEach(([key, series]) => {
 	logger.info(`[成就][合并][PMSeries][${key}] 处理成就系列 ${series.name}`);
 	const achievementArray = flatArray(series.achievements);
 	const seriesVersion = getMaxVersion(achievementArray);
@@ -104,11 +98,11 @@ await Object.entries(srcList[2].data).forEach(([key, series]) => {
 		tempData.achievements[o.id] = {
 			id: o.id,
 			series: Number(key),
-			order: 0, // 处理胡桃的数据的时候添加
+			order: 0,
 			name: o.name,
-			description: o.desc,
+			description: o["desc"],
 			reward: o.reward,
-			version: o.ver,
+			version: o["ver"],
 		};
 	});
 });
@@ -117,8 +111,8 @@ logger.info("[成就][合并] 处理 Paimon.moe 的数据完成");
 // 处理 Snap.Hutao 的数据
 logger.info("[成就][合并] 处理 Snap.Hutao 的数据");
 await srcList[0].data.map((o) => {
-	consoleLogger.info(`[成就][合并][SHItem][${o.Id}] 处理成就 ${o.Title}`);
-	tempData.achievements[o.Id].order = o.Order;
+	consoleLogger.info(`[成就][合并][Hutao][${o["Id"]}] 处理成就 ${o["Title"]}`);
+	tempData.achievements[o["Id"]].order = o["Order"];
 });
 logger.info("[成就][合并] 处理 Snap.Hutao 的数据完成");
 
@@ -163,7 +157,7 @@ function flatArray(data) {
 function getMaxVersion(data) {
 	let maxVer = Math.max.apply(
 		Math,
-		data.map((o) => o.ver)
+		data.map((o) => o["ver"])
 	);
 	if (!maxVer.toString().includes(".")) {
 		maxVer = maxVer + ".0";
