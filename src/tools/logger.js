@@ -21,7 +21,7 @@ log4js.configure({
 			type: "console",
 			layout: {
 				type: "pattern",
-				pattern: "%[[%d{yyyy-MM-dd hh:mm:ss}] [%p] %c -%] %m",
+				pattern: "%[[%d{yyyy-MM-dd hh:mm:ss}][%p] %c -%] %m",
 			}
 		},
 		file: {
@@ -29,6 +29,10 @@ log4js.configure({
 			pattern: ".yyyy-MM-dd",
 			filename: `${pathList.log}/${getDate()}.log`,
 			daysToKeep: 7,
+			layout: {
+				type: "pattern",
+				pattern: "[%d{yyyy-MM-dd hh:mm:ss}][%p] %c - %m",
+			}
 		}
 	},
 	categories: {
