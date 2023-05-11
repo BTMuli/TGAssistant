@@ -40,6 +40,10 @@ log4js.configure({
 			appenders: ["console", "file"],
 			level: "all",
 		},
+		console: {
+			appenders: ["console"],
+			level: "all",
+		}
 	},
 });
 
