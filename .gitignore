@@ -2,13 +2,19 @@
 .idea
 # Node modules
 node_modules
-# temp
-temp
 # source
+data/*
+assets/*
+temp/*
+# old files
+achievements
+calendar
+character
+gcg
+namecard
 oriData
 oriSource
-source
-data
-# out
-source
 out
+source
+tools
+weapon

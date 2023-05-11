@@ -1,9 +1,9 @@
 {
   "name": "tg-assisstant",
   "version": "1.0.0",
-  "description": "The assisstant for Tauri.Genshin",
-  "main": "index.js",
+  "description": "The assistant for Tauri.Genshin",
   "type": "module",
+  "packageManager": "npm@9.6.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/BTMuli/TGAssistent.git"
@@ -11,11 +11,13 @@
   "keywords": [
     "BTMuli",
     "Genshin",
-    "Assistent",
     "Tools"
   ],
   "scripts": {
-    "format": "prettier --write ."
+    "lint:all": "npm run lint:json && npm run lint:fix",
+    "lint:json": "prettier --write data/**/*.json",
+    "lint:check": "eslint --ext .js .",
+    "lint:fix": "eslint --ext .js . --fix"
   },
   "author": "BTMuli <bt-muli@outlook.com>",
   "license": "MIT",
@@ -24,14 +26,17 @@
   },
   "homepage": "https://github.com/BTMuli/TGAssistent#readme",
   "dependencies": {
+    "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "global": "^4.4.0",
-    "jsdom": "^21.1.1",
-    "node-fetch": "^3.3.0",
-    "request": "^2.88.2",
-    "sharp": "^0.31.3"
+    "jsdom": "^22.0.0",
+    "log4js": "^6.9.1",
+    "node-fetch": "^3.3.1",
+    "sharp": "^0.32.1"
   },
   "devDependencies": {
-    "prettier": "^2.8.7"
+    "eslint": "^8.40.0",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.8"
   }
 }
