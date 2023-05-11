@@ -7,7 +7,7 @@
 
 // Node
 import axios from "axios";
-import {writeFileSync} from "node:fs";
+import { writeFileSync } from "node:fs";
 // TGAssistant
 import logger from "./logger.js";
 

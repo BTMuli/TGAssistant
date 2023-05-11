@@ -7,7 +7,7 @@
 
 // Node
 import assert from "assert";
-import {describe, it} from "mocha";
+import { describe, it } from "mocha";
 
 describe("框架测试", () => {
 	it("正确性测试", () => {

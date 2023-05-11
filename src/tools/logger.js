@@ -9,7 +9,7 @@
 import log4js from "log4js";
 // TGAssistant
 import pathList from "../../root.js";
-import getDate from "./getDate.js";
+import { getDate } from "./utils.js";
 
 // 日志记录器
 const logger = log4js.getLogger();

@@ -7,9 +7,9 @@
 
 // Node
 import assert from "node:assert";
-import {describe, it} from "mocha";
+import { describe, it } from "mocha";
 // TGAssistant
-import pathList, {ROOT_PATH} from "../root.js";
+import pathList, { ROOT_PATH } from "../root.js";
 
 describe("测试路径", () => {
 	it("根目录", () => {
