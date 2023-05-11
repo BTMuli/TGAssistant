@@ -2,28 +2,33 @@
  * @file root.js
  * @description 项目根目录
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.0.0
+ * @since 1.1.0
  */
 
-import path from "path";
+// Node
+import path from "node:path";
+import appRootPath from "app-root-path";
 
-// 跟目录
-const ROOT_PATH = path.resolve("./");
+// 根目录，即 TGAssistant
+export const ROOT_PATH = appRootPath.path;
 
-// 元数据
-export const ORI_DATA_PATH = path.resolve(ROOT_PATH, "oriData");
+// 路径列表
+const pathList = {
+	src: {
+		json: path.join(ROOT_PATH, "data", "src"),
+		img: path.join(ROOT_PATH, "assets", "src"),
+		temp: path.join(ROOT_PATH, "temp", "src"),
+	},
+	out: {
+		json: path.join(ROOT_PATH, "data", "out"),
+		img: path.join(ROOT_PATH, "assets", "out"),
+		temp: path.join(ROOT_PATH, "temp", "out"),
+	},
+	repo: {
+		SH: "DGP-Studio/Snap.Metadata",
+		PM: "MadeBaruna/paimon-moe",
+	},
+	log: path.join(ROOT_PATH, "logs"),
+};
 
-// 生成的数据
-export const DATA_PATH = path.resolve(ROOT_PATH, "data");
-
-// 临时文件
-export const TEMP_PATH = path.resolve(ROOT_PATH, "temp");
-
-// 生成的文件
-export const OUT_PATH = path.resolve(ROOT_PATH, "out");
-
-// 原资源
-export const ORI_SRC_PATH = path.resolve(ROOT_PATH, "oriSource");
-
-// 生成的资源
-export const SRC_PATH = path.resolve(ROOT_PATH, "source");
+export default pathList;
