@@ -33,19 +33,10 @@ export function fileExist(filePath) {
 }
 
 /**
- * @description 数组扁平化
- * @param {Array} arr 需要扁平化的数组
- * @returns {Array} 扁平化后的数组
- */
-export function flatten(arr) {
-	return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), []);
-}
-
-/**
  * @description 获取当前日期
  * @returns {string} 当前日期
  */
-function getDate() {
+export function getDate() {
 	const date = new Date();
 	const year = date.getFullYear();
 	const month = date.getMonth() + 1;
