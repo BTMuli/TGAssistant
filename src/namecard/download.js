@@ -104,26 +104,7 @@ for (let i = 1; i <= 163; i++) {
 		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
 	}
 }
-logger.info("[名片][下载] 获取原始数据完成，开始处理数据");
-const nameCardsDataOut = [];
-nameCardsData.forEach(item => {
-	if (item !== undefined) {
-		nameCardsDataOut.push(convertNameCard(item));
-	}
-});
-logger.info("[名片][下载] 对数据进行排序");
-nameCardsDataOut.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
-logger.info("[名片][下载] 保存数据");
-fs.writeFileSync(dataPaths.out, JSON.stringify(nameCardsDataOut, null, 4));
-
-logger.info("[名片][下载] 开始转换名片图像");
-nameCardsData.map(item => {
-	if (item !== undefined) {
-		convertImg(item);
-	}
-});
-
-logger.info("[名片][下载] downloadImg.js 运行完成，请执行 achievement/update.js 更新成就系列数据");
+logger.info("[名片][下载] 获取原始数据完成，请执行 convert.js 处理数据");
 
 // 使用的函数
 
@@ -277,69 +258,4 @@ async function getNameCardByIndex(index, urlType) {
 	return await getNameCard(url, index);
 }
 
-/**
- * @description 获取名片 type
- * @param {srcData.NameCard} nameCard 名片数据
- * @returns {number} 名片 type
- */
-function getNameCardType(nameCard) {
-	let sourceStr = "";
-	try {
-		sourceStr = nameCard.source.toString();
-	} catch (e) {
-		logger.error(`[名片][下载][${nameCard.index}] 名片 ${nameCard.name} source 数据类型错误`);
-	}
-	if (sourceStr.includes("成就")) {
-		return 1;
-	} else if (sourceStr.includes("纪行")) {
-		return 3;
-	} else if (sourceStr.includes("活动") || sourceStr.includes("庆典")) {
-		return 4;
-	} else if (sourceStr.includes("好感")) {
-		return 2;
-	} else {
-		return 0;
-	}
-}
 
-/**
- * @description 转换名片数据
- * @param {srcData.NameCard} nameCard 名片数据
- * @returns {outData.NameCard} 转换后的名片数据
- */
-function convertNameCard(nameCard) {
-	const type = getNameCardType(nameCard);
-	return {
-		name: nameCard.name,
-		type: type,
-		description: nameCard.description,
-		source: nameCard.source,
-		icon: `/source/nameCard/icon/${nameCard.name}.webp`,
-		bg: `/source/nameCard/bg/${nameCard.name}.webp`,
-		profile: `/source/nameCard/profile/${nameCard.name}.webp`,
-	};
-}
-
-/**
- * @description 转换图像
- * @param {srcData.NameCard} nameCard 名片数据
- * @returns {void} 无返回值
- */
-function convertImg(nameCard) {
-	logger.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} 开始转换`);
-	dataList.map(item => {
-		// 查找 item.srcDir/index.webp
-		if (!fs.existsSync(`${item.srcDir}/${nameCard.index}.webp`)) {
-			logger.error(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像不存在`);
-			return;
-		}
-		// 查找 item.outDir/name.webp
-		if (fs.existsSync(`${item.outDir}/${nameCard.name}.webp`)) {
-			consoleLog.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像已存在，跳过`);
-			return;
-		}
-		// item.srcDir/index.webp -> item.outDir/name.webp
-		fs.copyFileSync(`${item.srcDir}/${nameCard.index}.webp`, `${item.outDir}/${nameCard.name}.webp`);
-		logger.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像转换成功`);
-	});
-}
