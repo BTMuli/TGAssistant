@@ -7,7 +7,7 @@
 
 // Node
 import axios from "axios";
-import { describe, it, before } from "mocha";
+import { before, describe, it } from "mocha";
 import assert from "node:assert";
 
 describe("米游社数据源", async () => {
