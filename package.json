@@ -17,7 +17,8 @@
     "lint:all": "npm run lint:json && npm run lint:fix",
     "lint:json": "prettier --write data/**/*.json",
     "lint:check": "eslint --ext .js .",
-    "lint:fix": "eslint --ext .js . --fix"
+    "lint:fix": "eslint --ext .js . --fix",
+    "test:all": "mocha --timeout 10000"
   },
   "author": "BTMuli <bt-muli@outlook.com>",
   "license": "MIT",
