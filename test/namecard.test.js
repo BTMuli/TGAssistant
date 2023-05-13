@@ -8,18 +8,19 @@
 // Node
 import axios from "axios";
 import { load } from "cheerio";
-import { describe, it } from "mocha";
+import { before, describe, it } from "mocha";
 import assert from "assert";
 
-const testUrl = "https://genshin.honeyhunterworld.com/i_n210163/?lang=CHS";
-
-describe("测试名片数据获取", () => {
+describe("测试名片数据获取", async () => {
+	let html;
+	before(async () => {
+		const testUrl = "https://genshin.honeyhunterworld.com/i_n210163/?lang=CHS";
+		html = (await axios.get(testUrl)).data;
+	});
 	it("测试 html 内容获取", async () => {
-		const html = await axios.get(testUrl);
-		assert.strictEqual(html.data.startsWith("<!DOCTYPE html>"), true);
+		assert.strictEqual(html.startsWith("<!DOCTYPE html>"), true);
 	});
 	it("测试名片 table 内容获取", async () => {
-		const html = (await axios.get(testUrl)).data;
 		const tbSelector = "body > div.wp-site-blocks > div.wp-block-columns > div:nth-child(3) > div.entry-content.wp-block-post-content > table";
 		const loadDom = load(html);
 		const trs = loadDom(tbSelector).find("tr");
