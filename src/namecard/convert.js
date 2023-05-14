@@ -86,7 +86,7 @@ function convertImg(nameCard) {
 		}
 		// 查找 item.outDir/name.webp
 		if (fs.existsSync(`${item.outDir}/${nameCard.name}.webp`)) {
-			consoleLogger.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像已存在，跳过`);
+			consoleLogger.mark(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像已存在，跳过`);
 			return;
 		}
 		// item.srcDir/index.webp -> item.outDir/name.webp

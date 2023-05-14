@@ -44,7 +44,7 @@ if (!fileExist(amberSavePath)) {
 		defaultLogger.error(error.message);
 	}
 } else {
-	consoleLogger.warn("[GCG][下载] amber.json 已存在，跳过下载");
+	consoleLogger.mark("[GCG][下载] amber.json 已存在，跳过下载");
 }
 if (!fileExist(mysSavePath)) {
 	try {
@@ -59,7 +59,7 @@ if (!fileExist(mysSavePath)) {
 		defaultLogger.error(error.message);
 	}
 } else {
-	consoleLogger.warn("[GCG][下载] mys.json 已存在，跳过下载");
+	consoleLogger.mark("[GCG][下载] mys.json 已存在，跳过下载");
 }
 // 下载图片
 const amberJson = JSON.parse(fs.readFileSync(amberSavePath, "utf-8"));
@@ -102,7 +102,7 @@ function getAmberImgUrl(icon) {
 async function downloadImg(url, name, source) {
 	const savePath = path.resolve(srcImgDir, `${name}.png`);
 	if (fileExist(savePath)) {
-		consoleLogger.warn(`[GCG][下载][${source}] ${name}.png 已存在，跳过下载`);
+		consoleLogger.mark(`[GCG][下载][${source}] ${name}.png 已存在，跳过下载`);
 		return;
 	}
 	await axios.get(url, {

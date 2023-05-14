@@ -42,7 +42,7 @@ if (!fileExist(amberSavePath)) {
 		defaultLogger.error(error.message);
 	}
 } else {
-	consoleLogger.warn("[角色][下载] amber.json 已存在，跳过下载");
+	consoleLogger.mark("[角色][下载] amber.json 已存在，跳过下载");
 }
 if (!fileExist(mysSavePath)) {
 	try {
@@ -56,7 +56,7 @@ if (!fileExist(mysSavePath)) {
 		defaultLogger.error(error.message);
 	}
 } else {
-	consoleLogger.warn("[角色][下载] mys.json 已存在，跳过下载");
+	consoleLogger.mark("[角色][下载] mys.json 已存在，跳过下载");
 }
 
 // 下载图片
@@ -78,7 +78,7 @@ await Promise.allSettled(amberKeys.map(async (key) => {
 		await downloadImg(url, savePath, key);
 	} else {
 		count.skip++;
-		consoleLogger.warn(`[角色][下载][${key}] 图像已存在，跳过下载`);
+		consoleLogger.mark(`[角色][下载][${key}] 图像已存在，跳过下载`);
 	}
 }));
 defaultLogger.info(`[角色][下载] 下载完成，共 ${count.total} 张图片，成功 ${count.success} 张，失败 ${count.fail} 张，跳过 ${count.skip} 张`);

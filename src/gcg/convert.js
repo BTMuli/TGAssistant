@@ -115,7 +115,7 @@ function convertImg(item) {
 		return;
 	}
 	if (fs.existsSync(outImgPath)) {
-		consoleLogger.info(`[GCG][转换] ${item.name} 图像已存在，跳过`);
+		consoleLogger.mark(`[GCG][转换] ${item.name} 图像已存在，跳过`);
 		return;
 	}
 	sharp(srcImgPath).png().toFormat("webp").toFile(outImgPath, (err) => {

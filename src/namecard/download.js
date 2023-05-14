@@ -86,7 +86,7 @@ nameCardsData.map(item => nameCardSet.add(item.index));
 for (let i = 1; i <= 163; i++) {
 	if (i <= 117) {
 		if (nameCardSet.has(i)) {
-			consoleLogger.info(`[名片][下载][${i}] 已存在, 跳过`);
+			consoleLogger.mark(`[名片][下载][${i}] 已存在, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "pre");
@@ -94,7 +94,7 @@ for (let i = 1; i <= 163; i++) {
 		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
 	} else if (i >= 122) {
 		if (nameCardSet.has(i)) {
-			consoleLogger.info(`[名片][下载][${i}] 已存在, 跳过`);
+			consoleLogger.mark(`[名片][下载][${i}] 已存在, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "curr");
@@ -128,7 +128,7 @@ function getSavePath(fileType, index) {
 async function downloadImg(url, index, imgType) {
 	const savePath = getSavePath(imgType, index);
 	if (fileExist(savePath)) {
-		consoleLogger.info(`[名片][下载][${index}] ${imgType} 已存在, 跳过`);
+		consoleLogger.mark(`[名片][下载][${index}] ${imgType} 已存在, 跳过`);
 		return;
 	}
 	try {

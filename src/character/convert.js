@@ -104,7 +104,7 @@ await Promise.allSettled(characterData.map(async character => {
 	}
 	if (fileExist(out)) {
 		count.skip++;
-		consoleLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} 目标图片已存在`);
+		consoleLogger.mark(`[角色][转换][${character["id"]}] ${character["name"]} 目标图片已存在`);
 		return;
 	}
 	if (character.content_id === null) {
