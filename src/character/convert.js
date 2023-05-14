@@ -108,9 +108,7 @@ await Promise.allSettled(characterData.map(async character => {
 		return;
 	}
 	if (character.content_id === null) {
-		count.skip++;
 		consoleLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} content_id 不存在`);
-		return;
 	}
 	await sharp(src).toFormat("webp").toFile(out);
 	consoleLogger.info(`[角色][转换][${character["id"]}] ${character["name"]} 转换完成`);
