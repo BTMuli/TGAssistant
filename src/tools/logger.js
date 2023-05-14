@@ -11,9 +11,6 @@ import log4js from "log4js";
 import pathList from "../../root.js";
 import { getDate } from "./utils.js";
 
-// 日志记录器
-const logger = log4js.getLogger();
-
 // 日志记录器配置
 log4js.configure({
 	appenders: {
@@ -47,4 +44,6 @@ log4js.configure({
 	},
 });
 
-export default logger;
+// 日志记录器
+export const defaultLogger = log4js.getLogger();
+export const consoleLogger = log4js.getLogger("console");

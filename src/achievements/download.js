@@ -8,12 +8,12 @@
 // Node
 import path from "node:path";
 // TGAssistant
-import logger from "../tools/logger.js";
+import { defaultLogger } from "../tools/logger.js";
 import pathList from "../../root.js";
 import { dirCheck } from "../tools/utils.js";
 import gitDownload from "../tools/gitDownload.js";
 
-logger.info("[成就][下载] 正在运行 download.js");
+defaultLogger.info("[成就][下载] 正在运行 download.js");
 
 const srcDir = path.resolve(pathList.src.json, "achievements");
 const dataList = [
@@ -37,8 +37,8 @@ const dataList = [
 dirCheck(srcDir);
 
 await Promise.allSettled(dataList.map(async data => {
-	logger.info(`[成就][下载] 开始下载 ${data.name} 文件`);
+	defaultLogger.info(`[成就][下载] 开始下载 ${data.name} 文件`);
 	await gitDownload(data.repo, data.file, data.savePath);
 }));
 
-logger.info("[成就][下载] download.js 运行完成");
+defaultLogger.info("[成就][下载] download.js 运行完成");

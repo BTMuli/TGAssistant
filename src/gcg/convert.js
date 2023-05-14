@@ -8,15 +8,13 @@
 // Node
 import path from "node:path";
 import fs from "node:fs";
-import log4js from "log4js";
 // TGAssistant
-import logger from "../tools/logger.js";
+import { defaultLogger,consoleLogger } from "../tools/logger.js";
 import pathList from "../../root.js";
 import sharp from "sharp";
 import { dirCheck } from "../tools/utils.js";
 
-const consoleLog = log4js.getLogger("console");
-logger.info("[GCGenerator][转换] 正在运行 convert.js");
+defaultLogger.info("[GCGenerator][转换] 正在运行 convert.js");
 
 const srcJsonDir = path.resolve(pathList.src.json, "gcg");
 const srcImgDir = path.resolve(pathList.src.img, "gcg");
@@ -27,11 +25,11 @@ const jsonSavePath = path.resolve(pathList.out.json, "GCG.json");
 
 // 检测资源文件是否存在
 if (!fs.existsSync(srcJsonMys)) {
-	logger.error("[GCG][转换] 未找到原始数据文件 mys.json，请执行 download.js");
+	defaultLogger.error("[GCG][转换] 未找到原始数据文件 mys.json，请执行 download.js");
 	process.exit(1);
 }
 if (!fs.existsSync(srcJsonAmber)) {
-	logger.error("[GCG][转换] 未找到原始数据文件 amber.json，请执行 download.js");
+	defaultLogger.error("[GCG][转换] 未找到原始数据文件 amber.json，请执行 download.js");
 	process.exit(1);
 }
 // 检查输出目录是否存在
@@ -40,7 +38,7 @@ dirCheck(outImgDir);
 const gcgData = [];
 
 // 获取 AmberJson 的所有图像数据
-logger.info("[GCG][转换] 正在读取 amber.json");
+defaultLogger.info("[GCG][转换] 正在读取 amber.json");
 const amberJson = JSON.parse(fs.readFileSync(srcJsonAmber, "utf-8"));
 const amberKeys = Object.keys(amberJson);
 const gcgTitleSet = new Set();
@@ -48,13 +46,13 @@ amberKeys.map(key => {
 	const item = amberJson[key];
 	gcgTitleSet.add(item.name);
 });
-logger.info(`[GCG][转换] amber.json 读取完成，共 ${gcgTitleSet.size} 个图像数据`);
+defaultLogger.info(`[GCG][转换] amber.json 读取完成，共 ${gcgTitleSet.size} 个图像数据`);
 
 // 获取 MysJson 的所有图像数据
-logger.info("[GCG][转换] 正在读取 mys.json");
+defaultLogger.info("[GCG][转换] 正在读取 mys.json");
 const mysJson = JSON.parse(fs.readFileSync(srcJsonMys, "utf-8"));
 await Promise.allSettled(mysJson.map(async itemList => {
-	consoleLog.info(`[GCG][转换] 正在读取 ${itemList.name} 列表`);
+	consoleLogger.info(`[GCG][转换] 正在读取 ${itemList.name} 列表`);
 	await itemList.list.map(item => {
 		const gcgItem = getGcgItem(itemList.name, amberJson, item);
 		gcgData.push(gcgItem);
@@ -62,17 +60,17 @@ await Promise.allSettled(mysJson.map(async itemList => {
 	});
 }));
 
-logger.info(`[GCG][转换] mys.json 读取完成，共 ${gcgData.length} 个图像数据`);
-logger.info("[GCG][转换] 对 GCG.json 进行排序");
+defaultLogger.info(`[GCG][转换] mys.json 读取完成，共 ${gcgData.length} 个图像数据`);
+defaultLogger.info("[GCG][转换] 对 GCG.json 进行排序");
 gcgData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id || a.content_id - b.content_id);
 fs.writeFileSync(jsonSavePath, JSON.stringify(gcgData, null, 2), "utf-8");
-logger.info(`[GCG][转换] GCG.json 保存完成，共 ${gcgData.length} 个图像数据`);
+defaultLogger.info(`[GCG][转换] GCG.json 保存完成，共 ${gcgData.length} 个图像数据`);
 
 if (gcgTitleSet.size > 0) {
-	logger.warn(`[GCG][转换] amber.json 中有 ${gcgTitleSet.size} 个图像数据未被使用`);
+	defaultLogger.warn(`[GCG][转换] amber.json 中有 ${gcgTitleSet.size} 个图像数据未被使用`);
 }
 
-logger.info("[GCG][转换] convert.js 运行结束");
+defaultLogger.info("[GCG][转换] convert.js 运行结束");
 
 // 用到的函数
 
@@ -87,7 +85,7 @@ function getGcgItem(name, amberJson, item) {
 	const itemFind = Object.values(amberJson).find(amberItem => amberItem.name === item.title);
 	let idFind = 0;
 	if (!itemFind) {
-		logger.warn(`[GCG][转换] AmberJson 中未找到 ${item.title} 的数据，id 设置为 0`);
+		defaultLogger.warn(`[GCG][转换] AmberJson 中未找到 ${item.title} 的数据，id 设置为 0`);
 	} else {
 		idFind = itemFind.id;
 	}
@@ -111,19 +109,18 @@ function convertImg(item) {
 	const outImgPath = path.resolve(outImgDir, `${item.name}.webp`);
 	gcgTitleSet.delete(item.name);
 	if (!fs.existsSync(srcImgPath)) {
-		console.log(srcImgPath);
-		logger.error(`[GCG][转换] 未找到 ${item.name} 的图像文件`);
+		defaultLogger.error(`[GCG][转换] 未找到 ${item.name} 的图像文件`);
 		return;
 	}
 	if (fs.existsSync(outImgPath)) {
-		consoleLog.info(`[GCG][转换] ${item.name} 图像已存在，跳过`);
+		consoleLogger.info(`[GCG][转换] ${item.name} 图像已存在，跳过`);
 		return;
 	}
 	sharp(srcImgPath).png().toFormat("webp").toFile(outImgPath, (err) => {
 		if (err) {
-			logger.error(`[GCG][转换] ${item.name} 图像转换失败`);
+			defaultLogger.error(`[GCG][转换] ${item.name} 图像转换失败`);
 			return;
 		}
-		logger.info(`[GCG][转换] ${item.name} 图像转换成功`);
+		defaultLogger.info(`[GCG][转换] ${item.name} 图像转换成功`);
 	});
 }

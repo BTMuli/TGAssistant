@@ -9,7 +9,7 @@
 import axios from "axios";
 import { writeFileSync } from "node:fs";
 // TGAssistant
-import logger from "./logger.js";
+import { defaultLogger,consoleLogger } from "./logger.js";
 
 /**
  * @description 获取 GitHub 仓库的文件对应下载地址
@@ -30,17 +30,17 @@ function getDownloadUrl(repo, file, tree = "master") {
  * @returns {Promise<void>} 无返回值
  */
 async function gitDownload(repo, file, savePath) {
-	logger.info(`[gitDownload] 开始下载 ${file}`);
+	consoleLogger.info(`[gitDownload] 开始下载 ${file}`);
 	const downloadUrl = getDownloadUrl(repo, file);
 	try {
 		await axios.get(downloadUrl, {
 			responseType: "text",
 		}).then((res) => {
 			writeFileSync(savePath, res.data);
-			logger.info(`[gitDownload] ${file} 下载完成`);
+			defaultLogger.info(`[gitDownload] ${file} 下载完成`);
 		});
 	} catch (error) {
-		logger.error(`[gitDownload] ${file} 下载失败`);
+		defaultLogger.error(`[gitDownload] ${file} 下载失败`);
 	}
 }
 

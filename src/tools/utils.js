@@ -8,7 +8,7 @@
 // Node
 import fs from "node:fs";
 // TGAssistant
-import logger from "./logger.js";
+import { defaultLogger } from "./logger.js";
 
 
 /**
@@ -18,7 +18,7 @@ import logger from "./logger.js";
  */
 export function dirCheck(dirPath) {
 	if (!fs.existsSync(dirPath)) {
-		logger.warn(`[tools][utils] 检测到 ${dirPath} 不存在，正在创建`);
+		defaultLogger.warn(`[tools][utils] 检测到 ${dirPath} 不存在，正在创建`);
 		fs.mkdirSync(dirPath, { recursive: true });
 	}
 }

@@ -8,17 +8,15 @@
 // Node
 import path from "node:path";
 import fs from "node:fs";
-import log4js from "log4js";
 import axios from "axios";
 import sharp from "sharp";
 import { load } from "cheerio";
 // TGAssistant
-import logger from "../tools/logger.js";
+import { defaultLogger,consoleLogger } from "../tools/logger.js";
 import pathList from "../../root.js";
 import { dirCheck, fileExist } from "../tools/utils.js";
 
-const consoleLog = log4js.getLogger("console");
-logger.info("[名片][下载] 正在运行 downloadImg.js");
+defaultLogger.info("[名片][下载] 正在运行 downloadImg.js");
 
 const srcImgDir = path.resolve(pathList.src.img, "namecard");
 const outImgDir = path.resolve(pathList.out.img, "namecard");
@@ -62,19 +60,19 @@ dataList.forEach(data => {
 });
 
 // 下载图像
-logger.info("[名片][下载] 开始下载图像");
+defaultLogger.info("[名片][下载] 开始下载图像");
 for (let i = 1; i <= 163; i++) {
 	if (i <= 117) {
 		await downloadImgByIndex(i, "pre");
 	} else if (i >= 122) {
 		await downloadImgByIndex(i, "curr");
 	} else {
-		consoleLog.info(`[名片][下载][${i}] 不存在, 跳过`);
+		consoleLogger.info(`[名片][下载][${i}] 不存在, 跳过`);
 	}
 }
-logger.info("[名片][下载] 图像下载完成");
+defaultLogger.info("[名片][下载] 图像下载完成");
 
-logger.info("[名片][下载] 开始获取原始数据");
+defaultLogger.info("[名片][下载] 开始获取原始数据");
 let nameCardsData;
 try {
 	nameCardsData = JSON.parse(fs.readFileSync(dataPaths.src, "utf-8"));
@@ -88,7 +86,7 @@ nameCardsData.map(item => nameCardSet.add(item.index));
 for (let i = 1; i <= 163; i++) {
 	if (i <= 117) {
 		if (nameCardSet.has(i)) {
-			consoleLog.info(`[名片][下载][${i}] 已存在, 跳过`);
+			consoleLogger.info(`[名片][下载][${i}] 已存在, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "pre");
@@ -96,7 +94,7 @@ for (let i = 1; i <= 163; i++) {
 		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
 	} else if (i >= 122) {
 		if (nameCardSet.has(i)) {
-			consoleLog.info(`[名片][下载][${i}] 已存在, 跳过`);
+			consoleLogger.info(`[名片][下载][${i}] 已存在, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "curr");
@@ -104,7 +102,7 @@ for (let i = 1; i <= 163; i++) {
 		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
 	}
 }
-logger.info("[名片][下载] 获取原始数据完成，请执行 convert.js 处理数据");
+defaultLogger.info("[名片][下载] 获取原始数据完成，请执行 convert.js 处理数据");
 
 // 使用的函数
 
@@ -128,7 +126,7 @@ function getSavePath(fileType, index) {
 async function downloadImg(url, index, imgType) {
 	const savePath = getSavePath(imgType, index);
 	if (fileExist(savePath)) {
-		consoleLog.info(`[名片][下载][${index}] ${imgType} 已存在, 跳过`);
+		consoleLogger.info(`[名片][下载][${index}] ${imgType} 已存在, 跳过`);
 		return;
 	}
 	try {
@@ -137,14 +135,14 @@ async function downloadImg(url, index, imgType) {
 		}).then(res => {
 			sharp(res.data).webp().toFile(savePath, (err, info) => {
 				if (err) {
-					logger.error(`[名片][下载][${index}] ${imgType} 下载失败`);
+					defaultLogger.error(`[名片][下载][${index}] ${imgType} 下载失败`);
 				} else {
-					logger.info(`[名片][下载][${index}] ${imgType} 下载成功，大小为 ${info.size}`);
+					defaultLogger.info(`[名片][下载][${index}] ${imgType} 下载成功，大小为 ${info.size}`);
 				}
 			});
 		});
 	} catch (e) {
-		logger.error(`[名片][下载][${index}] ${index} 下载失败`);
+		defaultLogger.error(`[名片][下载][${index}] ${index} 下载失败`);
 	}
 }
 
@@ -185,7 +183,7 @@ async function downloadImgByIndex(index, urlType) {
 	} else if (urlType === "curr") {
 		baseUrl = urlList.curr;
 	} else {
-		logger.error(`[名片][下载][${index}] 图像类型错误`);
+		defaultLogger.error(`[名片][下载][${index}] 图像类型错误`);
 		return;
 	}
 	const downloadList = getDownloadUrls(baseUrl, index);
@@ -228,13 +226,13 @@ async function getNameCard(url, index) {
 			}
 		});
 		if (nameCard.name !== "？？？") {
-			logger.info(`[名片][下载][${index}] 名片 ${nameCard.name} 解析成功`);
+			consoleLogger.info(`[名片][下载][${index}] 名片 ${nameCard.name} 解析成功`);
 		} else {
-			logger.warn(`[名片][下载][${index}] 名片 ${nameCard.name} 数据不完整`);
+			defaultLogger.warn(`[名片][下载][${index}] 名片 ${nameCard.name} 数据不完整`);
 		}
 		return nameCard;
 	} catch (e) {
-		logger.error(`[名片][下载][${index}] 获取 html 失败`);
+		defaultLogger.error(`[名片][下载][${index}] 获取 html 失败`);
 	}
 }
 
@@ -252,7 +250,7 @@ async function getNameCardByIndex(index, urlType) {
 	} else if (urlType === "curr") {
 		url = `${urlList.curr}${index.toString().padStart(3, "0")}/?lang=CHS`;
 	} else {
-		logger.error(`[名片][下载][${index}] 图像类型错误`);
+		defaultLogger.error(`[名片][下载][${index}] 图像类型错误`);
 		return;
 	}
 	return await getNameCard(url, index);

@@ -8,16 +8,14 @@
 // Node
 import path from "node:path";
 import fs from "node:fs";
-import log4js from "log4js";
 import axios from "axios";
 import sharp from "sharp";
 // TGAssistant
-import logger from "../tools/logger.js";
+import { defaultLogger,consoleLogger } from "../tools/logger.js";
 import pathList from "../../root.js";
 import { dirCheck, fileExist } from "../tools/utils.js";
 
-const consoleLog = log4js.getLogger("console");
-logger.info("[GCG][下载] 正在运行 download.js");
+defaultLogger.info("[GCG][下载] 正在运行 download.js");
 
 const srcImgDir = path.resolve(pathList.src.img, "gcg");
 const srcJsonDir = path.resolve(pathList.src.json, "gcg");
@@ -39,14 +37,14 @@ if (!fileExist(amberSavePath)) {
 			const dataGet = res.data["data"]["items"];
 			const savePath = path.resolve(srcJsonDir, "amber.json");
 			fs.writeFileSync(savePath, JSON.stringify(dataGet, null, 2));
-			logger.info("[GCG][下载] amber.json 下载完成");
+			defaultLogger.info("[GCG][下载] amber.json 下载完成");
 		});
 	} catch (error) {
-		logger.error("[GCG][下载] amber.json 下载失败");
-		logger.error(error.message);
+		defaultLogger.error("[GCG][下载] amber.json 下载失败");
+		defaultLogger.error(error.message);
 	}
 } else {
-	consoleLog.info("[GCG][下载] amber.json 已存在，跳过下载");
+	consoleLogger.warn("[GCG][下载] amber.json 已存在，跳过下载");
 }
 if (!fileExist(mysSavePath)) {
 	try {
@@ -54,14 +52,14 @@ if (!fileExist(mysSavePath)) {
 			const dataGet = res.data["data"]["list"][0]["children"];
 			const savePath = path.resolve(srcJsonDir, "mys.json");
 			fs.writeFileSync(savePath, JSON.stringify(dataGet, null, 2));
-			logger.info("[GCG][下载] mys.json 下载完成");
+			defaultLogger.info("[GCG][下载] mys.json 下载完成");
 		});
 	} catch (error) {
-		logger.error("[GCG][下载] mys.json 下载失败");
-		logger.error(error.message);
+		defaultLogger.error("[GCG][下载] mys.json 下载失败");
+		defaultLogger.error(error.message);
 	}
 } else {
-	consoleLog.info("[GCG][下载] mys.json 已存在，跳过下载");
+	consoleLogger.warn("[GCG][下载] mys.json 已存在，跳过下载");
 }
 // 下载图片
 const amberJson = JSON.parse(fs.readFileSync(amberSavePath, "utf-8"));
@@ -79,7 +77,7 @@ await Promise.allSettled(mysJson.map(async itemList => {
 	}));
 }));
 
-logger.info("[GCG][下载] download.js 运行结束");
+defaultLogger.info("[GCG][下载] download.js 运行结束");
 
 // 用到的函数
 
@@ -102,7 +100,7 @@ function getAmberImgUrl(icon) {
 async function downloadImg(url, name, source) {
 	const savePath = path.resolve(srcImgDir, `${name}.png`);
 	if (fileExist(savePath)) {
-		consoleLog.info(`[GCG][下载][${source}] ${name}.png 已存在，跳过下载`);
+		consoleLogger.warn(`[GCG][下载][${source}] ${name}.png 已存在，跳过下载`);
 		return;
 	}
 	await axios.get(url, {
@@ -110,9 +108,9 @@ async function downloadImg(url, name, source) {
 	}).then(res => {
 		sharp(res.data).png().toFile(savePath, (err) => {
 			if (err) {
-				logger.error(`[GCG][下载][${source}] ${name}.png 下载失败`);
+				defaultLogger.error(`[GCG][下载][${source}] ${name}.png 下载失败`);
 			} else {
-				logger.info(`[GCG][下载][${source}] ${name}.png 下载完成，大小为 ${res.data.length} 字节`);
+				defaultLogger.info(`[GCG][下载][${source}] ${name}.png 下载完成，大小为 ${res.data.length} 字节`);
 			}
 		});
 	});
