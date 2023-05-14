@@ -12,14 +12,14 @@ import axios from "axios";
 import sharp from "sharp";
 // TGAssistant
 import { defaultLogger,consoleLogger } from "../tools/logger.js";
-import pathList from "../../root.js";
+import pathList, { AMBER_VH } from "../../root.js";
 import { dirCheck, fileExist } from "../tools/utils.js";
 
 defaultLogger.info("[GCG][下载] 正在运行 download.js");
 
 const srcImgDir = path.resolve(pathList.src.img, "gcg");
 const srcJsonDir = path.resolve(pathList.src.json, "gcg");
-const amberUrl = "https://api.ambr.top/v2/chs/gcg?vh=37F8";
+const amberUrl = `https://api.ambr.top/v2/chs/gcg?vh=${AMBER_VH}`;
 const amberSavePath = path.resolve(srcJsonDir, "amber.json");
 const mysUrl = "https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list?app_sn=ys_obc&channel_id=231";
 const mysSavePath = path.resolve(srcJsonDir, "mys.json");
