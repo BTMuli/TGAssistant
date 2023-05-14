@@ -44,6 +44,7 @@ outASData.forEach((item) => {
 });
 
 defaultLogger.info("[名片][更新] 保存数据文件");
+outASData.sort((a, b) => a.order - b.order);
 fs.writeFileSync(outASPath, JSON.stringify(outASData, null, 2));
 
 defaultLogger.info("[名片][更新] 成功完成 update.js");
