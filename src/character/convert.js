@@ -68,7 +68,7 @@ amberKey.forEach((key) => {
 		icon: `/WIKI/character/icon/${key}.webp`,
 	};
 	count.success++;
-	consoleLogger.info(`[角色][转换][${key}] ${character["name"]} 处理完成`);
+	consoleLogger.info(`[角色][转换][${key}] ${character["name"]} 数据已添加`);
 	characterData.push(character);
 });
 defaultLogger.info(`[角色][转换] amber.json 处理完成，共处理 ${count.success} 个，跳过 ${count.skip} 个`);
@@ -79,7 +79,7 @@ characterData.forEach((character) => {
 	const mysFind = mysJson.find((item) => item.title === character["name"]);
 	if (!mysFind) {
 		count.fail++;
-		consoleLogger.error(`[角色][转换][${character["id"]}] ${character["name"]} 未找到 content_id`);
+		defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} 未找到 content_id`);
 		return;
 	}
 	character["content_id"] = mysFind["content_id"];
@@ -91,7 +91,7 @@ defaultLogger.info(`[角色][转换] content_id 添加完成，共添加 ${count
 const outData = characterData.filter((item) => item["content_id"] !== null).sort((a, b) => b["star"] - a["star"]|| b["id"] - a["id"]);
 // 写入文件
 fs.writeFileSync(outJsonPath, JSON.stringify(outData, null, 2));
-defaultLogger.info(`[角色][转换] 写入文件 ${outJsonPath} 完成, 处理${characterData.length}个，写入${outData.length}个`);
+defaultLogger.info(`[角色][转换] 写入文件 character.json 完成, 处理${characterData.length}个，写入${outData.length}个`);
 count.success = 0;
 count.fail = 0;
 defaultLogger.info("[角色][转换] 开始转换图片");
@@ -103,13 +103,13 @@ await Promise.allSettled(characterData.map(async character => {
 		consoleLogger.error(`[角色][转换][${character["id"]}] ${character["name"]} 源图片不存在`);
 		return;
 	}
+	if (character.content_id === null) {
+		defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} content_id 不存在`);
+	}
 	if (fileExist(out)) {
 		count.skip++;
 		consoleLogger.mark(`[角色][转换][${character["id"]}] ${character["name"]} 目标图片已存在`);
 		return;
-	}
-	if (character.content_id === null) {
-		consoleLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} content_id 不存在`);
 	}
 	await sharp(src).toFormat("webp").toFile(out);
 	consoleLogger.info(`[角色][转换][${character["id"]}] ${character["name"]} 转换完成`);
