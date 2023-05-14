@@ -13,6 +13,7 @@ import { defaultLogger,consoleLogger } from "./logger.js";
 
 /**
  * @description 获取 GitHub 仓库的文件对应下载地址
+ * @since 1.1.0
  * @param {string} repo 仓库地址
  * @param {string} tree 分支
  * @param {string} file 文件路径
@@ -24,6 +25,7 @@ function getDownloadUrl(repo, file, tree = "master") {
 
 /**
  * @description 下载 GitHub 仓库的文件
+ * @since 1.1.0
  * @param {string} repo 仓库地址
  * @param {string} file 文件路径
  * @param {string} savePath 保存路径

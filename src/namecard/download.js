@@ -108,6 +108,7 @@ defaultLogger.info("[名片][下载] 获取原始数据完成，请执行 conver
 
 /**
  * @description 获取文件保存路径
+ * @since 1.1.0
  * @param {string} fileType 文件类型
  * @param {number} index 文件索引
  * @returns {string} 文件保存路径
@@ -118,6 +119,7 @@ function getSavePath(fileType, index) {
 
 /**
  * @description 下载图像
+ * @since 1.1.0
  * @param {string} url 图像链接
  * @param {number} index 图像索引
  * @param {string} imgType 图像类型
@@ -148,6 +150,7 @@ async function downloadImg(url, index, imgType) {
 
 /**
  * @description 获取下载链接
+ * @since 1.1.0
  * @param {string} baseUrl 基础链接
  * @param {number} index 图像索引
  * @returns {[{type: string, url: string}]} 下载链接列表
@@ -172,6 +175,7 @@ function getDownloadUrls(baseUrl, index) {
 
 /**
  * @description 根据 index 和 urlType 下载图像
+ * @since 1.1.0
  * @param {number} index 图像索引
  * @param {string} urlType 图像类型
  * @returns {Promise<void>} 无返回值
@@ -192,9 +196,10 @@ async function downloadImgByIndex(index, urlType) {
 
 /**
  * @description 根据 url 获取名片对应 table 的 html
+ * @since 1.1.0
  * @param {string} url 名片链接
  * @param {number} index 名片索引
- * @returns {Promise<srcData.NameCard>} 名片对应 table 的 html
+ * @returns {Promise<object>} 名片对应 table 的 html
  */
 async function getNameCard(url, index) {
 	try {
@@ -239,9 +244,10 @@ async function getNameCard(url, index) {
 
 /**
  * @description 根据 index 获取名片数据
+ * @since 1.1.0
  * @param {number} index 名片索引
  * @param {string} urlType 图像类型
- * @returns {Promise<srcData.NameCard|void>} 名片数据
+ * @returns {Promise<object|void>} 名片数据
  */
 async function getNameCardByIndex(index, urlType) {
 	let url = "";

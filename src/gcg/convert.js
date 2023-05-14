@@ -76,6 +76,7 @@ defaultLogger.info("[GCG][转换] convert.js 运行结束");
 
 /**
  * @description 获取 GCG JSON 数据
+ * @since 1.1.0
  * @param {string} name 卡牌类型
  * @param {object} amberJson AmberJson 数据
  * @param {object} item MysJson 数据
@@ -100,6 +101,7 @@ function getGcgItem(name, amberJson, item) {
 
 /**
  * @description 转换图像
+ * @since 1.1.0
  * @param {object} item GCG JSON 数据
  * @returns {void}
  */

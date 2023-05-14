@@ -83,6 +83,7 @@ defaultLogger.info("[GCG][下载] download.js 运行结束");
 
 /**
  * @description 获取 amber.json 中的图片下载链接
+ * @since 1.1.0
  * @param {string} icon 图片名
  * @returns {string} 图片下载链接
  */
@@ -92,6 +93,7 @@ function getAmberImgUrl(icon) {
 
 /**
  * @description 下载图片
+ * @since 1.1.0
  * @param {string} url 图片下载链接
  * @param {string} name 图片名
  * @param {string} source 图片来源

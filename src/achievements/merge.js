@@ -134,6 +134,7 @@ defaultLogger.info("[成就][合并] merge.js 运行完成，请执行 namecard/
 
 /**
  * @description 递归将多维数组转换为一维数组
+ * @since 1.1.0
  * @param {Array} data
  * @returns {Array} 一维数组
  */
@@ -145,6 +146,7 @@ function flatArray(data) {
 
 /**
  * @description 获取最大的版本号
+ * @since 1.1.0
  * @param {Array} data
  * @returns {String} 最大的版本号
  */

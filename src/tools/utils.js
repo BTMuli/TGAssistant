@@ -13,6 +13,7 @@ import { defaultLogger } from "./logger.js";
 
 /**
  * @description 检测文件夹是否存在，不存在则创建
+ * @since 1.1.0
  * @param {string} dirPath 文件夹路径
  * @returns {void}
  */
@@ -25,6 +26,7 @@ export function dirCheck(dirPath) {
 
 /**
  * @description 检测文件是否存在
+ * @since 1.1.0
  * @param {string} filePath 文件路径
  * @returns {boolean} 文件是否存在
  */
@@ -34,6 +36,7 @@ export function fileExist(filePath) {
 
 /**
  * @description 获取当前日期
+ * @since 1.1.0
  * @returns {string} 当前日期
  */
 export function getDate() {

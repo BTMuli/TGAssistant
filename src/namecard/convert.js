@@ -73,7 +73,8 @@ defaultLogger.info("[名片][转换] 图像资源转换成功，请执行 update
 
 /**
  * @description 转换图像
- * @param {srcData.NameCard} nameCard 名片数据
+ * @since 1.1.0
+ * @param {object} nameCard 名片数据
  * @returns {void} 无返回值
  */
 function convertImg(nameCard) {
@@ -96,7 +97,8 @@ function convertImg(nameCard) {
 
 /**
  * @description 获取名片 type
- * @param {srcData.NameCard} nameCard 名片数据
+ * @since 1.1.0
+ * @param {object} nameCard 名片数据
  * @returns {number} 名片 type
  */
 function getNameCardType(nameCard) {
@@ -121,8 +123,9 @@ function getNameCardType(nameCard) {
 
 /**
  * @description 转换名片数据
- * @param {srcData.NameCard} nameCard 名片数据
- * @returns {outData.NameCard} 转换后的名片数据
+ * @since 1.1.0
+ * @param {object} nameCard 名片数据
+ * @returns {object} 转换后的名片数据
  */
 function convertNameCard(nameCard) {
 	const type = getNameCardType(nameCard);
