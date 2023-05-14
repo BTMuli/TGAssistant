@@ -151,7 +151,7 @@ function getAmberWeapon(weapon) {
 		"WEAPON_SWORD_ONE_HAND": "单手剑",
 		"WEAPON_CLAYMORE": "双手剑",
 		"WEAPON_POLE": "长柄武器",
-		"WEAPON_BOW": "弓箭",
+		"WEAPON_BOW": "弓",
 		"WEAPON_CATALYST": "法器",
 	};
 	const weaponGet = weaponMap[weapon];
