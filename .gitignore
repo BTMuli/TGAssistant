@@ -10,7 +10,6 @@ temp/*
 logs/*
 # old files
 calendar
-character
 oriData
 oriSource
 out
