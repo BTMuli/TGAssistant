@@ -15,7 +15,7 @@ import { load } from "cheerio";
 // TGAssistant
 import logger from "../tools/logger.js";
 import pathList from "../../root.js";
-import { fileCheck, fileExist } from "../tools/utils.js";
+import { dirCheck, fileExist } from "../tools/utils.js";
 
 const consoleLog = log4js.getLogger("console");
 logger.info("[名片][下载] 正在运行 downloadImg.js");
@@ -53,12 +53,12 @@ const urlList = {
 };
 
 // 检测目录是否存在
-fileCheck(srcImgDir);
-fileCheck(outImgDir);
-fileCheck(srcJsonDir);
+dirCheck(srcImgDir);
+dirCheck(outImgDir);
+dirCheck(srcJsonDir);
 dataList.forEach(data => {
-	fileCheck(data.srcDir);
-	fileCheck(data.outDir);
+	dirCheck(data.srcDir);
+	dirCheck(data.outDir);
 });
 
 // 下载图像

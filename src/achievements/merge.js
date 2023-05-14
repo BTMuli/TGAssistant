@@ -12,7 +12,7 @@ import log4js from "log4js";
 // TGAssistant
 import logger from "../tools/logger.js";
 import pathList from "../../root.js";
-import { fileCheck, fileExist } from "../tools/utils.js";
+import { dirCheck, fileExist } from "../tools/utils.js";
 
 const consoleLogger = log4js.getLogger("console");
 
@@ -22,8 +22,8 @@ logger.info("[成就][合并] 正在运行 merge.js");
 logger.info("[成就][合并] 检测目录是否存在");
 const srcDir = path.join(pathList.src.json, "achievements");
 const dataDir = path.join(pathList.out.json);
-fileCheck(srcDir);
-fileCheck(dataDir);
+dirCheck(srcDir);
+dirCheck(dataDir);
 
 const srcList = [
 	{

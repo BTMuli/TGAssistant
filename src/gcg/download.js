@@ -14,7 +14,7 @@ import sharp from "sharp";
 // TGAssistant
 import logger from "../tools/logger.js";
 import pathList from "../../root.js";
-import { fileCheck, fileExist } from "../tools/utils.js";
+import { dirCheck, fileExist } from "../tools/utils.js";
 
 const consoleLog = log4js.getLogger("console");
 logger.info("[GCG][下载] 正在运行 download.js");
@@ -27,8 +27,8 @@ const mysUrl = "https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/c
 const mysSavePath = path.resolve(srcJsonDir, "mys.json");
 
 // 检测目录是否存在
-fileCheck(srcImgDir);
-fileCheck(srcJsonDir);
+dirCheck(srcImgDir);
+dirCheck(srcJsonDir);
 
 // 下载JSON
 if (!fileExist(amberSavePath)) {

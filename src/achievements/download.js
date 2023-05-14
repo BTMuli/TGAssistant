@@ -10,7 +10,7 @@ import path from "node:path";
 // TGAssistant
 import logger from "../tools/logger.js";
 import pathList from "../../root.js";
-import { fileCheck } from "../tools/utils.js";
+import { dirCheck } from "../tools/utils.js";
 import gitDownload from "../tools/gitDownload.js";
 
 logger.info("[成就][下载] 正在运行 download.js");
@@ -34,7 +34,7 @@ const dataList = [
 ];
 
 // 检测目录是否存在
-fileCheck(srcDir);
+dirCheck(srcDir);
 
 await Promise.allSettled(dataList.map(async data => {
 	logger.info(`[成就][下载] 开始下载 ${data.name} 文件`);

@@ -16,7 +16,7 @@ import logger from "./logger.js";
  * @param {string} dirPath 文件夹路径
  * @returns {void}
  */
-export function fileCheck(dirPath) {
+export function dirCheck(dirPath) {
 	if (!fs.existsSync(dirPath)) {
 		logger.warn(`[tools][utils] 检测到 ${dirPath} 不存在，正在创建`);
 		fs.mkdirSync(dirPath, { recursive: true });

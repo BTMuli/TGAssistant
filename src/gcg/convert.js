@@ -13,7 +13,7 @@ import log4js from "log4js";
 import logger from "../tools/logger.js";
 import pathList from "../../root.js";
 import sharp from "sharp";
-import { fileCheck } from "../tools/utils.js";
+import { dirCheck } from "../tools/utils.js";
 
 const consoleLog = log4js.getLogger("console");
 logger.info("[GCGenerator][转换] 正在运行 convert.js");
@@ -35,7 +35,7 @@ if (!fs.existsSync(srcJsonAmber)) {
 	process.exit(1);
 }
 // 检查输出目录是否存在
-fileCheck(outImgDir);
+dirCheck(outImgDir);
 
 const gcgData = [];
 
