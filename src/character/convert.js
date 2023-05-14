@@ -111,7 +111,7 @@ await Promise.allSettled(characterData.map(async character => {
 		consoleLogger.mark(`[角色][转换][${character["id"]}] ${character["name"]} 目标图片已存在`);
 		return;
 	}
-	await sharp(src).toFormat("webp").toFile(out);
+	await sharp(src).png().toFormat("webp").toFile(out);
 	consoleLogger.info(`[角色][转换][${character["id"]}] ${character["name"]} 转换完成`);
 	count.success++;
 }));

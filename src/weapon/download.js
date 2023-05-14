@@ -110,13 +110,7 @@ async function downloadImg(url, savePath, index) {
 			responseType: "arraybuffer",
 		}).then(async res => {
 			defaultLogger.info(`[武器][下载][${index}] 图像下载完成`);
-			await sharp(res.data).png().toFile(savePath,(err, info) => {
-				if (err) {
-					defaultLogger.error(`[武器][下载][${index}] 图像保存失败`);
-				} else {
-					consoleLogger.info(`[武器][下载][${index}] 图像保存成功`);
-				}
-			});
+			await sharp(res.data).png().toFile(savePath);
 			count.success++;
 		});
 	} catch (error) {

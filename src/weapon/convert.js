@@ -113,7 +113,7 @@ await Promise.allSettled(weaponData.map(async (weapon) => {
 		consoleLogger.mark(`[武器][转换][${weapon.id}] ${weapon.name} 目标图片已存在，跳过`);
 		return;
 	}
-	await sharp(src).webp().toFile(out);
+	await sharp(src).png().toFormat("webp").toFile(out);
 	consoleLogger.info(`[武器][转换][${weapon.id}] ${weapon.name} 处理完成`);
 }));
 defaultLogger.info(`[武器][转换] 图片处理完成，共处理 ${count.total} 个，成功 ${count.success} 个，失败 ${count.fail} 个，跳过 ${count.skip} 个`);

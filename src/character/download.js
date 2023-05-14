@@ -111,13 +111,7 @@ async function downloadImg(url, savePath, index) {
 			responseType: "arraybuffer",
 		}).then(res => {
 			defaultLogger.info(`[角色][下载][${index}] 图像下载完成`);
-			sharp(res.data).png().toFile(savePath, (err, info) => {
-				if (err) {
-					defaultLogger.error(`[角色][下载][${index}] 图像保存失败`);
-				} else {
-					consoleLogger.info(`[角色][下载][${index}] 图像保存成功`);
-				}
-			});
+			sharp(res.data).png().toFile(savePath);
 			count.success++;
 		});
 	} catch (error) {
