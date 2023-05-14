@@ -9,11 +9,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import axios from "axios";
+import sharp from "sharp";
 // TGAssistant
 import pathList, { AMBER_VH } from "../../root.js";
 import { consoleLogger, defaultLogger } from "../tools/logger.js";
 import { dirCheck, fileExist } from "../tools/utils.js";
-import sharp from "sharp";
+
 
 defaultLogger.info("[角色][下载] 开始执行 download.js");
 

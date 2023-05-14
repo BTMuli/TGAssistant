@@ -8,11 +8,12 @@
 // Node
 import path from "node:path";
 import fs from "node:fs";
+import sharp from "sharp";
 // TGAssistant
 import pathList from "../../root.js";
 import { consoleLogger, defaultLogger } from "../tools/logger.js";
 import { dirCheck, fileExist } from "../tools/utils.js";
-import sharp from "sharp";
+
 
 defaultLogger.info("[角色][转换] 开始执行 convert.js");
 
@@ -87,7 +88,7 @@ characterData.forEach((character) => {
 defaultLogger.info(`[角色][转换] content_id 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`);
 
 // 按照 id 排序
-const outData = characterData.filter((item) => item["content_id"] !== null).sort((a, b) => b["star"] - a["star"]|| a["id"] - b["id"]);
+const outData = characterData.filter((item) => item["content_id"] !== null).sort((a, b) => b["star"] - a["star"]|| b["id"] - a["id"]);
 // 写入文件
 fs.writeFileSync(outJsonPath, JSON.stringify(outData, null, 2));
 defaultLogger.info(`[角色][转换] 写入文件 ${outJsonPath} 完成, 处理${characterData.length}个，写入${outData.length}个`);
