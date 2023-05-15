@@ -62,7 +62,7 @@ amberKey.forEach((key) => {
 		content_id: null,
 		name: item["name"],
 		star: item["rank"],
-		bg: `/icon/bg/${item["rank"]}-star.webp`,
+		bg: `/icon/bg/${item["rank"]}-Star.webp`,
 		element: getAmberElement(item["element"]),
 		weapon: getAmberWeapon(item["weaponType"]),
 		icon: `/WIKI/character/icon/${key}.webp`,
