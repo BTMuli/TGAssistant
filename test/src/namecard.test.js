@@ -1,5 +1,5 @@
 /**
- * @file test namecard.test.js
+ * @file test src namecard.test.js
  * @description 测试 cheerio 解析 html 的功能是否正常工作
  * @author BTMuli<bt-muli@outlook.com>
  * @since 1.1.0

@@ -1,5 +1,5 @@
 /**
- * @file test gcg.test.js
+ * @file test src gcg.test.js
  * @description 测试 gcg 数据获取
  * @author BTMuli<bt-muli@outlook.com>
  * @since 1.1.0

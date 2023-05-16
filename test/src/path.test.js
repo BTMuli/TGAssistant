@@ -1,5 +1,5 @@
 /**
- * @file test path.test.js
+ * @file test src path.test.js
  * @description 测试路径是否正确
  * @author BTMuli<bt-muli@outlook.com>
  * @since 1.1.0
@@ -9,7 +9,7 @@
 import assert from "node:assert";
 import { describe, it } from "mocha";
 // TGAssistant
-import pathList, { ROOT_PATH } from "../root.js";
+import pathList, { ROOT_PATH } from "../../root.js";
 
 describe("测试路径", () => {
 	it("根目录", () => {

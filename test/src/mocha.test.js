@@ -1,5 +1,5 @@
 /**
- * @file test mocha.test.js
+ * @file test src mocha.test.js
  * @description 测试 Mocha 框架的一些用法
  * @author BTMuli<bt-muli@outlook.com>
  * @since 1.1.0
