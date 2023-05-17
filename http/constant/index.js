@@ -14,6 +14,7 @@ const HttpConstant = {
 	BBS: BBS,
 	Salt: Salt,
 	SqlPath: SQL_PATH,
+	GAME_BIZ: "hk4e_cn"
 };
 
 export default HttpConstant;
