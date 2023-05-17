@@ -25,7 +25,7 @@ function getDS(method, data) {
 		t: Math.floor(Date.now() / 1000).toString(),
 		r: getRandomNumber(100000, 200000).toString(),
 		b: method==="POST" ? data : "",
-		q: method==="GET" ? "" : data,
+		q: method==="GET" ? data : "",
 	};
 	const md5Str = md5.createHash("md5").update(qs.stringify(params)).digest("hex");
 	return `${params.t},${params.r},${md5Str}`;
