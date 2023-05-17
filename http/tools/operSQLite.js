@@ -49,7 +49,7 @@ class LocalSqlite {
 	/**
 	 * @description 获取 cookie
 	 * @since 1.1.0
-	 * @return {Promise<object>}
+	 * @return {Promise<string>}
 	 */
 	async getCookie() {
 		const sql = "select * from AppData where key='cookie'";
