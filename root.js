@@ -31,6 +31,7 @@ const pathList = {
 		PM: "MadeBaruna/paimon-moe",
 	},
 	log: path.join(ROOT_PATH, "logs"),
+	http: path.join(ROOT_PATH, "data", "http")
 };
 
 export default pathList;

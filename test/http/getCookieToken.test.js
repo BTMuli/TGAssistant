@@ -10,14 +10,14 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { getCookieTokenBySToken } from "../../http/request/getCookieToken.js";
-import LocalSqlite from "../../http/tools/operSQLite.js";
+import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
 
 describe("测试 cookieToken 获取", ()=>{
 	it("通过 stoken", async ()=>{
-		const stoken = await LocalSqlite.getCookieItem("stoken");
-		const cookie = JSON.stringify(await LocalSqlite.getCookie());
+		const stoken = readCookieItem("stoken");
+		const cookie = readCookie();
 		const res = await getCookieTokenBySToken(cookie, stoken);
-		const cookieToken = await LocalSqlite.getCookieItem("cookie_token");
+		const cookieToken = readCookieItem("cookie_token");
 		assert.strictEqual(res, cookieToken);
 	});
 });

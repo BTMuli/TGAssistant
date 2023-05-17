@@ -10,12 +10,12 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { verifyLToken } from "../../http/request/verifyLToken.js";
-import LocalSqlite from "../../http/tools/operSQLite.js";
+import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
 
 describe("测试 LToken 验证", () => {
 	it("测试 func", async ()=>{
-		const cookie = await LocalSqlite.getCookie();
-		const ltoken = await LocalSqlite.getCookieItem("ltoken");
+		const cookie = readCookie();
+		const ltoken = readCookieItem("ltoken");
 		const res = await verifyLToken(cookie,ltoken);
 		assert.strictEqual(res["retcode"], 0);
 	});

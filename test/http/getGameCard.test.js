@@ -10,12 +10,12 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { getGameCardByCookie, getUserInfoByCookie } from "../../http/request/getGameCard.js";
-import LocalSqlite from "../../http/tools/operSQLite.js";
+import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
 
 describe("测试 GameCard 获取", ()=>{
 	it("通过 cookie", async ()=>{
-		const cookie = await LocalSqlite.getCookie();
-		const uid = await LocalSqlite.getCookieItem("ltuid");
+		const cookie = readCookie();
+		const uid = readCookieItem("ltuid");
 		const res = await getGameCardByCookie(cookie,uid);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
@@ -24,7 +24,7 @@ describe("测试 GameCard 获取", ()=>{
 
 describe("测试 UserInfo 获取", ()=>{
 	it("通过 cookie", async ()=>{
-		const cookie = await LocalSqlite.getCookie();
+		const cookie = readCookie();
 		const role_id = "500299765";
 		const res = await getUserInfoByCookie(cookie, role_id);
 		console.log(res);
