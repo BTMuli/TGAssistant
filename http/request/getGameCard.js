@@ -7,6 +7,7 @@
 
 // Node
 import axios from "axios";
+import qs from "qs";
 // TGAssistant
 import getHeader from "../tools/getHeader.js";
 
@@ -19,12 +20,10 @@ import getHeader from "../tools/getHeader.js";
  * @returns {Promise<object>}
  */
 export function getGameCardByCookie(cookie ,uid){
-	const urlPre = "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/getGameRecordCard";
-	const urlCur = `uid=${uid}`;
-	const url = `${urlPre}?${urlCur}`;
-	const header = getHeader(cookie, "GET", urlCur);
-	console.log(header);
-	return axios.get(url,{ headers:header }).then(res=>{
+	const url = "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/getGameRecordCard";
+	const params = { uid:uid };
+	const header = getHeader(cookie, "GET", qs.stringify(params));
+	return axios.get(url,{ headers:header,params:params }).then(res=>{
 		console.log(res.data);
 		return res.data;
 	});
