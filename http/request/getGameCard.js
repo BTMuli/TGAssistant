@@ -10,6 +10,7 @@ import axios from "axios";
 import qs from "qs";
 // TGAssistant
 import getHeader from "../tools/getHeader.js";
+import getServerByUid from "../tools/getServerByUid.js";
 
 /**
  * @description 根据 cookie 获取用户游戏数据
@@ -24,8 +25,23 @@ export function getGameCardByCookie(cookie ,uid){
 	const params = { uid:uid };
 	const header = getHeader(cookie, "GET", qs.stringify(params));
 	return axios.get(url,{ headers:header,params:params }).then(res=>{
-		console.log(res.data);
 		return res.data;
 	});
+}
 
+/**
+ * @description 通过 cookie 获取基本信息
+ * @since 1.1.0
+ * @todo invalid request
+ * @param {string} cookie cookie
+ * @param {string} role_id role_id
+ * @returns {Promise<unknown>}
+ */
+export function getUserInfoByCookie(cookie, role_id) {
+	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/index";
+	const params = { role_id: role_id,server: getServerByUid(role_id) };
+	const header = getHeader(cookie, "GET", qs.stringify(params));
+	return axios.get(url, { headers: header, params:params }).then(res=>{
+		return res.data;
+	});
 }
