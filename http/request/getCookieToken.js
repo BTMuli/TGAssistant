@@ -14,7 +14,7 @@ import getHeader from "../tools/getHeader.js";
 /**
  * @description 根据 stoken 获取 cookieToken
  * @param {string} cookie cookie
- * @param {string} SToken sToken
+ * @param {string} SToken stoken
  * @returns {Promise<string>} cookieToken
  */
 export async function getCookieTokenBySToken(cookie, SToken) {
