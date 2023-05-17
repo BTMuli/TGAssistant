@@ -12,6 +12,7 @@ import getHeader from "../tools/getHeader.js";
 
 /**
  * @description 根据 stoken 获取 ltoken
+ * @since 1.1.0
  * @param {string} cookie cookie
  * @param {string} SToken stoken
  * @returns {Promise<string>} ltoken
