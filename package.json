@@ -1,5 +1,5 @@
 {
-  "name": "tg-assisstant",
+  "name": "tg-assistant",
   "version": "1.0.0",
   "description": "The assistant for Tauri.Genshin",
   "type": "module",
