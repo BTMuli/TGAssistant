@@ -30,3 +30,20 @@ export function getRandomString(length) {
 export function getRandomNumber(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+/**
+ * @description 转换 cookie
+ * @since 1.1.0
+ * @param {object} cookie cookie
+ * @returns {string} 转换后的 cookie
+ */
+export function transCookie(cookie) {
+	let res = "";
+	const keys = Object.keys(cookie);
+	for (const key of keys){
+		if(cookie[key]!==""){
+			res += `${key}=${cookie[key]};`;
+		}
+	}
+	return res;
+}

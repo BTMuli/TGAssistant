@@ -9,6 +9,7 @@
 import sqlite3 from "sqlite3";
 // TGAssistant
 import HttpConstant from "../constant/index.js";
+import { transCookie } from "./utils.js";
 
 class LocalSqlite {
 	constructor() {
@@ -53,7 +54,7 @@ class LocalSqlite {
 	async getCookie() {
 		const sql = "select * from AppData where key='cookie'";
 		const res = await this.selectSingle(sql);
-		return JSON.parse(res.value);
+		return transCookie(JSON.parse(res.value));
 	}
 
 	/**
@@ -63,7 +64,9 @@ class LocalSqlite {
 	 * @return {Promise<string>}
 	 */
 	async getCookieItem(itemKey){
-		const cookie = await this.getCookie();
+		const sql = "select * from AppData where key='cookie'";
+		const res = await this.selectSingle(sql);
+		const cookie = JSON.parse(res.value);
 		return cookie[itemKey];
 	}
 
