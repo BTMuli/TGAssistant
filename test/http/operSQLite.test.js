@@ -22,7 +22,15 @@ describe("测试 SQLite", ()=>{
 		const sql = "select * from AppData where key='appVersion';";
 		const res = await LocalSqlite.selectSingle(sql);
 		const versionTest = "0.2.0";
-		assert.strictEqual(res["value"], versionTest);
+		assert.strictEqual(res.value, versionTest);
 		LocalSqlite.closeDB();
+	});
+	it("测试 cookie 获取",async ()=>{
+		const cookie = await LocalSqlite.getCookie();
+		assert.strictEqual(cookie["account_id"], "249066520");
+	});
+	it("测试 cookie 项获取", async  ()=>{
+		const accountId = await LocalSqlite.getCookieItem("account_id");
+		assert.strictEqual(accountId, "249066520");
 	});
 });

@@ -34,7 +34,7 @@ class LocalSqlite {
 	 * @description 查询返回单个数据
 	 * @since 1.1.0
 	 * @param sql sql 语句
-	 * @return {Promise<Array<unknown>>}
+	 * @return {Promise<unknown>}
 	 */
 	async selectSingle(sql) {
 		return new Promise((resolve, reject) =>{
@@ -44,6 +44,29 @@ class LocalSqlite {
 			});
 		});
 	}
+
+	/**
+	 * @description 获取 cookie
+	 * @since 1.1.0
+	 * @return {Promise<object>}
+	 */
+	async getCookie() {
+		const sql = "select * from AppData where key='cookie'";
+		const res = await this.selectSingle(sql);
+		return JSON.parse(res.value);
+	}
+
+	/**
+	 * @description 获取 cookie 某项
+	 * @since 1.1.0
+	 * @param {string} itemKey 项名称
+	 * @return {Promise<string>}
+	 */
+	async getCookieItem(itemKey){
+		const cookie = await this.getCookie();
+		return cookie[itemKey];
+	}
+
 
 	/**
 	 * @description 关闭数据库链接
