@@ -11,7 +11,7 @@ import assert from "node:assert";
 // TGAssistant
 import { getCookieTokenBySToken } from "../../http/request/getCookieToken.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import { transCookie } from "../../http/tools/utils.js";
+import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 cookieToken 获取", ()=>{
 	it("通过 stoken", async ()=>{

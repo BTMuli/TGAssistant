@@ -11,7 +11,7 @@ import assert from "node:assert";
 // TGAssistant
 import { getGameAccountsByCookie, getGameAccountsByStoken } from "../../http/request/getGameAccounts.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import { transCookie } from "../../http/tools/utils.js";
+import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试游戏账号获取", ()=>{
 	it("通过 cookie", async ()=>{

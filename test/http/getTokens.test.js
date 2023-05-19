@@ -11,7 +11,7 @@ import assert from "node:assert";
 // TGAssistant
 import getTokensByLoginTicket from "../../http/request/getTokens.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import { transCookie } from "../../http/tools/utils.js";
+import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 tokens 获取", ()=>{
 	it("通过 login_ticket", async ()=>{

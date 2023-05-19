@@ -10,7 +10,7 @@ import fs from "node:fs";
 import path from "node:path";
 // TGAssistant
 import pathList from "../../root.js";
-import { transCookie } from "./utils.js";
+import transCookie from "./transCookie.js";
 
 const ckFile = fs.readFileSync(path.resolve(pathList.http, "cookie.json"), "utf8");
 

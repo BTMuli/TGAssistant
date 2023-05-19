@@ -11,7 +11,7 @@ import assert from "node:assert";
 // TGAssistant
 import { verifyLToken } from "../../http/request/verifyLToken.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import { transCookie } from "../../http/tools/utils.js";
+import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 LToken 验证", () => {
 	it("测试 func", async ()=>{
