@@ -6,7 +6,6 @@
  */
 
 // Node
-import qs from "qs";
 import md5 from "node:crypto";
 // TGAssistant
 import HttpConstant from "../constant/index.js";
@@ -65,35 +64,14 @@ function getSalt(saltType) {
  * @since 1.1.0
  * @param {string} query query
  * @param {string} body body
- * @returns {string} DS
- */
-export function getDS(query="", body="") {
-	const salt = HttpConstant.Salt.Other.X4;
-	const random = getRandomNumber(100000, 200000);
-	const params = {
-		salt: salt,
-		t: Math.floor(Date.now() / 1000).toString(),
-		r: random === 100000 ? 642367 : random,
-		b: body,
-		q: query,
-	};
-	const md5Str = md5.createHash("md5").update(qs.stringify(params)).digest("hex");
-	return `${params.t},${params.r},${md5Str}`;
-}
-
-/**
- * @description 获取新的 DS
- * @since 1.1.0
  * @param {string} saltType salt 类型
  * @returns {string} DS
  */
-export function getNewDS(saltType) {
+export function getDS(query="", body="", saltType="common") {
 	const salt = getSalt(saltType);
-	const params = {
-		salt: salt,
-		t: Math.floor(Date.now() / 1000).toString(),
-		r: getRandomString(6),
-	};
-	const md5Str = md5.createHash("md5").update(qs.stringify(params)).digest("hex");
-	return `${params.t},${params.r},${md5Str}`;
+	const random = getRandomNumber(100000, 200000);
+	const time = Math.floor(Date.now() / 1000).toString();
+	const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
+	const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
+	return `${time},${random},${md5Str}`;
 }
