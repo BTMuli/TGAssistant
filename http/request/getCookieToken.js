@@ -22,8 +22,9 @@ import getHeader from "../tools/getHeader.js";
 export async function getCookieTokenBySToken(cookie, stoken) {
 	const url = "https://passport-api.mihoyo.com/account/auth/api/getCookieAccountInfoBySToken";
 	const params = { stoken:stoken, };
-	const header = getHeader(cookie, "GET", qs.stringify(params));
+	const header = getHeader(cookie, "GET", qs.stringify(params), "common");
 	return axios.get(url, { headers: header, params: params }).then(res => {
+		console.log(res.data);
 		return res.data["data"]["cookie_token"];
 	});
 }

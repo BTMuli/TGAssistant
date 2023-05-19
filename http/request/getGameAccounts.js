@@ -24,6 +24,7 @@ export async function getGameAccountsByStoken(cookie, stoken) {
 	const params = { stoke:stoken, game_biz: HttpConstant.GAME_BIZ };
 	const header = getHeader(cookie, "GET", qs.stringify(params));
 	return axios.get(url, { headers: header, params:params }).then(res=>{
+		console.log(res.data);
 		return res.data["data"]["list"];
 	});
 }
@@ -39,6 +40,7 @@ export async function getGameAccountsByCookie(cookie) {
 	const params = { game_biz: HttpConstant.GAME_BIZ };
 	const header = getHeader(cookie, "GET", qs.stringify(params));
 	return axios.get(url, { headers:header,params:params }).then(res=>{
+		console.log(res.data);
 		return res.data["data"]["list"];
 	});
 }

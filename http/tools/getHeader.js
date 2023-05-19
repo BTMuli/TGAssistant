@@ -12,18 +12,20 @@ import getDS from "./getDS.js";
 /**
  * @description 获取请求头部信息
  * @since 1.1.0
- * @param {String} cookie cookie
- * @param {String} method 请求方法
- * @param {String} data 请求数据
+ * @param {string} cookie cookie
+ * @param {string} method 请求方法
+ * @param {string} data 请求数据
+ * @param {string} saltType salt 类型
  * @returns {Object} 请求头部信息
  */
-function getHeader(cookie, method, data) {
+function getHeader(cookie, method, data, saltType) {
 	return {
 		"User-Agent": HttpConstant.BBS.Header,
 		"x-rpc-app_version": HttpConstant.BBS.Version,
 		"x-rpc-client_type": "5",
-		"Referer": HttpConstant.BBS.Host,
-		"DS": getDS(method, data),
+		"x-requested-with": "com.mihoyo.hyperion",
+		"Referer": HttpConstant.BBS.Referer,
+		"DS": getDS(method, data, saltType),
 		"Cookie": cookie,
 	};
 }
