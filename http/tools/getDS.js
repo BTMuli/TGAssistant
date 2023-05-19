@@ -63,23 +63,37 @@ function getSalt(saltType) {
 /**
  * @description 获取 DS
  * @since 1.1.0
- * @param {string} method 请求方法
- * @param {string} data 请求数据
- * @param {string} saltType salt 类型
+ * @param {string} query query
+ * @param {string} body body
  * @returns {string} DS
  */
-function getDS(method, data, saltType) {
-	const salt = getSalt(saltType);
+export function getDS(query="", body="") {
+	const salt = HttpConstant.Salt.Other.X4;
+	const random = getRandomNumber(100000, 200000);
 	const params = {
 		salt: salt,
 		t: Math.floor(Date.now() / 1000).toString(),
-		r: getRandomNumber(100000, 200000).toString(),
-		b: method==="POST" ? data : "",
-		q: method==="GET" ? data : "",
+		r: random === 100000 ? 642367 : random,
+		b: body,
+		q: query,
 	};
 	const md5Str = md5.createHash("md5").update(qs.stringify(params)).digest("hex");
 	return `${params.t},${params.r},${md5Str}`;
 }
 
-
-export default getDS;
+/**
+ * @description 获取新的 DS
+ * @since 1.1.0
+ * @param {string} saltType salt 类型
+ * @returns {string} DS
+ */
+export function getNewDS(saltType) {
+	const salt = getSalt(saltType);
+	const params = {
+		salt: salt,
+		t: Math.floor(Date.now() / 1000).toString(),
+		r: getRandomString(6),
+	};
+	const md5Str = md5.createHash("md5").update(qs.stringify(params)).digest("hex");
+	return `${params.t},${params.r},${md5Str}`;
+}
