@@ -10,13 +10,19 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { getRoleListByCookie } from "../../http/request/getRoleList.js";
-import { readCookie } from "../../http/tools/readCookie.js";
+import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
+import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试角色列表获取", ()=>{
 	it("通过 cookie",async ()=>{
-		const cookie = readCookie();
 		const role_id = "500299765";
-		const res = await getRoleListByCookie(cookie, role_id);
+		const cookie = {
+			stoken: readCookieItem("stoken"),
+			stuid: readCookieItem("stuid")
+		};
+		const res = await getRoleListByCookie(transCookie(cookie), role_id);
+		// const cookie = readCookie();
+		// const res = await getRoleListByCookie(cookie, role_id);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});

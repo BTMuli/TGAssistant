@@ -22,9 +22,13 @@ import getServerByUid from "../tools/getServerByUid.js";
  */
 export async function getRoleListByCookie(cookie,  role_id) {
 	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/character";
-	const data = { role_id: role_id, server:getServerByUid(role_id) };
-	const header = getHeader(cookie,"POST", qs.stringify(data));
+	const data = { role_id: role_id.toString(), server:getServerByUid(role_id) };
+	console.log(data);
+	// const header = getHeader(cookie,"POST", qs.stringify(data), "common");
+	const header = getHeader(cookie,"POST", qs.stringify(data), "prod");
 	return axios.post(url, data, { headers: header }).then(res=>{
+		// console.log(res.config.headers);
+		// console.log(res.config.url);
 		return res.data;
 	});
 }
