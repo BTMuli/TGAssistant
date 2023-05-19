@@ -18,7 +18,9 @@ describe("测试 cookieToken 获取", ()=>{
 		const stoken = readCookieItem("stoken");
 		const cookie = {
 			stoken: stoken,
-			mid: readCookieItem("mid"),
+			// stoken_v2
+			// mid: readCookieItem("mid"),
+			stuid: readCookieItem("stuid"),
 		};
 		const res = await getCookieTokenBySToken(transCookie(cookie), stoken);
 		const cookieToken = readCookieItem("cookie_token");

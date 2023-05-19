@@ -10,13 +10,17 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { getLTokenBySToken } from "../../http/request/getLToken.js";
-import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
+import { readCookieItem } from "../../http/tools/readCookie.js";
+import { transCookie } from "../../http/tools/utils.js";
 
 describe("测试 LToken 获取", ()=>{
 	it("通过 stoken", async ()=>{
-		const cookie = readCookie();
 		const stoken = readCookieItem("stoken");
-		const res = await getLTokenBySToken(cookie,stoken);
+		const cookie = {
+			stoken: readCookieItem("stoken"),
+			stuid: readCookieItem("stuid")
+		};
+		const res = await getLTokenBySToken(transCookie(cookie),stoken);
 		const ltoken = readCookieItem("ltoken");
 		assert.strictEqual(res, ltoken);
 	});

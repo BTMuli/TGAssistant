@@ -10,13 +10,18 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { verifyLToken } from "../../http/request/verifyLToken.js";
-import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
+import { readCookieItem } from "../../http/tools/readCookie.js";
+import { transCookie } from "../../http/tools/utils.js";
 
 describe("测试 LToken 验证", () => {
 	it("测试 func", async ()=>{
-		const cookie = readCookie();
 		const ltoken = readCookieItem("ltoken");
-		const res = await verifyLToken(cookie,ltoken);
+		const cookie = {
+			ltoken: ltoken,
+			ltuid: readCookieItem("ltuid")
+		};
+		const res = await verifyLToken(transCookie(cookie),ltoken);
+		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});
 });
