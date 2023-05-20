@@ -10,8 +10,7 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { getRoleListByCookie } from "../../http/request/getRoleList.js";
-import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
-import transCookie from "../../http/tools/transCookie.js";
+import { readCookieItem } from "../../http/tools/readCookie.js";
 
 describe("测试角色列表获取", ()=>{
 	it("通过 cookie",async ()=>{
@@ -20,7 +19,7 @@ describe("测试角色列表获取", ()=>{
 			stoken: readCookieItem("stoken"),
 			stuid: readCookieItem("stuid")
 		};
-		const res = await getRoleListByCookie(transCookie(cookie), role_id);
+		const res = await getRoleListByCookie(cookie, role_id);
 		// const cookie = readCookie();
 		// const res = await getRoleListByCookie(cookie, role_id);
 		console.log(res);

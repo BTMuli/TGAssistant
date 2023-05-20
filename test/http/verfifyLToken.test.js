@@ -11,7 +11,6 @@ import assert from "node:assert";
 // TGAssistant
 import { verifyLToken } from "../../http/request/verifyLToken.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 LToken 验证", () => {
 	it("测试 func", async ()=>{
@@ -20,7 +19,7 @@ describe("测试 LToken 验证", () => {
 			ltoken: ltoken,
 			ltuid: readCookieItem("ltuid")
 		};
-		const res = await verifyLToken(transCookie(cookie),ltoken);
+		const res = await verifyLToken(cookie,ltoken);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});

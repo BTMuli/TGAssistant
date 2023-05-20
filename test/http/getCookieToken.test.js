@@ -11,18 +11,15 @@ import assert from "node:assert";
 // TGAssistant
 import { getCookieTokenBySToken } from "../../http/request/getCookieToken.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 cookieToken 获取", ()=>{
 	it("通过 stoken", async ()=>{
 		const stoken = readCookieItem("stoken");
 		const cookie = {
 			stoken: stoken,
-			// stoken_v2
-			// mid: readCookieItem("mid"),
 			stuid: readCookieItem("stuid"),
 		};
-		const res = await getCookieTokenBySToken(transCookie(cookie), stoken);
+		const res = await getCookieTokenBySToken(cookie, stoken);
 		const cookieToken = readCookieItem("cookie_token");
 		assert.strictEqual(res, cookieToken);
 	});

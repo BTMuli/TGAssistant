@@ -9,9 +9,8 @@
 import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
-import getTokensByLoginTicket from "../../http/request/getTokens.js";
+import { getTokensByLoginTicket } from "../../http/request/getTokens.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 tokens 获取", ()=>{
 	it("通过 login_ticket", async ()=>{
@@ -21,7 +20,11 @@ describe("测试 tokens 获取", ()=>{
 			login_ticket: ticket,
 			login_uid: uid
 		};
-		const res = await getTokensByLoginTicket(transCookie(cookie), ticket, uid);
+		const data = {
+			ticket: ticket,
+			uid: uid
+		};
+		const res = await getTokensByLoginTicket(cookie, data);
 		console.log(res);
 		const ltokenTest = readCookieItem("ltoken");
 		const ltokenGet = (res.find(item => item["name"] === "ltoken"))["token"];

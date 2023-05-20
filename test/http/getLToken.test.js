@@ -11,7 +11,6 @@ import assert from "node:assert";
 // TGAssistant
 import { getLTokenBySToken } from "../../http/request/getLToken.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 LToken 获取", ()=>{
 	it("通过 stoken", async ()=>{
@@ -20,7 +19,7 @@ describe("测试 LToken 获取", ()=>{
 			stoken: readCookieItem("stoken"),
 			stuid: readCookieItem("stuid")
 		};
-		const res = await getLTokenBySToken(transCookie(cookie),stoken);
+		const res = await getLTokenBySToken(cookie,stoken);
 		const ltoken = readCookieItem("ltoken");
 		assert.strictEqual(res, ltoken);
 	});

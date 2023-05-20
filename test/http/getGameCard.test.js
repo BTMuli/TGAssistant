@@ -11,7 +11,6 @@ import assert from "node:assert";
 // TGAssistant
 import { getGameCardByCookie, getUserInfoByLToken, getUserInfoByCookie } from "../../http/request/getGameCard.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 GameCard 获取", ()=>{
 	it("通过 cookie", async ()=>{
@@ -21,7 +20,7 @@ describe("测试 GameCard 获取", ()=>{
 			cookie_token: readCookieItem("cookie_token"),
 
 		};
-		const res = await getGameCardByCookie(transCookie(cookie),uid);
+		const res = await getGameCardByCookie(cookie,uid);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});
@@ -34,7 +33,7 @@ describe("测试 UserInfo 获取", ()=>{
 			ltuid: readCookieItem("ltuid"),
 			ltoken: readCookieItem("ltoken"),
 		};
-		const res = await getUserInfoByLToken(transCookie(cookie), role_id);
+		const res = await getUserInfoByLToken(cookie, role_id);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});
@@ -44,7 +43,7 @@ describe("测试 UserInfo 获取", ()=>{
 			account_id: readCookieItem("account_id"),
 			cookie_token: readCookieItem("cookie_token"),
 		};
-		const res = await getUserInfoByCookie(transCookie(cookie), role_id);
+		const res = await getUserInfoByCookie(cookie, role_id);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});

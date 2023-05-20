@@ -32,7 +32,6 @@
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "log4js": "^6.9.1",
-    "qs": "^6.11.2",
     "sharp": "^0.32.1"
   },
   "devDependencies": {

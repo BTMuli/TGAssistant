@@ -11,7 +11,6 @@ import assert from "node:assert";
 // TGAssistant
 import { getGameAccountsByCookie, getGameAccountsByStoken } from "../../http/request/getGameAccounts.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
-import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试游戏账号获取", ()=>{
 	it("通过 cookie", async ()=>{
@@ -19,7 +18,7 @@ describe("测试游戏账号获取", ()=>{
 			cookie_token: readCookieItem("cookie_token"),
 			account_id: readCookieItem("account_id"),
 		};
-		const res = await getGameAccountsByCookie(transCookie(cookie));
+		const res = await getGameAccountsByCookie(cookie);
 		console.log(res);
 		assert.strictEqual(res.length, 2);
 		const resFind = res.find(item => item["is_chosen"] === true);
@@ -32,7 +31,7 @@ describe("测试游戏账号获取", ()=>{
 			stuid: readCookieItem("stuid")
 		};
 		const stoken = readCookieItem("stoken");
-		const res = await getGameAccountsByStoken(transCookie(cookie), stoken);
+		const res = await getGameAccountsByStoken(cookie, stoken);
 		console.log(res);
 		assert.strictEqual(res.length, 2);
 		const resFind = res.find(item => item["is_chosen"] === true);

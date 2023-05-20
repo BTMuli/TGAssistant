@@ -9,16 +9,14 @@
 /**
  * @description 转换 cookie
  * @since 1.1.0
- * @param {object} cookie cookie
+ * @param {Record<string,string>} cookie cookie
  * @returns {string} 转换后的 cookie
  */
 function transCookie(cookie) {
 	let res = "";
 	const keys = Object.keys(cookie);
-	for (const key of keys){
-		if(cookie[key]!==""){
-			res += `${key}=${cookie[key]};`;
-		}
+	for (const key of keys) {
+		res += `${key}=${cookie[key]};`;
 	}
 	return res;
 }

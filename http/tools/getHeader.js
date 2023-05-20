@@ -8,13 +8,15 @@
 // TGAssistant
 import HttpConstant from "../constant/index.js";
 import { getDS }from "./getDS.js";
+import { transParams } from "./transParams.js";
+import transCookie from "./transCookie.js";
 
 /**
  * @description 获取请求头部信息
  * @since 1.1.0
- * @param {string} cookie cookie
+ * @param {Record<string, string>} cookie cookie
  * @param {string} method 请求方法
- * @param {string} data 请求数据
+ * @param {Record<string, string|number>} data 请求数据
  * @param {string} saltType salt 类型
  * @returns {Object} 请求头部信息
  */
@@ -25,7 +27,7 @@ export function getHeader(cookie, method, data, saltType="common") {
 		"x-rpc-client_type": "5",
 		"x-requested-with": "com.mihoyo.hyperion",
 		"Referer": HttpConstant.BBS.Referer,
-		"DS": getDS(method, data, saltType),
-		"Cookie": cookie,
+		"DS": getDS(method, transParams(data), saltType),
+		"Cookie": transCookie(cookie)
 	};
 }
