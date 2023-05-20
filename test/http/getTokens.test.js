@@ -24,7 +24,7 @@ describe("测试 tokens 获取", ()=>{
 			ticket: ticket,
 			uid: uid
 		};
-		const res = await getTokensByLoginTicket(cookie, data);
+		const res = await getTokensByLoginTicket(cookie, ticket, uid);
 		console.log(res);
 		const ltokenTest = readCookieItem("ltoken");
 		const ltokenGet = (res.find(item => item["name"] === "ltoken"))["token"];
