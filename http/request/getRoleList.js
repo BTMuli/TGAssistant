@@ -14,16 +14,16 @@ import getServerByUid from "../tools/getServerByUid.js";
 /**
  * @description 通过 cookie 获取角色列表
  * @since 1.1.0
- * @todo invalid request
  * @param {Record<string, string>} cookie cookie
  * @param {string} role_id role_id
  * @returns {Promise<unknown>}
  */
 export async function getRoleListByCookie(cookie,  role_id) {
 	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/character";
-	const data = { role_id: role_id.toString(), server:getServerByUid(role_id) };
-	const header = getHeader(cookie,"POST", data);
+	const data = { role_id: role_id, server:getServerByUid(role_id) };
+	const header = getHeader(cookie,"POST", JSON.stringify(data));
 	return axios.post(url, data, { headers: header }).then(res=>{
-		return res.data;
+		console.log(res.data);
+		return res.data["data"]["avatars"];
 	});
 }

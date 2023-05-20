@@ -16,18 +16,21 @@ import transCookie from "./transCookie.js";
  * @since 1.1.0
  * @param {Record<string, string>} cookie cookie
  * @param {string} method 请求方法
- * @param {Record<string, string|number>} data 请求数据
+ * @param {Record<string, string|number>|string} data 请求数据
  * @param {string} saltType salt 类型
  * @returns {Object} 请求头部信息
  */
 export function getHeader(cookie, method, data, saltType="common") {
+	let ds;
+	if(typeof data === "string") ds=getDS(method, data, saltType);
+	else ds=getDS(method, transParams(data), saltType);
 	return {
 		"User-Agent": HttpConstant.BBS.Header,
 		"x-rpc-app_version": HttpConstant.BBS.Version,
 		"x-rpc-client_type": "5",
 		"x-requested-with": "com.mihoyo.hyperion",
 		"Referer": HttpConstant.BBS.Referer,
-		"DS": getDS(method, transParams(data), saltType),
+		"DS": ds,
 		"Cookie": transCookie(cookie)
 	};
 }

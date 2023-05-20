@@ -10,18 +10,16 @@ import fs from "node:fs";
 import path from "node:path";
 // TGAssistant
 import pathList from "../../root.js";
-import transCookie from "./transCookie.js";
 
 const ckFile = fs.readFileSync(path.resolve(pathList.http, "cookie.json"), "utf8");
 
 /**
  * @description 读取 cookie
  * @since 1.1.0
- * @returns {string} cookie
+ * @returns {Record<string,string>} cookie
  */
 export function readCookie() {
-	const ck = JSON.parse(ckFile);
-	return transCookie(ck);
+	return JSON.parse(ckFile);
 }
 
 /**
