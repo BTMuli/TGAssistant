@@ -31,6 +31,6 @@ export function readCookie() {
  * @returns {string} 项值
  */
 export function readCookieItem(itemKey){
-	const ck = readCookie();
+	const ck = JSON.parse(ckFile);
 	return ck[itemKey];
 }
