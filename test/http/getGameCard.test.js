@@ -10,7 +10,7 @@ import { describe, it } from "mocha";
 import assert from "node:assert";
 // TGAssistant
 import { getGameCardByCookie, getUserInfoByLToken, getUserInfoByCookie } from "../../http/request/getGameCard.js";
-import { readCookie, readCookieItem } from "../../http/tools/readCookie.js";
+import { readCookieItem } from "../../http/tools/readCookie.js";
 import transCookie from "../../http/tools/transCookie.js";
 
 describe("测试 GameCard 获取", ()=>{
@@ -35,8 +35,6 @@ describe("测试 UserInfo 获取", ()=>{
 			ltoken: readCookieItem("ltoken"),
 		};
 		const res = await getUserInfoByLToken(transCookie(cookie), role_id);
-		// const cookie = readCookie();
-		// const res = await getUserInfoByLToken(transCookie(cookie), role_id);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});
@@ -47,8 +45,6 @@ describe("测试 UserInfo 获取", ()=>{
 			cookie_token: readCookieItem("cookie_token"),
 		};
 		const res = await getUserInfoByCookie(transCookie(cookie), role_id);
-		// const cookie = readCookie();
-		// const res = await getUserInfoByLToken(transCookie(cookie), role_id);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});

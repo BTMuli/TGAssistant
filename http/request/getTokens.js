@@ -23,7 +23,7 @@ import { getHeader } from "../tools/getHeader.js";
 async function getTokensByLoginTicket(cookie, ticket, uid) {
 	const url = "https://api-takumi.mihoyo.com/auth/api/getMultiTokenByLoginTicket";
 	const params = { login_ticket: ticket, token_types: 2, uid: uid };
-	const header = getHeader(cookie, qs.stringify(params));
+	const header = getHeader(cookie,"GET", qs.stringify(params));
 	return axios.get(url, { headers:header,params:params }).then(res=>{
 		console.log(res.data.data.list);
 		return res.data["data"]["list"];

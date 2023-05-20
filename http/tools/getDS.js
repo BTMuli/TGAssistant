@@ -62,15 +62,17 @@ function getSalt(saltType) {
 /**
  * @description 获取 DS
  * @since 1.1.0
- * @param {string} query query
- * @param {string} body body
+ * @param {string} method 请求方法
+ * @param {string} data 请求数据
  * @param {string} saltType salt 类型
  * @returns {string} DS
  */
-export function getDS(query="", body="", saltType="common") {
+export function getDS(method, data, saltType) {
 	const salt = getSalt(saltType);
 	const random = getRandomNumber(100000, 200000);
 	const time = Math.floor(Date.now() / 1000).toString();
+	const body = method==="POST" ? data : "";
+	const query = method==="GET" ? data : "";
 	const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
 	const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
 	return `${time},${random},${md5Str}`;

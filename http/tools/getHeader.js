@@ -13,19 +13,19 @@ import { getDS }from "./getDS.js";
  * @description 获取请求头部信息
  * @since 1.1.0
  * @param {string} cookie cookie
- * @param {string} query query
- * @param {string} body body
+ * @param {string} method 请求方法
+ * @param {string} data 请求数据
  * @param {string} saltType salt 类型
  * @returns {Object} 请求头部信息
  */
-export function getHeader(cookie, query="", body="", saltType = "common") {
+export function getHeader(cookie, method, data, saltType="common") {
 	return {
 		"User-Agent": HttpConstant.BBS.Header,
 		"x-rpc-app_version": HttpConstant.BBS.Version,
 		"x-rpc-client_type": "5",
 		"x-requested-with": "com.mihoyo.hyperion",
 		"Referer": HttpConstant.BBS.Referer,
-		"DS": getDS(query, body, saltType),
+		"DS": getDS(method, data, saltType),
 		"Cookie": cookie,
 	};
 }
