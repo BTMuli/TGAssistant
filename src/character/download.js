@@ -30,7 +30,6 @@ const amberSavePath = path.resolve(srcJsonDir, "amber.json");
 const mysSavePath = path.resolve(srcJsonDir, "mys.json");
 
 // 下载JSON
-defaultLogger.info("[角色][下载] 正在下载 JSON");
 if (!fileExist(amberSavePath)) {
 	try {
 		await axios.get(amberUrl).then(res => {
@@ -61,7 +60,6 @@ if (!fileExist(mysSavePath)) {
 }
 
 // 下载图片
-defaultLogger.info("[角色][下载] 正在下载图片");
 const count = {
 	total: 0,
 	success: 0,

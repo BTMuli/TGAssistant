@@ -19,8 +19,7 @@ describe("测试角色列表获取", ()=>{
 			ltoken: readCookieItem("ltoken"),
 			ltuid: readCookieItem("ltuid")
 		};
-		const character_ids = [10000076];
-		const res = await getRoleListByCookie(cookie, role_id, character_ids);
+		const res = await getRoleListByCookie(cookie, role_id);
 		console.log(res);
 		assert.strictEqual(res["retcode"], 0);
 	});
