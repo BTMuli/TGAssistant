@@ -65,11 +65,13 @@ function getSalt(saltType) {
  * @param {string} method 请求方法
  * @param {string} data 请求数据
  * @param {string} saltType salt 类型
+ * @param {boolean} isSign 是否为签名
  * @returns {string} DS
  */
-export function getDS(method, data, saltType) {
+export function getDS(method, data, saltType, isSign=false) {
 	const salt = getSalt(saltType);
-	const random = getRandomNumber(100000, 200000);
+	let random = getRandomNumber(100000, 200000);
+	if(isSign) random = getRandomString(6);
 	const time = Math.floor(Date.now() / 1000).toString();
 	const body = method==="POST" ? data : "";
 	const query = method==="GET" ? data : "";
