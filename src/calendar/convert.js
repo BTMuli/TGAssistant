@@ -47,7 +47,8 @@ const characterJson = JSON.parse(fs.readFileSync(srcJsonCharacter, "utf-8"));
 const weaponJson = JSON.parse(fs.readFileSync(srcJsonWeapon, "utf-8"));
 const materialJson = JSON.parse(fs.readFileSync(srcJsonMaterial, "utf-8"));
 const calendarData = [];
-const noSourceData = [];
+const materialIdsSet = new Set();
+const materialSourceRecord = {};
 
 // 处理数据
 mysJson.map(item => {
@@ -56,8 +57,27 @@ mysJson.map(item => {
 	calendarItem.drop_day = item["drop_day"].map(day => Number(day));
 	calendarItem.materials = getCalendarMaterials(item["contentInfos"], name);
 	calendarItem.source = getCalendarSource(item["contentSource"], name);
+	const ids = calendarItem.materials.map(material => material.id).join(",");
+	if(materialSourceRecord[ids] === undefined && calendarItem.source["type"]!==undefined) {
+		materialSourceRecord[ids] = calendarItem.source;
+		consoleLogger.mark(`[日历][转换][source}] 素材来源已添加 [${ids}]`);
+	}
 	calendarData.push(calendarItem);
 	consoleLogger.mark(`[日历][转换][${name}] 处理完成`);
+});
+
+// 处理没有 source 的数据
+consoleLogger.mark("[日历][转换][source] 开始处理没有 source 的数据");
+calendarData.map(item => {
+	if(item.source["type"] === undefined) {
+		const ids = item.materials.map(material => material.id).join(",");
+		if(materialSourceRecord[ids] !== undefined) {
+			item.source = materialSourceRecord[ids];
+			defaultLogger.warn(`[日历][转换][${item.name}] 检测到 source 为空，已补全`);
+		} else {
+			defaultLogger.error(`[日历][转换][${item.name}] 素材来源未找到，请检查`);
+		}
+	}
 });
 
 // 排序
@@ -74,12 +94,6 @@ calendarData.sort((a, b) => {
 // 保存
 fs.writeFileSync(outJsonPath, JSON.stringify(calendarData, null, 2));
 defaultLogger.info(`[日历][转换] 转换完成，共 ${calendarData.length} 个数据`);
-if(noSourceData.length > 0) {
-	consoleLogger.warn("[日历][转换] 以下数据未找到对应的素材数据，请检查：");
-	noSourceData.map(item => {
-		consoleLogger.warn(`[日历][转换] ${item}`);
-	});
-}
 defaultLogger.info("[日历][转换] convert.js 执行完毕");
 
 // 用到的函数
@@ -178,6 +192,11 @@ function getCalendarMaterials(contentInfos, name) {
 		}
 	});
 	materialInfo.sort((a, b) => b.star - a.star);
+	const ids = materialInfo.map(item => item.id).join(",");
+	if(!materialIdsSet.has(ids)) {
+		materialIdsSet.add(ids);
+		consoleLogger.mark(`[日历][转换][material] 添加新的材料组合 [${ids}]`);
+	}
 	return materialInfo;
 }
 
@@ -229,8 +248,7 @@ function getCalendarSource(contentSource, name) {
 	try {
 		sourceName = contentSource[0]["title"];
 	} catch (error) {
-		defaultLogger.error(`[日历][转换][${name}] 未找到对应的来源数据`);
-		noSourceData.push(name);
+		consoleLogger.warn(`[日历][转换][${name}] 未找到对应的来源数据`);
 		return sourceData;
 	}
 	if(!sourceKey.includes(sourceName)) {
