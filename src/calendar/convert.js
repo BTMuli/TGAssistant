@@ -54,11 +54,11 @@ const materialSourceRecord = {};
 mysJson.map(item => {
 	const name = item["title"];
 	const calendarItem = getCalendarBaseInfo(item["break_type"], name);
-	calendarItem.drop_day = item["drop_day"].map(day => Number(day));
+	calendarItem.dropDays = item["drop_day"].map(day => Number(day));
 	calendarItem.materials = getCalendarMaterials(item["contentInfos"], name);
 	calendarItem.source = getCalendarSource(item["contentSource"], name);
 	const ids = calendarItem.materials.map(material => material.id).join(",");
-	if(materialSourceRecord[ids] === undefined && calendarItem.source["type"]!==undefined) {
+	if(materialSourceRecord[ids] === undefined && calendarItem.source["name"]!==undefined) {
 		materialSourceRecord[ids] = calendarItem.source;
 		consoleLogger.mark(`[日历][转换][source}] 素材来源已添加 [${ids}]`);
 	}
@@ -115,13 +115,15 @@ function getCalendarBaseInfo(breakType, name) {
 			consoleLogger.mark(`[日历][转换][${name}] 武器数据已添加`);
 			baseInfo = {
 				id: itemFind.id,
-				content_id: itemFind.content_id,
-				drop_day:[],
+				contentId: itemFind.contentId,
+				dropDays:[],
 				name: itemFind.name,
-				item_type: "weapon",
+				itemType: "weapon",
 				star: itemFind.star,
 				bg: itemFind.bg,
-				weapon_type: itemFind.type,
+				starIcon: `/icon/star/${itemFind.star}.webp`,
+				weaponIcon: itemFind.weaponIcon,
+				elementIcon: itemFind.elementIcon||"",
 				icon: itemFind.icon,
 				materials: [],
 				source: {},
@@ -135,14 +137,15 @@ function getCalendarBaseInfo(breakType, name) {
 			consoleLogger.mark(`[日历][转换][${name}] 角色数据已添加`);
 			baseInfo = {
 				id: itemFind.id,
-				content_id: itemFind.content_id,
-				drop_day:[],
+				contentId: itemFind.contentId,
+				dropDays:[],
 				name: itemFind.name,
-				item_type: "character",
+				itemType: "character",
 				star: itemFind.star,
 				bg: itemFind.bg,
-				element: itemFind.element,
-				weapon_type: itemFind.weapon,
+				starIcon: `/icon/star/${itemFind.star}.webp`,
+				elementIcon: itemFind.elementIcon,
+				weaponIcon: itemFind.weaponIcon,
 				icon: itemFind.icon,
 				materials: [],
 				source: {},
@@ -166,10 +169,9 @@ function getCalendarMaterials(contentInfos, name) {
 	contentInfos.map(item => {
 		let materialItem = {
 			id: 0,
-			content_id: 0,
 			name: "",
-			type: "",
 			star: 0,
+			starIcon: "",
 			bg: "",
 			icon: "",
 
@@ -180,10 +182,9 @@ function getCalendarMaterials(contentInfos, name) {
 		} else {
 			materialItem = {
 				id: itemFind.id,
-				content_id: item["content_id"],
 				name: itemFind.name,
-				type: itemFind.type,
 				star: itemFind.star,
+				starIcon: itemFind.starIcon,
 				bg: itemFind.bg,
 				icon: itemFind.icon,
 			};
@@ -256,10 +257,9 @@ function getCalendarSource(contentSource, name) {
 		return sourceData;
 	}
 	sourceData = {
-		type: sourceMap[sourceName].type,
 		area: sourceMap[sourceName].area,
 		name: sourceName,
-		content_id: contentSource["content_id"],
+		icon: `/icon/nation/${sourceMap[sourceName].area}.webp`,
 	};
 	return sourceData;
 

@@ -54,6 +54,7 @@ amberKey.forEach((key) => {
 		name: item["name"],
 		type: amberType[item["type"]],
 		star: item["rank"],
+		starIcon: `/icon/star/${item["rank"]}.webp`,
 		bg: `/icon/bg/${item["rank"]}-Star.webp`,
 		icon: `/icon/material/${key}.webp`,
 	};

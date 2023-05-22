@@ -132,7 +132,7 @@ function convertNameCard(nameCard) {
 	return {
 		name: nameCard.name,
 		type: type,
-		description: nameCard.description,
+		desc: nameCard.description,
 		source: nameCard.source,
 		icon: `/source/nameCard/icon/${nameCard.name}.webp`,
 		bg: `/source/nameCard/bg/${nameCard.name}.webp`,

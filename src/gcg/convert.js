@@ -62,7 +62,7 @@ await Promise.allSettled(mysJson.map(async itemList => {
 
 defaultLogger.info(`[GCG][转换] mys.json 读取完成，共 ${gcgData.length} 个图像数据`);
 defaultLogger.info("[GCG][转换] 对 GCG.json 进行排序");
-gcgData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id || a.content_id - b.content_id);
+gcgData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id || a.contentId - b.contentId);
 fs.writeFileSync(jsonSavePath, JSON.stringify(gcgData, null, 2), "utf-8");
 defaultLogger.info(`[GCG][转换] GCG.json 保存完成，共 ${gcgData.length} 个图像数据`);
 
@@ -92,7 +92,7 @@ function getGcgItem(name, amberJson, item) {
 	}
 	return {
 		id: idFind,
-		content_id: item.content_id,
+		contentId: item.content_id,
 		name: item.title,
 		type: name,
 		icon: `/WIKI/GCG/normal/${item.title}.webp`,

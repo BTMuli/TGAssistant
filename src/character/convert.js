@@ -31,8 +31,10 @@ if (!fileExist(srcJsonMys)) {
 }
 
 // 检测保存路径是否存在
+const outJsonDir = pathList.out.json;
 const outJsonPath = path.join(pathList.out.json, "character.json");
 const outImgDir = path.join(pathList.out.img, "character");
+dirCheck(outJsonDir);
 dirCheck(outImgDir);
 
 // 读取原始数据
@@ -59,12 +61,12 @@ amberKey.forEach((key) => {
 	}
 	const character = {
 		id: Number(key),
-		content_id: null,
+		contentId: 0,
 		name: item["name"],
 		star: item["rank"],
 		bg: `/icon/bg/${item["rank"]}-Star.webp`,
-		element: getAmberElement(item["element"]),
-		weapon: getAmberWeapon(item["weaponType"]),
+		elementIcon: getAmberElement(item["element"]),
+		weaponIcon: getAmberWeapon(item["weaponType"]),
 		icon: `/WIKI/character/icon/${key}.webp`,
 	};
 	count.success++;
@@ -82,13 +84,13 @@ characterData.forEach((character) => {
 		defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} 未找到 content_id`);
 		return;
 	}
-	character["content_id"] = mysFind["content_id"];
+	character.contentId = mysFind["content_id"];
 	count.success++;
 });
 defaultLogger.info(`[角色][转换] content_id 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`);
 
 // 按照 id 排序
-const outData = characterData.filter((item) => item["content_id"] !== null).sort((a, b) => b["star"] - a["star"]|| b["id"] - a["id"]);
+const outData = characterData.filter((item) => item.contentId !== 0).sort((a, b) => b["star"] - a["star"]|| b["id"] - a["id"]);
 // 写入文件
 fs.writeFileSync(outJsonPath, JSON.stringify(outData, null, 2));
 defaultLogger.info(`[角色][转换] 写入文件 character.json 完成, 处理${characterData.length}个，写入${outData.length}个`);
@@ -103,7 +105,7 @@ await Promise.allSettled(characterData.map(async character => {
 		consoleLogger.error(`[角色][转换][${character["id"]}] ${character["name"]} 源图片不存在`);
 		return;
 	}
-	if (character.content_id === null) {
+	if (character.contentId === 0) {
 		defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} content_id 不存在`);
 	}
 	if (fileExist(out)) {

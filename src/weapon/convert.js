@@ -30,8 +30,10 @@ if (!fileExist(srcJsonMys)) {
 }
 
 // 检测保存路径是否存在
+const outJsonDir = pathList.out.json;
 const outJsonPath = path.join(pathList.out.json, "weapon.json");
 const outImgDir = path.join(pathList.out.img, "weapon");
+dirCheck(outJsonDir);
 dirCheck(outImgDir);
 
 // 读取原始数据
@@ -58,11 +60,11 @@ amberKey.forEach((key) => {
 	}
 	const weapon = {
 		id: Number(key),
-		content_id: null,
+		contentId: 0,
 		name: item["name"],
 		star: item["rank"],
 		bg: `/icon/bg/${item["rank"]}-Star.webp`,
-		type: getAmberWeaponType(item["type"]),
+		weaponIcon: getAmberWeaponType(item["type"]),
 		icon: `/WIKI/weapon/icon/${key}.webp`,
 	};
 	count.success++;
@@ -82,13 +84,13 @@ weaponData.forEach((weapon) => {
 		defaultLogger.warn(`[武器][转换][${weapon.id}] ${weapon.name} 未找到 content_id`);
 		return;
 	}
-	weapon.content_id = mysFind.content_id;
+	weapon.contentId = mysFind.content_id;
 	count.success++;
 });
 defaultLogger.info(`[武器][转换] mys.json 处理完成，共添加 ${count.success} 个，失败 ${count.fail} 个`);
 
 // 排序
-const outData = weaponData.filter((item) => item.content_id !== null).sort((a, b) => b.star - a.star||b.id-a.id);
+const outData = weaponData.filter((item) => item.contentId !== 0).sort((a, b) => b.star - a.star||b.id-a.id);
 // 写入文件
 fs.writeFileSync(outJsonPath, JSON.stringify(outData, null, 2));
 defaultLogger.info(`[武器][转换] 写入文件 weapon.json 完成，处理 ${count.total} 个，写入 ${outData.length} 个`);
@@ -105,7 +107,7 @@ await Promise.allSettled(weaponData.map(async (weapon) => {
 		defaultLogger.error(`[武器][转换][${weapon.id}] ${weapon.name} 源图片不存在`);
 		return;
 	}
-	if(weapon.content_id === null) {
+	if(weapon.content_id === 0) {
 		defaultLogger.warn(`[武器][转换][${weapon.id}] ${weapon.name} content_id 为空`);
 	}
 	if(fileExist(out)) {
