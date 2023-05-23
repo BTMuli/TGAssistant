@@ -1,6 +1,6 @@
 /**
- * @file achievements merge.js
- * @description 合并成就数据，生成目标数据文件
+ * @file achievements convert.js
+ * @description 转换成就数据，生成目标数据文件
  * @author BTMuli<bt-muli@outlook.com>
  * @since 1.1.0
  */
@@ -9,14 +9,13 @@
 import path from "node:path";
 import fs from "node:fs";
 // TGAssistant
-import { defaultLogger,consoleLogger } from "../tools/logger.js";
-import pathList from "../../root.js";
+import { consoleLogger, defaultLogger } from "../tools/logger.js";
+import pathList, { GENSHIN_VER } from "../../root.js";
 import { dirCheck, fileExist } from "../tools/utils.js";
 
-defaultLogger.info("[成就][合并] 正在运行 merge.js");
+defaultLogger.info("[成就][转换] 正在运行 convert.js");
 
 // 检测目录是否存在
-defaultLogger.info("[成就][合并] 检测目录是否存在");
 const srcDir = path.join(pathList.src.json, "achievements");
 const dataDir = path.join(pathList.out.json);
 dirCheck(srcDir);
@@ -36,10 +35,9 @@ const srcList = [
 ];
 
 // 检测数据文件是否存在
-defaultLogger.info("[成就][合并] 检测数据文件是否存在");
 srcList.forEach((src) => {
 	if (!fileExist(src.file)) {
-		defaultLogger.error(`[成就][合并] ${src.name} 文件不存在，请先执行 download.js`);
+		defaultLogger.error(`[成就][转换] ${src.name} 文件不存在，请先执行 download.js`);
 		process.exit(1);
 	}
 });
@@ -65,33 +63,25 @@ const tempData = {
 };
 
 // 读取数据
-defaultLogger.info("[成就][合并] 读取数据");
 srcList.forEach((src) => {
-	try {
-		src.data = JSON.parse(fs.readFileSync(src.file, "utf-8"));
-	} catch (error) {
-		defaultLogger.error(`[成就][合并] ${src.name} 数据读取失败，请检查文件是否损坏`);
-		process.exit(1);
-	}
+	src.data = JSON.parse(fs.readFileSync(src.file, "utf-8"));
 });
 
 // 处理 Paimon.moe 的数据
-defaultLogger.info("[成就][合并] 处理 Paimon.moe 的数据");
 await Object.entries(srcList[1].data).forEach(([key, series]) => {
-	defaultLogger.info(`[成就][合并][PMSeries][${key}] 处理成就系列 ${series.name}`);
+	consoleLogger.mark(`[成就][转换][PMSeries][${key}] 处理成就系列 ${series.name}`);
 	const achievementArray = flatArray(series.achievements);
-	const seriesVersion = getMaxVersion(achievementArray);
 	tempData.series[key] = {
 		id: Number(key),
 		order: series.order,
 		name: series.name,
-		version: seriesVersion,
+		version: "",
 		card: "",
 		icon: `/source/achievementSeries/${key}.webp`,
 	};
-	defaultLogger.info(`[成就][合并][PMSeries][${key}] 处理成就系列 ${series.name} 的成就`);
+	consoleLogger.info(`[成就][转换][PMSeries][${key}] 处理成就系列 ${series.name} 的成就`);
 	achievementArray.forEach((o) => {
-		consoleLogger.info(`[成就][合并][PMItem][${o.id}] 处理成就 ${o.name}`);
+		consoleLogger.mark(`[成就][转换][PMItem][${o.id}] 处理成就 ${o.name}`);
 		tempData.achievements[o.id] = {
 			id: o.id,
 			series: Number(key),
@@ -103,15 +93,33 @@ await Object.entries(srcList[1].data).forEach(([key, series]) => {
 		};
 	});
 });
-defaultLogger.info("[成就][合并] 处理 Paimon.moe 的数据完成");
 
 // 处理 Snap.Hutao 的数据
-defaultLogger.info("[成就][合并] 处理 Snap.Hutao 的数据");
+defaultLogger.info("[成就][转换] 处理 Snap.Hutao 的数据");
 await srcList[0].data.map((o) => {
-	consoleLogger.info(`[成就][合并][Hutao][${o["Id"]}] 处理成就 ${o["Title"]}`);
-	tempData.achievements[o["Id"]].order = o["Order"];
+	consoleLogger.mark(`[成就][转换][Hutao][${o["Id"]}] 处理成就 ${o["Title"]}`);
+	if(tempData.achievements[o["Id"]] === undefined){
+		tempData.achievements[o["Id"]] = {
+			id: o["Id"],
+			series: o["Goal"],
+			order: o["Order"],
+			name: o["Title"],
+			description: o["Description"],
+			reward: o["FinishReward"]["Count"],
+			version: GENSHIN_VER,
+		};
+		consoleLogger.warn(`[成就][转换][Hutao] 添加缺失成就数据 ${o["Title"]}`);
+	} else {
+		tempData.achievements[o["Id"]].order = o["Order"];
+	}
 });
-defaultLogger.info("[成就][合并] 处理 Snap.Hutao 的数据完成");
+
+// 添加成就系列版本
+tempData.achievements.map((item)=>{
+	if(tempData.series[item.series].version === "" || item.version>tempData.series[item.series].version){
+		tempData.series[item.series].version = item.version;
+	}
+});
 
 // 排序
 Object.values(tempData.achievements).sort((a, b) => a.id - b.id).forEach((o) => {
@@ -120,15 +128,13 @@ Object.values(tempData.achievements).sort((a, b) => a.id - b.id).forEach((o) => 
 Object.values(tempData.series).sort((a, b) => a.id - b.id).forEach((o) => {
 	saveData.series.data.push(o);
 });
-defaultLogger.info("[成就][合并] 对数据进行排序完成");
+defaultLogger.info("[成就][转换] 对数据进行排序完成");
 
 // 保存数据
 fs.writeFileSync(saveData.achievements.savePath, JSON.stringify(saveData.achievements.data, null, 2));
-defaultLogger.info("[成就][合并] 保存成就数据完成");
 fs.writeFileSync(saveData.series.savePath, JSON.stringify(saveData.series.data, null, 2));
-defaultLogger.info("[成就][合并] 保存成就系列数据完成");
 
-defaultLogger.info("[成就][合并] merge.js 运行完成，请执行 namecard/update.js 更新成就系列数据");
+defaultLogger.info("[成就][转换] merge.js 运行完成，请执行 namecard/update.js 更新成就系列数据");
 
 // 用到的函数
 
@@ -159,5 +165,6 @@ function getMaxVersion(data) {
 		maxVer = maxVer + ".0";
 		return maxVer;
 	}
+	console.log(maxVer);
 	return maxVer.toString();
 }

@@ -13,6 +13,8 @@ import appRootPath from "app-root-path";
 export const ROOT_PATH = appRootPath.path;
 // Amber.top API 版本
 export const AMBER_VH = "37F8";
+// 游戏版本
+export const GENSHIN_VER = "3.7";
 
 // 路径列表
 const pathList = {

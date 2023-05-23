@@ -21,7 +21,7 @@ const outNCPath = path.resolve(pathList.out.json, "namecard.json");
 defaultLogger.info("[名片][更新] 读取数据文件");
 
 if (!fileExist(outASPath)) {
-	defaultLogger.error("[名片][更新] achievementSeries.json 文件不存在，请先执行 achievement/merge.js");
+	defaultLogger.error("[名片][更新] achievementSeries.json 文件不存在，请先执行 achievement/convert.js");
 	process.exit(1);
 }
 if (!fileExist(outNCPath)) {
