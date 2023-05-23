@@ -36,10 +36,10 @@ outASData.forEach((item) => {
 	if (item.card !== "") return;
 	const nc = outNCData.find(nc => nc.source.includes(item.name));
 	if (nc) {
-		consoleLogger.info(`[名片][更新][${item.id}] 找到 ${item.name} 的成就名片: ${nc.name}`);
+		consoleLogger.info(`[名片][更新][${transI(item.id)}] 找到 ${item.name} 的成就名片: ${nc.name}`);
 		item.card = nc.name;
 	} else {
-		defaultLogger.warn(`[名片][更新][${item.id}] 未找到 ${item.name} 的成就名片`);
+		defaultLogger.warn(`[名片][更新][${transI(item.id)}] 未找到 ${item.name} 的成就名片`);
 	}
 });
 
@@ -48,3 +48,14 @@ outASData.sort((a, b) => a.order - b.order);
 fs.writeFileSync(outASPath, JSON.stringify(outASData, null, 2));
 
 defaultLogger.info("[名片][更新] 成功完成 update.js");
+
+// 使用的函数
+/**
+ * @description 转换 i
+ * @since 1.1.0
+ * @param {number} i
+ * @return {string}
+ */
+function transI(i) {
+	return i.toString().padStart(3,"0");
+}

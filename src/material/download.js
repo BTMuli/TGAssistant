@@ -28,18 +28,18 @@ const amberSavePath = path.resolve(srcJsonDir, "amber.json");
 
 // 下载JSON
 defaultLogger.info("[材料][下载] 正在下载 JSON");
-if (!fileExist(amberSavePath)) {
-	try {
-		await axios.get(amberUrl).then(res => {
-			const dataGet = res.data["data"];
-			fs.writeFileSync(amberSavePath, JSON.stringify(dataGet, null, 2));
-			defaultLogger.info("[材料][下载] amber.json 下载完成");
-		});
-	} catch (error) {
-		defaultLogger.error("[材料][下载] amber.json 下载失败");
-		defaultLogger.error(error.message);
-	}
+
+try {
+	await axios.get(amberUrl).then(res => {
+		const dataGet = res.data["data"];
+		fs.writeFileSync(amberSavePath, JSON.stringify(dataGet, null, 2));
+		defaultLogger.info("[材料][下载] amber.json 下载完成");
+	});
+} catch (error) {
+	defaultLogger.error("[材料][下载] amber.json 下载失败");
+	defaultLogger.error(error.message);
 }
+
 
 // 下载图片
 defaultLogger.info("[材料][下载] 正在下载图片");

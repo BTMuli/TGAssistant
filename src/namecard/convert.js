@@ -8,6 +8,7 @@
 // Node
 import path from "node:path";
 import fs from "node:fs";
+import sharp from "sharp";
 // TGAssistant
 import { defaultLogger,consoleLogger } from "../tools/logger.js";
 import pathList from "../../root.js";
@@ -70,6 +71,15 @@ await Promise.allSettled(rawData.map(nameCard => convertImg(nameCard)));
 defaultLogger.info("[名片][转换] 图像资源转换成功，请执行 update.js 更新成就数据");
 
 // 用到的函数
+/**
+ * @description 转换 i
+ * @since 1.1.0
+ * @param {number} i
+ * @return {string}
+ */
+function transI(i) {
+	return i.toString().padStart(3,"0");
+}
 
 /**
  * @description 转换图像
@@ -78,20 +88,21 @@ defaultLogger.info("[名片][转换] 图像资源转换成功，请执行 update
  * @returns {void} 无返回值
  */
 function convertImg(nameCard) {
-	dataList.map(item => {
+	dataList.map(async item => {
 		// 查找 item.srcDir/index.webp
 		if (!fs.existsSync(`${item.srcDir}/${nameCard.index}.webp`)) {
-			defaultLogger.error(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像不存在`);
-			return;
-		}
-		// 查找 item.outDir/name.webp
-		if (fs.existsSync(`${item.outDir}/${nameCard.name}.webp`)) {
-			consoleLogger.mark(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像已存在，跳过`);
+			defaultLogger.error(`[名片][转换][${transI(nameCard.index)}] 名片 ${nameCard.name} ${item.type} 图像不存在`);
 			return;
 		}
 		// item.srcDir/index.webp -> item.outDir/name.webp
-		fs.copyFileSync(`${item.srcDir}/${nameCard.index}.webp`, `${item.outDir}/${nameCard.name}.webp`);
-		defaultLogger.info(`[名片][转换][${nameCard.index}] 名片 ${nameCard.name} ${item.type} 图像转换成功`);
+		if(item.type === "icon") {
+			await sharp(`${item.srcDir}/${nameCard.index}.webp`).webp().resize(250,165).toFile(`${item.outDir}/${nameCard.name}.webp`);
+		} else if(item.type === "bg") {
+			await sharp(`${item.srcDir}/${nameCard.index}.webp`).webp().resize(880,140).toFile(`${item.outDir}/${nameCard.name}.webp`);
+		} else if((item.type === "profile")){
+			await sharp(`${item.srcDir}/${nameCard.index}.webp`).webp().resize(840,400).toFile(`${item.outDir}/${nameCard.name}.webp`);
+		}
+		consoleLogger.mark(`[名片][转换][${transI(nameCard.index)}] 名片 ${nameCard.name} ${item.type} 图像转换成功`);
 	});
 }
 
@@ -106,7 +117,7 @@ function getNameCardType(nameCard) {
 	try {
 		sourceStr = nameCard.source.toString();
 	} catch (e) {
-		defaultLogger.error(`[名片][下载][${nameCard.index}] 名片 ${nameCard.name} source 数据类型错误`);
+		defaultLogger.error(`[名片][下载][${transI(nameCard.index)}] 名片 ${nameCard.name} source 数据类型错误`);
 	}
 	if (sourceStr.includes("成就")) {
 		return 1;

@@ -67,7 +67,7 @@ for (let i = 1; i <= 163; i++) {
 	} else if (i >= 122) {
 		await downloadImgByIndex(i, "curr");
 	} else {
-		consoleLogger.info(`[名片][下载][${i}] 不存在, 跳过`);
+		consoleLogger.info(`[名片][下载][${transI(i)}] 不存在, 跳过`);
 	}
 }
 defaultLogger.info("[名片][下载] 图像下载完成");
@@ -86,25 +86,36 @@ nameCardsData.map(item => nameCardSet.add(item.index));
 for (let i = 1; i <= 163; i++) {
 	if (i <= 117) {
 		if (nameCardSet.has(i)) {
-			consoleLogger.mark(`[名片][下载][${i}] 已存在, 跳过`);
+			consoleLogger.mark(`[名片][下载][${transI(i)}] 已存在名片数据, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "pre");
-		nameCardsData.push(dataGet);
-		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
+		if(dataGet !== null) nameCardsData.push(dataGet);
 	} else if (i >= 122) {
 		if (nameCardSet.has(i)) {
-			consoleLogger.mark(`[名片][下载][${i}] 已存在, 跳过`);
+			consoleLogger.mark(`[名片][下载][${transI(i)}] 已存在名片数据, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "curr");
-		nameCardsData.push(dataGet);
-		fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
+		if(dataGet!==null) nameCardsData.push(dataGet);
+	} else {
+		consoleLogger.mark(`[名片][下载][${transI(i)}] 不存在名片数据，跳过`);
 	}
 }
+fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
 defaultLogger.info("[名片][下载] 获取原始数据完成，请执行 convert.js 处理数据");
 
 // 使用的函数
+
+/**
+ * @description 转换 i
+ * @since 1.1.0
+ * @param {number} i
+ * @return {string}
+ */
+function transI(i) {
+	return i.toString().padStart(3,"0");
+}
 
 /**
  * @description 获取文件保存路径
@@ -127,8 +138,9 @@ function getSavePath(fileType, index) {
  */
 async function downloadImg(url, index, imgType) {
 	const savePath = getSavePath(imgType, index);
+	console.log(savePath);
 	if (fileExist(savePath)) {
-		consoleLogger.mark(`[名片][下载][${index}] ${imgType} 已存在, 跳过`);
+		consoleLogger.mark(`[名片][下载][${transI(index)}] ${imgType} 已存在, 跳过`);
 		return;
 	}
 	try {
@@ -144,7 +156,7 @@ async function downloadImg(url, index, imgType) {
 			});
 		});
 	} catch (e) {
-		defaultLogger.error(`[名片][下载][${index}] ${index} 下载失败`);
+		defaultLogger.error(`[名片][下载][${transI(index)}] ${index} 下载失败`);
 	}
 }
 
@@ -187,7 +199,7 @@ async function downloadImgByIndex(index, urlType) {
 	} else if (urlType === "curr") {
 		baseUrl = urlList.curr;
 	} else {
-		defaultLogger.error(`[名片][下载][${index}] 图像类型错误`);
+		defaultLogger.error(`[名片][下载][${transI(index)}] 图像类型错误`);
 		return;
 	}
 	const downloadList = getDownloadUrls(baseUrl, index);
@@ -231,13 +243,15 @@ async function getNameCard(url, index) {
 			}
 		});
 		if (nameCard.name !== "？？？") {
-			consoleLogger.info(`[名片][下载][${index}] 名片 ${nameCard.name} 解析成功`);
+			consoleLogger.info(`[名片][下载][${transI(index)}] 名片 ${nameCard.name} 解析成功`);
+			return nameCard;
 		} else {
-			defaultLogger.warn(`[名片][下载][${index}] 名片 ${nameCard.name} 数据不完整`);
+			defaultLogger.warn(`[名片][下载][${transI(index)}] 名片 ${nameCard.name} 数据不完整`);
+			return null;
 		}
-		return nameCard;
 	} catch (e) {
-		defaultLogger.error(`[名片][下载][${index}] 获取 html 失败`);
+		defaultLogger.error(`[名片][下载][${transI(index)}] 获取 html 失败`);
+		return null;
 	}
 }
 
@@ -256,7 +270,7 @@ async function getNameCardByIndex(index, urlType) {
 	} else if (urlType === "curr") {
 		url = `${urlList.curr}${index.toString().padStart(3, "0")}/?lang=CHS`;
 	} else {
-		defaultLogger.error(`[名片][下载][${index}] 图像类型错误`);
+		defaultLogger.error(`[名片][下载][${transI(index)}] 图像类型错误`);
 		return;
 	}
 	return await getNameCard(url, index);
