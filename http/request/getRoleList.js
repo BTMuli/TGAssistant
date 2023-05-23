@@ -18,12 +18,11 @@ import getServerByUid from "../tools/getServerByUid.js";
  * @param {string} role_id role_id
  * @returns {Promise<unknown>}
  */
-export async function getRoleListByCookie(cookie,  role_id) {
+export async function getRoleListByLToken(cookie,  role_id) {
 	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/character";
 	const data = { role_id: role_id, server:getServerByUid(role_id) };
 	const header = getHeader(cookie,"POST", JSON.stringify(data));
 	return axios.post(url, data, { headers: header }).then(res=>{
-		console.log(res.data);
-		return res.data["data"]["avatars"];
+		return res.data["data"];
 	});
 }

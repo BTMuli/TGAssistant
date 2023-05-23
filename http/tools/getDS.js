@@ -79,3 +79,23 @@ export function getDS(method, data, saltType, isSign=false) {
 	const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
 	return `${time},${random},${md5Str}`;
 }
+
+/**
+ * @description 测试DS
+ * @since 1.1.0
+ * @param {string} random 随机数
+ * @param {string} time 时间戳
+ * @param {string} method 请求方法
+ * @param {string} data 请求数据
+ * @param {string} saltType salt 类型
+ * @param {boolean} isSign 是否为签名
+ * @returns {string} DS
+ */
+export function getTestDS(random, time, method, data, saltType="common", isSign=false) {
+	const salt = getSalt(saltType);
+	const body = method==="POST" ? data : "";
+	const query = method==="GET" ? data : "";
+	const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
+	const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
+	return `${time},${random},${md5Str}`;
+}
