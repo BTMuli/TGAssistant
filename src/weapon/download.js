@@ -30,34 +30,28 @@ const mysSavePath = path.resolve(srcJsonDir, "mys.json");
 
 // 下载JSON
 defaultLogger.info("[武器][下载] 正在下载 JSON");
-if (!fileExist(amberSavePath)) {
-	try {
-		await axios.get(amberUrl).then(res => {
-			const dataGet = res.data["data"];
-			fs.writeFileSync(amberSavePath, JSON.stringify(dataGet, null, 2));
-			defaultLogger.info("[武器][下载] amber.json 下载完成");
-		});
-	} catch (error) {
-		defaultLogger.error("[武器][下载] amber.json 下载失败");
-		defaultLogger.error(error.message);
-	}
-} else {
-	consoleLogger.mark("[武器][下载] amber.json 已存在，跳过下载");
+try {
+	await axios.get(amberUrl).then(res => {
+		const dataGet = res.data["data"];
+		fs.writeFileSync(amberSavePath, JSON.stringify(dataGet, null, 2));
+		defaultLogger.info("[武器][下载] amber.json 下载完成");
+	});
+} catch (error) {
+	defaultLogger.error("[武器][下载] amber.json 下载失败");
+	defaultLogger.error(error.message);
 }
-if (!fileExist(mysSavePath)) {
-	try {
-		await axios.get(mysUrl).then(res => {
-			const dataGet = res.data["data"]["list"][0]["children"][1]["list"];
-			fs.writeFileSync(mysSavePath, JSON.stringify(dataGet, null, 2));
-			defaultLogger.info("[武器][下载] mys.json 下载完成");
-		});
-	} catch (error) {
-		defaultLogger.error("[武器][下载] mys.json 下载失败");
-		defaultLogger.error(error.message);
-	}
-} else {
-	consoleLogger.mark("[角色][下载] mys.json 已存在，跳过下载");
+
+try {
+	await axios.get(mysUrl).then(res => {
+		const dataGet = res.data["data"]["list"][0]["children"][1]["list"];
+		fs.writeFileSync(mysSavePath, JSON.stringify(dataGet, null, 2));
+		defaultLogger.info("[武器][下载] mys.json 下载完成");
+	});
+} catch (error) {
+	defaultLogger.error("[武器][下载] mys.json 下载失败");
+	defaultLogger.error(error.message);
 }
+
 
 // 下载图片
 defaultLogger.info("[武器][下载] 正在下载图片");

@@ -62,12 +62,15 @@ await Promise.allSettled(mysJson.map(async itemList => {
 
 defaultLogger.info(`[GCG][转换] mys.json 读取完成，共 ${gcgData.length} 个图像数据`);
 defaultLogger.info("[GCG][转换] 对 GCG.json 进行排序");
-gcgData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id || a.contentId - b.contentId);
+gcgData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id || b.contentId - a.contentId);
 fs.writeFileSync(jsonSavePath, JSON.stringify(gcgData, null, 2), "utf-8");
 defaultLogger.info(`[GCG][转换] GCG.json 保存完成，共 ${gcgData.length} 个图像数据`);
 
 if (gcgTitleSet.size > 0) {
 	defaultLogger.warn(`[GCG][转换] amber.json 中有 ${gcgTitleSet.size} 个图像数据未被使用`);
+	for(const title of gcgTitleSet) {
+		consoleLogger.warn(`[GCG][转换] 未使用的图像数据：${title}`);
+	}
 }
 
 defaultLogger.info("[GCG][转换] convert.js 运行结束");

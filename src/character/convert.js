@@ -70,7 +70,6 @@ amberKey.forEach((key) => {
 		icon: `/WIKI/character/icon/${key}.webp`,
 	};
 	count.success++;
-	consoleLogger.info(`[角色][转换][${key}] ${character["name"]} 数据已添加`);
 	characterData.push(character);
 });
 defaultLogger.info(`[角色][转换] amber.json 处理完成，共处理 ${count.success} 个，跳过 ${count.skip} 个`);
