@@ -54,13 +54,13 @@ const materialSourceRecord = {};
 mysJson.map(item => {
 	const name = item["title"];
 	const calendarItem = getCalendarBaseInfo(item["break_type"], name);
-	calendarItem.dropDays = item["drop_day"].map(day => Number(day));
+	calendarItem.dropDays = item["drop_day"].map(day => Number(day)).sort((a, b) => a - b);
 	calendarItem.materials = getCalendarMaterials(item["contentInfos"], name);
 	calendarItem.source = getCalendarSource(item["contentSource"], name);
-	const ids = calendarItem.materials.map(material => material.id).join(",");
+	const ids = calendarItem.materials.map(material => material.id).sort().join(",");
 	if(materialSourceRecord[ids] === undefined && calendarItem.source["name"]!==undefined) {
 		materialSourceRecord[ids] = calendarItem.source;
-		consoleLogger.mark(`[日历][转换][source}] 素材来源已添加 [${ids}]`);
+		consoleLogger.mark(`[日历][转换][source] 素材来源已添加 [${ids}]`);
 	}
 	calendarData.push(calendarItem);
 	consoleLogger.mark(`[日历][转换][${name}] 处理完成`);
@@ -69,8 +69,8 @@ mysJson.map(item => {
 // 处理没有 source 的数据
 consoleLogger.mark("[日历][转换][source] 开始处理没有 source 的数据");
 calendarData.map(item => {
-	if(item.source["type"] === undefined) {
-		const ids = item.materials.map(material => material.id).join(",");
+	if(item.source["area"] === undefined) {
+		const ids = item.materials.map(material => material.id).sort().join(",");
 		if(materialSourceRecord[ids] !== undefined) {
 			item.source = materialSourceRecord[ids];
 			defaultLogger.warn(`[日历][转换][${item.name}] 检测到 source 为空，已补全`);
@@ -193,7 +193,7 @@ function getCalendarMaterials(contentInfos, name) {
 		}
 	});
 	materialInfo.sort((a, b) => b.star - a.star);
-	const ids = materialInfo.map(item => item.id).join(",");
+	const ids = materialInfo.map(item => item.id).sort().join(",");
 	if(!materialIdsSet.has(ids)) {
 		materialIdsSet.add(ids);
 		consoleLogger.mark(`[日历][转换][material] 添加新的材料组合 [${ids}]`);
