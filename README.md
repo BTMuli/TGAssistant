@@ -2,18 +2,18 @@
 Author: 目棃
 Date: 2023-05-01
 Description: 说明文档
-Update: 2023-05-01
+Update: 2023-05-25
 ---
 
 > 本文档 [`Front-matter`](https://github.com/BTMuli/Mucli#FrontMatter) 由 [MuCli](https://github.com/BTMuli/Mucli) 自动生成于`2023-05-01 21:57:11`
->
-> 更新于 `2023-05-01 21:57:11`
+> 
+> 更新于 `2023-05-25 16:55:53`
 
 ![](https://img.shields.io/github/last-commit/BTMuli/TGAssistant?style=for-the-badge) ![](https://img.shields.io/github/license/BTMuli/TGAssistant?style=for-the-badge)
 
 # TGAssistant
 
-本项目为 [Tauri.Genshin](https://github.com/BTMuli/Tauri.Genshin) 的辅助工具，用于获取及生成所需资源文件。
+本项目为 [Tauri.Genshin](https://github.com/BTMuli/Tauri.Genshin) 的辅助工具。
 
 ## 上游版本
 
