@@ -94,7 +94,7 @@ function getGcgItem(name, amberJson, item) {
 	let idFind = 0;
 	if (!itemFind) {
 		if(name!=="魔物牌") defaultLogger.warn(`[GCG][转换][${name}] AmberJson 中未找到 ${item.title} 的数据，id 设置为 0`);
-		else consoleLogger.warn(`[GCG][转换][${name}] AmberJson 中未找到 ${item.title} 的数据，id 设置为 0`);
+		else consoleLogger.info(`[GCG][转换][${name}] AmberJson 未找到 ${item.title} 相关数据，id 设置为 0`);
 	} else {
 		idFind = itemFind.id;
 	}
