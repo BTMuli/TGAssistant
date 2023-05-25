@@ -28,6 +28,7 @@ const pathList = {
 		img: path.join(ROOT_PATH, "assets", "out"),
 		temp: path.join(ROOT_PATH, "temp", "out"),
 	},
+	constant: path.join(ROOT_PATH, "data", "constant"),
 	repo: {
 		SH: "DGP-Studio/Snap.Metadata",
 		PM: "MadeBaruna/paimon-moe",
