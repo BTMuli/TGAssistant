@@ -54,9 +54,13 @@ const mysJson = JSON.parse(fs.readFileSync(srcJsonMys, "utf-8"));
 await Promise.allSettled(mysJson.map(async itemList => {
 	consoleLogger.info(`[GCG][转换] 正在读取 ${itemList.name} 列表`);
 	await itemList.list.map(item => {
+		if(item.title==="雷楔") {
+			consoleLogger.warn(`[GCG][转换][${itemList.name}] 跳过雷楔`);
+			return;
+		}
 		const gcgItem = getGcgItem(itemList.name, amberJson, item);
 		gcgData.push(gcgItem);
-		convertImg(gcgItem);
+		convertImg(itemList.name, gcgItem);
 	});
 }));
 
@@ -89,7 +93,8 @@ function getGcgItem(name, amberJson, item) {
 	const itemFind = Object.values(amberJson).find(amberItem => amberItem.name === item.title);
 	let idFind = 0;
 	if (!itemFind) {
-		defaultLogger.warn(`[GCG][转换] AmberJson 中未找到 ${item.title} 的数据，id 设置为 0`);
+		if(name!=="魔物牌") defaultLogger.warn(`[GCG][转换][${name}] AmberJson 中未找到 ${item.title} 的数据，id 设置为 0`);
+		else consoleLogger.warn(`[GCG][转换][${name}] AmberJson 中未找到 ${item.title} 的数据，id 设置为 0`);
 	} else {
 		idFind = itemFind.id;
 	}
@@ -105,27 +110,32 @@ function getGcgItem(name, amberJson, item) {
 /**
  * @description 转换图像
  * @since 1.1.0
+ * @param {string} name 卡牌类型
  * @param {object} item GCG JSON 数据
  * @returns {void}
  */
-function convertImg(item) {
+function convertImg(name, item) {
 	if (!item) return;
+	if(item.name==="雷楔") {
+		defaultLogger.warn("[GCG][转换] 跳过雷楔");
+		return;
+	}
 	const srcImgPath = path.resolve(srcImgDir, `${item.name}.png`);
 	const outImgPath = path.resolve(outImgDir, `${item.name}.webp`);
 	gcgTitleSet.delete(item.name);
 	if (!fs.existsSync(srcImgPath)) {
-		defaultLogger.error(`[GCG][转换] 未找到 ${item.name} 的图像文件`);
+		defaultLogger.error(`[GCG][转换][${name}] 未找到 ${item.name} 的图像文件`);
 		return;
 	}
 	if (fs.existsSync(outImgPath)) {
-		consoleLogger.mark(`[GCG][转换] ${item.name} 图像已存在，跳过`);
+		consoleLogger.mark(`[GCG][转换][${name}] ${item.name} 图像已存在，跳过`);
 		return;
 	}
 	sharp(srcImgPath).png().toFormat("webp").toFile(outImgPath, (err) => {
 		if (err) {
-			defaultLogger.error(`[GCG][转换] ${item.name} 图像转换失败`);
+			defaultLogger.error(`[GCG][转换][${name}] ${item.name} 图像转换失败`);
 			return;
 		}
-		defaultLogger.info(`[GCG][转换] ${item.name} 图像转换成功`);
+		defaultLogger.info(`[GCG][转换][${name}] ${item.name} 图像转换成功`);
 	});
 }
