@@ -26,33 +26,27 @@ const mysSavePath = path.resolve(srcJsonDir, "mys.json");
 const amberSavePath = path.resolve(srcJsonDir, "amber.json");
 
 // 下载JSON
-if (!fileExist(amberSavePath)) {
-	try {
-		await axios.get(amberUrl).then(res => {
-			const dataGet = res.data["data"];
-			fs.writeFileSync(amberSavePath, JSON.stringify(dataGet, null, 2));
-			defaultLogger.info("[素材日历][下载] amber.json 下载完成");
-		});
-	} catch (error) {
-		defaultLogger.error("[素材日历][下载] amber.json 下载失败");
-		defaultLogger.error(error.message);
-	}
-} else {
-	consoleLogger.mark("[素材日历][下载] amber.json 已存在，跳过下载");
+try {
+	await axios.get(amberUrl).then(res => {
+		const dataGet = res.data["data"];
+		fs.writeFileSync(amberSavePath, JSON.stringify(dataGet, null, 2));
+		consoleLogger.info("[素材日历][下载] amber.json 下载完成");
+	});
+} catch (error) {
+	defaultLogger.error("[素材日历][下载] amber.json 下载失败");
+	defaultLogger.error(error.message);
 }
-if (!fileExist(mysSavePath)) {
-	try {
-		await axios.get(mysUrl).then(res => {
-			const dataGet = res.data["data"]["list"].filter(item => item.kind === "2");
-			fs.writeFileSync(mysSavePath, JSON.stringify(dataGet, null, 2));
-			defaultLogger.info("[素材日历][下载] mys.json 下载完成");
-		});
-	} catch (error) {
-		defaultLogger.error("[素材日历][下载] mys.json 下载失败");
-		defaultLogger.error(error.message);
-	}
-}else {
-	consoleLogger.mark("[素材日历][下载] mys.json 已存在，跳过下载");
+
+try {
+	await axios.get(mysUrl).then(res => {
+		const dataGet = res.data["data"]["list"].filter(item => item.kind === "2");
+		fs.writeFileSync(mysSavePath, JSON.stringify(dataGet, null, 2));
+		consoleLogger.info("[素材日历][下载] mys.json 下载完成");
+	});
+} catch (error) {
+	defaultLogger.error("[素材日历][下载] mys.json 下载失败");
+	defaultLogger.error(error.message);
 }
+
 defaultLogger.info("[素材日历][下载] JSON 下载完成");
 defaultLogger.info("[素材日历][下载] download.js 执行完毕");
