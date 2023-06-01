@@ -2,7 +2,7 @@
  * @file character convert.js
  * @description 转换原始数据为可用数据
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @since 1.2.0
  */
 
 // Node
@@ -20,6 +20,7 @@ defaultLogger.info("[角色][转换] 开始执行 convert.js");
 // 检测原始数据是否存在
 const srcJsonAmber = path.join(pathList.src.json, "character", "amber.json");
 const srcJsonMys = path.join(pathList.src.json, "character", "mys.json");
+const srcNameCard = path.join(pathList.src.json, "namecard", "namecard.json");
 
 if (!fileExist(srcJsonAmber)) {
 	consoleLogger.error("[角色][转换] amber.json 不存在，请执行 download.js");
@@ -27,6 +28,10 @@ if (!fileExist(srcJsonAmber)) {
 }
 if (!fileExist(srcJsonMys)) {
 	consoleLogger.error("[角色][转换] mys.json 不存在，请执行 download.js");
+	process.exit(1);
+}
+if (!fileExist(srcNameCard)) {
+	consoleLogger.error("[角色][转换] namecard.json 不存在，请执行 namecard/download.js");
 	process.exit(1);
 }
 
@@ -40,6 +45,7 @@ dirCheck(outImgDir);
 // 读取原始数据
 const amberJson = JSON.parse(fs.readFileSync(srcJsonAmber, "utf-8"));
 const mysJson = JSON.parse(fs.readFileSync(srcJsonMys, "utf-8"));
+const nameCardJson = JSON.parse(fs.readFileSync(srcNameCard, "utf-8"));
 const characterData = [];
 const count = {
 	total: 0,
@@ -63,11 +69,12 @@ amberKey.forEach((key) => {
 		id: Number(key),
 		contentId: 0,
 		name: item["name"],
+		title: "",
+		birthday: "",
 		star: item["rank"],
-		bg: `/icon/bg/${item["rank"]}-Star.webp`,
-		elementIcon: getAmberElement(item["element"]),
-		weaponIcon: getAmberWeapon(item["weaponType"]),
-		icon: `/WIKI/character/icon/${key}.webp`,
+		element: getAmberElement(item["element"]),
+		weapon: getAmberWeapon(item["weaponType"]),
+		nameCard: "",
 	};
 	count.success++;
 	characterData.push(character);
@@ -87,6 +94,22 @@ characterData.forEach((character) => {
 	count.success++;
 });
 defaultLogger.info(`[角色][转换] content_id 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`);
+count.success = 0;
+count.fail = 0;
+defaultLogger.info("[角色][转换] 开始添加 namecard");
+characterData.forEach((character) => {
+	// 是否包含角色名或者角色名后两个字
+	const nameCardFind = nameCardJson.find((item) => (item.source.includes(character["name"])||item.source.includes(character["name"].slice(-2))));
+	if (!nameCardFind) {
+		count.fail++;
+		defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} 未找到 namecard`);
+		return;
+	}
+	consoleLogger.info(`[角色][转换][${character["id"]}] ${character["name"]} namecard: ${nameCardFind["name"]}`);
+	character.nameCard = nameCardFind["name"];
+	count.success++;
+});
+defaultLogger.info(`[角色][转换] namecard 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`);
 
 // 按照 id 排序
 const outData = characterData.filter((item) => item.contentId !== 0).sort((a, b) => b["star"] - a["star"]|| b["id"] - a["id"]);
@@ -123,7 +146,7 @@ defaultLogger.info("[角色][转换] convert.js 执行完成");
 
 /**
  * @description 获取角色元素
- * @since 1.1.0
+ * @since 1.2.0
  * @param {string} element 原始数据中的元素
  * @returns {string} 角色元素
  */
@@ -137,13 +160,12 @@ function getAmberElement(element) {
 		"Rock": "岩",
 		"Grass": "草",
 	};
-	const elementGet = elementMap[element];
-	return `/icon/element/${elementGet}元素.webp`;
+	return elementMap[element];
 }
 
 /**
  * @description 获取角色武器
- * @since 1.1.0
+ * @since 1.2.0
  * @param {string} weapon 原始数据中的武器
  * @returns {string} 角色武器
  */
@@ -155,7 +177,6 @@ function getAmberWeapon(weapon) {
 		"WEAPON_BOW": "弓",
 		"WEAPON_CATALYST": "法器",
 	};
-	const weaponGet = weaponMap[weapon];
-	return `/icon/weapon/${weaponGet}.webp`;
+	return weaponMap[weapon];
 }
 
