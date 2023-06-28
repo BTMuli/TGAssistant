@@ -1,12 +1,12 @@
 {
   "name": "tg-assistant",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The assistant for Tauri.Genshin",
   "type": "module",
   "packageManager": "npm@9.6.6",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BTMuli/TGAssistent.git"
+    "url": "https://github.com/BTMuli/TGAssistant.git"
   },
   "keywords": [
     "BTMuli",
