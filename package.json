@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "The assistant for Tauri.Genshin",
   "type": "module",
-  "packageManager": "npm@9.6.6",
+  "packageManager": "pnpm@8.6.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/BTMuli/TGAssistant.git"
@@ -14,7 +14,7 @@
     "Tools"
   ],
   "scripts": {
-    "lint:all": "npm run lint:json && npm run lint:fix",
+    "lint:all": "pnpm lint:json && pnpm run lint:fix",
     "lint:json": "prettier --write data/**/*.json",
     "lint:check": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js . --fix",
