@@ -2,7 +2,7 @@
  * @file root.js
  * @description 项目根目录
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @since 1.2.0
  */
 
 // Node
@@ -12,7 +12,7 @@ import appRootPath from "app-root-path";
 // 根目录，即 TGAssistant
 export const ROOT_PATH = appRootPath.path;
 // Amber.top API 版本
-export const AMBER_VH = "37F8";
+export const AMBER_VH = "38F3";
 // 游戏版本
 export const GENSHIN_VER = "3.7";
 
