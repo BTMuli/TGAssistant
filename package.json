@@ -23,7 +23,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
+    "*.js": "eslint --fix",
     "*.{js,css,md,json}": "prettier --write"
   },
   "author": "BTMuli <bt-muli@outlook.com>",
