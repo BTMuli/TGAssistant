@@ -2,7 +2,7 @@
  * @file namecard download.js
  * @description 下载图像资源，获取原始数据文件
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @since 1.2.0
  */
 
 // Node
@@ -12,7 +12,7 @@ import axios from "axios";
 import sharp from "sharp";
 import { load } from "cheerio";
 // TGAssistant
-import { defaultLogger,consoleLogger } from "../tools/logger.js";
+import { defaultLogger, consoleLogger } from "../tools/logger.js";
 import pathList from "../../root.js";
 import { dirCheck, fileExist } from "../tools/utils.js";
 
@@ -43,25 +43,27 @@ const dataList = [
 		type: "profile",
 		srcDir: path.resolve(srcImgDir, "profile"),
 		outDir: path.resolve(outImgDir, "profile"),
-	}
+	},
 ];
 const urlList = {
 	pre: "https://genshin.honeyhunterworld.com/img/i_7",
 	curr: "https://genshin.honeyhunterworld.com/img/i_n210",
 };
+// 决定爬取的数据
+const endIndex = 164;
 
 // 检测目录是否存在
 dirCheck(srcImgDir);
 dirCheck(outImgDir);
 dirCheck(srcJsonDir);
-dataList.forEach(data => {
+dataList.forEach((data) => {
 	dirCheck(data.srcDir);
 	dirCheck(data.outDir);
 });
 
 // 下载图像
 defaultLogger.info("[名片][下载] 开始下载图像");
-for (let i = 1; i <= 163; i++) {
+for (let i = 1; i <= endIndex; i++) {
 	if (i <= 117) {
 		await downloadImgByIndex(i, "pre");
 	} else if (i >= 122) {
@@ -76,28 +78,28 @@ defaultLogger.info("[名片][下载] 开始获取原始数据");
 let nameCardsData;
 try {
 	nameCardsData = JSON.parse(fs.readFileSync(dataPaths.src, "utf-8"));
-	nameCardsData = nameCardsData.filter(item => item !== null);
+	nameCardsData = nameCardsData.filter((item) => item !== null);
 	fs.writeFileSync(dataPaths.src, JSON.stringify(nameCardsData, null, 2));
 } catch (error) {
 	nameCardsData = [];
 }
 const nameCardSet = new Set();
-nameCardsData.map(item => nameCardSet.add(item.index));
-for (let i = 1; i <= 163; i++) {
+nameCardsData.map((item) => nameCardSet.add(item.index));
+for (let i = 1; i <= endIndex; i++) {
 	if (i <= 117) {
 		if (nameCardSet.has(i)) {
 			consoleLogger.mark(`[名片][下载][${transI(i)}] 已存在名片数据, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "pre");
-		if(dataGet !== null) nameCardsData.push(dataGet);
+		if (dataGet !== null) nameCardsData.push(dataGet);
 	} else if (i >= 122) {
 		if (nameCardSet.has(i)) {
 			consoleLogger.mark(`[名片][下载][${transI(i)}] 已存在名片数据, 跳过`);
 			continue;
 		}
 		const dataGet = await getNameCardByIndex(i, "curr");
-		if(dataGet!==null) nameCardsData.push(dataGet);
+		if (dataGet !== null) nameCardsData.push(dataGet);
 	} else {
 		consoleLogger.mark(`[名片][下载][${transI(i)}] 不存在名片数据，跳过`);
 	}
@@ -114,7 +116,7 @@ defaultLogger.info("[名片][下载] 获取原始数据完成，请执行 conver
  * @return {string}
  */
 function transI(i) {
-	return i.toString().padStart(3,"0");
+	return i.toString().padStart(3, "0");
 }
 
 /**
@@ -144,17 +146,21 @@ async function downloadImg(url, index, imgType) {
 		return;
 	}
 	try {
-		await axios.get(url, {
-			responseType: "arraybuffer",
-		}).then(res => {
-			sharp(res.data).webp().toFile(savePath, (err, info) => {
-				if (err) {
-					defaultLogger.error(`[名片][下载][${index}] ${imgType} 下载失败`);
-				} else {
-					defaultLogger.info(`[名片][下载][${index}] ${imgType} 下载成功，大小为 ${info.size}`);
-				}
+		await axios
+			.get(url, {
+				responseType: "arraybuffer",
+			})
+			.then((res) => {
+				sharp(res.data)
+					.webp()
+					.toFile(savePath, (err, info) => {
+						if (err) {
+							defaultLogger.error(`[名片][下载][${index}] ${imgType} 下载失败`);
+						} else {
+							defaultLogger.info(`[名片][下载][${index}] ${imgType} 下载成功，大小为 ${info.size}`);
+						}
+					});
 			});
-		});
 	} catch (e) {
 		defaultLogger.error(`[名片][下载][${transI(index)}] ${index} 下载失败`);
 	}
@@ -181,7 +187,7 @@ function getDownloadUrls(baseUrl, index) {
 		{
 			type: "profile",
 			url: `${baseUrl}${indexStr}_profile.webp`,
-		}
+		},
 	];
 }
 
@@ -203,7 +209,7 @@ async function downloadImgByIndex(index, urlType) {
 		return;
 	}
 	const downloadList = getDownloadUrls(baseUrl, index);
-	downloadList.map(async item => await downloadImg(item.url, index, item.type));
+	downloadList.map(async (item) => await downloadImg(item.url, index, item.type));
 }
 
 /**
@@ -216,7 +222,8 @@ async function downloadImgByIndex(index, urlType) {
 async function getNameCard(url, index) {
 	try {
 		const html = (await axios.get(url)).data;
-		const tbSelector = "body > div.wp-site-blocks > div.wp-block-columns > div:nth-child(3) > div.entry-content.wp-block-post-content > table";
+		const tbSelector =
+      "body > div.wp-site-blocks > div.wp-block-columns > div:nth-child(3) > div.entry-content.wp-block-post-content > table";
 		const htmlDom = load(html);
 		const trsGet = htmlDom(tbSelector).find("tr");
 		let nameCard = {
@@ -255,7 +262,6 @@ async function getNameCard(url, index) {
 	}
 }
 
-
 /**
  * @description 根据 index 获取名片数据
  * @since 1.1.0
@@ -275,5 +281,3 @@ async function getNameCardByIndex(index, urlType) {
 	}
 	return await getNameCard(url, index);
 }
-
-
