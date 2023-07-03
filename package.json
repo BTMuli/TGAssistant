@@ -19,7 +19,12 @@
     "lint:check": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js . --fix",
     "test:all": "mocha --timeout 10000",
-    "resize": "node ./src/tools/resize.js"
+    "resize": "node ./src/tools/resize.js",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md,json}": "prettier --write"
   },
   "author": "BTMuli <bt-muli@outlook.com>",
   "license": "MIT",
@@ -36,6 +41,8 @@
   },
   "devDependencies": {
     "eslint": "^8.40.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
     "mocha": "^10.2.0",
     "prettier": "^2.8.8"
   }
