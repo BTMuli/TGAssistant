@@ -14,7 +14,7 @@ export const ROOT_PATH = appRootPath.path;
 // Amber.top API 版本
 export const AMBER_VH = "38F3";
 // 游戏版本
-export const GENSHIN_VER = "3.7";
+export const GENSHIN_VER = "3.8";
 
 // 路径列表
 const pathList = {
@@ -34,7 +34,7 @@ const pathList = {
 		PM: "MadeBaruna/paimon-moe",
 	},
 	log: path.join(ROOT_PATH, "logs"),
-	http: path.join(ROOT_PATH, "data", "http")
+	http: path.join(ROOT_PATH, "data", "http"),
 };
 
 export default pathList;
