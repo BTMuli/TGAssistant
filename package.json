@@ -1,9 +1,9 @@
 {
   "name": "tg-assistant",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "The assistant for Tauri.Genshin",
   "type": "module",
-  "packageManager": "pnpm@8.6.5",
+  "packageManager": "pnpm@8.6.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/BTMuli/TGAssistant.git"
@@ -37,13 +37,13 @@
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "log4js": "^6.9.1",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.3"
   },
   "devDependencies": {
     "eslint": "^8.44.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "mocha": "^10.2.0",
-    "prettier": "^2.8.8"
+    "prettier": "^3.0.0"
   }
 }

@@ -2,7 +2,7 @@
  * @file tools resizeImg.js
  * @description Sharp 处理图片
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @since 1.2.0
  */
 
 // Node
@@ -32,19 +32,23 @@ if (filesGet.length === 0) {
 		const filePath = path.join(srcTempDir, file);
 		const savePath = path.join(outTempDir, `${fileName}.webp`);
 		defaultLogger.info(`[resizeImg][defaultResize] 转换图片 ${file} 为 webp`);
-		sharp(filePath).png().toFormat("webp", {
-			background: { r: 0, g: 0, b: 0, alpha: 0 },
-			lossless: true,
-		})
+		sharp(filePath)
+			.png()
+		// .resize(256,256)
+			.toFormat("webp", {
+				background: { r: 0, g: 0, b: 0, alpha: 0 },
+				lossless: true,
+			})
 			.toFile(savePath, (err, info) => {
 				if (err) {
 					defaultLogger.error(`[resizeImg][defaultResize] 转换图片 ${file} 失败`);
 					console.log(err);
 				} else {
-					defaultLogger.info(`[resizeImg][defaultResize] 转换图片 ${file} 成功，大小为 ${info.size}`);
+					defaultLogger.info(
+						`[resizeImg][defaultResize] 转换图片 ${file} 成功，大小为 ${info.size}`
+					);
 				}
 			});
 	});
 }
 defaultLogger.info("[resizeImg] resizeImg.js 运行结束");
-
