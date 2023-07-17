@@ -4,8 +4,6 @@
 node_modules
 # source
 data/*
-# constant
-!data/constant
 assets/*
 temp/*
 # Logs
