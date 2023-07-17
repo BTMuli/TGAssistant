@@ -18,23 +18,23 @@ export const GENSHIN_VER = "3.8";
 
 // 路径列表
 const pathList = {
-	src: {
-		json: path.join(ROOT_PATH, "data", "src"),
-		img: path.join(ROOT_PATH, "assets", "src"),
-		temp: path.join(ROOT_PATH, "temp", "src"),
-	},
-	out: {
-		json: path.join(ROOT_PATH, "data", "out"),
-		img: path.join(ROOT_PATH, "assets", "out"),
-		temp: path.join(ROOT_PATH, "temp", "out"),
-	},
-	constant: path.join(ROOT_PATH, "data", "constant"),
-	repo: {
-		SH: "DGP-Studio/Snap.Metadata",
-		PM: "MadeBaruna/paimon-moe",
-	},
-	log: path.join(ROOT_PATH, "logs"),
-	http: path.join(ROOT_PATH, "data", "http"),
+  src: {
+    json: path.join(ROOT_PATH, "data", "src"),
+    img: path.join(ROOT_PATH, "assets", "src"),
+    temp: path.join(ROOT_PATH, "temp", "src"),
+  },
+  out: {
+    json: path.join(ROOT_PATH, "data", "out"),
+    img: path.join(ROOT_PATH, "assets", "out"),
+    temp: path.join(ROOT_PATH, "temp", "out"),
+  },
+  constant: path.join(ROOT_PATH, "data", "constant"),
+  repo: {
+    SH: "DGP-Studio/Snap.Metadata",
+    PM: "MadeBaruna/paimon-moe",
+  },
+  log: path.join(ROOT_PATH, "logs"),
+  http: path.join(ROOT_PATH, "data", "http"),
 };
 
 export default pathList;

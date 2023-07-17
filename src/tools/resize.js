@@ -25,30 +25,30 @@ dirCheck(outTempDir);
 defaultLogger.info("[resizeImg][defaultResize] 读取 temp 文件夹");
 const filesGet = fs.readdirSync(srcTempDir);
 if (filesGet.length === 0) {
-	defaultLogger.mark("[resizeImg][defaultResize] temp 文件夹为空，跳过处理");
+  defaultLogger.mark("[resizeImg][defaultResize] temp 文件夹为空，跳过处理");
 } else {
-	filesGet.map(async (file) => {
-		const fileName = file.split(".")[0];
-		const filePath = path.join(srcTempDir, file);
-		const savePath = path.join(outTempDir, `${fileName}.webp`);
-		defaultLogger.info(`[resizeImg][defaultResize] 转换图片 ${file} 为 webp`);
-		sharp(filePath)
-			.png()
-		// .resize(256,256)
-			.toFormat("webp", {
-				background: { r: 0, g: 0, b: 0, alpha: 0 },
-				lossless: true,
-			})
-			.toFile(savePath, (err, info) => {
-				if (err) {
-					defaultLogger.error(`[resizeImg][defaultResize] 转换图片 ${file} 失败`);
-					console.log(err);
-				} else {
-					defaultLogger.info(
-						`[resizeImg][defaultResize] 转换图片 ${file} 成功，大小为 ${info.size}`
-					);
-				}
-			});
-	});
+  filesGet.map(async (file) => {
+    const fileName = file.split(".")[0];
+    const filePath = path.join(srcTempDir, file);
+    const savePath = path.join(outTempDir, `${fileName}.webp`);
+    defaultLogger.info(`[resizeImg][defaultResize] 转换图片 ${file} 为 webp`);
+    sharp(filePath)
+      .png()
+      // .resize(256,256)
+      .toFormat("webp", {
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+        lossless: true,
+      })
+      .toFile(savePath, (err, info) => {
+        if (err) {
+          defaultLogger.error(`[resizeImg][defaultResize] 转换图片 ${file} 失败`);
+          console.log(err);
+        } else {
+          defaultLogger.info(
+            `[resizeImg][defaultResize] 转换图片 ${file} 成功，大小为 ${info.size}`,
+          );
+        }
+      });
+  });
 }
 defaultLogger.info("[resizeImg] resizeImg.js 运行结束");

@@ -6,21 +6,21 @@
  */
 
 // Node
-import { describe, it } from "mocha";
 import assert from "node:assert";
+import { describe, it } from "mocha";
 // TGAssistant
 import { getCookieTokenBySToken } from "../../http/request/getCookieToken.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
 
-describe("测试 cookieToken 获取", ()=>{
-	it("通过 stoken", async ()=>{
-		const stoken = readCookieItem("stoken");
-		const cookie = {
-			stoken: stoken,
-			stuid: readCookieItem("stuid"),
-		};
-		const res = await getCookieTokenBySToken(cookie, stoken);
-		const cookieToken = readCookieItem("cookie_token");
-		assert.strictEqual(res, cookieToken);
-	});
+describe("测试 cookieToken 获取", () => {
+  it("通过 stoken", async () => {
+    const stoken = readCookieItem("stoken");
+    const cookie = {
+      stoken: stoken,
+      stuid: readCookieItem("stuid"),
+    };
+    const res = await getCookieTokenBySToken(cookie, stoken);
+    const cookieToken = readCookieItem("cookie_token");
+    assert.strictEqual(res, cookieToken);
+  });
 });

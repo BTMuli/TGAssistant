@@ -6,8 +6,8 @@
  */
 
 // Node
-import axios from "axios";
 import { writeFileSync } from "node:fs";
+import axios from "axios";
 // TGAssistant
 import { defaultLogger, consoleLogger } from "./logger.js";
 
@@ -20,7 +20,7 @@ import { defaultLogger, consoleLogger } from "./logger.js";
  * @returns {string} 下载地址
  */
 function getDownloadUrl(repo, file, tree = "master") {
-	return `https://raw.kgithub.com/${repo}/${tree}/${file}`;
+  return `https://raw.kgithub.com/${repo}/${tree}/${file}`;
 }
 
 /**
@@ -32,20 +32,20 @@ function getDownloadUrl(repo, file, tree = "master") {
  * @returns {Promise<void>} 无返回值
  */
 async function gitDownload(repo, file, savePath) {
-	consoleLogger.info(`[gitDownload] 开始下载 ${file}`);
-	const downloadUrl = getDownloadUrl(repo, file);
-	await axios
-		.get(downloadUrl, {
-			responseType: "text",
-		})
-		.then((res) => {
-			writeFileSync(savePath, res.data);
-			defaultLogger.info(`[gitDownload] ${file} 下载完成`);
-		})
-		.catch((error) => {
-			defaultLogger.error(`[gitDownload] ${downloadUrl} 下载失败`);
-			defaultLogger.error(error.message);
-		});
+  consoleLogger.info(`[gitDownload] 开始下载 ${file}`);
+  const downloadUrl = getDownloadUrl(repo, file);
+  await axios
+    .get(downloadUrl, {
+      responseType: "text",
+    })
+    .then((res) => {
+      writeFileSync(savePath, res.data);
+      defaultLogger.info(`[gitDownload] ${file} 下载完成`);
+    })
+    .catch((error) => {
+      defaultLogger.error(`[gitDownload] ${downloadUrl} 下载失败`);
+      defaultLogger.error(error.message);
+    });
 }
 
 export default gitDownload;

@@ -6,21 +6,21 @@
  */
 
 // Node
-import { describe, it } from "mocha";
 import assert from "node:assert";
+import { describe, it } from "mocha";
 // TGAssistant
 import { getRoleListByLToken } from "../../http/request/getRoleList.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
 
-describe("测试角色列表获取", ()=>{
-	it("通过 ltoken",async ()=>{
-		const role_id = "500299765";
-		const cookie = {
-			ltoken: readCookieItem("ltoken"),
-			ltuid: readCookieItem("ltuid")
-		};
-		const res = await getRoleListByLToken(cookie, role_id);
-		console.log(res);
-		assert.strictEqual(res["role"]["nickname"], "目棃");
-	});
+describe("测试角色列表获取", () => {
+  it("通过 ltoken", async () => {
+    const role_id = "500299765";
+    const cookie = {
+      ltoken: readCookieItem("ltoken"),
+      ltuid: readCookieItem("ltuid"),
+    };
+    const res = await getRoleListByLToken(cookie, role_id);
+    console.log(res);
+    assert.strictEqual(res["role"]["nickname"], "目棃");
+  });
 });

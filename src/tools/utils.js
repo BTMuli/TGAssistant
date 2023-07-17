@@ -10,7 +10,6 @@ import fs from "node:fs";
 // TGAssistant
 import { defaultLogger } from "./logger.js";
 
-
 /**
  * @description 检测文件夹是否存在，不存在则创建
  * @since 1.1.0
@@ -18,10 +17,10 @@ import { defaultLogger } from "./logger.js";
  * @returns {void}
  */
 export function dirCheck(dirPath) {
-	if (!fs.existsSync(dirPath)) {
-		defaultLogger.warn(`[tools][utils] 检测到 ${dirPath} 不存在，正在创建`);
-		fs.mkdirSync(dirPath, { recursive: true });
-	}
+  if (!fs.existsSync(dirPath)) {
+    defaultLogger.warn(`[tools][utils] 检测到 ${dirPath} 不存在，正在创建`);
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
 }
 
 /**
@@ -31,7 +30,7 @@ export function dirCheck(dirPath) {
  * @returns {boolean} 文件是否存在
  */
 export function fileExist(filePath) {
-	return fs.existsSync(filePath);
+  return fs.existsSync(filePath);
 }
 
 /**
@@ -40,9 +39,9 @@ export function fileExist(filePath) {
  * @returns {string} 当前日期
  */
 export function getDate() {
-	const date = new Date();
-	const year = date.getFullYear();
-	const month = date.getMonth() + 1;
-	const day = date.getDate();
-	return `${year}-${month}-${day}`;
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month}-${day}`;
 }

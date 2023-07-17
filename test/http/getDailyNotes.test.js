@@ -6,23 +6,23 @@
  */
 
 // Node
-import { describe, it } from "mocha";
 import assert from "node:assert";
+import { describe, it } from "mocha";
 // TGAssistant
 import { getDailyNotes } from "../../http/request/getDailyNotes.js";
 import { readCookieItem } from "../../http/tools/readCookie.js";
 
-describe("测试实时便笺获取", ()=>{
-	it("通过cookie", async ()=>{
-		const role_id = "500299765";
-		const cookie = {
-			cookie_token: readCookieItem("cookie_token"),
-			account_id: readCookieItem("account_id"),
-			ltoken: readCookieItem("ltoken"),
-			ltuid: readCookieItem("ltuid"),
-		};
-		const res = await getDailyNotes(cookie, role_id);
-		console.log(res);
-		assert.strictEqual(res["retcode"], 0);
-	});
+describe("测试实时便笺获取", () => {
+  it("通过cookie", async () => {
+    const role_id = "500299765";
+    const cookie = {
+      cookie_token: readCookieItem("cookie_token"),
+      account_id: readCookieItem("account_id"),
+      ltoken: readCookieItem("ltoken"),
+      ltuid: readCookieItem("ltuid"),
+    };
+    const res = await getDailyNotes(cookie, role_id);
+    console.log(res);
+    assert.strictEqual(res["retcode"], 0);
+  });
 });

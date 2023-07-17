@@ -11,10 +11,10 @@ import Salt from "./salt.js";
 import { SQL_PATH } from "./sqlite.js";
 
 const HttpConstant = {
-	BBS: BBS,
-	Salt: Salt,
-	SqlPath: SQL_PATH,
-	GAME_BIZ: "hk4e_cn"
+  BBS: BBS,
+  Salt: Salt,
+  SqlPath: SQL_PATH,
+  GAME_BIZ: "hk4e_cn",
 };
 
 export default HttpConstant;

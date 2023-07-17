@@ -18,13 +18,13 @@ import getServerByUid from "../tools/getServerByUid.js";
  * @param {string} uid mid
  * @returns {Promise<object>}
  */
-export function getGameCardByCookie(cookie ,uid){
-	const url = "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/getGameRecordCard";
-	const params = { uid:uid };
-	const header = getHeader(cookie,"GET",params);
-	return axios.get(url,{ headers:header,params:params }).then(res=>{
-		return res.data;
-	});
+export function getGameCardByCookie(cookie, uid) {
+  const url = "https://api-takumi-record.mihoyo.com/game_record/app/card/wapi/getGameRecordCard";
+  const params = { uid: uid };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    return res.data;
+  });
 }
 
 /**
@@ -35,12 +35,12 @@ export function getGameCardByCookie(cookie ,uid){
  * @returns {Promise<unknown>}
  */
 export function getUserInfoByCookie(cookie, role_id) {
-	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/index";
-	const params = { server: getServerByUid(role_id),role_id: role_id };
-	const header = getHeader(cookie,"GET", params);
-	return axios.get(url, { headers: header, params: params }).then(res=>{
-		return res.data;
-	});
+  const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/index";
+  const params = { server: getServerByUid(role_id), role_id: role_id };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    return res.data;
+  });
 }
 
 /**
@@ -51,10 +51,10 @@ export function getUserInfoByCookie(cookie, role_id) {
  * @returns {Promise<unknown>}
  */
 export function getUserInfoByLToken(cookie, role_id) {
-	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/index";
-	const params = { role_id: role_id, server: getServerByUid(role_id) };
-	const header = getHeader(cookie,"GET", params);
-	return axios.get(url, { headers: header, params: params }).then(res=>{
-		return res.data;
-	});
+  const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/index";
+  const params = { role_id: role_id, server: getServerByUid(role_id) };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    return res.data;
+  });
 }

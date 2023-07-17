@@ -18,7 +18,7 @@ import HttpConstant from "../constant/index.js";
  * @returns {number} 随机数
  */
 function getRandomNumber(min, max) {
-	return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 /**
@@ -28,12 +28,12 @@ function getRandomNumber(min, max) {
  * @returns {string} 随机字符串
  */
 function getRandomString(length) {
-	const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	let res = "";
-	for (let i = 0; i < length; i++) {
-		res += str[getRandomNumber(0, str.length - 1)];
-	}
-	return res;
+  const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let res = "";
+  for (let i = 0; i < length; i++) {
+    res += str[getRandomNumber(0, str.length - 1)];
+  }
+  return res;
 }
 
 /**
@@ -43,20 +43,20 @@ function getRandomString(length) {
  * @returns {string} salt
  */
 function getSalt(saltType) {
-	switch (saltType) {
-	case "common":
-		return HttpConstant.Salt.Other.X4;
-	case "prod":
-		return HttpConstant.Salt.Other.prod;
-	case "x6":
-		return HttpConstant.Salt.Other.X6;
-	case "bbs-k2":
-		return HttpConstant.Salt.BBS.K2;
-	case "bbs-lk2":
-		return HttpConstant.Salt.BBS.LK2;
-	default:
-		return HttpConstant.Salt.Other.X4;
-	}
+  switch (saltType) {
+    case "common":
+      return HttpConstant.Salt.Other.X4;
+    case "prod":
+      return HttpConstant.Salt.Other.prod;
+    case "x6":
+      return HttpConstant.Salt.Other.X6;
+    case "bbs-k2":
+      return HttpConstant.Salt.BBS.K2;
+    case "bbs-lk2":
+      return HttpConstant.Salt.BBS.LK2;
+    default:
+      return HttpConstant.Salt.Other.X4;
+  }
 }
 
 /**
@@ -68,16 +68,16 @@ function getSalt(saltType) {
  * @param {boolean} isSign 是否为签名
  * @returns {string} DS
  */
-export function getDS(method, data, saltType, isSign=false) {
-	const salt = getSalt(saltType);
-	let random = getRandomNumber(100000, 200000);
-	if(isSign) random = getRandomString(6);
-	const time = Math.floor(Date.now() / 1000).toString();
-	const body = method==="POST" ? data : "";
-	const query = method==="GET" ? data : "";
-	const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
-	const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
-	return `${time},${random},${md5Str}`;
+export function getDS(method, data, saltType, isSign = false) {
+  const salt = getSalt(saltType);
+  let random = getRandomNumber(100000, 200000);
+  if (isSign) random = getRandomString(6);
+  const time = Math.floor(Date.now() / 1000).toString();
+  const body = method === "POST" ? data : "";
+  const query = method === "GET" ? data : "";
+  const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
+  const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
+  return `${time},${random},${md5Str}`;
 }
 
 /**
@@ -91,11 +91,11 @@ export function getDS(method, data, saltType, isSign=false) {
  * @param {boolean} isSign 是否为签名
  * @returns {string} DS
  */
-export function getTestDS(random, time, method, data, saltType="common", isSign=false) {
-	const salt = getSalt(saltType);
-	const body = method==="POST" ? data : "";
-	const query = method==="GET" ? data : "";
-	const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
-	const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
-	return `${time},${random},${md5Str}`;
+export function getTestDS(random, time, method, data, saltType = "common", isSign = false) {
+  const salt = getSalt(saltType);
+  const body = method === "POST" ? data : "";
+  const query = method === "GET" ? data : "";
+  const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
+  const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
+  return `${time},${random},${md5Str}`;
 }

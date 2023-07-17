@@ -18,11 +18,11 @@ import { getHeader } from "../tools/getHeader.js";
  * @returns {Promise<string>} cookieToken
  */
 export async function getCookieTokenBySToken(cookie, stoken) {
-	const url = "https://passport-api.mihoyo.com/account/auth/api/getCookieAccountInfoBySToken";
-	const params = { stoken:stoken, };
-	const header = getHeader(cookie,"GET", params);
-	return axios.get(url, { headers: header, params: params }).then(res => {
-		console.log(res.data);
-		return res.data["data"]["cookie_token"];
-	});
+  const url = "https://passport-api.mihoyo.com/account/auth/api/getCookieAccountInfoBySToken";
+  const params = { stoken: stoken };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    console.log(res.data);
+    return res.data["data"]["cookie_token"];
+  });
 }

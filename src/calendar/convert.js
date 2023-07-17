@@ -20,21 +20,21 @@ const srcJsonMys = path.resolve(pathList.src.json, "calendar", "mys.json");
 const srcJsonCharacter = path.resolve(pathList.out.json, "character.json");
 const srcJsonWeapon = path.resolve(pathList.out.json, "weapon.json");
 const srcJsonMaterial = path.resolve(pathList.out.json, "material.json");
-if(!fileExist(srcJsonMys)) {
-	consoleLogger.error("[日历][转换][mys] 源数据文件不存在，请执行 download.js");
-	process.exit(1);
+if (!fileExist(srcJsonMys)) {
+  consoleLogger.error("[日历][转换][mys] 源数据文件不存在，请执行 download.js");
+  process.exit(1);
 }
-if(!fileExist(srcJsonCharacter)) {
-	consoleLogger.error("[日历][转换][character] 源数据文件不存在，请执行 character/convert.js");
-	process.exit(1);
+if (!fileExist(srcJsonCharacter)) {
+  consoleLogger.error("[日历][转换][character] 源数据文件不存在，请执行 character/convert.js");
+  process.exit(1);
 }
-if(!fileExist(srcJsonWeapon)) {
-	consoleLogger.error("[日历][转换][weapon] 源数据文件不存在，请执行 weapon/convert.js");
-	process.exit(1);
+if (!fileExist(srcJsonWeapon)) {
+  consoleLogger.error("[日历][转换][weapon] 源数据文件不存在，请执行 weapon/convert.js");
+  process.exit(1);
 }
-if(!fileExist(srcJsonMaterial)) {
-	consoleLogger.error("[日历][转换][material] 源数据文件不存在，请执行 material/convert.js");
-	process.exit(1);
+if (!fileExist(srcJsonMaterial)) {
+  consoleLogger.error("[日历][转换][material] 源数据文件不存在，请执行 material/convert.js");
+  process.exit(1);
 }
 
 // 检测保存路径是否存在
@@ -51,44 +51,50 @@ const materialIdsSet = new Set();
 const materialSourceRecord = {};
 
 // 处理数据
-mysJson.map(item => {
-	const name = item["title"];
-	const calendarItem = getCalendarBaseInfo(item["break_type"], name);
-	calendarItem.dropDays = item["drop_day"].map(day => Number(day)).sort((a, b) => a - b);
-	calendarItem.materials = getCalendarMaterials(item["contentInfos"], name);
-	calendarItem.source = getCalendarSource(item["contentSource"], name);
-	const ids = calendarItem.materials.map(material => material.id).sort().join(",");
-	if(materialSourceRecord[ids] === undefined && calendarItem.source["name"]!==undefined) {
-		materialSourceRecord[ids] = calendarItem.source;
-		consoleLogger.mark(`[日历][转换][source] 素材来源已添加 [${ids}]`);
-	}
-	calendarData.push(calendarItem);
-	consoleLogger.mark(`[日历][转换][${name}] 处理完成`);
+mysJson.map((item) => {
+  const name = item["title"];
+  const calendarItem = getCalendarBaseInfo(item["break_type"], name);
+  calendarItem.dropDays = item["drop_day"].map((day) => Number(day)).sort((a, b) => a - b);
+  calendarItem.materials = getCalendarMaterials(item["contentInfos"], name);
+  calendarItem.source = getCalendarSource(item["contentSource"], name);
+  const ids = calendarItem.materials
+    .map((material) => material.id)
+    .sort()
+    .join(",");
+  if (materialSourceRecord[ids] === undefined && calendarItem.source["name"] !== undefined) {
+    materialSourceRecord[ids] = calendarItem.source;
+    consoleLogger.mark(`[日历][转换][source] 素材来源已添加 [${ids}]`);
+  }
+  calendarData.push(calendarItem);
+  consoleLogger.mark(`[日历][转换][${name}] 处理完成`);
 });
 
 // 处理没有 source 的数据
 consoleLogger.mark("[日历][转换][source] 开始处理没有 source 的数据");
-calendarData.map(item => {
-	if(item.source["area"] === undefined) {
-		const ids = item.materials.map(material => material.id).sort().join(",");
-		if(materialSourceRecord[ids] !== undefined) {
-			item.source = materialSourceRecord[ids];
-			defaultLogger.warn(`[日历][转换][${item.name}] 检测到 source 为空，已补全`);
-		} else {
-			defaultLogger.error(`[日历][转换][${item.name}] 素材来源未找到，请检查`);
-		}
-	}
+calendarData.map((item) => {
+  if (item.source["area"] === undefined) {
+    const ids = item.materials
+      .map((material) => material.id)
+      .sort()
+      .join(",");
+    if (materialSourceRecord[ids] !== undefined) {
+      item.source = materialSourceRecord[ids];
+      defaultLogger.warn(`[日历][转换][${item.name}] 检测到 source 为空，已补全`);
+    } else {
+      defaultLogger.error(`[日历][转换][${item.name}] 素材来源未找到，请检查`);
+    }
+  }
 });
 
 // 排序
 calendarData.sort((a, b) => {
-	if(a.type !== b.type) {
-		return a.type - b.type;
-	}
-	if(a.star !== b.star) {
-		return b.star - a.star;
-	}
-	return a.id - b.id;
+  if (a.type !== b.type) {
+    return a.type - b.type;
+  }
+  if (a.star !== b.star) {
+    return b.star - a.star;
+  }
+  return a.id - b.id;
 });
 
 // 保存
@@ -106,55 +112,55 @@ defaultLogger.info("[日历][转换] convert.js 执行完毕");
  * @returns {object}
  */
 function getCalendarBaseInfo(breakType, name) {
-	let baseInfo = {};
-	if(breakType === "1") {
-		const itemFind = weaponJson.find(item => item.name === name);
-		if(!itemFind) {
-			defaultLogger.error(`[日历][转换][${name}] 未找到对应的武器数据`);
-		} else {
-			consoleLogger.mark(`[日历][转换][${name}] 武器数据已添加`);
-			baseInfo = {
-				id: itemFind.id,
-				contentId: itemFind.contentId,
-				dropDays:[],
-				name: itemFind.name,
-				itemType: "weapon",
-				star: itemFind.star,
-				bg: itemFind.bg,
-				starIcon: `/icon/star/${itemFind.star}.webp`,
-				weaponIcon: itemFind.weaponIcon,
-				elementIcon: itemFind.elementIcon||"",
-				icon: itemFind.icon,
-				materials: [],
-				source: {},
-			};
-		}
-	} else if(breakType === "2") {
-		const itemFind = characterJson.find(item => item.name === name);
-		if(!itemFind) {
-			defaultLogger.error(`[日历][转换][${name}] 未找到对应的角色数据`);
-		} else {
-			consoleLogger.mark(`[日历][转换][${name}] 角色数据已添加`);
-			baseInfo = {
-				id: itemFind.id,
-				contentId: itemFind.contentId,
-				dropDays:[],
-				name: itemFind.name,
-				itemType: "character",
-				star: itemFind.star,
-				bg: itemFind.bg,
-				starIcon: `/icon/star/${itemFind.star}.webp`,
-				elementIcon: itemFind.elementIcon,
-				weaponIcon: itemFind.weaponIcon,
-				icon: itemFind.icon,
-				materials: [],
-				source: {},
-			};
-		}
-	} else {
-		defaultLogger.error(`[日历][转换][${name}] 未知的 breakType: ${breakType}`);
-	}
-	return baseInfo;
+  let baseInfo = {};
+  if (breakType === "1") {
+    const itemFind = weaponJson.find((item) => item.name === name);
+    if (!itemFind) {
+      defaultLogger.error(`[日历][转换][${name}] 未找到对应的武器数据`);
+    } else {
+      consoleLogger.mark(`[日历][转换][${name}] 武器数据已添加`);
+      baseInfo = {
+        id: itemFind.id,
+        contentId: itemFind.contentId,
+        dropDays: [],
+        name: itemFind.name,
+        itemType: "weapon",
+        star: itemFind.star,
+        bg: itemFind.bg,
+        starIcon: `/icon/star/${itemFind.star}.webp`,
+        weaponIcon: itemFind.weaponIcon,
+        elementIcon: itemFind.elementIcon || "",
+        icon: itemFind.icon,
+        materials: [],
+        source: {},
+      };
+    }
+  } else if (breakType === "2") {
+    const itemFind = characterJson.find((item) => item.name === name);
+    if (!itemFind) {
+      defaultLogger.error(`[日历][转换][${name}] 未找到对应的角色数据`);
+    } else {
+      consoleLogger.mark(`[日历][转换][${name}] 角色数据已添加`);
+      baseInfo = {
+        id: itemFind.id,
+        contentId: itemFind.contentId,
+        dropDays: [],
+        name: itemFind.name,
+        itemType: "character",
+        star: itemFind.star,
+        bg: itemFind.bg,
+        starIcon: `/icon/star/${itemFind.star}.webp`,
+        elementIcon: itemFind.elementIcon,
+        weaponIcon: itemFind.weaponIcon,
+        icon: itemFind.icon,
+        materials: [],
+        source: {},
+      };
+    }
+  } else {
+    defaultLogger.error(`[日历][转换][${name}] 未知的 breakType: ${breakType}`);
+  }
+  return baseInfo;
 }
 
 /**
@@ -165,40 +171,42 @@ function getCalendarBaseInfo(breakType, name) {
  * @returns {array}
  */
 function getCalendarMaterials(contentInfos, name) {
-	const materialInfo = [];
-	contentInfos.map(item => {
-		let materialItem = {
-			id: 0,
-			name: "",
-			star: 0,
-			starIcon: "",
-			bg: "",
-			icon: "",
-
-		};
-		const itemFind = materialJson.find(material => material.name === item["title"]);
-		if(!itemFind) {
-			defaultLogger.error(`[日历][转换][${name}] 未找到对应的材料数据 ${item["title"]}`);
-		} else {
-			materialItem = {
-				id: itemFind.id,
-				name: itemFind.name,
-				star: itemFind.star,
-				starIcon: itemFind.starIcon,
-				bg: itemFind.bg,
-				icon: itemFind.icon,
-			};
-			consoleLogger.mark(`[日历][转换][${name}] 材料数据 ${item["title"]} 已添加`);
-			materialInfo.push(materialItem);
-		}
-	});
-	materialInfo.sort((a, b) => b.star - a.star);
-	const ids = materialInfo.map(item => item.id).sort().join(",");
-	if(!materialIdsSet.has(ids)) {
-		materialIdsSet.add(ids);
-		consoleLogger.mark(`[日历][转换][material] 添加新的材料组合 [${ids}]`);
-	}
-	return materialInfo;
+  const materialInfo = [];
+  contentInfos.map((item) => {
+    let materialItem = {
+      id: 0,
+      name: "",
+      star: 0,
+      starIcon: "",
+      bg: "",
+      icon: "",
+    };
+    const itemFind = materialJson.find((material) => material.name === item["title"]);
+    if (!itemFind) {
+      defaultLogger.error(`[日历][转换][${name}] 未找到对应的材料数据 ${item["title"]}`);
+    } else {
+      materialItem = {
+        id: itemFind.id,
+        name: itemFind.name,
+        star: itemFind.star,
+        starIcon: itemFind.starIcon,
+        bg: itemFind.bg,
+        icon: itemFind.icon,
+      };
+      consoleLogger.mark(`[日历][转换][${name}] 材料数据 ${item["title"]} 已添加`);
+      materialInfo.push(materialItem);
+    }
+  });
+  materialInfo.sort((a, b) => b.star - a.star);
+  const ids = materialInfo
+    .map((item) => item.id)
+    .sort()
+    .join(",");
+  if (!materialIdsSet.has(ids)) {
+    materialIdsSet.add(ids);
+    consoleLogger.mark(`[日历][转换][material] 添加新的材料组合 [${ids}]`);
+  }
+  return materialInfo;
 }
 
 /**
@@ -209,58 +217,57 @@ function getCalendarMaterials(contentInfos, name) {
  * @returns {object}
  */
 function getCalendarSource(contentSource, name) {
-	const sourceMap = {
-		"忘却之峡": {
-			type: "character",
-			area: "蒙德"
-		},
-		"太山府":{
-			type: "character",
-			area: "璃月"
-		},
-		"菫色之庭": {
-			type: "character",
-			area: "稻妻"
-		},
-		"昏识塔": {
-			type: "character",
-			area: "须弥"
-		},
-		"塞西莉亚苗圃":{
-			type: "weapon",
-			area: "蒙德"
-		},
-		"震雷连山密宫": {
-			type: "weapon",
-			area: "璃月"
-		},
-		"砂流之庭": {
-			type: "weapon",
-			area: "稻妻"
-		},
-		"有顶塔": {
-			type: "weapon",
-			area: "须弥"
-		}
-	};
-	const sourceKey = Object.keys(sourceMap);
-	let sourceData = {};
-	let sourceName;
-	try {
-		sourceName = contentSource[0]["title"];
-	} catch (error) {
-		consoleLogger.warn(`[日历][转换][${name}] 未找到对应的来源数据`);
-		return sourceData;
-	}
-	if(!sourceKey.includes(sourceName)) {
-		defaultLogger.error(`[日历][转换][${name}] 未知的来源: ${sourceName}`);
-		return sourceData;
-	}
-	sourceData = {
-		area: sourceMap[sourceName].area,
-		name: sourceName,
-		icon: `/icon/nation/${sourceMap[sourceName].area}.webp`,
-	};
-	return sourceData;
-
+  const sourceMap = {
+    忘却之峡: {
+      type: "character",
+      area: "蒙德",
+    },
+    太山府: {
+      type: "character",
+      area: "璃月",
+    },
+    菫色之庭: {
+      type: "character",
+      area: "稻妻",
+    },
+    昏识塔: {
+      type: "character",
+      area: "须弥",
+    },
+    塞西莉亚苗圃: {
+      type: "weapon",
+      area: "蒙德",
+    },
+    震雷连山密宫: {
+      type: "weapon",
+      area: "璃月",
+    },
+    砂流之庭: {
+      type: "weapon",
+      area: "稻妻",
+    },
+    有顶塔: {
+      type: "weapon",
+      area: "须弥",
+    },
+  };
+  const sourceKey = Object.keys(sourceMap);
+  let sourceData = {};
+  let sourceName;
+  try {
+    sourceName = contentSource[0]["title"];
+  } catch (error) {
+    consoleLogger.warn(`[日历][转换][${name}] 未找到对应的来源数据`);
+    return sourceData;
+  }
+  if (!sourceKey.includes(sourceName)) {
+    defaultLogger.error(`[日历][转换][${name}] 未知的来源: ${sourceName}`);
+    return sourceData;
+  }
+  sourceData = {
+    area: sourceMap[sourceName].area,
+    name: sourceName,
+    icon: `/icon/nation/${sourceMap[sourceName].area}.webp`,
+  };
+  return sourceData;
 }

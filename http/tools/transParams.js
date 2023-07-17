@@ -12,10 +12,10 @@
  * @returns {string} 转换后的字符串
  */
 export function transParams(params) {
-	const keys = Object.keys(params).sort();
-	let result = "";
-	for (let i = 0; i < keys.length; i++) {
-		result += keys[i] + "=" + params[keys[i]] + "&";
-	}
-	return result.slice(0, -1);
+  const keys = Object.keys(params).sort();
+  let result = "";
+  for (let i = 0; i < keys.length; i++) {
+    result += keys[i] + "=" + params[keys[i]] + "&";
+  }
+  return result.slice(0, -1);
 }

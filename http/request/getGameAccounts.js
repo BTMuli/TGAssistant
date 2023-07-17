@@ -19,13 +19,13 @@ import HttpConstant from "../constant/index.js";
  * @returns {Promise<object>}
  */
 export async function getGameAccountsByStoken(cookie, stoken) {
-	const url = "https://api-takumi.mihoyo.com/binding/api/getUserGameRolesBySToken";
-	const params = { stoken: stoken, game_biz: HttpConstant.GAME_BIZ };
-	const header = getHeader(cookie,"GET",params);
-	return axios.get(url, { headers: header, params:params }).then(res=>{
-		console.log(res.data);
-		return res.data["data"]["list"];
-	});
+  const url = "https://api-takumi.mihoyo.com/binding/api/getUserGameRolesBySToken";
+  const params = { stoken: stoken, game_biz: HttpConstant.GAME_BIZ };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    console.log(res.data);
+    return res.data["data"]["list"];
+  });
 }
 
 /**
@@ -35,11 +35,11 @@ export async function getGameAccountsByStoken(cookie, stoken) {
  * @returns {Promise<object>}
  */
 export async function getGameAccountsByCookie(cookie) {
-	const url = "https://api-takumi.mihoyo.com/binding/api/getUserGameRolesByCookie";
-	const params = { game_biz: HttpConstant.GAME_BIZ };
-	const header = getHeader(cookie,"GET", params);
-	return axios.get(url, { headers:header,params:params }).then(res=>{
-		console.log(res.data);
-		return res.data["data"]["list"];
-	});
+  const url = "https://api-takumi.mihoyo.com/binding/api/getUserGameRolesByCookie";
+  const params = { game_biz: HttpConstant.GAME_BIZ };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    console.log(res.data);
+    return res.data["data"]["list"];
+  });
 }

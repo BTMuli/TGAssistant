@@ -12,12 +12,12 @@ import { describe, it } from "mocha";
 import pathList, { ROOT_PATH } from "../../root.js";
 
 describe("测试路径", () => {
-	it("根目录", () => {
-		const localPath = "E:\\Code\\IDEA\\App\\TGAssistant";
-		assert.strictEqual(ROOT_PATH, localPath);
-	});
-	it("日志路径", () => {
-		const localPath = "E:\\Code\\IDEA\\App\\TGAssistant\\logs";
-		assert.strictEqual(pathList.log, localPath);
-	});
+  it("根目录", () => {
+    const localPath = "E:\\Code\\IDEA\\App\\TGAssistant";
+    assert.strictEqual(ROOT_PATH, localPath);
+  });
+  it("日志路径", () => {
+    const localPath = "E:\\Code\\IDEA\\App\\TGAssistant\\logs";
+    assert.strictEqual(pathList.log, localPath);
+  });
 });

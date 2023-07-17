@@ -22,19 +22,19 @@ const baseUrl = "https://api-takumi.mihoyo.com/event/e20200928calculate/";
  * @param {number} page 页数
  * @returns {Promise<object>} 请求返回
  */
-export async function getAvatarList(cookie,uid,page=1) {
-	const url = `${baseUrl}v1/avatar/list`;
-	const data = {
-		uid: uid,
-		region: getServerByUid(uid),
-		page: page,
-	};
-	const header = {
-		"User-Agent": "TGAssistant/1.2.0",
-		Referer: "https://webstatic.mihoyo.com/",
-		Cookie: transCookie(cookie),
-	};
-	return axios.post(url,data,{ headers: header }).then(res => res.data);
+export async function getAvatarList(cookie, uid, page = 1) {
+  const url = `${baseUrl}v1/avatar/list`;
+  const data = {
+    uid: uid,
+    region: getServerByUid(uid),
+    page: page,
+  };
+  const header = {
+    "User-Agent": "TGAssistant/1.2.0",
+    "Referer": "https://webstatic.mihoyo.com/",
+    "Cookie": transCookie(cookie),
+  };
+  return axios.post(url, data, { headers: header }).then((res) => res.data);
 }
 
 /**
@@ -45,19 +45,19 @@ export async function getAvatarList(cookie,uid,page=1) {
  * @param {number} page 页数
  * @returns {Promise<object>} 请求返回
  */
-export async function getWeaponList(cookie, uid, page=1) {
-	const url = `${baseUrl}v1/weapon/list`;
-	const data = {
-		uid: uid,
-		region: getServerByUid(uid),
-		page: page,
-	};
-	const header = {
-		"User-Agent": "TGAssistant/1.2.0",
-		Referer: "https://webstatic.mihoyo.com/",
-		Cookie: transCookie(cookie),
-	};
-	return axios.post(url, data, { headers: header }).then(res => res.data);
+export async function getWeaponList(cookie, uid, page = 1) {
+  const url = `${baseUrl}v1/weapon/list`;
+  const data = {
+    uid: uid,
+    region: getServerByUid(uid),
+    page: page,
+  };
+  const header = {
+    "User-Agent": "TGAssistant/1.2.0",
+    "Referer": "https://webstatic.mihoyo.com/",
+    "Cookie": transCookie(cookie),
+  };
+  return axios.post(url, data, { headers: header }).then((res) => res.data);
 }
 
 /**
@@ -68,19 +68,19 @@ export async function getWeaponList(cookie, uid, page=1) {
  * @param {number} page 页数
  * @returns {Promise<object>} 请求返回
  */
-export async function getSyncAvatarList(cookie, uid, page=1) {
-	const url = `${baseUrl}v1/sync/avatar/list`;
-	const data = {
-		uid: uid,
-		region: getServerByUid(uid),
-		page: page,
-	};
-	const header = {
-		"User-Agent": "TGAssistant/1.2.0",
-		Referer: "https://webstatic.mihoyo.com/",
-		Cookie: transCookie(cookie),
-	};
-	return axios.post(url, data, { headers: header }).then(res => res.data);
+export async function getSyncAvatarList(cookie, uid, page = 1) {
+  const url = `${baseUrl}v1/sync/avatar/list`;
+  const data = {
+    uid: uid,
+    region: getServerByUid(uid),
+    page: page,
+  };
+  const header = {
+    "User-Agent": "TGAssistant/1.2.0",
+    "Referer": "https://webstatic.mihoyo.com/",
+    "Cookie": transCookie(cookie),
+  };
+  return axios.post(url, data, { headers: header }).then((res) => res.data);
 }
 
 /**
@@ -92,16 +92,16 @@ export async function getSyncAvatarList(cookie, uid, page=1) {
  * @returns {Promise<object>} 请求返回
  */
 export async function getSyncAvatarDetail(cookie, uid, avatarId) {
-	const url = `${baseUrl}v1/sync/avatar/detail`;
-	const param = {
-		uid: uid,
-		region: getServerByUid(uid),
-		avatar_id: avatarId,
-	};
-	const header = {
-		"User-Agent": "TGAssistant/1.2.0",
-		Referer: "https://webstatic.mihoyo.com/",
-		Cookie: transCookie(cookie),
-	};
-	return axios.get(url,{ headers: header, params:param }).then(res => res.data);
+  const url = `${baseUrl}v1/sync/avatar/detail`;
+  const param = {
+    uid: uid,
+    region: getServerByUid(uid),
+    avatar_id: avatarId,
+  };
+  const header = {
+    "User-Agent": "TGAssistant/1.2.0",
+    "Referer": "https://webstatic.mihoyo.com/",
+    "Cookie": transCookie(cookie),
+  };
+  return axios.get(url, { headers: header, params: param }).then((res) => res.data);
 }

@@ -17,8 +17,8 @@ import pathList from "../../root.js";
  * @returns {Record<string,string>} cookie
  */
 export function readCookie() {
-	const ckFile = fs.readFileSync(path.resolve(pathList.http, "cookie.json"), "utf8");
-	return JSON.parse(ckFile);
+  const ckFile = fs.readFileSync(path.resolve(pathList.http, "cookie.json"), "utf8");
+  return JSON.parse(ckFile);
 }
 
 /**
@@ -27,8 +27,8 @@ export function readCookie() {
  * @param {string} itemKey 项名称
  * @returns {string} 项值
  */
-export function readCookieItem(itemKey){
-	const ckFile = fs.readFileSync(path.resolve(pathList.http, "cookie.json"), "utf8");
-	const ck = JSON.parse(ckFile);
-	return ck[itemKey];
+export function readCookieItem(itemKey) {
+  const ckFile = fs.readFileSync(path.resolve(pathList.http, "cookie.json"), "utf8");
+  const ck = JSON.parse(ckFile);
+  return ck[itemKey];
 }

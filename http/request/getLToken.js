@@ -17,12 +17,12 @@ import { getHeader } from "../tools/getHeader.js";
  * @param {string} stoken stoken
  * @returns {Promise<string>} ltoken
  */
-export async function getLTokenBySToken(cookie, stoken){
-	const url = "https://passport-api.mihoyo.com/account/auth/api/getLTokenBySToken";
-	const params = { stoken:stoken };
-	const header = getHeader(cookie,"GET",params);
-	return axios.get(url, { headers: header,params:params }).then(res=>{
-		console.log(res.data);
-		return res.data["data"]["ltoken"];
-	});
+export async function getLTokenBySToken(cookie, stoken) {
+  const url = "https://passport-api.mihoyo.com/account/auth/api/getLTokenBySToken";
+  const params = { stoken: stoken };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    console.log(res.data);
+    return res.data["data"]["ltoken"];
+  });
 }

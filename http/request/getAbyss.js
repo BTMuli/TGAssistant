@@ -20,12 +20,16 @@ import getServerByUid from "../tools/getServerByUid.js";
  * @returns {Promise<object>} 请求返回
  */
 export async function getAbyss(cookie, schedule_type, role_id) {
-	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/spiralAbyss";
-	const params = { schedule_type: schedule_type, role_id: role_id, server: getServerByUid(role_id) };
-	const header = getHeader(cookie,"GET", params);
-	console.log(header);
-	return axios.get(url, { headers: header, params: params }).then(res => {
-		console.log(res.data);
-		return res.data["data"];
-	});
+  const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/spiralAbyss";
+  const params = {
+    schedule_type: schedule_type,
+    role_id: role_id,
+    server: getServerByUid(role_id),
+  };
+  const header = getHeader(cookie, "GET", params);
+  console.log(header);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    console.log(res.data);
+    return res.data["data"];
+  });
 }

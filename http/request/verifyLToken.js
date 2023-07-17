@@ -18,10 +18,10 @@ import { getHeader } from "../tools/getHeader.js";
  * @returns {Promise<object>} 请求返回
  */
 export async function verifyLToken(cookie, ltoken) {
-	const url = "https://passport-api.mihoyo.com/account/ma-cn-session/web/verifyLtoken";
-	const data = { ltoken: ltoken };
-	const header = getHeader(cookie, "POST",data);
-	return axios.post(url, data, { headers: header }).then(res => {
-		return res.data;
-	});
+  const url = "https://passport-api.mihoyo.com/account/ma-cn-session/web/verifyLtoken";
+  const data = { ltoken: ltoken };
+  const header = getHeader(cookie, "POST", data);
+  return axios.post(url, data, { headers: header }).then((res) => {
+    return res.data;
+  });
 }

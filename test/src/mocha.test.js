@@ -10,12 +10,12 @@ import assert from "assert";
 import { describe, it } from "mocha";
 
 describe("框架测试", () => {
-	it("正确性测试", () => {
-		const testTrue = true;
-		assert.strictEqual(testTrue, true);
-	});
-	it("错误性测试", () => {
-		const testFalse = false;
-		assert.strictEqual(testFalse, false);
-	});
+  it("正确性测试", () => {
+    const testTrue = true;
+    assert.strictEqual(testTrue, true);
+  });
+  it("错误性测试", () => {
+    const testFalse = false;
+    assert.strictEqual(testFalse, false);
+  });
 });

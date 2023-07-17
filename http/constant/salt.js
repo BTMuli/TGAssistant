@@ -18,15 +18,15 @@
  * @returns {Object} salt 值
  */
 const Salt = {
-	BBS: {
-		K2: "A4lPYtN0KGRVwE5M5Fm0DqQiC5VVMVM3",
-		LK2: "kkFiNdhyHqZ1VnDRHnU1podIvO4eiHcs",
-	},
-	Other: {
-		X4: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
-		X6: "t0qEgfub6cvueAPgR5m9aQWWVciEer7v",
-		prod: "JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS"
-	},
+  BBS: {
+    K2: "A4lPYtN0KGRVwE5M5Fm0DqQiC5VVMVM3",
+    LK2: "kkFiNdhyHqZ1VnDRHnU1podIvO4eiHcs",
+  },
+  Other: {
+    X4: "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
+    X6: "t0qEgfub6cvueAPgR5m9aQWWVciEer7v",
+    prod: "JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS",
+  },
 };
 
 export default Salt;

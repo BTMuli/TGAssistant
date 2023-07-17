@@ -9,7 +9,7 @@
 import path from "node:path";
 import fs from "node:fs";
 // TGAssistant
-import { defaultLogger,consoleLogger } from "../tools/logger.js";
+import { defaultLogger, consoleLogger } from "../tools/logger.js";
 import pathList from "../../root.js";
 import { fileExist } from "../tools/utils.js";
 
@@ -21,26 +21,28 @@ const outNCPath = path.resolve(pathList.out.json, "namecard.json");
 defaultLogger.info("[名片][更新] 读取数据文件");
 
 if (!fileExist(outASPath)) {
-	defaultLogger.error("[名片][更新] achievementSeries.json 文件不存在，请先执行 achievement/convert.js");
-	process.exit(1);
+  defaultLogger.error(
+    "[名片][更新] achievementSeries.json 文件不存在，请先执行 achievement/convert.js",
+  );
+  process.exit(1);
 }
 if (!fileExist(outNCPath)) {
-	defaultLogger.error("[名片][更新] namecard.json 文件不存在，请先执行 download.js");
-	process.exit(1);
+  defaultLogger.error("[名片][更新] namecard.json 文件不存在，请先执行 download.js");
+  process.exit(1);
 }
 
 const outASData = JSON.parse(fs.readFileSync(outASPath, "utf-8"));
-const outNCData = JSON.parse(fs.readFileSync(outNCPath, "utf-8")).filter(item => item.type === 1);
+const outNCData = JSON.parse(fs.readFileSync(outNCPath, "utf-8")).filter((item) => item.type === 1);
 
 outASData.forEach((item) => {
-	if (item.card !== "") return;
-	const nc = outNCData.find(nc => nc.source.includes(item.name));
-	if (nc) {
-		consoleLogger.info(`[名片][更新][${transI(item.id)}] 找到 ${item.name} 的成就名片: ${nc.name}`);
-		item.card = nc.name;
-	} else {
-		defaultLogger.warn(`[名片][更新][${transI(item.id)}] 未找到 ${item.name} 的成就名片`);
-	}
+  if (item.card !== "") return;
+  const nc = outNCData.find((nc) => nc.source.includes(item.name));
+  if (nc) {
+    consoleLogger.info(`[名片][更新][${transI(item.id)}] 找到 ${item.name} 的成就名片: ${nc.name}`);
+    item.card = nc.name;
+  } else {
+    defaultLogger.warn(`[名片][更新][${transI(item.id)}] 未找到 ${item.name} 的成就名片`);
+  }
 });
 
 defaultLogger.info("[名片][更新] 保存数据文件");
@@ -57,5 +59,5 @@ defaultLogger.info("[名片][更新] 成功完成 update.js");
  * @return {string}
  */
 function transI(i) {
-	return i.toString().padStart(3,"0");
+  return i.toString().padStart(3, "0");
 }

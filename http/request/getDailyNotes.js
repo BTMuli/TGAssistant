@@ -19,10 +19,10 @@ import getServerByUid from "../tools/getServerByUid.js";
  * @returns {Promise<object>} 请求返回
  */
 export async function getDailyNotes(cookie, role_id) {
-	const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/dailyNote";
-	const params = { role_id: role_id, server: getServerByUid(role_id) };
-	const header = getHeader(cookie,"GET", params);
-	return axios.get(url, { headers: header, params: params }).then(res => {
-		return res.data;
-	});
+  const url = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/dailyNote";
+  const params = { role_id: role_id, server: getServerByUid(role_id) };
+  const header = getHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    return res.data;
+  });
 }

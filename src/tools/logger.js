@@ -13,35 +13,35 @@ import { getDate } from "./utils.js";
 
 // 日志记录器配置
 log4js.configure({
-	appenders: {
-		console: {
-			type: "console",
-			layout: {
-				type: "pattern",
-				pattern: "%[[%d{yyyy-MM-dd hh:mm:ss}][%p] %c -%] %m",
-			}
-		},
-		file: {
-			type: "file",
-			pattern: ".yyyy-MM-dd",
-			filename: `${pathList.log}/${getDate()}.log`,
-			daysToKeep: 7,
-			layout: {
-				type: "pattern",
-				pattern: "[%d{yyyy-MM-dd hh:mm:ss}][%p] %c - %m",
-			}
-		}
-	},
-	categories: {
-		default: {
-			appenders: ["console", "file"],
-			level: "all",
-		},
-		console: {
-			appenders: ["console"],
-			level: "all",
-		}
-	},
+  appenders: {
+    console: {
+      type: "console",
+      layout: {
+        type: "pattern",
+        pattern: "%[[%d{yyyy-MM-dd hh:mm:ss}][%p] %c -%] %m",
+      },
+    },
+    file: {
+      type: "file",
+      pattern: ".yyyy-MM-dd",
+      filename: `${pathList.log}/${getDate()}.log`,
+      daysToKeep: 7,
+      layout: {
+        type: "pattern",
+        pattern: "[%d{yyyy-MM-dd hh:mm:ss}][%p] %c - %m",
+      },
+    },
+  },
+  categories: {
+    default: {
+      appenders: ["console", "file"],
+      level: "all",
+    },
+    console: {
+      appenders: ["console"],
+      level: "all",
+    },
+  },
 });
 
 // 日志记录器

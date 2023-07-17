@@ -17,11 +17,11 @@ import { getSignHeader } from "../tools/getHeader.js";
  * @returns {Promise<object>} 请求返回
  */
 export async function getUserInfo(cookie) {
-	const url  = "https://bbs-api.miyoushe.com/user/wapi/getUserFullInfo";
-	const params = { gids:2 };
-	let header = getSignHeader(cookie,"GET", params);
-	return axios.get(url, { headers: header, params: params }).then(res => {
-		console.log(res.data);
-		return res.data["data"];
-	});
+  const url = "https://bbs-api.miyoushe.com/user/wapi/getUserFullInfo";
+  const params = { gids: 2 };
+  let header = getSignHeader(cookie, "GET", params);
+  return axios.get(url, { headers: header, params: params }).then((res) => {
+    console.log(res.data);
+    return res.data["data"];
+  });
 }
