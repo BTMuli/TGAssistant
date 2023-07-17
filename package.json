@@ -14,9 +14,8 @@
     "Tools"
   ],
   "scripts": {
-    "lint:all": "pnpm lint:json && pnpm run lint:fix",
-    "lint:json": "prettier --write data/**/*.json",
-    "lint:check": "eslint --ext .js .",
+    "lint:all": "pnpm lint:style && pnpm run lint:fix",
+    "lint:style": "prettier --write .",
     "lint:fix": "eslint --ext .js . --fix",
     "test:all": "mocha --timeout 10000",
     "resize": "node ./src/tools/resize.js",
@@ -24,7 +23,7 @@
   },
   "lint-staged": {
     "*.js": "eslint --fix",
-    "*.{js,css,md,json}": "prettier --write"
+    "*.{js,css,md,json,yml}": "prettier --write"
   },
   "author": "BTMuli <bt-muli@outlook.com>",
   "license": "MIT",
@@ -41,6 +40,9 @@
   },
   "devDependencies": {
     "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "mocha": "^10.2.0",

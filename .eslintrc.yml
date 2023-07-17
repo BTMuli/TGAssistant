@@ -2,23 +2,26 @@ env:
   es2021: true
   node: true
 extends: eslint:recommended
-overrides: [ ]
+plugins:
+  - prettier
+  - import
 parserOptions:
   ecmaVersion: latest
   sourceType: module
 rules:
-  indent:
+  # possible errors
+  no-unused-vars: warn
+  # plugins
+  prettier/prettier: error
+  import/order:
     - error
-    - tab
-  linebreak-style:
-    - error
-    - windows
-  quotes:
-    - error
-    - double
-  semi:
-    - error
-    - always
-  object-curly-spacing:
-    - error
-    - always
+    - groups:
+        - builtin
+        - external
+        - internal
+        - parent
+        - sibling
+        - index
+        - object
+        - type
+        - unknown

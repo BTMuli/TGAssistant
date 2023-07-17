@@ -3,7 +3,7 @@ tabWidth: 2
 useTabs: false
 semi: true
 singleQuote: false
-quoteProps: "consistent"
+quoteProps: consistent
 bracketSpacing: true
-arrowParens: "always"
-endOfLine: "lf"
+arrowParens: always
+endOfLine: auto
