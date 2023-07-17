@@ -27,6 +27,7 @@ dirCheck(srcJsonDir);
 const mysUrl =
   "https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list?app_sn=ys_obc&channel_id=189";
 const amberUrl = `https://api.ambr.top/v2/chs/avatar?vh=${AMBER_VH}`;
+
 const amberSavePath = path.resolve(srcJsonDir, "amber.json");
 const mysSavePath = path.resolve(srcJsonDir, "mys.json");
 const hutaoSavePath = path.resolve(srcJsonDir, "hutao.json");
@@ -72,9 +73,13 @@ const amberJson = JSON.parse(fs.readFileSync(amberSavePath, "utf-8"));
 const amberKeys = Object.keys(amberJson["items"]);
 for (const key of amberKeys) {
 	count.total++;
+	let savePath = path.resolve(srcImgDir, `${key}.png`);
+	// 如果不是 number 类型，取前8位
+	if (isNaN(Number(key))) {
+		savePath = path.resolve(srcImgDir, `${key.slice(0, 8)}.png`);
+	}
 	const item = amberJson["items"][key];
 	const url = getAmberUrl(item["icon"]);
-	const savePath = path.resolve(srcImgDir, `${key}.png`);
 	if (!fileExist(savePath)) {
 		consoleLogger.info(`[角色][下载][${key}] 开始下载图像`);
 		await downloadImg(url, savePath, key);
@@ -102,26 +107,28 @@ function getAmberUrl(pre) {
 
 /**
  * @description 下载图片
- * @since 1.1.0
+ * @since 1.3.0
  * @param {string} url 图片链接
  * @param {string} savePath 保存路径
  * @param {string} index 图片索引
  * @returns {Promise<void>} 下载完成
  */
 async function downloadImg(url, savePath, index) {
-	try {
-		await axios
-			.get(url, {
-				responseType: "arraybuffer",
-			})
-			.then((res) => {
-				defaultLogger.info(`[角色][下载][${index}] 图像下载完成`);
-				sharp(res.data).png().toFile(savePath);
-				count.success++;
-			});
-	} catch (error) {
-		count.fail++;
-		defaultLogger.error(`[角色][下载][${index}] ${savePath} 下载失败`);
-		defaultLogger.error(error.message);
-	}
+	await axios
+		.get(url, {
+			responseType: "arraybuffer",
+			onDownloadProgress: (progressEvent) => {
+				consoleLogger.info(`[角色][下载][${index}] 已下载 ${progressEvent.loaded} 字节`);
+			},
+		})
+		.then((res) => {
+			defaultLogger.info(`[角色][下载][${index}] 图像下载完成`);
+			sharp(res.data).png().toFile(savePath);
+			count.success++;
+		})
+		.catch((error) => {
+			count.fail++;
+			defaultLogger.error(`[角色][下载][${index}] 图像下载失败`);
+			defaultLogger.error(error.message);
+		});
 }
