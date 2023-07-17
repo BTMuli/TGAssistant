@@ -63,7 +63,7 @@ const count = {
 };
 
 // 处理 amber.json
-defaultLogger.info("[角色][转换] 开始处理 amber.json");
+consoleLogger.info("[角色][转换] 开始处理 amber.json");
 const amberKey = Object.keys(amberJson["items"]);
 for (const key of amberKey) {
   let keyGet = -1;
@@ -88,7 +88,6 @@ for (const key of amberKey) {
     contentId: 0,
     name: name,
     title: "",
-    description: "",
     birthday: item["birthday"],
     star: item["rank"],
     element: keyGet === 10000005 ? "" : keyGet === 10000007 ? "" : getAmberElement(item["element"]),
@@ -104,24 +103,30 @@ defaultLogger.info(
 // 处理 mys.json
 count.success = 0;
 count.skip = 0;
-defaultLogger.info("[角色][转换] 开始添加 content_id");
+consoleLogger.info("[角色][转换] 开始添加 contentId");
 characterData.forEach((character) => {
+  if (character["id"] === 10000005 || character["id"] === 10000007) {
+    if (character["id"] === 10000005) character.contentId = 4073;
+    if (character["id"] === 10000007) character.contentId = 4074;
+    count.success++;
+    return;
+  }
   const mysFind = mysJson.find((item) => item.title === character["name"]);
   if (!mysFind) {
     count.fail++;
-    defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} 未找到 content_id`);
+    defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} 未找到 contentId`);
     return;
   }
   character.contentId = mysFind["content_id"];
   count.success++;
 });
 defaultLogger.info(
-  `[角色][转换] content_id 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`,
+  `[角色][转换] contentId 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`,
 );
 // 处理 namecard.json
 count.success = 0;
 count.fail = 0;
-defaultLogger.info("[角色][转换] 开始添加 namecard");
+consoleLogger.info("[角色][转换] 开始添加 namecard");
 characterData.forEach((character) => {
   // 是否包含角色名或者角色名后两个字
   const nameCardFind = nameCardJson.find(
@@ -142,22 +147,19 @@ defaultLogger.info(
 // 处理 hutao.json
 count.success = 0;
 count.fail = 0;
-defaultLogger.info("[角色][转换] 开始添加 title、description");
+consoleLogger.info("[角色][转换] 开始添加 title");
 characterData.forEach((character) => {
   const hutaoFind = hutaoJson.find((item) => item["Id"] === character.id);
   if (!hutaoFind) {
     count.fail++;
-    defaultLogger.warn(
-      `[角色][转换][${character["id"]}] ${character["name"]} 未找到 title、description`,
-    );
+    defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} 未找到 title`);
     return;
   }
   character.title = hutaoFind["FetterInfo"]["Title"];
-  character.description = hutaoFind["FetterInfo"]["Detail"];
   count.success++;
 });
 defaultLogger.info(
-  `[角色][转换] title、description 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`,
+  `[角色][转换] title 添加完成，共添加 ${count.success} 个，失败 ${count.fail} 个`,
 );
 
 // 按照 id 排序
@@ -171,7 +173,7 @@ defaultLogger.info(
 );
 count.success = 0;
 count.fail = 0;
-defaultLogger.info("[角色][转换] 开始转换图片");
+consoleLogger.info("[角色][转换] 开始转换图片");
 await Promise.allSettled(
   characterData.map(async (character) => {
     const src = path.join(pathList.src.img, "character", `${character["id"]}.png`);
@@ -182,7 +184,7 @@ await Promise.allSettled(
       return;
     }
     if (character.contentId === 0) {
-      defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} content_id 不存在`);
+      defaultLogger.warn(`[角色][转换][${character["id"]}] ${character["name"]} contentId 不存在`);
     }
     if (fileExist(out)) {
       count.skip++;
