@@ -106,8 +106,8 @@ count.skip = 0;
 consoleLogger.info("[角色][转换] 开始添加 contentId");
 characterData.forEach((character) => {
   if (character["id"] === 10000005 || character["id"] === 10000007) {
-    if (character["id"] === 10000005) character.contentId = 4073;
-    if (character["id"] === 10000007) character.contentId = 4074;
+    if (character["id"] === 10000005) character.contentId = 4074;
+    if (character["id"] === 10000007) character.contentId = 4073;
     count.success++;
     return;
   }
