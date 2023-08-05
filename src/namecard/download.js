@@ -2,7 +2,7 @@
  * @file namecard download.js
  * @description 下载图像资源，获取原始数据文件
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.2.0
+ * @since 1.3.0
  */
 
 // Node
@@ -50,7 +50,7 @@ const urlList = {
   curr: "https://genshin.honeyhunterworld.com/img/i_n210",
 };
 // 决定爬取的数据
-const endIndex = 164;
+const endIndex = 173;
 
 // 检测目录是否存在
 dirCheck(srcImgDir);
