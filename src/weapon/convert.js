@@ -1,8 +1,8 @@
 /**
  * @file weapon convert.js
  * @description 转换武器原始数据为可用数据
- * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @author BTMuli <bt-muli@outlook.com>
+ * @since 1.3.0
  */
 
 // Node
@@ -94,9 +94,7 @@ defaultLogger.info(
 );
 
 // 排序
-const outData = weaponData
-  .filter((item) => item.contentId !== 0)
-  .sort((a, b) => b.star - a.star || b.id - a.id);
+const outData = weaponData.sort((a, b) => b.star - a.star || b.id - a.id);
 // 写入文件
 fs.writeFileSync(outJsonPath, JSON.stringify(outData, null, 2));
 defaultLogger.info(
