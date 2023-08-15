@@ -1,8 +1,8 @@
 /**
  * @file root.js
  * @description 项目根目录
- * @author BTMuli<bt-muli@outlook.com>
- * @since 1.2.0
+ * @author BTMuli <bt-muli@outlook.com>
+ * @since 1.3.0
  */
 
 // Node
@@ -14,7 +14,7 @@ export const ROOT_PATH = appRootPath.path;
 // Amber.top API 版本
 export const AMBER_VH = "38F3";
 // 游戏版本
-export const GENSHIN_VER = "3.8";
+export const GENSHIN_VER = "4.0";
 
 // 路径列表
 const pathList = {

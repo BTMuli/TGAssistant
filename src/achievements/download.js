@@ -1,8 +1,8 @@
 /**
  * @file achievements download.js
  * @description 下载所需的 JSON 文件
- * @author BTMuli<bt-muli@outlook.com>
- * @since 1.2.0
+ * @author BTMuli <bt-muli@outlook.com>
+ * @since 1.3.0
  */
 
 // Node
@@ -22,7 +22,14 @@ const dataList = [
     repo: pathList.repo.SH,
     file: "Genshin/CHS/Achievement.json",
     tree: "main",
-    savePath: path.resolve(srcDir, "SnapHutao.json"),
+    savePath: path.resolve(srcDir, "achievement.json"),
+  },
+  {
+    name: "胡桃-成就系列",
+    repo: pathList.repo.SH,
+    file: "Genshin/CHS/AchievementGoal.json",
+    tree: "main",
+    savePath: path.resolve(srcDir, "achievementGoal.json"),
   },
   {
     name: "Paimon.moe-成就",

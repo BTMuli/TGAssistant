@@ -2,7 +2,7 @@
  * @file achievements convert.js
  * @description 转换成就数据，生成目标数据文件
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @since 1.3.0
  */
 
 // Node
@@ -24,8 +24,13 @@ dirCheck(dataDir);
 const srcList = [
   {
     name: "胡桃-成就",
-    file: path.resolve(srcDir, "SnapHutao.json"),
+    file: path.resolve(srcDir, "achievement.json"),
     data: {},
+  },
+  {
+    name: "胡桃-成就系列",
+    file: path.resolve(srcDir, "achievementGoal.json"),
+    data: [],
   },
   {
     name: "Paimon.moe-成就",
@@ -67,60 +72,82 @@ srcList.forEach((src) => {
   src.data = JSON.parse(fs.readFileSync(src.file, "utf-8"));
 });
 
-// 处理 Paimon.moe 的数据
-await Object.entries(srcList[1].data).forEach(([key, series]) => {
-  consoleLogger.mark(`[成就][转换][PMSeries][${key}] 处理成就系列 ${series.name}`);
-  const achievementArray = flatArray(series.achievements);
-  tempData.series[key] = {
-    id: Number(key),
-    order: series.order,
-    name: series.name,
+// 添加成就
+consoleLogger.info("[成就][转换] 处理成就数据");
+
+// 处理胡桃的成就数据
+consoleLogger.info("[成就][转换] 处理胡桃的成就数据");
+srcList[0].data.forEach((item) => {
+  tempData.achievements.push({
+    id: item["Id"],
+    series: item["Goal"],
+    order: item["Order"],
+    name: item["Title"],
+    description: item["Description"],
+    reward: item["FinishReward"]["Count"],
     version: "",
-    card: "",
-    icon: `/source/achievementSeries/${key}.webp`,
-  };
-  consoleLogger.info(`[成就][转换][PMSeries][${key}] 处理成就系列 ${series.name} 的成就`);
-  achievementArray.forEach((o) => {
-    consoleLogger.mark(`[成就][转换][PMItem][${o.id}] 处理成就 ${o.name}`);
-    tempData.achievements[o.id] = {
-      id: o.id,
-      series: Number(key),
-      order: 0,
-      name: o.name,
-      description: o["desc"],
-      reward: o.reward,
-      version: o["ver"],
-    };
   });
+  consoleLogger.mark(`[成就][转换][胡桃][${item["Id"]}] 添加成就 ${item["Title"]}`);
 });
 
-// 处理 Snap.Hutao 的数据
-defaultLogger.info("[成就][转换] 处理 Snap.Hutao 的数据");
-await srcList[0].data.map((o) => {
-  consoleLogger.mark(`[成就][转换][Hutao][${o["Id"]}] 处理成就 ${o["Title"]}`);
-  if (tempData.achievements[o["Id"]] === undefined) {
-    tempData.achievements[o["Id"]] = {
-      id: o["Id"],
-      series: o["Goal"],
-      order: o["Order"],
-      name: o["Title"],
-      description: o["Description"],
-      reward: o["FinishReward"]["Count"],
-      version: GENSHIN_VER,
-    };
-    consoleLogger.warn(`[成就][转换][Hutao] 添加缺失成就数据 ${o["Title"]}`);
+// 处理 Paimon.moe 的数据
+consoleLogger.info("[成就][转换] 添加成就 version");
+tempData.achievements.forEach((item) => {
+  const seriesId = item.series;
+  if (srcList[2].data[seriesId] === undefined) {
+    item.version = GENSHIN_VER;
+    consoleLogger.warn(
+      `[成就][转换][Paimon.moe][${item["id"]}] ${item["name"]} 成就版本为 ${item.version}`,
+    );
   } else {
-    tempData.achievements[o["Id"]].order = o["Order"];
+    const achievements = flatArray(srcList[2].data[seriesId]["achievements"]);
+    const itemFind = achievements.find((o) => o["id"] === item.id);
+    if (itemFind === undefined) {
+      item.version = GENSHIN_VER;
+      consoleLogger.warn(
+        `[成就][转换][Paimon.moe][${item["id"]}] ${item["name"]} 成就版本为 ${item.version}`,
+      );
+    } else {
+      item.version = itemFind["ver"];
+      consoleLogger.mark(
+        `[成就][转换][Paimon.moe][${item["id"]}] ${item["name"]} 成就版本为 ${item.version}`,
+      );
+    }
   }
 });
 
-// 添加成就系列版本
-tempData.achievements.map((item) => {
-  if (
-    tempData.series[item.series].version === "" ||
-    item.version > tempData.series[item.series].version
-  ) {
-    tempData.series[item.series].version = item.version;
+// 添加成就系列
+consoleLogger.info("[成就][转换] 处理成就系列数据");
+
+// 处理胡桃的成就系列数据
+consoleLogger.info("[成就][转换] 处理胡桃的成就系列数据");
+Array.from(srcList[1].data).forEach((item) => {
+  tempData.series.push({
+    id: item["Id"],
+    order: item["Order"],
+    name: item["Name"],
+    version: "",
+    card: "",
+    icon: `/icon/achievement/${item["Icon"]}.webp`,
+  });
+  consoleLogger.mark(`[成就][转换][胡桃][${item["Id"]}] 添加成就系列 ${item["Name"]}`);
+});
+
+// 处理 Paimon.moe 的数据
+consoleLogger.info("[成就][转换] 添加成就系列 version");
+tempData.series.forEach((item) => {
+  if (srcList[2].data[item.id] === undefined) {
+    item.version = GENSHIN_VER;
+    consoleLogger.warn(
+      `[成就][转换][Paimon.moe][${item["id"]}] ${item["name"]} 成就系列版本为 ${item.version}`,
+    );
+  } else {
+    const achievements = flatArray(srcList[2].data[item.id]["achievements"]);
+    // 获取 achievements.ver 的最大值
+    item.version = Math.max(...achievements.map((o) => o["ver"])).toFixed(1);
+    consoleLogger.mark(
+      `[成就][转换][Paimon.moe][${item["id"]}] ${item["name"]} 成就系列版本为 ${item.version}`,
+    );
   }
 });
 
@@ -135,7 +162,6 @@ Object.values(tempData.series)
   .forEach((o) => {
     saveData.series.data.push(o);
   });
-defaultLogger.info("[成就][转换] 对数据进行排序完成");
 
 // 保存数据
 fs.writeFileSync(
