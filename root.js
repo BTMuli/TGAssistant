@@ -12,7 +12,7 @@ import appRootPath from "app-root-path";
 // 根目录，即 TGAssistant
 export const ROOT_PATH = appRootPath.path;
 // Amber.top API 版本
-export const AMBER_VH = "38F3";
+export const AMBER_VH = "40F0";
 // 游戏版本
 export const GENSHIN_VER = "4.0";
 
