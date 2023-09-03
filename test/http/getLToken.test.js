@@ -1,8 +1,8 @@
 /**
  * @file test http getLToken.test.js
  * @description 测试 LToken 的获取
- * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @author BTMuli <bt-muli@outlook.com>
+ * @since 1.4.0
  */
 
 // Node
@@ -18,6 +18,16 @@ describe("测试 LToken 获取", () => {
     const cookie = {
       stoken: readCookieItem("stoken"),
       stuid: readCookieItem("stuid"),
+    };
+    const res = await getLTokenBySToken(cookie, stoken);
+    const ltoken = readCookieItem("ltoken");
+    assert.strictEqual(res, ltoken);
+  });
+  it("通过 stoken_v2", async () => {
+    const stoken = readCookieItem("stoken_v2");
+    const cookie = {
+      stoken: readCookieItem("stoken_v2"),
+      mid: readCookieItem("mid"),
     };
     const res = await getLTokenBySToken(cookie, stoken);
     const ltoken = readCookieItem("ltoken");

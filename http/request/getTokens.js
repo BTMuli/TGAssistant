@@ -27,3 +27,25 @@ export async function getTokensByLoginTicket(cookie, ticket, uid) {
     return res.data["data"]["list"];
   });
 }
+
+/**
+ * @description 根据 game_token 获取 stoken
+ * @since 1.4.0
+ * @param {string} accountId account_id
+ * @param {string} gameToken game_token
+ * @returns {Promise<string>}
+ */
+export async function getStokenByGameToken(accountId, gameToken) {
+  const url = "https://api-takumi.mihoyo.com/account/ma-cn-session/app/getTokenByGameToken";
+  const data = { account_id: Number(accountId), game_token: gameToken };
+  const header = {
+    "x-rpc-app_id": "bll8iq97cem8",
+  };
+  return axios
+    .post(url, data, {
+      headers: header,
+    })
+    .then((res) => {
+      return res.data["data"];
+    });
+}
