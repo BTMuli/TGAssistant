@@ -18,12 +18,13 @@ import transCookie from "./transCookie.js";
  * @param {string} method 请求方法
  * @param {Record<string, string|number>|string} data 请求数据
  * @param {string} saltType salt 类型
+ * @param {boolean} isSign 是否为签名
  * @returns {Object} 请求头部信息
  */
-export function getHeader(cookie, method, data, saltType = "common") {
+export function getHeader(cookie, method, data, saltType = "common", isSign = false) {
   let ds;
-  if (typeof data === "string") ds = getDS(method, data, saltType);
-  else ds = getDS(method, transParams(data), saltType);
+  if (typeof data === "string") ds = getDS(method, data, saltType, isSign);
+  else ds = getDS(method, transParams(data), saltType, isSign);
   return {
     "User-Agent": HttpConstant.BBS.Header,
     "x-rpc-app_version": HttpConstant.BBS.Version,

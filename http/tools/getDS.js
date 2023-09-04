@@ -2,7 +2,7 @@
  * @file http tools getDS.js
  * @description DS 算法
  * @author BTMuli<bt-muli@outlook.com>
- * @since 1.1.0
+ * @since 1.4.0
  */
 
 // Node
@@ -61,7 +61,7 @@ function getSalt(saltType) {
 
 /**
  * @description 获取 DS
- * @since 1.1.0
+ * @since 1.4.0
  * @param {string} method 请求方法
  * @param {string} data 请求数据
  * @param {string} saltType salt 类型
@@ -75,27 +75,8 @@ export function getDS(method, data, saltType, isSign = false) {
   const time = Math.floor(Date.now() / 1000).toString();
   const body = method === "POST" ? data : "";
   const query = method === "GET" ? data : "";
-  const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
-  const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
-  return `${time},${random},${md5Str}`;
-}
-
-/**
- * @description 测试DS
- * @since 1.1.0
- * @param {string} random 随机数
- * @param {string} time 时间戳
- * @param {string} method 请求方法
- * @param {string} data 请求数据
- * @param {string} saltType salt 类型
- * @param {boolean} isSign 是否为签名
- * @returns {string} DS
- */
-export function getTestDS(random, time, method, data, saltType = "common", isSign = false) {
-  const salt = getSalt(saltType);
-  const body = method === "POST" ? data : "";
-  const query = method === "GET" ? data : "";
-  const hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
+  let hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
+  if (isSign) hashStr = `salt=${salt}&t=${time}&r=${random}`;
   const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
   return `${time},${random},${md5Str}`;
 }
