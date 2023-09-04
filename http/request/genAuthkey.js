@@ -27,10 +27,7 @@ export async function genAuthkey(cookie, game_uid) {
     game_uid: Number(game_uid),
     region: getServerByUid(game_uid),
   };
-  console.log(data);
   const header = getHeader(cookie, "POST", JSON.stringify(data), "bbs-lk2", true);
-  header.Referer = "https://app.mihoyo.com/";
-  console.log(header);
   return axios.post(url, data, { headers: header }).then((res) => {
     return res.data;
   });

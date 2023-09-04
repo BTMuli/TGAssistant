@@ -17,7 +17,6 @@ describe("测试获取 authkey", () => {
     const cookie = {
       stoken: readCookieItem("stoken"),
       mid: readCookieItem("mid"),
-      stuid: readCookieItem("stuid"),
     };
     const game_uid = "500299765";
     const res = await genAuthkey(cookie, game_uid);
