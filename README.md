@@ -1,25 +1,25 @@
 ---
 Author: 目棃
-Date: 2023-05-01
 Description: 说明文档
-Update: 2023-08-15
+Date: 2023-05-01
+Update: 2023-09-28
 ---
 
-> 本文档 [`Front-matter`](https://github.com/BTMuli/Mucli#FrontMatter) 由 [MuCli](https://github.com/BTMuli/Mucli) 自动生成于 `2023-05-01 21:57:11`
+> 本文档 [`Frontmatter`](https://github.com/BTMuli/MuCli#Frontmatter) 由 [MuCli](https://github.com/BTMuli/Mucli) 自动生成于 `2023-05-01 21:57:11`
 >
-> 更新于 `2023-08-15 18:20:01`
+> 更新于 `2023-09-28 17:48:36`
 
 ![](https://img.shields.io/github/last-commit/BTMuli/TGAssistant?style=for-the-badge) ![](https://img.shields.io/github/license/BTMuli/TGAssistant?style=for-the-badge)
 
 # TGAssistant
 
-本项目为 [Tauri.Genshin](https://github.com/BTMuli/Tauri.Genshin) 的辅助工具。
+本项目为 [TeyvatGuide](https://github.com/BTMuli/TeyvatGuide) 的辅助工具。
 
 ## 上游版本
 
 ![](https://img.shields.io/github/v/release/BTMuli/Tauri.Genshin?include_prereleases&style=for-the-badge)
 
-适应版本：`0.2.2`
+适应版本：`0.3.2`
 
 ## 仓库概况
 
