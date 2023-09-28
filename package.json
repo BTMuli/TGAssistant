@@ -13,8 +13,8 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,ts,json,yml}": "eslint --fix",
-    "*.{js,css,md,json,yml,ts}": "prettier --write"
+    "*.{ts,json,yml}": "eslint --fix",
+    "*.{md,json,yml,ts}": "prettier --write"
   },
   "keywords": [
     "BTMuli",
