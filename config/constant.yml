@@ -1,0 +1,37 @@
+# =============================================================================
+# ConfigFile: config/constants.yml
+# Description: 一些常量的配置文件
+# Since: 2.0.0
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Amber.top 配置
+# version: API版本
+# -----------------------------------------------------------------------------
+amber:
+  version: 40F8
+
+# -----------------------------------------------------------------------------
+# Honeyhunter 配置
+# url: Honeyhunter网址
+# namecard: 名片
+#   prefix: 名片前缀
+#     old: 旧前缀
+#     new: 新前缀
+#   suffix: 名片后缀
+#     icon: icon后缀
+#     bg: 背景后缀
+#     profile: profile后缀
+#   endIndex: 名片结束索引
+# -----------------------------------------------------------------------------
+honeyhunter:
+  url: https://genshin.honeyhunterworld.com
+  namecard:
+    prefix:
+      old: /img/i_7
+      new: /img/i_n210
+    suffix:
+      icon: _70.webp
+      bg: _back.webp
+      profile: _profile.webp
+    endIndex: 179

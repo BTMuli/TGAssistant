@@ -1,0 +1,9 @@
+# Node modules
+node_modules
+# source
+source/assets
+source/temp
+# Logs
+logs
+# Pnpm lock file
+pnpm-lock.yaml

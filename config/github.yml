@@ -1,0 +1,38 @@
+# =============================================================================
+# File: config/github.yml
+# Description: github配置文件
+# Since: 2.0.0
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 仓库 Snap.Metadata 配置
+# repo: 仓库地址
+# base: 仓库基础路径
+# branch: 仓库分支
+# include: 包含的文件，这边只列出了需要的文件
+# -----------------------------------------------------------------------------
+snap:
+  repo: DGP-Studio/Snap.Metadata
+  base: Genshin/CHS
+  branch: main
+  include:
+    Achievement: Achievement.json
+    AchievementGoal: AchievementGoal.json
+    Avatar: Avatar.json
+    Meta: Meta.json
+    Weapon: Weapon.json
+    Material: Material.json
+
+# -----------------------------------------------------------------------------
+# 仓库 Paimon.Moe 配置
+# repo: 仓库地址
+# base: 仓库基础路径
+# branch: 仓库分支
+# include: 包含的文件，这边只列出了需要的文件
+# -----------------------------------------------------------------------------
+paimon:
+  repo: MadeBaruna/paimon-moe
+  base: src/data
+  branch: main
+  include:
+    Achievement: achievement/zh.json

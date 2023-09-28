@@ -3,49 +3,66 @@
   "version": "1.4.0",
   "description": "The assistant for Tauri.Genshin",
   "type": "module",
-  "packageManager": "pnpm@8.7.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BTMuli/TGAssistant.git"
+  "packageManager": "pnpm@8.7.6",
+  "scripts": {
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --write .",
+    "test:all": "mocha --timeout 10000",
+    "resize": "ts-node ./core/utils/resizeImages.ts",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,ts,json,yml}": "eslint --fix",
+    "*.{js,css,md,json,yml,ts}": "prettier --write"
   },
   "keywords": [
     "BTMuli",
     "Genshin",
     "Tools"
   ],
-  "scripts": {
-    "lint:all": "pnpm lint:style && pnpm run lint:fix",
-    "lint:style": "prettier --write .",
-    "lint:fix": "eslint --ext .js . --fix",
-    "test:all": "mocha --timeout 10000",
-    "resize": "node ./src/tools/resize.js",
-    "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*.js": "eslint --fix",
-    "*.{js,css,md,json,yml}": "prettier --write"
-  },
   "author": "BTMuli <bt-muli@outlook.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BTMuli/TGAssistant.git"
+  },
   "license": "MIT",
+  "homepage": "https://github.com/BTMuli/TGAssistent#readme",
   "bugs": {
     "url": "https://github.com/BTMuli/TGAssistent/issues"
   },
-  "homepage": "https://github.com/BTMuli/TGAssistent#readme",
   "dependencies": {
     "app-root-path": "^3.1.0",
     "axios": "^1.5.0",
+    "chalk": "^5.3.0",
     "cheerio": "^1.0.0-rc.12",
+    "fs-extra": "^11.1.1",
     "log4js": "^6.9.1",
-    "sharp": "^0.32.5"
+    "sharp": "^0.32.5",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "eslint": "^8.48.0",
+    "@types/fs-extra": "^11.0.2",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.6.4",
+    "@types/yamljs": "^0.2.31",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard-with-typescript": "^39.1.0",
     "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsonc": "^2.9.0",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-yml": "^1.9.0",
     "husky": "^8.0.3",
+    "jsonc-eslint-parser": "^2.3.0",
     "lint-staged": "^14.0.1",
     "mocha": "^10.2.0",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "yaml-eslint-parser": "^1.2.2"
   }
 }

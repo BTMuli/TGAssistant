@@ -1,0 +1,218 @@
+/**
+ * @file core types amber.d.ts
+ * @description amber 插件类型定义
+ * @since 2.0.0
+ */
+
+/**
+ * @description amber 插件类型 namespace
+ * @since 2.0.0
+ * @namespace TGACore.Plugins.Amber
+ * @memberof TGACore.Plugins
+ */
+declare namespace TGACore.Plugins.Amber {
+  /**
+   * @description 通用 api 返回数据类型
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface Response<T, U>
+   * @template T, U
+   * @property {number} response 返回状态码
+   * @property {T} data.types 返回数据
+   * @property {Record<string, U>} data.items 返回数据类型
+   * @return Response<T, U>
+   */
+  interface Response<T, U> {
+    response: number;
+    data: {
+      types: T;
+      items: Record<string, U>;
+    };
+  }
+
+  /**
+   * @description 通用数据类型，data.items 的类型
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface Item
+   * @property {number} id 编号
+   * @property {string} name 名称
+   * @property {string} icon 图标
+   * @property {string} route 路由
+   * @return Item
+   */
+  interface Item {
+    id: number;
+    name: string;
+    icon: string;
+    route: string;
+  }
+
+  /**
+   * @description 武器类型枚举
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @enum {string}
+   * @property {string} sword 单手剑
+   * @property {string} claymore 双手剑
+   * @property {string} pole 长柄武器
+   * @property {string} bow 弓
+   * @property {string} catalyst 书
+   * @return WeaponType
+   */
+  const enum WeaponType {
+    sword = "WEAPON_SWORD_ONE_HAND",
+    claymore = "WEAPON_CLAYMORE",
+    pole = "WEAPON_POLE",
+    bow = "WEAPON_BOW",
+    catalyst = "WEAPON_CATALYST",
+  }
+
+  /**
+   * @description 武器类型对照表
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @return WeaponTypeMap
+   */
+  type WeaponTypeMap = Record<WeaponType, TGACore.Constant.WeaponType>;
+
+  /**
+   * @description 元素类型枚举
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @enum {string}
+   * @property {string} anemo 风
+   * @property {string} geo 岩
+   * @property {string} electro 雷
+   * @property {string} hydro 水
+   * @property {string} pyro 火
+   * @property {string} cryo 冰
+   * @property {string} dendro 草
+   * @return ElementType
+   */
+  const enum ElementType {
+    anemo = "Wind",
+    geo = "Rock",
+    electro = "Electric",
+    hydro = "Water",
+    pyro = "Fire",
+    cryo = "Ice",
+    dendro = "Grass",
+  }
+
+  /**
+   * @description 返回数据-角色
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface ResponseCharacter
+   * @template WeaponTypeMap, Character
+   * @extends Response<WeaponTypeMap, Character>
+   * @property {WeaponTypeMap} data.types 武器类型对照表
+   * @property {Record<string, Character>} data.items 角色数据
+   * @return ResponseCharacter
+   */
+  interface ResponseCharacter extends Response<WeaponTypeMap, Character> {}
+
+  /**
+   * @description 角色数据
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface Character
+   * @extends Item
+   * @property {number} rank 星级
+   * @property {string} element 元素
+   * @property {WeaponType} weaponType 武器类型
+   * @property {[number,number]} birthday 生日
+   * @property {number} release 发布时间
+   * @return Character
+   */
+  interface Character extends Item {
+    rank: number;
+    element: ElementType;
+    weaponType: WeaponType;
+    birthday: [number, number];
+    release: number;
+  }
+
+  /**
+   * @description 返回数据-武器
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface ResponseWeapon
+   * @template WeaponTypeMap, Weapon
+   * @extends Response<WeaponTypeMap, Weapon>
+   * @property {WeaponTypeMap} data.types 武器类型对照表
+   * @property {Record<string, Weapon>} data.items 武器数据
+   * @return ResponseWeapon
+   */
+  interface ResponseWeapon extends Response<WeaponTypeMap, Weapon> {}
+
+  /**
+   * @description 武器数据
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface Weapon
+   * @extends Item
+   * @property {number} rank 星级
+   * @property {WeaponType} type 武器类型
+   * @return Weapon
+   */
+  interface Weapon extends Item {
+    rank: number;
+    type: WeaponType;
+  }
+
+  /**
+   * @description 返回数据-GCG卡牌
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface ResponseGCG
+   * @template GCGTypeMap, GCG
+   * @extends Response<GCGTypeMap, GCG>
+   * @property {GCGTypeMap} data.types GCG类型对照表
+   * @property {Record<string, GCG>} data.items GCG数据
+   * @return ResponseGCG
+   */
+  interface ResponseGCG extends Response<GCGTypeMap, GCG> {}
+
+  /**
+   * @description GCG数据
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @interface GCG
+   * @extends Item
+   * @property {GCGType} type GCG类型
+   * @property {Record<string,string>} tags 标签
+   * @property {Record<string,string>} props 属性
+   * @property {number} sortOrder 排序
+   * @return GCG
+   */
+  interface GCG extends Item {
+    type: GCGType;
+    tags: Record<string, string>;
+    props: Record<string, string>;
+    sortOrder: number;
+  }
+
+  /**
+   * @description GCG类型枚举
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @enum {string}
+   * @property {string} character 角色卡
+   * @property {string} action 动作卡
+   * @return GCGType
+   */
+  const enum GCGType {
+    character = "characterCard",
+    action = "actionCard",
+  }
+
+  /**
+   * @description GCG类型对照表
+   * @since 2.0.0
+   * @memberof TGACore.Plugins.Amber
+   * @return GCGTypeMap
+   */
+  type GCGTypeMap = Record<GCGType, GCGType>;
+}

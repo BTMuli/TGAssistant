@@ -1,11 +1,11 @@
-# JetBrains IDE config
-.idea
 # Node modules
 node_modules
-# source
-source/*
 # Logs
-logs/*
+logs
+# Source
+source
 # Temp ignore
 core/test/*
 web/*
+# Pnpm lock
+pnpm-lock.yaml
