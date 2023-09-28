@@ -6,6 +6,7 @@ node_modules
 source/*
 # Logs
 logs/*
+# Jest cache
+.jest
 # Temp ignore
-core/test/*
 web/*

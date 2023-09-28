@@ -14,7 +14,7 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "include": ["*.json", "config/**/*", "core/**/*"],
+  "include": ["*.json", "config/**/*", "core/**/*", "jest.config.ts"],
   "exclude": ["node_modules"],
   "ts-node": {
     "esm": true,
