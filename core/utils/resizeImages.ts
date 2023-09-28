@@ -26,15 +26,13 @@ fileCheckObj(tempDir);
 const files = fs.readdirSync(tempDir.src);
 Counter.Reset(files.length);
 for (const file of files) {
-  // 获取文件名跟后缀
-  const fileName = file.split(".")[0];
-  const fileExt = file.split(".")[1];
   // 判断文件后缀是否为 png
-  if (fileExt !== "png") {
+  if (!file.endsWith(".png")) {
     logger.console.mark(`[utils][resizeImages] 图片 ${file} 不是 png 格式，跳过`);
     Counter.Skip();
     continue;
   }
+  const fileName = file.slice(0, -4);
   const savePath = path.join(tempDir.out, fileName + ".webp");
   const saveFile = fileName + ".webp";
   if (fs.existsSync(savePath)) {
