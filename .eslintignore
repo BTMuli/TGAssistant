@@ -5,6 +5,6 @@ logs
 # Source
 source
 # Temp ignore
-web/*
+web/**/*.js
 # Pnpm lock
 pnpm-lock.yaml

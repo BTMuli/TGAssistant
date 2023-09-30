@@ -9,4 +9,4 @@ logs/*
 # Jest cache
 .jest
 # Temp ignore
-web/*
+web/**/*.js
