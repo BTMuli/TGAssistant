@@ -56,22 +56,22 @@ export function getAppDirPath(
   dirType: TGACore.Config.AppDirType,
   dirName?: TGACore.Config.AppDataDirType,
 ): TGACore.Config.BaseDirType {
-  const baseDir = path.join(getProjRootPath(), "source");
+  const baseDir = getProjDataPath(dirType);
   switch (dirType) {
     case "data":
       return {
-        src: path.join(baseDir, dirType, "src", dirName ?? ""),
-        out: path.join(baseDir, dirType, "out"),
+        src: path.join(baseDir, "src", dirName ?? ""),
+        out: path.join(baseDir, "out"),
       };
     case "temp":
       return {
-        src: path.join(baseDir, dirType, "src"),
-        out: path.join(baseDir, dirType, "out"),
+        src: path.join(baseDir, "src"),
+        out: path.join(baseDir, "out"),
       };
     default:
       return {
-        src: path.join(baseDir, dirType, "src", dirName ?? ""),
-        out: path.join(baseDir, dirType, "out", dirName ?? ""),
+        src: path.join(baseDir, "src", dirName ?? ""),
+        out: path.join(baseDir, "out", dirName ?? ""),
       };
   }
 }
