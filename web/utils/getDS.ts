@@ -7,6 +7,21 @@
 import md5 from "node:crypto";
 
 /**
+ * @description 转换 params
+ * @since 2.0.0
+ * @param {Record<string, string|number|boolean>} obj object
+ * @returns {string} query string
+ */
+function transParams(obj: Record<string, string | number | boolean>): string {
+  let res = "";
+  const keys = Object.keys(obj).sort();
+  for (const key of keys) {
+    res += `${key}=${obj[key].toString()}&`;
+  }
+  return res.slice(0, -1);
+}
+
+/**
  * @description 获取 salt
  * @since 2.0.0
  * @version 2.50.1
@@ -58,23 +73,24 @@ function getRandomString(length: number): string {
  * @description 获取 ds
  * @since 2.0.0
  * @param {string} method 请求方法
- * @param {string} data 请求数据
+ * @param {string|Record<string, string|number|boolean>} data 请求数据
  * @param {TGWeb.Constant.SaltType} saltType salt 类型
  * @param {boolean} isSign 是否为签名
  * @returns {string} ds
  */
 function getDS(
   method: string,
-  data: string,
+  data: string | Record<string, string | number | boolean>,
   saltType: TGWeb.Constant.SaltType,
   isSign: boolean,
 ): string {
   const salt = getSalt(saltType);
   const time = Math.floor(Date.now() / 1000).toString();
   let random = getRandomNumber(100000, 200000).toString();
+  const dataStr = typeof data === "string" ? data : transParams(data);
   if (isSign) random = getRandomString(6);
-  const body = method === "GET" ? "" : data;
-  const query = method === "GET" ? data : "";
+  const body = method === "GET" ? "" : dataStr;
+  const query = method === "GET" ? dataStr : "";
   let hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
   if (isSign) hashStr = `salt=${salt}&t=${time}&r=${random}`;
   const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
@@ -85,7 +101,7 @@ function getDS(
  * @description 获取 DS - 用于测试
  * @since 2.0.0
  * @param {string} method 请求方法
- * @param {string} data 请求数据
+ * @param {string|Record<string, string|number|boolean>} data 请求数据
  * @param {TGWeb.Constant.SaltType} saltType salt 类型
  * @param {boolean} isSign 是否为签名
  * @param {string} time 时间戳
@@ -94,15 +110,16 @@ function getDS(
  */
 export function getDSTest(
   method: string,
-  data: string,
+  data: string | Record<string, string | number | boolean>,
   saltType: TGWeb.Constant.SaltType,
   isSign: boolean,
   time: string,
   random: string,
 ): string {
   const salt = getSalt(saltType);
-  const body = method === "GET" ? "" : data;
-  const query = method === "GET" ? data : "";
+  const dataStr = typeof data === "string" ? data : transParams(data);
+  const body = method === "GET" ? "" : dataStr;
+  const query = method === "GET" ? dataStr : "";
   let hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
   if (isSign) hashStr = `salt=${salt}&t=${time}&r=${random}`;
   const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
