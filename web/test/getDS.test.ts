@@ -20,13 +20,13 @@ describe("getDS 测试", () => {
     expect(testDS).toBe(realDS);
   });
   test("测试 verifyVerification", () => {
-    const realDS = "1696512600,128536,7bc1e867dc11974213c6b26a1bcc0bd9";
+    const realDS = "1696854636,167543,f66bc212bd354f047d0949677d7655ea";
     const time = realDS.split(",")[0];
     const random = realDS.split(",")[1];
     const data = {
-      geetest_challenge: "460a6898ec4b295e9458e22fdbf88be2",
-      geetest_validate: "a2471df8f3c4d0f0beefcfe5e25426cf",
-      geetest_seccode: "a2471df8f3c4d0f0beefcfe5e25426cf|jordan",
+      geetest_challenge: "c7e2cb19c1c5bad724df0d99dae6f7cd",
+      geetest_validate: "a6fc1b66cba7e9024d57e0cfe75d5225",
+      geetest_seccode: "a6fc1b66cba7e9024d57e0cfe75d5225|jordan",
     };
     const testDS = getDSTest("POST", JSON.stringify(data), "X4", false, time, random);
     expect(testDS).toBe(realDS);
