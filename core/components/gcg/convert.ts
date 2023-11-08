@@ -68,7 +68,10 @@ for (const item of converData) {
   let findIndex = -1;
   let findData: TGACore.Plugins.Observe.WikiItem[] = [];
   if (item.type === TGACore.Components.GCG.CardType.character) {
-    findIndex = mysData.character.findIndex((value) => value.title === item.name);
+    findIndex = mysData.character.findIndex((value) => {
+      if (value.title === item.name) return true;
+      return value.title.includes("·") && value.title.split("·")[1] === item.name;
+    });
     findData = mysData.character;
   } else if (item.type === TGACore.Components.GCG.CardType.action) {
     findIndex = mysData.action.findIndex((value) => value.title === item.name);
