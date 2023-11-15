@@ -6,20 +6,7 @@
 
 import md5 from "node:crypto";
 
-/**
- * @description 转换 params
- * @since 2.0.0
- * @param {Record<string, string|number|boolean>} obj object
- * @returns {string} query string
- */
-function transParams(obj: Record<string, string | number | boolean>): string {
-  let res = "";
-  const keys = Object.keys(obj).sort();
-  for (const key of keys) {
-    res += `${key}=${obj[key].toString()}&`;
-  }
-  return res.slice(0, -1);
-}
+import { transParams } from "./transData.ts";
 
 /**
  * @description 获取 salt
@@ -58,15 +45,48 @@ function getRandomNumber(min: number, max: number): number {
  * @description 获取随机字符串
  * @since 2.0.0
  * @param {number} length 字符串长度
+ * @param [type] 字符串类型
  * @returns {string} 随机字符串
  */
-function getRandomString(length: number): string {
-  const str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+export function getRandomString(length: number, type?: string): string {
+  let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  if (type === "number") str = "0123456789";
+  if (type === "letter") str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (type === "lower") str = "abcdefghijklmnopqrstuvwxyz";
+  if (type === "upper") str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (type === "hex") str = "0123456789abcdef";
   let res = "";
   for (let i = 0; i < length; i++) {
     res += str.charAt(Math.floor(Math.random() * str.length));
   }
   return res;
+}
+
+/**
+ * @function getMd5Str
+ * @description 获取 dataStr
+ * @since 2.0.0
+ * @param {string} method 请求方法
+ * @param {string} time 时间戳
+ * @param {string} random 随机数
+ * @param {string} salt salt
+ * @param {string} dataStr 请求数据
+ * @param {boolean} isSign 是否为签名
+ * @returns {string} dataStr
+ */
+function getMd5Str(
+  method: string,
+  time: string,
+  random: string,
+  salt: string,
+  dataStr: string,
+  isSign: boolean,
+): string {
+  const body = method === "GET" ? "" : dataStr;
+  const query = method === "GET" ? dataStr : "";
+  let hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
+  if (isSign) hashStr = `salt=${salt}&t=${time}&r=${random}`;
+  return md5.createHash("md5").update(hashStr).digest("hex");
 }
 
 /**
@@ -78,7 +98,7 @@ function getRandomString(length: number): string {
  * @param {boolean} isSign 是否为签名
  * @returns {string} ds
  */
-function getDS(
+export function getDS(
   method: string,
   data: string | Record<string, string | number | boolean>,
   saltType: TGWeb.Constant.SaltType,
@@ -89,11 +109,7 @@ function getDS(
   let random = getRandomNumber(100000, 200000).toString();
   const dataStr = typeof data === "string" ? data : transParams(data);
   if (isSign) random = getRandomString(6);
-  const body = method === "GET" ? "" : dataStr;
-  const query = method === "GET" ? dataStr : "";
-  let hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
-  if (isSign) hashStr = `salt=${salt}&t=${time}&r=${random}`;
-  const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
+  const md5Str = getMd5Str(method, time, random, salt, dataStr, isSign);
   return `${time},${random},${md5Str}`;
 }
 
@@ -118,13 +134,6 @@ export function getDSTest(
 ): string {
   const salt = getSalt(saltType);
   const dataStr = typeof data === "string" ? data : transParams(data);
-  const body = method === "GET" ? "" : dataStr;
-  const query = method === "GET" ? dataStr : "";
-  let hashStr = `salt=${salt}&t=${time}&r=${random}&b=${body}&q=${query}`;
-  if (isSign) hashStr = `salt=${salt}&t=${time}&r=${random}`;
-  const md5Str = md5.createHash("md5").update(hashStr).digest("hex");
-  // 这边是为了暂时解决 no unused vars 的问题
-  const ds = getDS(method, data, saltType, isSign);
-  console.log(`DS: ${ds}`);
+  const md5Str = getMd5Str(method, time, random, salt, dataStr, isSign);
   return `${time},${random},${md5Str}`;
 }
