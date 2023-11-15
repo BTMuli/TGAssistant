@@ -7,27 +7,17 @@
 import md5 from "node:crypto";
 
 import { transParams } from "./transData.ts";
+import MysClient from "../constant/mys.ts";
 
 /**
  * @description 获取 salt
  * @since 2.0.0
  * @version 2.50.1
  * @param {TGWeb.Constant.SaltType} saltType salt 类型
- * @returns {TGWeb.Constant.Salt} salt
+ * @returns {MysClient.salt} salt
  */
-function getSalt(saltType: TGWeb.Constant.SaltType): TGWeb.Constant.Salt {
-  switch (saltType) {
-    case "BBS_K2":
-      return TGWeb.Constant.Salt.BBS_K2;
-    case "BBS_LK2":
-      return TGWeb.Constant.Salt.BBS_LK2;
-    case "X4":
-      return TGWeb.Constant.Salt.X4;
-    case "X6":
-      return TGWeb.Constant.Salt.X6;
-    case "PROD":
-      return TGWeb.Constant.Salt.PROD;
-  }
+function getSalt(saltType: TGWeb.Constant.SaltType): string {
+  return MysClient.salt[saltType];
 }
 
 /**
@@ -48,13 +38,35 @@ function getRandomNumber(min: number, max: number): number {
  * @param [type] 字符串类型
  * @returns {string} 随机字符串
  */
-export function getRandomString(length: number, type?: string): string {
-  let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  if (type === "number") str = "0123456789";
-  if (type === "letter") str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  if (type === "lower") str = "abcdefghijklmnopqrstuvwxyz";
-  if (type === "upper") str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  if (type === "hex") str = "0123456789abcdef";
+export function getRandomString(
+  length: number,
+  type: TGWeb.Utils.RandomStringTypeKey = "all",
+): string {
+  const char = "abcdefghijklmnopqrstuvwxyz";
+  const num = "0123456789";
+  let str = "";
+  switch (type) {
+    case "all":
+      str = char + char.toUpperCase() + num;
+      break;
+    case "number":
+      str = num;
+      break;
+    case "lower":
+      str = char;
+      break;
+    case "upper":
+      str = char.toUpperCase();
+      break;
+    case "letter":
+      str = char + char.toUpperCase();
+      break;
+    case "hex":
+      str = num + "abcdef";
+      break;
+    default:
+      throw new Error("Invalid type");
+  }
   let res = "";
   for (let i = 0; i < length; i++) {
     res += str.charAt(Math.floor(Math.random() * str.length));

@@ -24,12 +24,12 @@ declare namespace TGWeb.Constant {
    * @property {string} PROD - PROD salt 值
    * @returns {string} salt 值
    */
-  const enum Salt {
-    BBS_K2 = "A4lPYtN0KGRVwE5M5Fm0DqQiC5VVMVM3",
-    BBS_LK2 = "kkFiNdhyHqZ1VnDRHnU1podIvO4eiHcs",
-    X4 = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs",
-    X6 = "t0qEgfub6cvueAPgR5m9aQWWVciEer7v",
-    PROD = "JwYDpKvLj6MrMqqYU6jTKF17KNO2PXoS",
+  enum Salt {
+    BBS_K2,
+    BBS_LK2,
+    X4,
+    X6,
+    PROD,
   }
 
   /**
@@ -38,6 +38,16 @@ declare namespace TGWeb.Constant {
    * @return SaltType
    */
   type SaltType = keyof typeof Salt;
+
+  /**
+   * @description salt 常量
+   * @since 2.0.0
+   * @interface SaltFull
+   * @memberof TGWeb.Constant
+   */
+  type SaltFull = {
+    [key in SaltType]: string;
+  };
 
   /**
    * @description Cookie 类型枚举
