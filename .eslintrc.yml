@@ -75,6 +75,9 @@ overrides:
           alphabetize:
             order: asc
             caseInsensitive: true
+      quote-props:
+        - error
+        - consistent
   - files: ["*.json"]
     parser: jsonc-eslint-parser
     rules:
