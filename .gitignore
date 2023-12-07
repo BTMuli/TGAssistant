@@ -4,6 +4,7 @@
 node_modules
 # source
 source/*
+scripts/output/
 # Logs
 logs/*
 # Jest cache
