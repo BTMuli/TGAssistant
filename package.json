@@ -8,7 +8,7 @@
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --write .",
-    "test:all": "mocha --timeout 10000",
+    "test": "vitest",
     "resize": "bun ./core/utils/resizeImages.ts",
     "prepare": "husky install"
   },

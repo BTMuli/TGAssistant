@@ -1,14 +1,14 @@
 /**
- * @file web/test/getDeviceFP.test.ts
+ * @file test/getDeviceFP.test.ts
  * @description getDeviceFP 测试文件
  * @since 2.0.0
  */
 
-import { test } from "@jest/globals";
 import { v4 } from "uuid";
+import { test, expect, describe } from "vitest";
 
-import { getDeviceFP } from "../request/getDeviceFP.ts";
-import { getRandomString } from "../utils/getDS.ts";
+import { getDeviceFP } from "../web/request/getDeviceFP.ts";
+import { getRandomString } from "../web/utils/getDS.ts";
 
 describe("getDeviceFP 测试", () => {
   const model = getRandomString(6);

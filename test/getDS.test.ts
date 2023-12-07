@@ -1,12 +1,12 @@
 /**
- * @file web test getDS.test.ts
+ * @file test/getDS.test.ts
  * @description getDS 测试文件
  * @since 2.0.0
  */
 
-import { test } from "@jest/globals";
+import { test, expect, describe } from "vitest";
 
-import { getDSTest } from "../utils/getDS.ts";
+import { getDSTest } from "../web/utils/getDS.ts";
 
 describe("getDS 测试", () => {
   test("测试 createVerification", () => {
