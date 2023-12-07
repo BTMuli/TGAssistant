@@ -15,9 +15,5 @@
     "strict": true
   },
   "include": ["*.json", "config/**/*", "core/**/*", "jest.config.ts", "web/**/*.ts"],
-  "exclude": ["node_modules"],
-  "ts-node": {
-    "esm": true,
-    "files": true
-  }
+  "exclude": ["node_modules"]
 }
