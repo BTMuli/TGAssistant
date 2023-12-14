@@ -12,8 +12,7 @@
     "baseUrl": ".",
     "lib": ["esnext"],
     "skipLibCheck": true,
-    "strict": true,
-    "types": ["core/types", "web/types"]
+    "strict": true
   },
   "include": [
     "*.json",
