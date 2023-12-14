@@ -14,14 +14,10 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "include": [
-    "*.json",
-    "config/**/*",
-    "core/**/*",
-    "scripts/*.ts",
-    "test/*.ts",
-    "vitest.config.ts",
-    "web/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["*.json", "config/**/*", "core/**/*", "vitest.config.ts", "web/**/*.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "esm": true,
+    "files": true
+  }
 }
