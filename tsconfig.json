@@ -12,9 +12,17 @@
     "baseUrl": ".",
     "lib": ["esnext"],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "types": ["core/types", "web/types"]
   },
-  "include": ["*.json", "config/**/*", "core/**/*", "vitest.config.ts", "web/**/*.ts"],
+  "include": [
+    "*.json",
+    "config/**/*",
+    "core/**/*",
+    "test/**.test.ts",
+    "vitest.config.ts",
+    "web/**/*.ts"
+  ],
   "exclude": ["node_modules"],
   "ts-node": {
     "esm": true,
