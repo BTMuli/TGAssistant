@@ -65,6 +65,7 @@ declare namespace TGACore.Config {
    * @property {number} material 材料数据目录
    * @property {number} namecard 名片数据目录
    * @property {number} weapon 武器数据目录
+   * @property {number} wiki wiki数据目录
    * @return AppDataDirTypeEnum 应用数据目录配置文件类型枚举
    */
   enum AppDataDirTypeEnum {
@@ -75,6 +76,7 @@ declare namespace TGACore.Config {
     material,
     namecard,
     weapon,
+    wiki,
   }
 
   /**
