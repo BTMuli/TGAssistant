@@ -134,7 +134,7 @@ for (const id of amberReward) {
     }
     const url = requestData.amber.img.replace("{img}", `UI_ItemIcon_${id}`);
     const res = await axios.get(url, { responseType: "arraybuffer" });
-    await sharp(res.data).toFile(savePath);
+    await sharp(<ArrayBuffer>res.data).toFile(savePath);
     logger.console.info(`[components][calendar][download] ${id} 下载完成`);
     Counter.Success();
   } catch (e) {
@@ -162,6 +162,7 @@ function getReward(data: Record<string, TGACore.Components.Calendar.RawAmberItem
   const result = new Set<number>();
   result.add(201); // 原石
   result.add(105); // 好感
+  result.add(210); // 体力
   Object.values(data).forEach((item) => {
     item.reward.forEach((id) => {
       if (id > 100000) {

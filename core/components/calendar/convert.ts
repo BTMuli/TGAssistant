@@ -268,6 +268,7 @@ Counter.Output();
 // 处理图片
 convertMaterialSet.add(201); // 原石
 convertMaterialSet.add(105); // 好感
+convertMaterialSet.add(210); // 树脂
 Counter.Reset(convertMaterialSet.size);
 for (const item of convertMaterialSet) {
   const oriPath = path.join(imgDir.src, `${item}.png`);
