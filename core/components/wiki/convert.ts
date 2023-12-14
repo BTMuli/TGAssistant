@@ -12,6 +12,7 @@ import { jsonDetail, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import { getHutaoWeapon } from "../../utils/typeTrans.ts";
 
 logger.init();
 logger.default.info("[components][wiki][convert] 运行 convert.ts");
@@ -20,31 +21,127 @@ logger.default.info("[components][wiki][convert] 运行 convert.ts");
 fileCheckObj(jsonDir);
 fileCheck(jsonDetail.weapon.out);
 fileCheck(jsonDetail.character.out);
-if (!fileCheck(jsonDetail.character.src, false) || !fileCheck(jsonDetail.weapon.src)) {
+const checkObj = {
+  character: jsonDetail.character.src,
+  weapon: jsonDetail.weapon.src,
+  material: jsonDetail.material,
+};
+if (!fileCheckObj(checkObj, false)) {
   logger.default.error("[components][wiki][convert] wiki元数据文件不存在");
   logger.console.info("[components][wiki][convert] 请执行 download.ts");
   process.exit(1);
 }
 
 Counter.Reset();
-const weaponRaw: any[] = await fs.readJSON(jsonDetail.weapon.src);
-const characterRaw: any[] = await fs.readJSON(jsonDetail.character.src);
+const weaponRaw: TGACore.Components.Weapon.RawHutaoItem[] = await fs.readJSON(
+  jsonDetail.weapon.src,
+);
+const characterRaw: TGACore.Components.Character.RawHutaoItem[] = await fs.readJSON(
+  jsonDetail.character.src,
+);
+const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
 Counter.addTotal(weaponRaw.length + characterRaw.length);
 
 for (const character of characterRaw) {
-  const fileName = character.Id;
-  const outPath = `${jsonDetail.character.out}/${fileName}.json`;
-  await fs.writeJSON(outPath, character, { spaces: 2 });
-  logger.console.mark(`[components][wiki][convert] 角色 ${fileName} 转换完成`);
+  const outPath = `${jsonDetail.character.out}/${character.Id}.json`;
+  const data = transCharacter(character);
+  await fs.writeJSON(outPath, data, { spaces: 2 });
+  logger.console.mark(
+    `[components][wiki][convert][c${character.Id}] 角色 ${character.Name} 数据转换完成`,
+  );
   Counter.Success();
 }
 for (const weapon of weaponRaw) {
-  const fileName = weapon.Id;
-  const outPath = `${jsonDetail.weapon.out}/${fileName}.json`;
-  await fs.writeJSON(outPath, weapon, { spaces: 2 });
-  logger.console.mark(`[components][wiki][convert] 武器 ${fileName} 转换完成`);
+  const outPath = `${jsonDetail.weapon.out}/${weapon.Id}.json`;
+  const data = transWeapon(weapon);
+  await fs.writeJSON(outPath, data, { spaces: 2 });
+  logger.console.mark(
+    `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据转换完成`,
+  );
   Counter.Success();
 }
 Counter.End();
 logger.console.mark(`[components][wiki][convert] wiki组件转换完成，耗时${Counter.getTime()}`);
 Counter.Output();
+
+// 用到的函数
+/**
+ * @description 获取材料
+ * @since 2.0.0
+ * @param {number[]} raw 原始数据
+ * @returns {TGACore.Components.Calendar.ConvertMaterial[]} 转换后的数据
+ */
+function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMaterial[] {
+  const res = [];
+  for (const r of raw) {
+    const material = materialRaw.find((item) => item.Id === r);
+    if (material === undefined) {
+      logger.default.warn(`[components][wiki][convert] 缺失ID为 ${r} 的材料数据`);
+      continue;
+    }
+    res.push({
+      id: material.Id,
+      name: material.Name,
+      star: material.RankLevel,
+      starIcon: `/icon/star/${material.RankLevel}.webp`,
+      bg: `/icon/bg/${material.RankLevel}-Star.webp`,
+      icon: `/icon/material/${material.Id}.webp`,
+    });
+  }
+  return res;
+}
+
+/**
+ * @description 转换角色数据
+ * @since 2.0.0
+ * @param {TGACore.Components.Character.RawHutaoItem} raw 原始数据
+ * @returns {TGACore.Components.Character.WikiItem} 转换后的数据
+ */
+function transCharacter(
+  raw: TGACore.Components.Character.RawHutaoItem,
+): TGACore.Components.Character.WikiItem {
+  const materials = getMaterials(raw.CultivationItems);
+  return {
+    id: raw.Id,
+    name: raw.Name,
+    title: raw.FetterInfo.Title,
+    description: raw.Description,
+    brief: {
+      camp: raw.FetterInfo.Native,
+      constellation: raw.FetterInfo.ConstellationBefore,
+      birth: `${raw.FetterInfo.BirthMonth}月${raw.FetterInfo.BirthDay}日`,
+      cv: {
+        cn: raw.FetterInfo.CvChinese,
+        jp: raw.FetterInfo.CvJapanese,
+        en: raw.FetterInfo.CvEnglish,
+        kr: raw.FetterInfo.CvKorean,
+      },
+    },
+    star: raw.Quality,
+    element: raw.FetterInfo.VisionBefore,
+    weapon: getHutaoWeapon(raw.Weapon),
+    materials,
+    skills: {
+      normal: [...raw.SkillDepot.Skills, raw.SkillDepot.EnergySkill],
+      special: raw.SkillDepot.Inherents,
+    },
+    constellation: raw.SkillDepot.Talents,
+    // todo: costume 衣装
+    // todo: food 料理
+    talks: raw.FetterInfo.Fetters,
+    stories: raw.FetterInfo.FetterStories,
+  };
+}
+
+/**
+ * @description 转换武器数据
+ * @since 2.0.0
+ * @todo
+ * @param {TGACore.Components.Weapon.RawHutaoItem} raw 原始数据
+ * @returns {TGACore.Components.Weapon.WikiItem} 转换后的数据
+ */
+function transWeapon(
+  raw: TGACore.Components.Weapon.RawHutaoItem,
+): TGACore.Components.Weapon.WikiItem {
+  return raw;
+}

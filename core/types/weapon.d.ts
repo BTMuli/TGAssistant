@@ -70,4 +70,13 @@ declare namespace TGACore.Components.Weapon {
     weaponIcon: string;
     icon: string;
   }
+
+  /**
+   * @description 转换后的武器数据
+   * @since 2.0.0
+   * @interface WikiItem
+   * @memberof TGACore.Components.Weapon
+   * @todo 后续补充
+   */
+  type WikiItem = any;
 }

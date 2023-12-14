@@ -281,4 +281,63 @@ declare namespace TGACore.Components.Character {
     weapon: string;
     nameCard: string;
   }
+
+  /**
+   * @description 转换后的wiki数据
+   * @since 2.0.0
+   * @interface WikiItem
+   * @memberof TGACore.Components.Character
+   * @property {number} id 角色编号
+   * @property {string} name 角色名称
+   * @property {string} title 角色称号
+   * @property {string} description 角色简介
+   * @property {object} brief 角色简介
+   * @property {string} brief.camp 角色地区
+   * @property {string} brief.constellation 角色星座
+   * @property {string} brief.birth 角色生日
+   * @property {object} brief.cv 角色声优
+   * @property {string} brief.cv.cn 角色声优-中文
+   * @property {string} brief.cv.jp 角色声优-日文
+   * @property {string} brief.cv.en 角色声优-英文
+   * @property {string} brief.cv.kr 角色声优-韩文
+   * @property {number} star 角色星级
+   * @property {string} element 角色元素类型
+   * @property {TGACore.Constant.WeaponType} weapon 角色武器类型
+   * @property {TGACore.Components.Calendar.ConvertMaterial[]} materials 角色培养材料
+   * @property {object} skills 角色技能
+   * @property {RhisdSkill[]} skills.normal 正常技能-普攻、战技、元素爆发
+   * @property {RhisdSkill[]} skills.special 特殊技能
+   * @property {RhisdTalent[]} constellation 角色命座
+   * @property {RhiFetter[]} talks 闲聊
+   * @property {RhiFetter[]} stories 故事
+   * @return WikiItem
+   */
+  interface WikiItem {
+    id: number;
+    name: string;
+    title: string;
+    description: string;
+    brief: {
+      camp: string;
+      constellation: string;
+      birth: string;
+      cv: {
+        cn: string;
+        jp: string;
+        en: string;
+        kr: string;
+      };
+    };
+    star: number;
+    element: string;
+    weapon: TGACore.Constant.WeaponType;
+    materials: TGACore.Components.Calendar.ConvertMaterial[];
+    skills: {
+      normal: RhisdSkill[];
+      special: RhisdSkill[];
+    };
+    constellation: RhisdTalent[];
+    talks: RhiFetter[];
+    stories: RhiFetter[];
+  }
 }
