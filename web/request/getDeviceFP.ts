@@ -4,8 +4,6 @@
  * @since 2.0.0
  */
 
-import * as console from "console";
-
 import axios from "axios";
 
 import { getRandomString } from "../utils/getDS.ts";
@@ -68,7 +66,6 @@ export async function getDeviceFP(model: string, seedID: string, seedTime: strin
   };
   const header = getMinHeaderMobile();
   return await axios.post(url, data, { headers: header }).then((res) => {
-    console.log(res.data);
     return res.data;
   });
 }

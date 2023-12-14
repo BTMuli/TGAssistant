@@ -35,6 +35,9 @@ const Salt: TGWeb.Constant.SaltFull = {
 const MysClient = {
   version: SaltVersion,
   salt: Salt,
+  game: {
+    biz: "hk4e_cn",
+  },
 };
 
 export default MysClient;

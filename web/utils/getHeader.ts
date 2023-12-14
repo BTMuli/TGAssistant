@@ -12,7 +12,7 @@ import MysClient from "../constant/mys.ts";
  * @description 获取请求头-PC端
  * @since 2.0.0
  * @param {Record<string, string>} cookie cookie
- * @param {string} method 请求方法
+ * @param {"GET" | "POST"} method 请求方法
  * @param {Record<string, string|number|boolean>} params 请求参数
  * @param {string} saltType salt 类型
  * @param {boolean} isSign 是否签名
@@ -20,7 +20,7 @@ import MysClient from "../constant/mys.ts";
  */
 export function getHeaderPC(
   cookie: Record<string, string>,
-  method: string,
+  method: "GET" | "POST",
   params: Record<string, string | number | boolean>,
   saltType: TGWeb.Constant.SaltType,
   isSign: boolean,
