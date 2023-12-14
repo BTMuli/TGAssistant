@@ -11,6 +11,7 @@ import { getAppDirPath } from "../../utils/getBasePaths.ts";
 export const jsonDir = getAppDirPath("data", "wiki");
 
 export const jsonDetail = {
+  material: path.join(jsonDir.src, "material.json"),
   weapon: {
     src: path.join(jsonDir.src, "weapon.json"),
     out: path.join(jsonDir.out, "Weapon"),

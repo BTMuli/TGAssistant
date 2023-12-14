@@ -30,4 +30,28 @@ declare namespace TGACore.Plugins.Hutao {
     bow = 12,
     pole = 13,
   }
+
+  /**
+   * @description 材料类型
+   * @since 2.0.0
+   * @property {number} MaterialType - 材料类型
+   * @property {number} Id - 材料 Id
+   * @property {number} RankLevel - 星级
+   * @property {number} ItemType - 物品类型
+   * @property {string} Name - 材料名称
+   * @property {string} Description - 材料描述
+   * @property {string} TypeDescription - 物品类型描述
+   * @property {string} Icon - 材料图标
+   * @return Material
+   */
+  interface Material {
+    MaterialType: number;
+    Id: number;
+    RankLevel: number;
+    ItemType: number;
+    Name: string;
+    Description: string;
+    TypeDescription: string;
+    Icon: string;
+  }
 }

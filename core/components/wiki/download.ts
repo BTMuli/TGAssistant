@@ -34,13 +34,15 @@ const metadata = await getMetadata().catch((e) => {
 
 // 下载 wiki 数据
 Counter.Reset();
-const urlRes = getSnapDownloadUrl("Avatar", "Weapon");
+const urlRes = getSnapDownloadUrl("Avatar", "Weapon", "Material");
 for (const [key, value] of urlRes) {
   let savePath: string;
   if (key === "Avatar") {
     savePath = jsonDetail.character.src;
-  } else {
+  } else if (key === "Weapon") {
     savePath = jsonDetail.weapon.src;
+  } else {
+    savePath = jsonDetail.material;
   }
   if (checkMetadata(key, metadata) && fileCheck(savePath, false)) {
     logger.console.mark(`[components][wiki][download] ${key} 数据已存在，跳过`);
