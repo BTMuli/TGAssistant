@@ -19,11 +19,13 @@ declare namespace TGACore.Config {
    * @readonly
    * @property {string} Constant 常量配置文件类型
    * @property {string} Github Github 配置文件类型
+   * @property {string} Material 材料配置文件类型
    * @return ConfigFileEnum 配置文件类型枚举
    */
   const enum ConfigFileEnum {
     Constant = "constant",
     Github = "github",
+    Material = "material",
   }
 
   /**
@@ -192,5 +194,16 @@ declare namespace TGACore.Config {
   interface GithubConfig {
     snap: GithubRepoConfig;
     paimon: GithubRepoConfig;
+  }
+
+  /**
+   * @description 材料配置文件类型
+   * @since 2.0.0
+   * @memberof TGACore.Config
+   * @property {number[]} material 材料配置文件
+   * @return MaterialConfig 材料配置文件类型
+   */
+  interface MaterialConfig {
+    material: number[];
   }
 }

@@ -20,6 +20,9 @@ export function readConfig(
 export function readConfig(
   fileType: TGACore.Config.ConfigFileEnum.Github,
 ): TGACore.Config.GithubConfig;
+export function readConfig(
+  fileType: TGACore.Config.ConfigFileEnum.Material,
+): TGACore.Config.MaterialConfig;
 
 /**
  * @description 配置读取中转

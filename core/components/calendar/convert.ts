@@ -10,10 +10,11 @@ import process from "node:process";
 import fs from "fs-extra";
 import sharp from "sharp";
 
-import { jsonDir, jsonDetailDir, imgDir } from "./constant.ts";
+import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import { readConfig } from "../../utils/readConfig.ts";
 import { getHutaoWeapon } from "../../utils/typeTrans.ts";
 
 logger.init();
@@ -266,9 +267,10 @@ logger.default.info("[components][calendar][convert] 观测枢数据处理完成
 Counter.Output();
 
 // 处理图片
-convertMaterialSet.add(201); // 原石
-convertMaterialSet.add(105); // 好感
-convertMaterialSet.add(210); // 树脂
+const materialConfig = readConfig(TGACore.Config.ConfigFileEnum.Material);
+materialConfig.material.forEach((item) => {
+  convertMaterialSet.add(item);
+});
 Counter.Reset(convertMaterialSet.size);
 for (const item of convertMaterialSet) {
   const oriPath = path.join(imgDir.src, `${item}.png`);
