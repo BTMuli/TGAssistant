@@ -64,7 +64,8 @@ const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.ve
 for (const weapon of weaponRaw) {
   const outPath = `${jsonDetail.weapon.out}/${weapon.Id}.json`;
   const data = transWeapon(weapon);
-  data.story = await getWeaponStory(weapon.Id);
+  if (data.id !== 11513) data.story = await getWeaponStory(weapon.Id.toString());
+  data.story = [await getWeaponStory("11513_1"), await getWeaponStory("11513_2")];
   await fs.writeJSON(outPath, data, { spaces: 2 });
   logger.console.mark(
     `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据转换完成`,
@@ -181,12 +182,11 @@ function transWeapon(
 /**
  * @description 获取武器故事
  * @since 2.0.0
- * @param {number} id 武器ID
+ * @param {string} id 武器ID
  * @returns {Promise<string>} 武器故事
  */
-async function getWeaponStory(id: number): Promise<string> {
-  let url = `https://api.ambr.top/v2/CHS/readable/Weapon${id}?vh=${amberVersion}`;
-  if (id === 11513) url = url.replace("Weapon11513", "Weapon11513_1");
+async function getWeaponStory(id: string): Promise<string> {
+  const url = `https://api.ambr.top/v2/CHS/readable/Weapon${id}?vh=${amberVersion}`;
   try {
     const res = await axios.get(url);
     return res.data.data;

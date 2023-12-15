@@ -95,6 +95,15 @@ declare namespace TGACore.Components.Weapon {
    * @since 2.0.0
    * @interface WikiItem
    * @memberof TGACore.Components.Weapon
+   * @property {number} id 武器 id
+   * @property {string} name 武器名称
+   * @property {string} description 武器简介
+   * @property {number} star 武器星级
+   * @property {string} weapon 武器类型
+   * @property {TGACore.Components.Calendar.ConvertMaterial[]} materials 武器材料
+   * @property {RhiAffix} affix 精炼描述
+   * @property {string | string[]} story 武器故事
+   * @return WikiItem
    */
   interface WikiItem {
     id: number;
@@ -104,6 +113,6 @@ declare namespace TGACore.Components.Weapon {
     weapon: string;
     materials: TGACore.Components.Calendar.ConvertMaterial[];
     affix: RhiAffix;
-    story: string;
+    story: string | string[];
   }
 }
