@@ -7,6 +7,7 @@
 import { join } from "node:path";
 import process from "node:process";
 
+import axios from "axios";
 import fs from "fs-extra";
 
 import { jsonDetail, jsonDir } from "./constant.ts";
@@ -48,7 +49,7 @@ const localMaterialSet = new Set<number>(
   readConfig(TGACore.Config.ConfigFileEnum.Material).material,
 );
 Counter.addTotal(weaponRaw.length + characterRaw.length);
-
+// 处理角色
 for (const character of characterRaw) {
   const outPath = `${jsonDetail.character.out}/${character.Id}.json`;
   const data = transCharacter(character);
@@ -58,9 +59,12 @@ for (const character of characterRaw) {
   );
   Counter.Success();
 }
+// 处理武器
+const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
 for (const weapon of weaponRaw) {
   const outPath = `${jsonDetail.weapon.out}/${weapon.Id}.json`;
   const data = transWeapon(weapon);
+  data.story = await getWeaponStory(weapon.Id);
   await fs.writeJSON(outPath, data, { spaces: 2 });
   logger.console.mark(
     `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据转换完成`,
@@ -94,7 +98,7 @@ function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMateria
       continue;
     }
     if (!localMaterialSet.has(material.Id)) {
-      logger.default.warn(`[components][wiki][convert] 添加ID为 ${r} 的材料图像 ${material.Name}`);
+      logger.console.info(`[components][wiki][convert] 添加ID为 ${r} 的材料图像 ${material.Name}`);
       materialSet.add({ id: material.Id, name: material.Name });
       localMaterialSet.add(material.Id);
     }
@@ -155,12 +159,39 @@ function transCharacter(
 /**
  * @description 转换武器数据
  * @since 2.0.0
- * @todo
  * @param {TGACore.Components.Weapon.RawHutaoItem} raw 原始数据
  * @returns {TGACore.Components.Weapon.WikiItem} 转换后的数据
  */
 function transWeapon(
   raw: TGACore.Components.Weapon.RawHutaoItem,
 ): TGACore.Components.Weapon.WikiItem {
-  return raw;
+  const materials = getMaterials(raw.CultivationItems);
+  return {
+    id: raw.Id,
+    name: raw.Name,
+    description: raw.Description,
+    star: raw.RankLevel,
+    weapon: getHutaoWeapon(raw.WeaponType),
+    materials,
+    affix: raw.Affix,
+    story: "",
+  };
+}
+
+/**
+ * @description 获取武器故事
+ * @since 2.0.0
+ * @param {number} id 武器ID
+ * @returns {Promise<string>} 武器故事
+ */
+async function getWeaponStory(id: number): Promise<string> {
+  let url = `https://api.ambr.top/v2/CHS/readable/Weapon${id}?vh=${amberVersion}`;
+  if (id === 11513) url = url.replace("Weapon11513", "Weapon11513_1");
+  try {
+    const res = await axios.get(url);
+    return res.data.data;
+  } catch (e) {
+    logger.default.warn(`[components][wiki][convert] 获取武器 ${id} 故事失败`);
+    return "";
+  }
 }
