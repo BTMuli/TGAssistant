@@ -4,6 +4,7 @@
  * @since 2.0.0
  */
 
+import { join } from "node:path";
 import process from "node:process";
 
 import fs from "fs-extra";
@@ -12,6 +13,8 @@ import { jsonDetail, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import { getProjConfigPath } from "../../utils/getBasePaths.ts";
+import { readConfig } from "../../utils/readConfig.ts";
 import { getHutaoWeapon } from "../../utils/typeTrans.ts";
 
 logger.init();
@@ -40,6 +43,10 @@ const characterRaw: TGACore.Components.Character.RawHutaoItem[] = await fs.readJ
   jsonDetail.character.src,
 );
 const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
+const materialSet = new Set<{ id: number; name: string }>();
+const localMaterialSet = new Set<number>(
+  readConfig(TGACore.Config.ConfigFileEnum.Material).material,
+);
 Counter.addTotal(weaponRaw.length + characterRaw.length);
 
 for (const character of characterRaw) {
@@ -60,6 +67,13 @@ for (const weapon of weaponRaw) {
   );
   Counter.Success();
 }
+// 更新材料图像
+const configFile = join(getProjConfigPath(), "material.yml");
+const materialList = Array.from(materialSet).sort((a, b) => a.id - b.id);
+for (const material of materialList) {
+  await fs.appendFile(configFile, `  - ${material.id} # ${material.name}\n`);
+}
+
 Counter.End();
 logger.console.mark(`[components][wiki][convert] wiki组件转换完成，耗时${Counter.getTime()}`);
 Counter.Output();
@@ -78,6 +92,11 @@ function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMateria
     if (material === undefined) {
       logger.default.warn(`[components][wiki][convert] 缺失ID为 ${r} 的材料数据`);
       continue;
+    }
+    if (!localMaterialSet.has(material.Id)) {
+      logger.default.warn(`[components][wiki][convert] 添加ID为 ${r} 的材料图像 ${material.Name}`);
+      materialSet.add({ id: material.Id, name: material.Name });
+      localMaterialSet.add(material.Id);
     }
     res.push({
       id: material.Id,
