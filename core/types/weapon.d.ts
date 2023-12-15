@@ -27,6 +27,8 @@ declare namespace TGACore.Components.Weapon {
    * @property {number} GrowCurves.InitValue 未知
    * @property {number} GrowCurves.Type 未知
    * @property {number} GrowCurves.Value 未知
+   * @property {string} Affix.Name 精炼名称
+   * @property {Array<{Level: number; Description: string}>} Affix.Description 精炼描述
    * @property {number[]} CultivationItems 武器培养材料
    * @return RawHutaoItem
    */
@@ -43,6 +45,13 @@ declare namespace TGACore.Components.Weapon {
       InitValue: number;
       Type: number;
       Value: number;
+    };
+    Affix: {
+      Name: string;
+      Description: Array<{
+        Level: number;
+        Description: string;
+      }>;
     };
     CultivationItems: number[];
   }
