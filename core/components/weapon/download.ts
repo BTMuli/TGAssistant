@@ -112,25 +112,7 @@ logger.console.info("[components][weapon][download] 开始下载图片数据");
 const amberJson: TGACore.Plugins.Amber.Weapon[] = await fs.readJson(jsonDetailDir.amber);
 Counter.addTotal(amberJson.length);
 for (const item of amberJson) {
-  const url = requestData.amber.img.replace("{img}", item.icon);
-  const savePath = path.join(imgDir.src, `${item.id}.png`);
-  const weapon = getAmberWeapon(item.type);
-  if (fileCheck(savePath, false)) {
-    logger.console.mark(`[components][weapon][download] ${weapon} ${item.name} 图片已存在，跳过`);
-    Counter.Skip();
-    continue;
-  }
-  let res;
-  try {
-    res = await axios.get(url, { responseType: "arraybuffer" });
-  } catch (e) {
-    logger.console.warn(`[components][weapon][download] ${weapon} ${item.name} 图片下载失败`);
-    Counter.Fail();
-    continue;
-  }
-  await sharp(res.data).toFile(savePath);
-  logger.console.info(`[components][weapon][download] ${weapon} ${item.name} 图片下载完成`);
-  Counter.Success();
+  await downloadImage(item, false);
 }
 Counter.End();
 logger.default.info(`[components][weapon][download] 图片下载完成，耗时 ${Counter.getTime()}`);
@@ -161,4 +143,51 @@ function getAmberWeapon(type: TGACore.Plugins.Amber.WeaponType): TGACore.Constan
     case TGACore.Plugins.Amber.WeaponType.catalyst:
       return TGACore.Constant.WeaponType.catalyst;
   }
+}
+
+/**
+ * @description 下载武器图片
+ * @since 2.0.0
+ * @param {TGACore.Plugins.Amber.Weapon} item 武器数据
+ * @param {boolean} isAwaken 是否觉醒
+ * @return {Promise<void>}
+ */
+async function downloadImage(item: TGACore.Plugins.Amber.Weapon, isAwaken: boolean): Promise<void> {
+  let url, savePath;
+  if (isAwaken) {
+    url = requestData.amber.img.replace("{img}", `${item.icon}_Awaken`);
+    savePath = path.join(imgDir.src, `${item.id}_Awaken.png`);
+  } else {
+    url = requestData.amber.img.replace("{img}", item.icon);
+    savePath = path.join(imgDir.src, `${item.id}.png`);
+  }
+  const weapon = getAmberWeapon(item.type);
+  if (fileCheck(savePath, false)) {
+    logger.console.mark(
+      `[components][weapon][download] ${weapon}${isAwaken ? "(Awaken)" : ""} ${
+        item.name
+      } 图片已存在，跳过`,
+    );
+    Counter.Skip();
+    return;
+  }
+  let res;
+  try {
+    res = await axios.get(url, { responseType: "arraybuffer" });
+  } catch (e) {
+    logger.console.warn(
+      `[components][weapon][download] ${weapon}${isAwaken ? "(Awaken)" : ""} ${
+        item.name
+      } 图片下载失败`,
+    );
+    Counter.Fail();
+    return;
+  }
+  await sharp(<ArrayBuffer>res.data).toFile(savePath);
+  logger.console.info(
+    `[components][weapon][download] ${weapon}${isAwaken ? "(Awaken)" : ""} ${
+      item.name
+    } 图片下载完成`,
+  );
+  Counter.Success();
 }
