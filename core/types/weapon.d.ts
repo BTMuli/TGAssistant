@@ -27,8 +27,7 @@ declare namespace TGACore.Components.Weapon {
    * @property {number} GrowCurves.InitValue 未知
    * @property {number} GrowCurves.Type 未知
    * @property {number} GrowCurves.Value 未知
-   * @property {string} Affix.Name 精炼名称
-   * @property {Array<{Level: number; Description: string}>} Affix.Description 精炼描述
+   * @property {RhiAffix} Affix 精炼描述
    * @property {number[]} CultivationItems 武器培养材料
    * @return RawHutaoItem
    */
@@ -46,14 +45,25 @@ declare namespace TGACore.Components.Weapon {
       Type: number;
       Value: number;
     };
-    Affix: {
-      Name: string;
-      Description: Array<{
-        Level: number;
-        Description: string;
-      }>;
-    };
+    Affix: RhiAffix;
     CultivationItems: number[];
+  }
+
+  /**
+   * @description 精炼描述
+   * @since 2.0.0
+   * @memberof TGACore.Components.Weapon
+   * @interface RhiAffix
+   * @property {string} Name 精炼名称
+   * @property {Array<{Level: number; Description: string}>} Description 精炼描述
+   * @return RhiAffix
+   */
+  interface RhiAffix {
+    Name: string;
+    Description: Array<{
+      Level: number;
+      Description: string;
+    }>;
   }
 
   /**
@@ -85,7 +95,15 @@ declare namespace TGACore.Components.Weapon {
    * @since 2.0.0
    * @interface WikiItem
    * @memberof TGACore.Components.Weapon
-   * @todo 后续补充
    */
-  type WikiItem = any;
+  interface WikiItem {
+    id: number;
+    name: string;
+    description: string;
+    star: number;
+    weapon: string;
+    materials: TGACore.Components.Calendar.ConvertMaterial[];
+    affix: RhiAffix;
+    story: string;
+  }
 }
