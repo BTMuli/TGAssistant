@@ -52,6 +52,13 @@ Counter.addTotal(weaponRaw.length + characterRaw.length);
 // 处理角色
 for (const character of characterRaw) {
   const outPath = `${jsonDetail.character.out}/${character.Id}.json`;
+  if (fileCheck(outPath, false)) {
+    logger.console.mark(
+      `[components][wiki][convert][c${character.Id}] 角色 ${character.Name} 数据已存在，跳过`,
+    );
+    Counter.Skip();
+    continue;
+  }
   const data = transCharacter(character);
   await fs.writeJSON(outPath, data, { spaces: 2 });
   logger.console.mark(
@@ -63,6 +70,13 @@ for (const character of characterRaw) {
 const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
 for (const weapon of weaponRaw) {
   const outPath = `${jsonDetail.weapon.out}/${weapon.Id}.json`;
+  if (fileCheck(outPath, false)) {
+    logger.console.mark(
+      `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据已存在，跳过`,
+    );
+    Counter.Skip();
+    continue;
+  }
   const data = transWeapon(weapon);
   if (data.id !== 11513) data.story = await getWeaponStory(weapon.Id.toString());
   data.story = [await getWeaponStory("11513_1"), await getWeaponStory("11513_2")];
