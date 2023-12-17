@@ -94,7 +94,7 @@ for (const material of materialList) {
 }
 
 Counter.End();
-logger.console.mark(`[components][wiki][convert] wiki组件转换完成，耗时${Counter.getTime()}`);
+logger.default.info(`[components][wiki][convert] wiki组件转换完成，耗时${Counter.getTime()}`);
 Counter.Output();
 
 // 用到的函数
