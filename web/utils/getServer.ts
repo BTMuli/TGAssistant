@@ -7,8 +7,8 @@
 /**
  * @description 服务器类型枚举
  * @since 2.0.0
+ * @constant Server
  * @enum {string}
- * @memberof TGWeb.Server
  * @property {string} CN_GF - 国服
  * @property {string} CN_QD - 渠道服
  * @property {string} USA - 美服
