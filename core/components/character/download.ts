@@ -139,7 +139,7 @@ for (const item of amberJson) {
     Counter.Fail();
     continue;
   }
-  await sharp(res.data).toFile(savePath);
+  await sharp(<ArrayBuffer>res.data).toFile(savePath);
   logger.console.info(
     `[components][character][download] ${item.id} ${item.name}·${element} Icon 下载完成`,
   );

@@ -18,6 +18,7 @@
     "*.json",
     "config/**/*",
     "core/**/*",
+    "scripts/*.ts",
     "test/**.test.ts",
     "vitest.config.ts",
     "web/**/*.ts"

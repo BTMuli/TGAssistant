@@ -100,7 +100,7 @@ for (const item of amberJson) {
     Counter.Fail();
     continue;
   }
-  await sharp(res.data).toFile(savePath);
+  await sharp(<ArrayBuffer>res.data).toFile(savePath);
   logger.console.info(`[components][gcg][download] ${item.name} 图片下载完成`);
   Counter.Success();
 }
@@ -129,7 +129,7 @@ for (const item of monsterData) {
     Counter.Fail();
     continue;
   }
-  await sharp(res.data).toFile(savePath);
+  await sharp(<ArrayBuffer>res.data).toFile(savePath);
   logger.console.info(`[components][gcg][download] ${item.title} 图片下载完成`);
   Counter.Success();
 }

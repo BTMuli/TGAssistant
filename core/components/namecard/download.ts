@@ -52,7 +52,9 @@ let nameCardsData: TGACore.Components.Namecard.RawData[] = [];
 try {
   const jsonRead = fs.readJSONSync(path.join(jsonDir.src, "namecard.json"), "utf-8");
   if (Array.isArray(jsonRead)) {
-    nameCardsData = jsonRead.filter((item) => Object.values(item).every((value) => value !== ""));
+    nameCardsData = jsonRead.filter((item) =>
+      Object.values(<TGACore.Components.Namecard.RawData>item).every((value) => value !== ""),
+    );
   }
 } catch (err) {
   logger.default.error("[components][namecard][download] 获取原始数据失败，请检查 JSON 文件");
@@ -167,7 +169,9 @@ async function downloadImg(
       Counter.Fail();
       return;
     }
-    await sharp(res.data).webp().toFile(savePath);
+    await sharp(<ArrayBuffer>res.data)
+      .webp()
+      .toFile(savePath);
     logger.console.mark(
       `[components][namecard][download] 第 ${indexStr} 张名片 ${imgType} 下载成功`,
     );
@@ -208,7 +212,7 @@ async function getNameCardData(
     const html = await axios.get(url, { params: { lang: "CHS" } });
     const tbSelector =
       "body > div.wp-site-blocks > div.wp-block-columns > div:nth-child(3) > div.entry-content.wp-block-post-content > table";
-    const htmlDom = load(html.data);
+    const htmlDom = load(<string>html.data);
     const trsGet = htmlDom(tbSelector).find("tr");
     const namecard: TGACore.Components.Namecard.RawData = {
       index,
