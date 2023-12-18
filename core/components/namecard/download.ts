@@ -172,7 +172,7 @@ async function downloadImg(
     await sharp(<ArrayBuffer>res.data)
       .webp()
       .toFile(savePath);
-    logger.console.mark(
+    logger.default.info(
       `[components][namecard][download] 第 ${indexStr} 张名片 ${imgType} 下载成功`,
     );
     Counter.Success();
