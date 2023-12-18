@@ -128,7 +128,7 @@ for (const item of converData) {
     continue;
   }
   await sharp(srcPath).webp().toFile(savePath);
-  logger.console.info(`[components][gcg][convert] ${item.name} 图片转换完成`);
+  logger.default.info(`[components][gcg][convert] ${item.name} 图片转换完成`);
   Counter.Success();
 }
 Counter.End();

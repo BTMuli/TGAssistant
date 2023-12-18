@@ -101,7 +101,7 @@ for (const item of amberJson) {
     continue;
   }
   await sharp(<ArrayBuffer>res.data).toFile(savePath);
-  logger.console.info(`[components][gcg][download] ${item.name} 图片下载完成`);
+  logger.default.info(`[components][gcg][download] ${item.name} 图片下载完成`);
   Counter.Success();
 }
 // 处理 mys 数据，魔物卡
@@ -130,7 +130,7 @@ for (const item of monsterData) {
     continue;
   }
   await sharp(<ArrayBuffer>res.data).toFile(savePath);
-  logger.console.info(`[components][gcg][download] ${item.title} 图片下载完成`);
+  logger.default.info(`[components][gcg][download] ${item.title} 图片下载完成`);
   Counter.Success();
 }
 Counter.End();
