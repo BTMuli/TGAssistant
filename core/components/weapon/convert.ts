@@ -44,7 +44,7 @@ for (const item of hutaoRaw) {
     star: item.RankLevel,
     bg: `/icon/bg/${item.RankLevel}-Star.webp`,
     weaponIcon: `/icon/weapon/${weaponType}.webp`,
-    icon: `/WIKI/weapon/icon/${item.Id}.webp`,
+    icon: `/WIKI/weapon/${item.Id}.webp`,
   };
   converData.push(weapon);
   logger.console.mark(`[components][weapon][convert] 武器 ${item.Id} 转换完成`);

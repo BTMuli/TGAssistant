@@ -139,7 +139,7 @@ for (const avatar of avatarRaw) {
     bg: `/icon/bg/${avatarStar}-Star.webp`,
     weaponIcon: `/icon/weapon/${avatarWeapon}.webp`,
     elementIcon: `/icon/element/${avatar.FetterInfo.VisionBefore}元素.webp`,
-    icon: `/WIKI/character/icon/${avatar.Id}.webp`,
+    icon: `/WIKI/character/${avatar.Id}.webp`,
     materials,
     source,
   };
@@ -195,7 +195,7 @@ for (const weapon of weaponRaw) {
     star: weapon.RankLevel,
     bg: `/icon/bg/${weapon.RankLevel}-Star.webp`,
     weaponIcon: `/icon/weapon/${getHutaoWeapon(weapon.WeaponType)}.webp`,
-    icon: `/WIKI/weapon/icon/${weapon.Id}.webp`,
+    icon: `/WIKI/weapon/${weapon.Id}.webp`,
     materials,
     source,
   };
