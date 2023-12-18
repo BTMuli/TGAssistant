@@ -61,7 +61,7 @@ for (const character of characterRaw) {
   }
   const data = transCharacter(character);
   await fs.writeJSON(outPath, data, { spaces: 2 });
-  logger.console.mark(
+  logger.console.info(
     `[components][wiki][convert][c${character.Id}] 角色 ${character.Name} 数据转换完成`,
   );
   Counter.Success();
@@ -81,7 +81,7 @@ for (const weapon of weaponRaw) {
   if (data.id !== 11513) data.story = await getWeaponStory(weapon.Id.toString());
   data.story = [await getWeaponStory("11513_1"), await getWeaponStory("11513_2")];
   await fs.writeJSON(outPath, data, { spaces: 2 });
-  logger.console.mark(
+  logger.console.info(
     `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据转换完成`,
   );
   Counter.Success();
