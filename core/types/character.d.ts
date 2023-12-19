@@ -330,7 +330,7 @@ declare namespace TGACore.Components.Character {
     element: string;
     weapon: TGACore.Constant.WeaponType;
     materials: TGACore.Components.Calendar.ConvertMaterial[];
-    skills: RhisdSkill[];
+    skills: Array<Omit<RhisdSkill, "Proud">>;
     constellation: RhisdTalent[];
     talks: RhiFetter[];
     stories: RhiFetter[];

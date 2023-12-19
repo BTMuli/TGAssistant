@@ -139,6 +139,16 @@ function transCharacter(
   raw: TGACore.Components.Character.RawHutaoItem,
 ): TGACore.Components.Character.WikiItem {
   const materials = getMaterials(raw.CultivationItems);
+  const tempSkills = [
+    ...raw.SkillDepot.Skills,
+    raw.SkillDepot.EnergySkill,
+    ...raw.SkillDepot.Inherents,
+  ];
+  const skills: Array<Omit<TGACore.Components.Character.RhisdSkill, "Proud">> = [];
+  tempSkills.forEach((skill) => {
+    const { Proud, ...rest } = skill;
+    skills.push(rest);
+  });
   return {
     id: raw.Id,
     name: raw.Name,
@@ -159,7 +169,7 @@ function transCharacter(
     element: raw.FetterInfo.VisionBefore,
     weapon: getHutaoWeapon(raw.Weapon),
     materials,
-    skills: [...raw.SkillDepot.Skills, raw.SkillDepot.EnergySkill, ...raw.SkillDepot.Inherents],
+    skills,
     constellation: raw.SkillDepot.Talents,
     // todo: costume 衣装
     // todo: food 料理
