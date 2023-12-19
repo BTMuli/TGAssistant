@@ -304,9 +304,7 @@ declare namespace TGACore.Components.Character {
    * @property {string} element 角色元素类型
    * @property {TGACore.Constant.WeaponType} weapon 角色武器类型
    * @property {TGACore.Components.Calendar.ConvertMaterial[]} materials 角色培养材料
-   * @property {object} skills 角色技能
-   * @property {RhisdSkill[]} skills.normal 正常技能-普攻、战技、元素爆发
-   * @property {RhisdSkill[]} skills.special 特殊技能
+   * @property {RhisdSkill[]} skills 角色技能
    * @property {RhisdTalent[]} constellation 角色命座
    * @property {RhiFetter[]} talks 闲聊
    * @property {RhiFetter[]} stories 故事
@@ -332,10 +330,7 @@ declare namespace TGACore.Components.Character {
     element: string;
     weapon: TGACore.Constant.WeaponType;
     materials: TGACore.Components.Calendar.ConvertMaterial[];
-    skills: {
-      normal: RhisdSkill[];
-      special: RhisdSkill[];
-    };
+    skills: RhisdSkill[];
     constellation: RhisdTalent[];
     talks: RhiFetter[];
     stories: RhiFetter[];

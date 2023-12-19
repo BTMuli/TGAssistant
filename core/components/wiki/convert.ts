@@ -159,10 +159,7 @@ function transCharacter(
     element: raw.FetterInfo.VisionBefore,
     weapon: getHutaoWeapon(raw.Weapon),
     materials,
-    skills: {
-      normal: [...raw.SkillDepot.Skills, raw.SkillDepot.EnergySkill],
-      special: raw.SkillDepot.Inherents,
-    },
+    skills: [...raw.SkillDepot.Skills, raw.SkillDepot.EnergySkill, ...raw.SkillDepot.Inherents],
     constellation: raw.SkillDepot.Talents,
     // todo: costume 衣装
     // todo: food 料理
