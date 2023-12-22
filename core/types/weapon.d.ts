@@ -102,7 +102,7 @@ declare namespace TGACore.Components.Weapon {
    * @property {string} weapon 武器类型
    * @property {TGACore.Components.Calendar.ConvertMaterial[]} materials 武器材料
    * @property {RhiAffix} affix 精炼描述
-   * @property {string | string[]} story 武器故事
+   * @property {string[]} story 武器故事
    * @return WikiItem
    */
   interface WikiItem {
@@ -113,6 +113,6 @@ declare namespace TGACore.Components.Weapon {
     weapon: string;
     materials: TGACore.Components.Calendar.ConvertMaterial[];
     affix: RhiAffix;
-    story: string | string[];
+    story: string[];
   }
 }
