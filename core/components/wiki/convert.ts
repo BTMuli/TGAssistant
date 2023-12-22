@@ -78,8 +78,12 @@ for (const weapon of weaponRaw) {
     continue;
   }
   const data = transWeapon(weapon);
-  if (data.id !== 11513) data.story = await getWeaponStory(weapon.Id.toString());
-  data.story = [await getWeaponStory("11513_1"), await getWeaponStory("11513_2")];
+  if (data.id !== 11513) {
+    data.story.push(await getWeaponStory(weapon.Id.toString()));
+  } else {
+    data.story.push(await getWeaponStory("11513_1"));
+    data.story.push(await getWeaponStory("11513_2"));
+  }
   await fs.writeJSON(outPath, data, { spaces: 2 });
   logger.console.info(
     `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据转换完成`,
@@ -196,7 +200,7 @@ function transWeapon(
     weapon: getHutaoWeapon(raw.WeaponType),
     materials,
     affix: raw.Affix,
-    story: "",
+    story: [],
   };
 }
 
