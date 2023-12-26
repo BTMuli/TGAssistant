@@ -51,12 +51,14 @@ function parseDesc(desc: string): string[] {
   res = res.replace(/；/g, "；\n");
   res = res.replace(/：/g, "：\n");
   res = res.replace(/？/g, "？\n");
-  res = res.replace(/！/g, "！\n");
+  if (!desc.includes("！」")) {
+    res = res.replace(/！/g, "！\n");
+  }
   res = res.replace(/…/g, "…\n");
   const match = res.split("\n");
   const array: string[] = [];
   for (const item of match) {
-    if (item.length > 0 && item.length <= 32) {
+    if (item.length > 0 && item.length <= 34) {
       array.push(item);
     } else {
       const match2 = item.replace(/，/g, "，\n").split("\n");

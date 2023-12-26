@@ -78,4 +78,16 @@ describe("parseNamecard 测试", () => {
     console.log("预期结果：", JSON.stringify(check));
     expect.soft(parsed).toStrictEqual(check);
   });
+  test("测试 香菱·出锅", () => {
+    console.log("测试 香菱·出锅");
+    const namecard = getNamecardByName("香菱·出锅");
+    expect(namecard).not.toBe(false);
+    if (namecard === false) return;
+    const parsed = parseNamecard(namecard.desc);
+    console.log("解析结果：", JSON.stringify(parsed));
+    const check =
+      "名片纹饰。\n快速而且准确地读出下面的话：\n「出锅锅巴！」、「锅巴出锅！」、「锅巴出击！」、「出击锅巴！」\n";
+    console.log("预期结果：", JSON.stringify(check));
+    expect.soft(parsed).toStrictEqual(check);
+  });
 });
