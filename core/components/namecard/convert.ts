@@ -10,7 +10,7 @@ import process from "node:process";
 import fs from "fs-extra";
 import sharp from "sharp";
 
-import { imgDir, jsonDir, imgDetailDir } from "./constant.ts";
+import { imgDetailDir, imgDir, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
@@ -44,7 +44,7 @@ jsonFile.forEach((item) => {
   const res = {
     name: item.name,
     type: 0,
-    desc: item.description,
+    desc: item.description.replace(/\s/g, ""),
     source: item.source,
     icon: `/source/nameCard/icon/${item.name}.webp`,
     bg: `/source/nameCard/bg/${item.name}.webp`,
