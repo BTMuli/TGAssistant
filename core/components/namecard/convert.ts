@@ -43,6 +43,7 @@ const outData: TGACore.Components.Namecard.ConvertData[] = [];
 jsonFile.forEach((item) => {
   const res = {
     name: item.name,
+    index: item.index,
     type: 0,
     desc: item.description.replace(/\s/g, ""),
     source: item.source,
@@ -53,11 +54,13 @@ jsonFile.forEach((item) => {
   res.type = getNamcardType(item);
   outData.push(res);
 });
+// 先按 type 排序，再按 index 排序
 outData.sort((a, b) => {
-  // type
-  if (a.type !== b.type) return a.type - b.type;
-  // name
-  return a.name.localeCompare(b.name);
+  if (a.type === b.type) {
+    return a.index - b.index;
+  } else {
+    return a.type - b.type;
+  }
 });
 await fs.writeJson(path.join(jsonDir.out, "namecard.json"), outData, { spaces: 2 });
 

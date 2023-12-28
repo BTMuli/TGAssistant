@@ -1,5 +1,5 @@
 /**
- * @file core types namecard.d.ts
+ * @file core/types/namecard.d.ts
  * @description 名片类型声明文件
  * @since 2.0.0
  */
@@ -84,6 +84,7 @@ declare namespace TGACore.Components.Namecard {
    * @since 2.0.0
    * @memberof TGACore.Components.Namecard
    * @property {string} name 名片名称
+   * @property {number} index 名片编号
    * @property {NamecardType} type 名片类型
    * @property {string} desc 名片描述
    * @property {string} source 名片来源
@@ -94,6 +95,7 @@ declare namespace TGACore.Components.Namecard {
    */
   interface ConvertData {
     name: string;
+    index: number;
     type: NamecardType;
     desc: string;
     source: string;
