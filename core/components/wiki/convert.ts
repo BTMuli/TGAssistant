@@ -146,11 +146,12 @@ function transCharacter(
     raw.SkillDepot.EnergySkill,
     ...raw.SkillDepot.Inherents,
   ];
-  const skills: Array<Omit<TGACore.Components.Character.RhisdSkill, "Proud">> = [];
+  let skills: Array<Omit<TGACore.Components.Character.RhisdSkill, "Proud">> = [];
   tempSkills.forEach((skill) => {
     const { Proud, ...rest } = skill;
     skills.push(rest);
   });
+  skills = skills.filter((skill) => skill.Icon !== "");
   return {
     id: raw.Id,
     name: raw.Name,
