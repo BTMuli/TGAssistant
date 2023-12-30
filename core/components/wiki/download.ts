@@ -75,10 +75,10 @@ const rawWeapon: TGACore.Components.Weapon.RawHutaoItem[] = await fs.readJSON(
 );
 for (const character of rawCharacter) {
   await downloadMaterials(character.CultivationItems);
-  await downloadTalents(character.SkillDepot.Talents);
-  await downloadTalents(character.SkillDepot.Inherents);
+  await downloadTalents(character.SkillDepot.Skills);
   await downloadTalent(character.SkillDepot.EnergySkill);
-  await downloadConstellations(character.SkillDepot.Skills);
+  await downloadTalents(character.SkillDepot.Inherents);
+  await downloadConstellations(character.SkillDepot.Talents);
 }
 for (const weapon of rawWeapon) {
   await downloadMaterials(weapon.CultivationItems);
@@ -146,7 +146,7 @@ async function downloadTalent(talent: TGACore.Components.Character.RhisdTalent):
  * @returns {Promise<void>}
  */
 async function downloadConstellations(
-  constellations: TGACore.Components.Character.RhisdSkill[],
+  constellations: TGACore.Components.Character.RhisdTalent[],
 ): Promise<void> {
   Counter.addTotal(constellations.length);
   for (const constellation of constellations) {

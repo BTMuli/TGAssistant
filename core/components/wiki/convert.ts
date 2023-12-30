@@ -91,10 +91,10 @@ Counter.End();
 Counter.Reset();
 for (const character of characterRaw) {
   await convertMaterials(character.CultivationItems);
-  await convertTalents(character.SkillDepot.Talents);
+  await convertTalents(character.SkillDepot.Skills);
   await convertTalents(character.SkillDepot.Inherents);
   await convertTalent(character.SkillDepot.EnergySkill);
-  await convertConstellations(character.SkillDepot.Skills);
+  await convertConstellations(character.SkillDepot.Talents);
 }
 for (const weapon of weaponRaw) {
   await convertMaterials(weapon.CultivationItems);
@@ -272,7 +272,7 @@ async function convertTalent(talent: TGACore.Components.Character.RhisdTalent): 
  * @returns {Promise<void>}
  */
 async function convertConstellations(
-  constellations: TGACore.Components.Character.RhisdSkill[],
+  constellations: TGACore.Components.Character.RhisdTalent[],
 ): Promise<void> {
   for (const constellation of constellations) {
     const oriPath = `${imageDetail.constellations.src}/${constellation.Icon}.png`;
