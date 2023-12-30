@@ -160,10 +160,6 @@ logger.console.info("[components][calendar][download] 请执行 convert.ts 进�
  */
 function getReward(data: Record<string, TGACore.Components.Calendar.RawAmberItem>): Set<number> {
   const result = new Set<number>();
-  const materialConfig = readConfig(TGACore.Config.ConfigFileEnum.Material);
-  materialConfig.material.forEach((item) => {
-    result.add(item);
-  });
   Object.values(data).forEach((item) => {
     item.reward.forEach((id) => {
       if (id > 100000) {

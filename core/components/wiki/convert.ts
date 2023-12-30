@@ -4,17 +4,16 @@
  * @since 2.0.0
  */
 
-import { join } from "node:path";
 import process from "node:process";
 
 import axios from "axios";
 import fs from "fs-extra";
+import sharp from "sharp";
 
-import { jsonDetail, jsonDir } from "./constant.ts";
+import { imageDetail, jsonDetail, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { getProjConfigPath } from "../../utils/getBasePaths.ts";
 import { readConfig } from "../../utils/readConfig.ts";
 import { getHutaoWeapon } from "../../utils/typeTrans.ts";
 
@@ -44,10 +43,6 @@ const characterRaw: TGACore.Components.Character.RawHutaoItem[] = await fs.readJ
   jsonDetail.character.src,
 );
 const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
-const materialSet = new Set<{ id: number; name: string }>();
-const localMaterialSet = new Set<number>(
-  readConfig(TGACore.Config.ConfigFileEnum.Material).material,
-);
 Counter.addTotal(weaponRaw.length + characterRaw.length);
 // 处理角色
 for (const character of characterRaw) {
@@ -90,14 +85,22 @@ for (const weapon of weaponRaw) {
   );
   Counter.Success();
 }
-// 更新材料图像
-const configFile = join(getProjConfigPath(), "material.yml");
-const materialList = Array.from(materialSet).sort((a, b) => a.id - b.id);
-for (const material of materialList) {
-  await fs.appendFile(configFile, `  - ${material.id} # ${material.name}\n`);
-}
-
 Counter.End();
+
+// 处理图像
+Counter.Reset();
+for (const character of characterRaw) {
+  await convertMaterials(character.CultivationItems);
+  await convertTalents(character.SkillDepot.Talents);
+  await convertTalents(character.SkillDepot.Inherents);
+  await convertTalent(character.SkillDepot.EnergySkill);
+  await convertConstellations(character.SkillDepot.Skills);
+}
+for (const weapon of weaponRaw) {
+  await convertMaterials(weapon.CultivationItems);
+}
+Counter.End();
+
 logger.default.info(`[components][wiki][convert] wiki组件转换完成，耗时${Counter.getTime()}`);
 Counter.Output();
 
@@ -115,11 +118,6 @@ function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMateria
     if (material === undefined) {
       logger.default.warn(`[components][wiki][convert] 缺失ID为 ${r} 的材料数据`);
       continue;
-    }
-    if (!localMaterialSet.has(material.Id)) {
-      logger.console.info(`[components][wiki][convert] 添加ID为 ${r} 的材料图像 ${material.Name}`);
-      materialSet.add({ id: material.Id, name: material.Name });
-      localMaterialSet.add(material.Id);
     }
     res.push({
       id: material.Id,
@@ -219,4 +217,91 @@ async function getWeaponStory(id: string): Promise<string> {
     logger.default.warn(`[components][wiki][convert] 获取武器 ${id} 故事失败`);
     return "";
   }
+}
+
+/**
+ * @description 转换材料图像
+ * @since 2.0.0
+ * @param {number[]} materials 材料id数组
+ * @returns {Promise<void>}
+ */
+async function convertMaterials(materials: number[]): Promise<void> {
+  const imgDir = imageDetail.material;
+  for (const material of materials) {
+    const oriPath = `${imgDir.src}/${material}.png`;
+    const savePath = `${imgDir.out}/${material}.webp`;
+    await convertImage(oriPath, savePath, `材料 ${material}`);
+  }
+}
+
+/**
+ * @description 转换天赋图像
+ * @since 2.0.0
+ * @param {TGACore.Components.Character.RhisdSkill[]} talents 天赋数组
+ * @returns {Promise<void>}
+ */
+async function convertTalents(talents: TGACore.Components.Character.RhisdTalent[]): Promise<void> {
+  for (const talent of talents) {
+    await convertTalent(talent);
+  }
+}
+
+/**
+ * @description 转换天赋图像
+ * @since 2.0.0
+ * @param {TGACore.Components.Character.RhisdSkill} talent 天赋
+ * @returns {Promise<void>}
+ */
+async function convertTalent(talent: TGACore.Components.Character.RhisdTalent): Promise<void> {
+  const imgDir = imageDetail.talents;
+  if (talent.Icon === "") {
+    Counter.addTotal();
+    logger.default.warn(`[components][wiki][convert][icon] 天赋 ${talent.Name} 无图标`);
+    Counter.Skip();
+    return;
+  }
+  const oriPath = `${imgDir.src}/${talent.Icon}.png`;
+  const savePath = `${imgDir.out}/${talent.Icon}.webp`;
+  await convertImage(oriPath, savePath, `天赋 ${talent.Icon}`);
+}
+
+/**
+ * @description 转换命座图像
+ * @since 2.0.0
+ * @param {TGACore.Components.Character.RhisdSkill[]} constellations 命座数组
+ * @returns {Promise<void>}
+ */
+async function convertConstellations(
+  constellations: TGACore.Components.Character.RhisdSkill[],
+): Promise<void> {
+  for (const constellation of constellations) {
+    const oriPath = `${imageDetail.constellations.src}/${constellation.Icon}.png`;
+    const savePath = `${imageDetail.constellations.out}/${constellation.Icon}.webp`;
+    await convertImage(oriPath, savePath, `命座 ${constellation.Icon}`);
+  }
+}
+
+/**
+ * @description 转换图像
+ * @since 2.0.0
+ * @param {string} oriPath 原始路径
+ * @param {string} savePath 保存路径
+ * @param {string} name 名称
+ * @returns {Promise<void>}
+ */
+async function convertImage(oriPath: string, savePath: string, name: string): Promise<void> {
+  Counter.addTotal();
+  if (!fileCheck(oriPath, false)) {
+    logger.default.warn(`[components][wiki][convert][icon] ${name} 无图标`);
+    Counter.Fail();
+    return;
+  }
+  if (fileCheck(savePath, false)) {
+    logger.console.mark(`[components][wiki][convert][icon] ${name} 已存在，跳过`);
+    Counter.Skip();
+    return;
+  }
+  await sharp(oriPath).webp().toFile(savePath);
+  logger.console.info(`[components][wiki][convert][icon] ${name} 转换完成`);
+  Counter.Success();
 }

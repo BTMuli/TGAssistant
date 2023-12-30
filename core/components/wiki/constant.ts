@@ -25,3 +25,18 @@ export const jsonDetail = {
     out: path.join(jsonDir.out, "GCG"),
   },
 };
+
+export const imageDetail = {
+  material: {
+    src: getAppDirPath("assets", "material").src,
+    out: getAppDirPath("assets", "material").out,
+  },
+  talents: {
+    src: getAppDirPath("assets", "talents").src,
+    out: getAppDirPath("assets", "talents").out,
+  },
+  constellations: {
+    src: getAppDirPath("assets", "constellations").src,
+    out: getAppDirPath("assets", "constellations").out,
+  },
+};

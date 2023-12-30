@@ -19,13 +19,11 @@ declare namespace TGACore.Config {
    * @readonly
    * @property {string} Constant 常量配置文件类型
    * @property {string} Github Github 配置文件类型
-   * @property {string} Material 材料配置文件类型
    * @return ConfigFileEnum 配置文件类型枚举
    */
   const enum ConfigFileEnum {
     Constant = "constant",
     Github = "github",
-    Material = "material",
   }
 
   /**
@@ -66,6 +64,8 @@ declare namespace TGACore.Config {
    * @property {number} namecard 名片数据目录
    * @property {number} weapon 武器数据目录
    * @property {number} wiki wiki数据目录
+   * @property {number} talents 角色天赋数据目录
+   * @property {number} constellations 角色命座数据目录
    * @return AppDataDirTypeEnum 应用数据目录配置文件类型枚举
    */
   enum AppDataDirTypeEnum {
@@ -77,6 +77,8 @@ declare namespace TGACore.Config {
     namecard,
     weapon,
     wiki,
+    talents,
+    constellations,
   }
 
   /**
