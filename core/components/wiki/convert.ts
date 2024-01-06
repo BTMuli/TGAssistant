@@ -176,9 +176,31 @@ function transCharacter(
     constellation: raw.SkillDepot.Talents,
     // todo: costume 衣装
     // todo: food 料理
-    talks: raw.FetterInfo.Fetters,
+    talks: transTalks(raw.FetterInfo.Fetters),
     stories: raw.FetterInfo.FetterStories,
   };
+}
+
+/**
+ * @description 转换对话
+ * @since 2.0.0
+ * @param {TGACore.Components.Character.RhiFetter[]} raw 原始数据
+ * @returns {TGACore.Components.Character.RhiFetter[]} 转换后的数据
+ */
+function transTalks(
+  raw: TGACore.Components.Character.RhiFetter[],
+): TGACore.Components.Character.RhiFetter[] {
+  const res = [];
+  for (const r of raw) {
+    const item = JSON.parse(JSON.stringify(r));
+    if (r.Title.startsWith("#") && r.Title.includes("{REALNAME[ID(1)]}")) {
+      item.Title = item.Title.substring(1);
+      item.Title = item.Title.replace("{REALNAME[ID(1)]}", "流浪者");
+      logger.console.info("[components][wiki][convert][talk]", r.Title, "->", item.Title);
+    }
+    res.push(item);
+  }
+  return res;
 }
 
 /**
