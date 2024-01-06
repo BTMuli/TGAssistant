@@ -9,6 +9,7 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --write .",
     "resize": "tsx ./core/utils/resizeImages.ts",
+    "auto:update": "tsx ./scripts/updateAll.ts",
     "prepare": "husky install"
   },
   "lint-staged": {

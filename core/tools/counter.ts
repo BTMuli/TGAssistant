@@ -74,10 +74,11 @@ class Counter {
   /**
    * @description 计数器跳过
    * @since 2.0.0
+   * @param {[number]} skipNum 跳过的数量，默认为 1
    * @return {void} 无返回值
    */
-  public Skip(): void {
-    this.skip++;
+  public Skip(skipNum?: number): void {
+    this.skip += skipNum ?? 1;
   }
 
   /**
