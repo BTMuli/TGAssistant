@@ -4,6 +4,7 @@
 node_modules
 # source
 source/*
+!source/data/out/
 scripts/output/
 scripts/data/
 # Logs
