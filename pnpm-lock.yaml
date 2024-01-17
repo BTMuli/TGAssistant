@@ -26,6 +26,9 @@ dependencies:
   image-size:
     specifier: ^1.0.2
     version: 1.0.2
+  js-md5:
+    specifier: ^0.8.3
+    version: 0.8.3
   log4js:
     specifier: ^6.9.1
     version: 6.9.1
@@ -3719,6 +3722,10 @@ packages:
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
+
+  /js-md5@0.8.3:
+    resolution: {integrity: sha512-qR0HB5uP6wCuRMrWPTrkMaev7MJZwJuuw4fnwAzRgP4J4/F8RwtodOKpGp4XpqsLBFzzgqIO42efFAyz2Et6KQ==}
+    dev: false
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
