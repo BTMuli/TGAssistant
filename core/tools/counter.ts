@@ -1,7 +1,7 @@
 /**
  * @file core tools counter
  * @description 计数器
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 import chalk from "chalk";
@@ -10,7 +10,7 @@ import logger from "./logger.ts";
 
 /**
  * @description 计数器 class
- * @since 2.0.0
+ * @since 2.0.1
  * @class Counter
  */
 class Counter {
@@ -34,13 +34,14 @@ class Counter {
 
   /**
    * @description 初始化-设置前缀
-   * @since 2.0.0
+   * @since 2.0.1
    * @param {string} prefix 前缀
    * @return {void} 无返回值
    */
   public Init(prefix: string): void {
     this.prefix = prefix;
     this.cost = 0;
+    this.time = new Date().getTime();
   }
 
   /**
