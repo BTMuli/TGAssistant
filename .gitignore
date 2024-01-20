@@ -3,8 +3,10 @@
 # Node modules
 node_modules
 # source
-source/*
-!source/data/out/
+source/assets
+source/temp
+source/data/http
+source/data/src
 scripts/output/
 scripts/data/
 # Logs
