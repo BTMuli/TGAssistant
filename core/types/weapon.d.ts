@@ -1,24 +1,24 @@
 /**
  * @file core types weapon.d.ts
  * @description 武器组件类型定义
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 /**
  * @description 武器类型 namespace
- * @since 2.0.0
+ * @since 2.0.1
  * @namespace TGACore.Components.Weapon
  * @memberof TGACore.Components
  */
 declare namespace TGACore.Components.Weapon {
   /**
    * @description 元数据-胡桃
-   * @since 2.0.0
+   * @since 2.0.1
    * @memberof TGACore.Components.Weapon
    * @description RawHutaoItem => Rhi
    * @property {number} Id 角色编号
    * @property {number} PromoteId 未知
-   * @property { TGACore.Plugins.Hutao.WeaponType} WeaponType 武器类型
+   * @property {TGACore.Plugins.Hutao.WeaponType} WeaponType 武器类型
    * @property {number} RankLevel 武器星级
    * @property {string} Name 武器名称
    * @property {string} Description 武器简介
@@ -45,7 +45,7 @@ declare namespace TGACore.Components.Weapon {
       Type: number;
       Value: number;
     };
-    Affix: RhiAffix;
+    Affix?: RhiAffix;
     CultivationItems: number[];
   }
 
@@ -92,7 +92,7 @@ declare namespace TGACore.Components.Weapon {
 
   /**
    * @description 转换后的武器数据
-   * @since 2.0.0
+   * @since 2.0.1
    * @interface WikiItem
    * @memberof TGACore.Components.Weapon
    * @property {number} id 武器 id
@@ -112,7 +112,7 @@ declare namespace TGACore.Components.Weapon {
     star: number;
     weapon: string;
     materials: TGACore.Components.Calendar.ConvertMaterial[];
-    affix: RhiAffix;
+    affix?: RhiAffix;
     story: string[];
   }
 }
