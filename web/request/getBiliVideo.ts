@@ -141,7 +141,7 @@ export async function getBiliVideo(cid: string, bvid: string): Promise<BiliVideo
   sign = jsMd5.md5(`${sign}${mixinKey}`);
   params = {
     ...params,
-    wrid: sign,
+    w_rid: sign,
     wts,
   };
   return await axios
