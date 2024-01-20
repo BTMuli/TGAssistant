@@ -1,7 +1,7 @@
 /**
  * @file core/components/wiki/convert.ts
  * @description wiki组件转换器
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 import process from "node:process";
@@ -22,8 +22,7 @@ logger.default.info("[components][wiki][convert] 运行 convert.ts");
 
 // 前置检查
 fileCheckObj(jsonDir);
-fileCheck(jsonDetail.weapon.out);
-fileCheck(jsonDetail.character.out);
+fileCheck(jsonDetail.dir);
 const checkObj = {
   character: jsonDetail.character.src,
   weapon: jsonDetail.weapon.src,
@@ -45,33 +44,20 @@ const characterRaw: TGACore.Components.Character.RawHutaoItem[] = await fs.readJ
 const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
 Counter.addTotal(weaponRaw.length + characterRaw.length);
 // 处理角色
+const wikiCharacter: TGACore.Components.Character.WikiItem[] = [];
 for (const character of characterRaw) {
-  const outPath = `${jsonDetail.character.out}/${character.Id}.json`;
-  if (fileCheck(outPath, false)) {
-    logger.console.mark(
-      `[components][wiki][convert][c${character.Id}] 角色 ${character.Name} 数据已存在，跳过`,
-    );
-    Counter.Skip();
-    continue;
-  }
   const data = transCharacter(character);
-  await fs.writeJSON(outPath, data, { spaces: 2 });
+  wikiCharacter.push(data);
   logger.console.info(
     `[components][wiki][convert][c${character.Id}] 角色 ${character.Name} 数据转换完成`,
   );
   Counter.Success();
 }
+await fs.writeJSON(jsonDetail.character.out, wikiCharacter, { spaces: 2 });
 // 处理武器
+const wikiWeapon: TGACore.Components.Weapon.WikiItem[] = [];
 const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
 for (const weapon of weaponRaw) {
-  const outPath = `${jsonDetail.weapon.out}/${weapon.Id}.json`;
-  if (fileCheck(outPath, false)) {
-    logger.console.mark(
-      `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据已存在，跳过`,
-    );
-    Counter.Skip();
-    continue;
-  }
   const data = transWeapon(weapon);
   if (data.id !== 11513) {
     data.story.push(await getWeaponStory(weapon.Id.toString()));
@@ -79,12 +65,13 @@ for (const weapon of weaponRaw) {
     data.story.push(await getWeaponStory("11513_1"));
     data.story.push(await getWeaponStory("11513_2"));
   }
-  await fs.writeJSON(outPath, data, { spaces: 2 });
+  wikiWeapon.push(data);
   logger.console.info(
     `[components][wiki][convert][w${weapon.Id}] 武器 ${weapon.Name} 数据转换完成`,
   );
   Counter.Success();
 }
+await fs.writeJSON(jsonDetail.weapon.out, wikiWeapon, { spaces: 2 });
 Counter.End();
 
 // 处理图像
