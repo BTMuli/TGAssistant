@@ -4,10 +4,7 @@
     "contentId": 500419,
     "name": "娜维娅",
     "title": "明花蔓舵",
-    "birthday": [
-      8,
-      16
-    ],
+    "birthday": [8, 16],
     "star": 5,
     "element": "岩",
     "weapon": "双手剑",
@@ -18,10 +15,7 @@
     "contentId": 500291,
     "name": "芙宁娜",
     "title": "不休独舞",
-    "birthday": [
-      10,
-      13
-    ],
+    "birthday": [10, 13],
     "star": 5,
     "element": "水",
     "weapon": "单手剑",
@@ -32,10 +26,7 @@
     "contentId": 500207,
     "name": "那维莱特",
     "title": "谕告的潮音",
-    "birthday": [
-      12,
-      18
-    ],
+    "birthday": [12, 18],
     "star": 5,
     "element": "水",
     "weapon": "法器",
@@ -46,10 +37,7 @@
     "contentId": 500286,
     "name": "莱欧斯利",
     "title": "寂罪的密使",
-    "birthday": [
-      11,
-      23
-    ],
+    "birthday": [11, 23],
     "star": 5,
     "element": "冰",
     "weapon": "法器",
@@ -60,10 +48,7 @@
     "contentId": 6937,
     "name": "林尼",
     "title": "惑光幻戏",
-    "birthday": [
-      2,
-      2
-    ],
+    "birthday": [2, 2],
     "star": 5,
     "element": "火",
     "weapon": "弓",
@@ -74,10 +59,7 @@
     "contentId": 6489,
     "name": "白术",
     "title": "遵生合和",
-    "birthday": [
-      4,
-      25
-    ],
+    "birthday": [4, 25],
     "star": 5,
     "element": "草",
     "weapon": "法器",
@@ -88,10 +70,7 @@
     "contentId": 6180,
     "name": "迪希雅",
     "title": "炽鬃之狮",
-    "birthday": [
-      4,
-      7
-    ],
+    "birthday": [4, 7],
     "star": 5,
     "element": "火",
     "weapon": "双手剑",
@@ -102,10 +81,7 @@
     "contentId": 5865,
     "name": "艾尔海森",
     "title": "诲韬诤言",
-    "birthday": [
-      2,
-      11
-    ],
+    "birthday": [2, 11],
     "star": 5,
     "element": "草",
     "weapon": "单手剑",
@@ -116,10 +92,7 @@
     "contentId": 5494,
     "name": "流浪者",
     "title": "久世浮倾",
-    "birthday": [
-      1,
-      3
-    ],
+    "birthday": [1, 3],
     "star": 5,
     "element": "风",
     "weapon": "法器",
@@ -130,10 +103,7 @@
     "contentId": 5111,
     "name": "纳西妲",
     "title": "白草净华",
-    "birthday": [
-      10,
-      27
-    ],
+    "birthday": [10, 27],
     "star": 5,
     "element": "草",
     "weapon": "法器",
@@ -144,10 +114,7 @@
     "contentId": 4780,
     "name": "赛诺",
     "title": "缄秘的裁遣",
-    "birthday": [
-      6,
-      23
-    ],
+    "birthday": [6, 23],
     "star": 5,
     "element": "雷",
     "weapon": "长柄武器",
@@ -158,10 +125,7 @@
     "contentId": 5020,
     "name": "妮露",
     "title": "莲光落舞筵",
-    "birthday": [
-      12,
-      3
-    ],
+    "birthday": [3, 12],
     "star": 5,
     "element": "水",
     "weapon": "单手剑",
@@ -172,10 +136,7 @@
     "contentId": 4334,
     "name": "提纳里",
     "title": "浅蔚轻行",
-    "birthday": [
-      12,
-      29
-    ],
+    "birthday": [12, 29],
     "star": 5,
     "element": "草",
     "weapon": "弓",
@@ -186,10 +147,7 @@
     "contentId": 3875,
     "name": "神里绫人",
     "title": "磐祭叶守",
-    "birthday": [
-      3,
-      26
-    ],
+    "birthday": [3, 26],
     "star": 5,
     "element": "水",
     "weapon": "单手剑",
@@ -200,10 +158,7 @@
     "contentId": 3386,
     "name": "申鹤",
     "title": "孤辰茕怀",
-    "birthday": [
-      3,
-      10
-    ],
+    "birthday": [3, 10],
     "star": 5,
     "element": "冰",
     "weapon": "长柄武器",
@@ -214,10 +169,7 @@
     "contentId": 2415,
     "name": "埃洛伊",
     "title": "「异界的救世主」",
-    "birthday": [
-      4,
-      4
-    ],
+    "birthday": [4, 4],
     "star": 5,
     "element": "冰",
     "weapon": "弓",
@@ -228,10 +180,7 @@
     "contentId": 4081,
     "name": "夜兰",
     "title": "兰生幽谷",
-    "birthday": [
-      4,
-      20
-    ],
+    "birthday": [4, 20],
     "star": 5,
     "element": "水",
     "weapon": "弓",
@@ -242,10 +191,7 @@
     "contentId": 3564,
     "name": "八重神子",
     "title": "浮世笑百姿",
-    "birthday": [
-      6,
-      27
-    ],
+    "birthday": [6, 27],
     "star": 5,
     "element": "雷",
     "weapon": "法器",
@@ -256,10 +202,7 @@
     "contentId": 3276,
     "name": "荒泷一斗",
     "title": "花坂豪快",
-    "birthday": [
-      6,
-      1
-    ],
+    "birthday": [1, 6],
     "star": 5,
     "element": "岩",
     "weapon": "双手剑",
@@ -270,10 +213,7 @@
     "contentId": 2403,
     "name": "珊瑚宫心海",
     "title": "真珠之智",
-    "birthday": [
-      2,
-      22
-    ],
+    "birthday": [2, 22],
     "star": 5,
     "element": "水",
     "weapon": "法器",
@@ -284,10 +224,7 @@
     "contentId": 2404,
     "name": "雷电将军",
     "title": "一心净土",
-    "birthday": [
-      6,
-      26
-    ],
+    "birthday": [6, 26],
     "star": 5,
     "element": "雷",
     "weapon": "长柄武器",
@@ -298,10 +235,7 @@
     "contentId": 2040,
     "name": "优菈",
     "title": "浪沫的旋舞",
-    "birthday": [
-      10,
-      25
-    ],
+    "birthday": [10, 25],
     "star": 5,
     "element": "冰",
     "weapon": "双手剑",
@@ -312,10 +246,7 @@
     "contentId": 2124,
     "name": "宵宫",
     "title": "琉焰华舞",
-    "birthday": [
-      6,
-      21
-    ],
+    "birthday": [6, 21],
     "star": 5,
     "element": "火",
     "weapon": "弓",
@@ -326,10 +257,7 @@
     "contentId": 2142,
     "name": "枫原万叶",
     "title": "红叶逐荒波",
-    "birthday": [
-      10,
-      29
-    ],
+    "birthday": [10, 29],
     "star": 5,
     "element": "风",
     "weapon": "单手剑",
@@ -340,10 +268,7 @@
     "contentId": 1627,
     "name": "胡桃",
     "title": "雪霁梅香",
-    "birthday": [
-      7,
-      15
-    ],
+    "birthday": [7, 15],
     "star": 5,
     "element": "火",
     "weapon": "长柄武器",
@@ -354,10 +279,7 @@
     "contentId": 1058,
     "name": "刻晴",
     "title": "霆霓快雨",
-    "birthday": [
-      11,
-      20
-    ],
+    "birthday": [11, 20],
     "star": 5,
     "element": "雷",
     "weapon": "单手剑",
@@ -368,10 +290,7 @@
     "contentId": 1057,
     "name": "莫娜",
     "title": "星天水镜",
-    "birthday": [
-      8,
-      31
-    ],
+    "birthday": [8, 31],
     "star": 5,
     "element": "水",
     "weapon": "法器",
@@ -382,10 +301,7 @@
     "contentId": 1360,
     "name": "阿贝多",
     "title": "白垩之子",
-    "birthday": [
-      9,
-      13
-    ],
+    "birthday": [9, 13],
     "star": 5,
     "element": "岩",
     "weapon": "单手剑",
@@ -396,10 +312,7 @@
     "contentId": 1433,
     "name": "甘雨",
     "title": "循循守月",
-    "birthday": [
-      12,
-      2
-    ],
+    "birthday": [2, 12],
     "star": 5,
     "element": "冰",
     "weapon": "弓",
@@ -410,10 +323,7 @@
     "contentId": 1056,
     "name": "七七",
     "title": "冻冻回魂夜",
-    "birthday": [
-      3,
-      3
-    ],
+    "birthday": [3, 3],
     "star": 5,
     "element": "冰",
     "weapon": "单手剑",
@@ -424,10 +334,7 @@
     "contentId": 1220,
     "name": "达达利亚",
     "title": "「公子」",
-    "birthday": [
-      7,
-      20
-    ],
+    "birthday": [7, 20],
     "star": 5,
     "element": "水",
     "weapon": "弓",
@@ -438,10 +345,7 @@
     "contentId": 1290,
     "name": "钟离",
     "title": "尘世闲游",
-    "birthday": [
-      12,
-      31
-    ],
+    "birthday": [12, 31],
     "star": 5,
     "element": "岩",
     "weapon": "长柄武器",
@@ -452,10 +356,7 @@
     "contentId": 55,
     "name": "可莉",
     "title": "逃跑的太阳",
-    "birthday": [
-      7,
-      27
-    ],
+    "birthday": [7, 27],
     "star": 5,
     "element": "火",
     "weapon": "法器",
@@ -466,10 +367,7 @@
     "contentId": 1498,
     "name": "魈",
     "title": "护法夜叉",
-    "birthday": [
-      4,
-      17
-    ],
+    "birthday": [4, 17],
     "star": 5,
     "element": "风",
     "weapon": "长柄武器",
@@ -480,10 +378,7 @@
     "contentId": 57,
     "name": "温迪",
     "title": "风色诗人",
-    "birthday": [
-      6,
-      16
-    ],
+    "birthday": [6, 16],
     "star": 5,
     "element": "风",
     "weapon": "弓",
@@ -494,10 +389,7 @@
     "contentId": 75,
     "name": "迪卢克",
     "title": "晨曦的暗面",
-    "birthday": [
-      4,
-      30
-    ],
+    "birthday": [4, 30],
     "star": 5,
     "element": "火",
     "weapon": "双手剑",
@@ -508,10 +400,7 @@
     "contentId": 4073,
     "name": "旅行者（荧）",
     "title": "",
-    "birthday": [
-      0,
-      0
-    ],
+    "birthday": [0, 0],
     "star": 5,
     "element": "",
     "weapon": "单手剑",
@@ -522,10 +411,7 @@
     "contentId": 4074,
     "name": "旅行者（空）",
     "title": "",
-    "birthday": [
-      0,
-      0
-    ],
+    "birthday": [0, 0],
     "star": 5,
     "element": "",
     "weapon": "单手剑",
@@ -536,10 +422,7 @@
     "contentId": 59,
     "name": "琴",
     "title": "蒲公英骑士",
-    "birthday": [
-      3,
-      14
-    ],
+    "birthday": [3, 14],
     "star": 5,
     "element": "风",
     "weapon": "单手剑",
@@ -550,10 +433,7 @@
     "contentId": 2123,
     "name": "神里绫华",
     "title": "白鹭霜华",
-    "birthday": [
-      9,
-      28
-    ],
+    "birthday": [9, 28],
     "star": 5,
     "element": "冰",
     "weapon": "单手剑",
@@ -564,10 +444,7 @@
     "contentId": 500605,
     "name": "夏沃蕾",
     "title": "明律决罚",
-    "birthday": [
-      1,
-      10
-    ],
+    "birthday": [1, 10],
     "star": 4,
     "element": "火",
     "weapon": "长柄武器",
@@ -578,10 +455,7 @@
     "contentId": 500292,
     "name": "夏洛蒂",
     "title": "朗镜索真",
-    "birthday": [
-      4,
-      10
-    ],
+    "birthday": [4, 10],
     "star": 4,
     "element": "冰",
     "weapon": "法器",
@@ -592,10 +466,7 @@
     "contentId": 7257,
     "name": "菲米尼",
     "title": "潜怀遐梦",
-    "birthday": [
-      9,
-      24
-    ],
+    "birthday": [9, 24],
     "star": 4,
     "element": "冰",
     "weapon": "双手剑",
@@ -606,10 +477,7 @@
     "contentId": 6938,
     "name": "琳妮特",
     "title": "丽影绮行",
-    "birthday": [
-      2,
-      2
-    ],
+    "birthday": [2, 2],
     "star": 4,
     "element": "风",
     "weapon": "单手剑",
@@ -620,10 +488,7 @@
     "contentId": 6490,
     "name": "卡维",
     "title": "天穹之镜",
-    "birthday": [
-      7,
-      9
-    ],
+    "birthday": [7, 9],
     "star": 4,
     "element": "草",
     "weapon": "双手剑",
@@ -634,10 +499,7 @@
     "contentId": 6285,
     "name": "米卡",
     "title": "晴霜的标绘",
-    "birthday": [
-      8,
-      11
-    ],
+    "birthday": [8, 11],
     "star": 4,
     "element": "冰",
     "weapon": "长柄武器",
@@ -648,10 +510,7 @@
     "contentId": 5866,
     "name": "瑶瑶",
     "title": "仙蕊玲珑",
-    "birthday": [
-      3,
-      6
-    ],
+    "birthday": [3, 6],
     "star": 4,
     "element": "草",
     "weapon": "长柄武器",
@@ -662,10 +521,7 @@
     "contentId": 5493,
     "name": "珐露珊",
     "title": "机逐封秘",
-    "birthday": [
-      8,
-      20
-    ],
+    "birthday": [8, 20],
     "star": 4,
     "element": "风",
     "weapon": "弓",
@@ -676,10 +532,7 @@
     "contentId": 5297,
     "name": "莱依拉",
     "title": "绮思晚星",
-    "birthday": [
-      12,
-      19
-    ],
+    "birthday": [12, 19],
     "star": 4,
     "element": "冰",
     "weapon": "单手剑",
@@ -690,10 +543,7 @@
     "contentId": 4781,
     "name": "坎蒂丝",
     "title": "浮金的誓愿",
-    "birthday": [
-      5,
-      3
-    ],
+    "birthday": [3, 5],
     "star": 4,
     "element": "水",
     "weapon": "长柄武器",
@@ -704,10 +554,7 @@
     "contentId": 4736,
     "name": "多莉",
     "title": "梦园藏金",
-    "birthday": [
-      12,
-      21
-    ],
+    "birthday": [12, 21],
     "star": 4,
     "element": "雷",
     "weapon": "双手剑",
@@ -718,10 +565,7 @@
     "contentId": 4333,
     "name": "柯莱",
     "title": "萃念初蘖",
-    "birthday": [
-      5,
-      8
-    ],
+    "birthday": [5, 8],
     "star": 4,
     "element": "草",
     "weapon": "弓",
@@ -732,10 +576,7 @@
     "contentId": 4148,
     "name": "久岐忍",
     "title": "烦恼刈除",
-    "birthday": [
-      7,
-      27
-    ],
+    "birthday": [7, 27],
     "star": 4,
     "element": "雷",
     "weapon": "单手剑",
@@ -746,10 +587,7 @@
     "contentId": 3387,
     "name": "云堇",
     "title": "红毹婵娟",
-    "birthday": [
-      5,
-      21
-    ],
+    "birthday": [5, 21],
     "star": 4,
     "element": "岩",
     "weapon": "长柄武器",
@@ -760,10 +598,7 @@
     "contentId": 6594,
     "name": "绮良良",
     "title": "檐宇猫游",
-    "birthday": [
-      1,
-      22
-    ],
+    "birthday": [1, 22],
     "star": 4,
     "element": "草",
     "weapon": "单手剑",
@@ -774,10 +609,7 @@
     "contentId": 4197,
     "name": "鹿野院平藏",
     "title": "心朝乂安",
-    "birthday": [
-      7,
-      24
-    ],
+    "birthday": [7, 24],
     "star": 4,
     "element": "风",
     "weapon": "法器",
@@ -788,10 +620,7 @@
     "contentId": 2402,
     "name": "九条裟罗",
     "title": "黑羽鸣镝",
-    "birthday": [
-      7,
-      14
-    ],
+    "birthday": [7, 14],
     "star": 4,
     "element": "雷",
     "weapon": "弓",
@@ -802,10 +631,7 @@
     "contentId": 3275,
     "name": "五郎",
     "title": "戎犬锵锵",
-    "birthday": [
-      5,
-      18
-    ],
+    "birthday": [5, 18],
     "star": 4,
     "element": "岩",
     "weapon": "弓",
@@ -816,10 +642,7 @@
     "contentId": 2125,
     "name": "早柚",
     "title": "忍里之貉",
-    "birthday": [
-      10,
-      19
-    ],
+    "birthday": [10, 19],
     "star": 4,
     "element": "风",
     "weapon": "双手剑",
@@ -830,10 +653,7 @@
     "contentId": 2606,
     "name": "托马",
     "title": "渡来介者",
-    "birthday": [
-      1,
-      9
-    ],
+    "birthday": [1, 9],
     "star": 4,
     "element": "火",
     "weapon": "长柄武器",
@@ -844,10 +664,7 @@
     "contentId": 1795,
     "name": "烟绯",
     "title": "智明无邪",
-    "birthday": [
-      7,
-      28
-    ],
+    "birthday": [7, 28],
     "star": 4,
     "element": "火",
     "weapon": "法器",
@@ -858,10 +675,7 @@
     "contentId": 1744,
     "name": "罗莎莉亚",
     "title": "棘冠恩典",
-    "birthday": [
-      1,
-      24
-    ],
+    "birthday": [1, 24],
     "star": 4,
     "element": "冰",
     "weapon": "长柄武器",
@@ -872,10 +686,7 @@
     "contentId": 1291,
     "name": "辛焱",
     "title": "燥热旋律",
-    "birthday": [
-      10,
-      16
-    ],
+    "birthday": [10, 16],
     "star": 4,
     "element": "火",
     "weapon": "双手剑",
@@ -886,10 +697,7 @@
     "contentId": 1055,
     "name": "砂糖",
     "title": "无害甜度",
-    "birthday": [
-      11,
-      26
-    ],
+    "birthday": [11, 26],
     "star": 4,
     "element": "风",
     "weapon": "法器",
@@ -900,10 +708,7 @@
     "contentId": 1221,
     "name": "迪奥娜",
     "title": "猫尾特调",
-    "birthday": [
-      1,
-      18
-    ],
+    "birthday": [1, 18],
     "star": 4,
     "element": "冰",
     "weapon": "弓",
@@ -914,10 +719,7 @@
     "contentId": 644,
     "name": "重云",
     "title": "雪融有踪",
-    "birthday": [
-      9,
-      7
-    ],
+    "birthday": [7, 9],
     "star": 4,
     "element": "冰",
     "weapon": "双手剑",
@@ -928,10 +730,7 @@
     "contentId": 111,
     "name": "诺艾尔",
     "title": "未授勋之花",
-    "birthday": [
-      3,
-      21
-    ],
+    "birthday": [3, 21],
     "star": 4,
     "element": "岩",
     "weapon": "双手剑",
@@ -942,10 +741,7 @@
     "contentId": 105,
     "name": "班尼特",
     "title": "命运试金石",
-    "birthday": [
-      2,
-      29
-    ],
+    "birthday": [2, 29],
     "star": 4,
     "element": "火",
     "weapon": "单手剑",
@@ -956,10 +752,7 @@
     "contentId": 382,
     "name": "菲谢尔",
     "title": "断罪皇女！！",
-    "birthday": [
-      5,
-      27
-    ],
+    "birthday": [5, 27],
     "star": 4,
     "element": "雷",
     "weapon": "弓",
@@ -970,10 +763,7 @@
     "contentId": 78,
     "name": "凝光",
     "title": "掩月天权",
-    "birthday": [
-      8,
-      26
-    ],
+    "birthday": [8, 26],
     "star": 4,
     "element": "岩",
     "weapon": "法器",
@@ -984,10 +774,7 @@
     "contentId": 241,
     "name": "行秋",
     "title": "少年春衫薄",
-    "birthday": [
-      10,
-      9
-    ],
+    "birthday": [9, 10],
     "star": 4,
     "element": "水",
     "weapon": "单手剑",
@@ -998,10 +785,7 @@
     "contentId": 79,
     "name": "北斗",
     "title": "无冕的龙王",
-    "birthday": [
-      2,
-      14
-    ],
+    "birthday": [2, 14],
     "star": 4,
     "element": "雷",
     "weapon": "双手剑",
@@ -1012,10 +796,7 @@
     "contentId": 112,
     "name": "香菱",
     "title": "万民百味",
-    "birthday": [
-      11,
-      2
-    ],
+    "birthday": [2, 11],
     "star": 4,
     "element": "火",
     "weapon": "长柄武器",
@@ -1026,10 +807,7 @@
     "contentId": 54,
     "name": "安柏",
     "title": "飞行冠军",
-    "birthday": [
-      8,
-      10
-    ],
+    "birthday": [8, 10],
     "star": 4,
     "element": "火",
     "weapon": "弓",
@@ -1040,10 +818,7 @@
     "contentId": 56,
     "name": "雷泽",
     "title": "狼少年",
-    "birthday": [
-      9,
-      9
-    ],
+    "birthday": [9, 9],
     "star": 4,
     "element": "雷",
     "weapon": "双手剑",
@@ -1054,10 +829,7 @@
     "contentId": 76,
     "name": "凯亚",
     "title": "寒风剑士",
-    "birthday": [
-      11,
-      30
-    ],
+    "birthday": [11, 30],
     "star": 4,
     "element": "冰",
     "weapon": "单手剑",
@@ -1068,10 +840,7 @@
     "contentId": 61,
     "name": "芭芭拉",
     "title": "闪耀偶像",
-    "birthday": [
-      7,
-      5
-    ],
+    "birthday": [5, 7],
     "star": 4,
     "element": "水",
     "weapon": "法器",
@@ -1082,10 +851,7 @@
     "contentId": 92,
     "name": "丽莎",
     "title": "蔷薇魔女",
-    "birthday": [
-      6,
-      9
-    ],
+    "birthday": [6, 9],
     "star": 4,
     "element": "雷",
     "weapon": "法器",
