@@ -3,7 +3,10 @@ node_modules
 # Logs
 logs
 # Source
-source
+source/assets
+source/temp
+source/data/http
+source/data/src
 # Temp ignore
 web/**/*.js
 # Pnpm lock

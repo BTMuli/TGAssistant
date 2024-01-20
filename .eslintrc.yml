@@ -81,6 +81,9 @@ overrides:
   - files: ["*.json"]
     parser: jsonc-eslint-parser
     rules:
+      jsonc/comma-dangle:
+        - error # 没有逗号
+        - never
       jsonc/sort-array-values:
         - error
         - pathPattern: .*

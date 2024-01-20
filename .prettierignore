@@ -7,3 +7,5 @@ source/temp
 logs
 # Pnpm lock file
 pnpm-lock.yaml
+# qodana
+qodana.yaml
