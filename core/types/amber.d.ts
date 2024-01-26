@@ -1,12 +1,12 @@
 /**
- * @file core types amber.d.ts
+ * @file core/types/amber.d.ts
  * @description amber 插件类型定义
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 /**
  * @description amber 插件类型 namespace
- * @since 2.0.0
+ * @since 2.0.1
  * @namespace TGACore.Plugins.Amber
  * @memberof TGACore.Plugins
  */
@@ -215,4 +215,44 @@ declare namespace TGACore.Plugins.Amber {
    * @return GCGTypeMap
    */
   type GCGTypeMap = Record<GCGType, GCGType>;
+
+  /**
+   * @description 返回数据-材料
+   * @since 2.0.1
+   * @memberof TGACore.Plugins.Amber
+   * @interface ResponseMaterial
+   * @template MaterialTypeMap, Material
+   * @extends Response<MaterialTypeMap, Material>
+   * @property {MaterialTypeMap} data.types 材料类型对照表
+   * @property {Record<string, Material>} data.items 材料数据
+   * @return ResponseMaterial
+   */
+  interface ResponseMaterial extends Response<MaterialTypeMap, Material> {}
+
+  /**
+   * @description 材料类型对照表
+   * @since 2.0.1
+   * @memberof TGACore.Plugins.Amber
+   * @return MaterialTypeMap
+   */
+  type MaterialTypeMap = Record<string, string>;
+
+  /**
+   * @description 材料数据
+   * @since 2.0.1
+   * @memberof TGACore.Plugins.Amber
+   * @interface Material
+   * @extends Item
+   * @property {string} type 材料类型
+   * @property {false} recipe 是否有配方
+   * @property {boolean} mapMark 是否有地图标记
+   * @property {number} rank 星级
+   * @return Material
+   */
+  interface Material extends Item {
+    type: string;
+    recipe: false;
+    mapMark: boolean;
+    rank: number;
+  }
 }

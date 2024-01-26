@@ -1,12 +1,12 @@
 /**
  * @file core types config.d.ts
  * @description 配置类型声明文件
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 /**
  * @description 配置 namespace
- * @since 2.0.0
+ * @since 2.0.1
  * @namespace TGACore.Config
  * @memberof TGACore
  */
@@ -198,16 +198,5 @@ declare namespace TGACore.Config {
   interface GithubConfig {
     snap: GithubRepoConfig;
     paimon: GithubRepoConfig;
-  }
-
-  /**
-   * @description 材料配置文件类型
-   * @since 2.0.0
-   * @memberof TGACore.Config
-   * @property {number[]} material 材料配置文件
-   * @return MaterialConfig 材料配置文件类型
-   */
-  interface MaterialConfig {
-    material: number[];
   }
 }
