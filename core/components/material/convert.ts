@@ -108,7 +108,7 @@ async function transMaterial(
       const recipe = data.recipe[key];
       const recipeKeys = Object.keys(recipe);
       for (const recipeKey of recipeKeys) {
-        const materialJson = path.join(jsonDir.src, `${material.id}.json`);
+        const materialJson = path.join(jsonDir.src, `${recipeKey}.json`);
         if (!fileCheck(materialJson, false)) {
           logger.default.error(
             `[components][material][convert][${material.id}] ${material.name} JSON 文件不存在`,
