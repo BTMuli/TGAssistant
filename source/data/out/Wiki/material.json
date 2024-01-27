@@ -9,152 +9,152 @@
       {
         "name": "精通秘境：炽炎祭场",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：雷云祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：霜凝祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：水光之城",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：菫染之国",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：沉沙之渊",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：圆镜",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：云垢",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：旋韵",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：机思",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：深炎之底",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：鸣雷城墟",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：冰封废渊",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：深没之谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：初雷幽谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：砂之祭场",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：妙语",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：思惑",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：箴铭",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：匠理",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：焚尽之环",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：古雷试炼场",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：沉睡之国",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：渴水的废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：真葛废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：流沙之葬",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：律藏",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：引业",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：琅诵",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：奇械",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -169,152 +169,152 @@
       {
         "name": "精通秘境：炽炎祭场",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：雷云祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：霜凝祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：水光之城",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：菫染之国",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：沉沙之渊",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：圆镜",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：云垢",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：旋韵",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：机思",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：深炎之底",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：鸣雷城墟",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：冰封废渊",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：深没之谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：初雷幽谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：砂之祭场",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：妙语",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：思惑",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：箴铭",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：匠理",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：焚尽之环",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：古雷试炼场",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：沉睡之国",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：渴水的废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：真葛废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：流沙之葬",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：律藏",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：引业",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：琅诵",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：奇械",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -351,152 +351,152 @@
       {
         "name": "精通秘境：炽炎祭场",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：雷云祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：霜凝祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：水光之城",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：菫染之国",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：沉沙之渊",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：圆镜",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：云垢",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：旋韵",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "炼武秘境：机思",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       },
       {
         "name": "精通秘境：深炎之底",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：鸣雷城墟",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：冰封废渊",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：深没之谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：初雷幽谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：砂之祭场",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：妙语",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：思惑",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：箴铭",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "炼武秘境：匠理",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       },
       {
         "name": "精通秘境：焚尽之环",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：古雷试炼场",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：沉睡之国",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：渴水的废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：真葛废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：流沙之葬",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：律藏",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：引业",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "精通秘境：琅诵",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       },
       {
         "name": "炼武秘境：奇械",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -7752,7 +7752,7 @@
       {
         "name": "精通秘境：霜凝祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -7771,7 +7771,7 @@
       {
         "name": "精通秘境：霜凝祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -7803,7 +7803,7 @@
       {
         "name": "精通秘境：霜凝祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -7831,7 +7831,7 @@
       {
         "name": "精通秘境：冰封废渊",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -7850,7 +7850,7 @@
       {
         "name": "精通秘境：冰封废渊",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -7882,7 +7882,7 @@
       {
         "name": "精通秘境：冰封废渊",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -7910,7 +7910,7 @@
       {
         "name": "精通秘境：沉睡之国",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -7929,7 +7929,7 @@
       {
         "name": "精通秘境：沉睡之国",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -7961,7 +7961,7 @@
       {
         "name": "精通秘境：沉睡之国",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -7989,7 +7989,7 @@
       {
         "name": "精通秘境：炽炎祭场",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -8008,7 +8008,7 @@
       {
         "name": "精通秘境：炽炎祭场",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8040,7 +8040,7 @@
       {
         "name": "精通秘境：炽炎祭场",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8068,7 +8068,7 @@
       {
         "name": "精通秘境：深炎之底",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -8087,7 +8087,7 @@
       {
         "name": "精通秘境：深炎之底",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8119,7 +8119,7 @@
       {
         "name": "精通秘境：深炎之底",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8147,7 +8147,7 @@
       {
         "name": "精通秘境：焚尽之环",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -8166,7 +8166,7 @@
       {
         "name": "精通秘境：焚尽之环",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -8198,7 +8198,7 @@
       {
         "name": "精通秘境：焚尽之环",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -8240,7 +8240,7 @@
       {
         "name": "精通秘境：菫染之国",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -8259,7 +8259,7 @@
       {
         "name": "精通秘境：菫染之国",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8291,7 +8291,7 @@
       {
         "name": "精通秘境：菫染之国",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8319,7 +8319,7 @@
       {
         "name": "精通秘境：初雷幽谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -8338,7 +8338,7 @@
       {
         "name": "精通秘境：初雷幽谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8370,7 +8370,7 @@
       {
         "name": "精通秘境：初雷幽谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8398,7 +8398,7 @@
       {
         "name": "精通秘境：真葛废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -8417,7 +8417,7 @@
       {
         "name": "精通秘境：真葛废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -8449,7 +8449,7 @@
       {
         "name": "精通秘境：真葛废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -8477,7 +8477,7 @@
       {
         "name": "精通秘境：圆镜",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -8496,7 +8496,7 @@
       {
         "name": "精通秘境：圆镜",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8528,7 +8528,7 @@
       {
         "name": "精通秘境：圆镜",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8556,7 +8556,7 @@
       {
         "name": "精通秘境：妙语",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -8575,7 +8575,7 @@
       {
         "name": "精通秘境：妙语",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8607,7 +8607,7 @@
       {
         "name": "精通秘境：妙语",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8635,7 +8635,7 @@
       {
         "name": "精通秘境：律藏",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -8654,7 +8654,7 @@
       {
         "name": "精通秘境：律藏",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -8686,7 +8686,7 @@
       {
         "name": "精通秘境：律藏",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -8714,7 +8714,7 @@
       {
         "name": "精通秘境：旋韵",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -8733,7 +8733,7 @@
       {
         "name": "精通秘境：旋韵",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8765,7 +8765,7 @@
       {
         "name": "精通秘境：旋韵",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -8793,7 +8793,7 @@
       {
         "name": "精通秘境：箴铭",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -8812,7 +8812,7 @@
       {
         "name": "精通秘境：箴铭",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8844,7 +8844,7 @@
       {
         "name": "精通秘境：箴铭",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -8872,7 +8872,7 @@
       {
         "name": "精通秘境：琅诵",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -8891,7 +8891,7 @@
       {
         "name": "精通秘境：琅诵",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -8923,7 +8923,7 @@
       {
         "name": "精通秘境：琅诵",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -14366,7 +14366,7 @@
       {
         "name": "炼武秘境：水光之城",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -14385,7 +14385,7 @@
       {
         "name": "炼武秘境：水光之城",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -14417,7 +14417,7 @@
       {
         "name": "炼武秘境：水光之城",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -14449,7 +14449,7 @@
       {
         "name": "炼武秘境：水光之城",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -14481,7 +14481,7 @@
       {
         "name": "炼武秘境：深没之谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -14500,7 +14500,7 @@
       {
         "name": "炼武秘境：深没之谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -14532,7 +14532,7 @@
       {
         "name": "炼武秘境：深没之谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -14564,7 +14564,7 @@
       {
         "name": "炼武秘境：深没之谷",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -14596,7 +14596,7 @@
       {
         "name": "炼武秘境：渴水的废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -14615,7 +14615,7 @@
       {
         "name": "炼武秘境：渴水的废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -14647,7 +14647,7 @@
       {
         "name": "炼武秘境：渴水的废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -14679,7 +14679,7 @@
       {
         "name": "炼武秘境：渴水的废都",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -14711,7 +14711,7 @@
       {
         "name": "炼武秘境：雷云祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -14730,7 +14730,7 @@
       {
         "name": "炼武秘境：雷云祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -14762,7 +14762,7 @@
       {
         "name": "炼武秘境：雷云祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -14794,7 +14794,7 @@
       {
         "name": "炼武秘境：雷云祭坛",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -14826,7 +14826,7 @@
       {
         "name": "炼武秘境：鸣雷城墟",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -14845,7 +14845,7 @@
       {
         "name": "炼武秘境：鸣雷城墟",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -14877,7 +14877,7 @@
       {
         "name": "炼武秘境：鸣雷城墟",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -14909,7 +14909,7 @@
       {
         "name": "炼武秘境：鸣雷城墟",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -14941,7 +14941,7 @@
       {
         "name": "炼武秘境：古雷试炼场",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -14960,7 +14960,7 @@
       {
         "name": "炼武秘境：古雷试炼场",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -14992,7 +14992,7 @@
       {
         "name": "炼武秘境：古雷试炼场",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15024,7 +15024,7 @@
       {
         "name": "炼武秘境：古雷试炼场",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15052,7 +15052,7 @@
       {
         "name": "炼武秘境：沉沙之渊",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -15071,7 +15071,7 @@
       {
         "name": "炼武秘境：沉沙之渊",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15103,7 +15103,7 @@
       {
         "name": "炼武秘境：沉沙之渊",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15135,7 +15135,7 @@
       {
         "name": "炼武秘境：沉沙之渊",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15163,7 +15163,7 @@
       {
         "name": "炼武秘境：砂之祭场",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -15182,7 +15182,7 @@
       {
         "name": "炼武秘境：砂之祭场",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15214,7 +15214,7 @@
       {
         "name": "炼武秘境：砂之祭场",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15246,7 +15246,7 @@
       {
         "name": "炼武秘境：砂之祭场",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15274,7 +15274,7 @@
       {
         "name": "炼武秘境：流沙之葬",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -15293,7 +15293,7 @@
       {
         "name": "炼武秘境：流沙之葬",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15325,7 +15325,7 @@
       {
         "name": "炼武秘境：流沙之葬",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15357,7 +15357,7 @@
       {
         "name": "炼武秘境：流沙之葬",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15385,7 +15385,7 @@
       {
         "name": "炼武秘境：云垢",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -15404,7 +15404,7 @@
       {
         "name": "炼武秘境：云垢",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15436,7 +15436,7 @@
       {
         "name": "炼武秘境：云垢",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15468,7 +15468,7 @@
       {
         "name": "炼武秘境：云垢",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15496,7 +15496,7 @@
       {
         "name": "炼武秘境：思惑",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -15515,7 +15515,7 @@
       {
         "name": "炼武秘境：思惑",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15547,7 +15547,7 @@
       {
         "name": "炼武秘境：思惑",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15579,7 +15579,7 @@
       {
         "name": "炼武秘境：思惑",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15607,7 +15607,7 @@
       {
         "name": "炼武秘境：引业",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -15626,7 +15626,7 @@
       {
         "name": "炼武秘境：引业",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15658,7 +15658,7 @@
       {
         "name": "炼武秘境：引业",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15690,7 +15690,7 @@
       {
         "name": "炼武秘境：引业",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15718,7 +15718,7 @@
       {
         "name": "炼武秘境：机思",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": []
@@ -15737,7 +15737,7 @@
       {
         "name": "炼武秘境：机思",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15769,7 +15769,7 @@
       {
         "name": "炼武秘境：机思",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15801,7 +15801,7 @@
       {
         "name": "炼武秘境：机思",
         "type": "domain",
-        "days": ["monday", "sunday", "thursday"]
+        "days": [0, 1, 4]
       }
     ],
     "convert": [
@@ -15829,7 +15829,7 @@
       {
         "name": "炼武秘境：匠理",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": []
@@ -15848,7 +15848,7 @@
       {
         "name": "炼武秘境：匠理",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15880,7 +15880,7 @@
       {
         "name": "炼武秘境：匠理",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15912,7 +15912,7 @@
       {
         "name": "炼武秘境：匠理",
         "type": "domain",
-        "days": ["friday", "sunday", "tuesday"]
+        "days": [0, 2, 5]
       }
     ],
     "convert": [
@@ -15940,7 +15940,7 @@
       {
         "name": "炼武秘境：奇械",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": []
@@ -15959,7 +15959,7 @@
       {
         "name": "炼武秘境：奇械",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -15991,7 +15991,7 @@
       {
         "name": "炼武秘境：奇械",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [
@@ -16023,7 +16023,7 @@
       {
         "name": "炼武秘境：奇械",
         "type": "domain",
-        "days": ["saturday", "sunday", "wednesday"]
+        "days": [0, 3, 6]
       }
     ],
     "convert": [

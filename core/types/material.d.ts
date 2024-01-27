@@ -75,6 +75,7 @@ declare namespace TGACore.Components.Material {
       }
     >
   >;
+
   /**
    * @description 转换后的材料数据
    * @since 2.0.1
@@ -112,7 +113,7 @@ declare namespace TGACore.Components.Material {
   interface Source {
     name: string;
     type: string;
-    days?: string[];
+    days?: number[];
   }
 
   /**

@@ -128,13 +128,36 @@ async function transMaterial(
       converts.push(convert);
     }
   }
+  const source: TGACore.Components.Material.Source[] = [];
+  const dayList = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  if (data.source !== null) {
+    for (const item of data.source) {
+      const days: number[] = [];
+      if (item.days !== undefined) {
+        item.days.map((day: string) => {
+          const index = dayList.indexOf(day);
+          return days.push(index);
+        });
+        source.push({
+          name: item.name,
+          type: item.type,
+          days,
+        });
+      } else {
+        source.push({
+          name: item.name,
+          type: item.type,
+        });
+      }
+    }
+  }
   return {
     id: material.id,
     name: data.name,
     description: data.description,
     type: data.type,
     star: data.rank,
-    source: data.source ?? [],
+    source,
     convert: converts,
   };
 }
