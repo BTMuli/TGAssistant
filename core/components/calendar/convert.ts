@@ -1,20 +1,17 @@
 /**
  * @file core components calendar convert.ts
  * @description 日历组件数据转换
- * @since 2.0.0
+ * @since 2.0.1
  */
 
-import path from "node:path";
 import process from "node:process";
 
 import fs from "fs-extra";
-import sharp from "sharp";
 
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { readConfig } from "../../utils/readConfig.ts";
 import { getHutaoWeapon } from "../../utils/typeTrans.ts";
 
 logger.init();
@@ -266,37 +263,8 @@ Counter.End();
 logger.default.info("[components][calendar][convert] 观测枢数据处理完成");
 Counter.Output();
 
-// 处理图片
-const materialConfig = readConfig(TGACore.Config.ConfigFileEnum.Material);
-materialConfig.material.forEach((item) => {
-  convertMaterialSet.add(item);
-});
-Counter.Reset(convertMaterialSet.size);
-for (const item of convertMaterialSet) {
-  const oriPath = path.join(imgDir.src, `${item}.png`);
-  const savePath = path.join(imgDir.out, `${item}.webp`);
-  if (!fileCheck(oriPath, false)) {
-    logger.default.warn(`[components][calendar][convert] 未找到材料 ${item} 的图片`);
-    Counter.Fail();
-    continue;
-  }
-  if (fileCheck(savePath, false)) {
-    logger.console.mark(`[components][calendar][convert] 材料 ${item} 的图片已存在`);
-    Counter.Skip();
-    continue;
-  }
-  await sharp(oriPath).webp().toFile(savePath);
-  logger.console.info(`[components][calendar][convert] 添加材料 ${item} 的图片`);
-  Counter.Success();
-}
-Counter.End();
-logger.default.info("[components][calendar][convert] 材料图片处理完成");
-Counter.Output();
-
 logger.default.info("[components][calendar][convert] convert.ts 运行完成");
 Counter.EndAll();
-
-// 用到的函数
 
 /**
  * @description 处理 amber.json

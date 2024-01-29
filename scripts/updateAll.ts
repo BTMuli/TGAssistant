@@ -1,7 +1,7 @@
 /**
  * @file scripts/updateAll.ts
  * @description 更新所有数据
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 import { spawnSync } from "child_process";
@@ -18,7 +18,7 @@ logger.console.warn("[scripts][updateAll] 运行 updateAll.ts");
 
 // 可能的文件命名
 const files = ["download.ts", "convert.ts", "update.ts"];
-const dirs = ["achievements", "namecard", "character", "weapon", "calendar", "wiki"];
+const dirs = ["material", "achievements", "namecard", "character", "weapon", "calendar", "wiki"];
 Counter.Init("[scripts][updateAll]");
 const startTime = Date.now();
 for (const dir of dirs) {
