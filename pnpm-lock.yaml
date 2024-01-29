@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@yuehaiteam/amos-data':
     specifier: github:yuehaiteam/amos-data
-    version: git@github.com+yuehaiteam/amos-data/56c2f9e084aa1cd5eee7d579ed9d4a23279d49fe
+    version: git@github.com+yuehaiteam/amos-data/1b8fe9ed35350686501fea6698575e8b380c6e22
   app-root-path:
     specifier: ^3.1.0
     version: 3.1.0
@@ -5186,8 +5186,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  git@github.com+yuehaiteam/amos-data/56c2f9e084aa1cd5eee7d579ed9d4a23279d49fe:
-    resolution: {commit: 56c2f9e084aa1cd5eee7d579ed9d4a23279d49fe, repo: git@github.com:yuehaiteam/amos-data.git, type: git}
+  git@github.com+yuehaiteam/amos-data/1b8fe9ed35350686501fea6698575e8b380c6e22:
+    resolution: {commit: 1b8fe9ed35350686501fea6698575e8b380c6e22, repo: git@github.com:yuehaiteam/amos-data.git, type: git}
     name: '@yuehaiteam/amos-data'
     version: 1.0.0-CNREL4.4.0-R20559831-S20338540-D20555221
     dev: false
