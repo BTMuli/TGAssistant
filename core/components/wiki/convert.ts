@@ -144,6 +144,7 @@ function transCharacter(
     name: raw.Name,
     title: raw.FetterInfo.Title,
     description: raw.Description,
+    area: transArea(raw.FetterInfo.Association),
     brief: {
       camp: raw.FetterInfo.Native,
       constellation: raw.FetterInfo.ConstellationBefore,
@@ -166,6 +167,32 @@ function transCharacter(
     talks: transTalks(raw.FetterInfo.Fetters),
     stories: raw.FetterInfo.FetterStories,
   };
+}
+
+/**
+ * @description 转换地区
+ * @since 2.0.1
+ * @param {number} raw 原始数据
+ * @returns {string} 转换后的数据
+ */
+function transArea(raw: number): string {
+  const AssocList = [
+    "未知",
+    "蒙德",
+    "璃月",
+    "主角",
+    "愚人众",
+    "稻妻",
+    "其他",
+    "须弥",
+    "枫丹",
+    "纳塔",
+    "至冬",
+  ];
+  if (raw >= AssocList.length || raw < 0) {
+    return "未知";
+  }
+  return AssocList[raw];
 }
 
 /**

@@ -291,6 +291,7 @@ declare namespace TGACore.Components.Character {
    * @property {string} name 角色名称
    * @property {string} title 角色称号
    * @property {string} description 角色简介
+   * @property {string} area 角色地区
    * @property {object} brief 角色简介
    * @property {string} brief.camp 角色地区
    * @property {string} brief.constellation 角色星座
@@ -315,6 +316,7 @@ declare namespace TGACore.Components.Character {
     name: string;
     title: string;
     description: string;
+    area: string;
     brief: {
       camp: string;
       constellation: string;
