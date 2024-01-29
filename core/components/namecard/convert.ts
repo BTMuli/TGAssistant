@@ -34,10 +34,7 @@ if (!fileCheck(jsonDir.src, false)) {
 // 处理 json 文件
 logger.console.mark("[components][namecard][convert] 处理 json 文件");
 const jsonFile: TGACore.Components.Namecard.RawData[] = await fs.readJson(
-  path.join(jsonDir.src, "namecard.json"),
-  {
-    encoding: "utf-8",
-  },
+  path.join(jsonDir.src, "app", "namecard.json"),
 );
 const outData: TGACore.Components.Namecard.ConvertData[] = [];
 jsonFile.forEach((item) => {
@@ -62,7 +59,7 @@ outData.sort((a, b) => {
     return a.type - b.type;
   }
 });
-await fs.writeJson(path.join(jsonDir.out, "namecard.json"), outData, { spaces: 2 });
+await fs.writeJson(path.join(jsonDir.out, "app", "namecard.json"), outData, { spaces: 2 });
 
 // 处理图像文件
 Counter.Reset();

@@ -11,19 +11,19 @@ import { getAppDirPath } from "../../utils/getBasePaths.ts";
 export const jsonDir = getAppDirPath("data", "wiki");
 
 export const jsonDetail = {
-  dir: path.join(jsonDir.out, "Wiki"),
+  dir: path.join(jsonDir.out, "WIKI"),
   material: path.join(jsonDir.src, "material.json"),
   weapon: {
     src: path.join(jsonDir.src, "weapon.json"),
-    out: path.join(jsonDir.out, "Wiki", "weapon.json"),
+    out: path.join(jsonDir.out, "WIKI", "weapon.json"),
   },
   character: {
     src: path.join(jsonDir.src, "character.json"),
-    out: path.join(jsonDir.out, "Wiki", "character.json"),
+    out: path.join(jsonDir.out, "WIKI", "character.json"),
   },
   gcg: {
     src: path.join(jsonDir.src, "gcg.json"),
-    out: path.join(jsonDir.out, "Wiki", "gcg.json"),
+    out: path.join(jsonDir.out, "WIKI", "gcg.json"),
   },
 };
 
