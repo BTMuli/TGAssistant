@@ -95,11 +95,14 @@ class Counter {
 
   /**
    * @description 全部结束
-   * @since 2.0.0
+   * @since 2.0.1
+   * @param {boolean} write 是否输出
    * @return {void} 无返回值
    */
-  public EndAll(): void {
-    logger.default.info(`${this.prefix} 总计耗时 ${(this.cost / 1000).toFixed(2)}s`);
+  public EndAll(write: boolean = true): void {
+    const str = `${this.prefix} 总计耗时 ${(this.cost / 1000).toFixed(2)}s`;
+    if (write !== undefined && !write) logger.console.info(str);
+    else logger.default.info(str);
   }
 
   /**

@@ -11,3 +11,4 @@ source/data/src
 web/**/*.js
 # Pnpm lock
 pnpm-lock.yaml
+qodana.yaml

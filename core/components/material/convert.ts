@@ -132,12 +132,13 @@ async function transMaterial(
   const dayList = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
   if (data.source !== null) {
     for (const item of data.source) {
-      const days: number[] = [];
+      let days: number[] = [];
       if (item.days !== undefined) {
         item.days.map((day: string) => {
           const index = dayList.indexOf(day);
           return days.push(index);
         });
+        days = days.sort((a, b) => a - b);
         source.push({
           name: item.name,
           type: item.type,
