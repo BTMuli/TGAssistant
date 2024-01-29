@@ -39,5 +39,8 @@ for (const dir of dirs) {
   Counter.End();
   logger.console.info(`[script][updateAll][${dir}] 更新完成，耗时 ${Counter.getTime()}`);
 }
-logger.console.warn("[scripts][updateAll] 运行 updateAll.ts 完成");
+// prettier
+spawnSync("pnpm prettier", { cwd: getProjRootPath(), shell: true });
+
+logger.console.info("[scripts][updateAll] 运行 updateAll.ts 完成");
 Counter.EndAll(false);
