@@ -19,8 +19,10 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8.12.1
+      - name: remove lock file
+        run: rm -f pnpm-lock.yaml
       - name: install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
       - name: "Qodana Scan"
         uses: JetBrains/qodana-action@v2023.3
         env:
