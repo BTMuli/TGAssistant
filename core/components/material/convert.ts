@@ -7,6 +7,7 @@
 import path from "node:path";
 import process from "node:process";
 
+import axios from "axios";
 import fs from "fs-extra";
 import sharp from "sharp";
 
@@ -14,6 +15,7 @@ import { imgDir, jsonDir, wikiDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
 Counter.Init("[components][material][convert]");
@@ -109,14 +111,23 @@ async function transMaterial(
       const recipeKeys = Object.keys(recipe);
       for (const recipeKey of recipeKeys) {
         const materialJson = path.join(jsonDir.src, `${recipeKey}.json`);
+        let materialData: TGACore.Components.Material.RawAmber;
         if (!fileCheck(materialJson, false)) {
-          logger.default.error(
-            `[components][material][convert][${material.id}] ${material.name} JSON 文件不存在`,
+          logger.default.warn(
+            `[components][material][convert][${material.id}] ${recipeKey} JSON 文件不存在，尝试下载`,
           );
-          Counter.Fail();
-          continue;
+          await convertImg(recipeKey);
+          const data = await downloadJson(recipeKey);
+          if (data === false) {
+            logger.default.warn(
+              `[components][material][convert][${material.id}] ${recipeKey} JSON 下载失败`,
+            );
+            continue;
+          }
+          materialData = data;
+        } else {
+          materialData = await fs.readJson(materialJson);
         }
-        const materialData: TGACore.Components.Material.RawAmber = await fs.readJson(materialJson);
         convert.source.push({
           id: recipeKey,
           name: materialData.name,
@@ -161,4 +172,57 @@ async function transMaterial(
     source,
     convert: converts,
   };
+}
+
+/**
+ * @description 下载 JSON
+ * @since 2.0.1
+ * @param {string} id 材料 ID
+ * @return {Promise<TGACore.Components.Material.RawAmber|false>}
+ */
+async function downloadJson(id: string): Promise<TGACore.Components.Material.RawAmber | false> {
+  const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
+  let res: TGACore.Components.Material.Response;
+  try {
+    res = await axios
+      .get(`https://api.ambr.top/v2/chs/material/${id}`, {
+        params: {
+          vh: amberVersion,
+        },
+      })
+      .then((res) => res.data);
+  } catch (error) {
+    logger.default.error(`[components][material][convert][${id}] 下载 JSON 数据失败`);
+    logger.console.error(error);
+    return false;
+  }
+  return res.data;
+}
+
+/**
+ * @description 下载图片
+ * @since 2.0.1
+ * @param {string} id 材料 ID
+ * @return {Promise<void>}
+ */
+async function convertImg(id: string): Promise<void> {
+  const savePath = path.join(imgDir.out, `${id}.webp`);
+  if (fileCheck(savePath, false)) {
+    logger.console.mark(`[components][material][convert][${id}] 图片已存在，跳过下载`);
+    return;
+  }
+  let res: ArrayBuffer;
+  try {
+    res = await axios
+      .get(`https://api.ambr.top/assets/UI/UI_ItemIcon_${id}.png`, {
+        responseType: "arraybuffer",
+      })
+      .then((res) => res.data);
+  } catch (error) {
+    logger.default.error(`[components][material][convert][${id}] 下载图片失败`);
+    logger.console.error(error);
+    return;
+  }
+  await sharp(res).png().resize(256, 256).webp().toFile(savePath);
+  logger.default.info(`[components][material][convert][${id}] 图片转换完成`);
 }
