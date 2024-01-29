@@ -9,6 +9,7 @@ import process from "node:process";
 import fs from "fs-extra";
 
 import { jsonDir, jsonDetailDir } from "./constant.ts";
+import { getAchiTrigger } from "./utils.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
@@ -51,6 +52,7 @@ achievementRaw.forEach((item) => {
     description: item.Description,
     reward: item.FinishReward.Count,
     version: item.Version,
+    trigger: getAchiTrigger(item.Id),
   };
   achievement.push(achievementItem);
   logger.console.mark(`[components][achievement][convert] 成就 ${item.Id} 转换完成`);

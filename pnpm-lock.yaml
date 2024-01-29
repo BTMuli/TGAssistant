@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@yuehaiteam/amos-data':
+    specifier: github:yuehaiteam/amos-data
+    version: git@github.com+yuehaiteam/amos-data/56c2f9e084aa1cd5eee7d579ed9d4a23279d49fe
   app-root-path:
     specifier: ^3.1.0
     version: 3.1.0
@@ -5182,3 +5185,9 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  git@github.com+yuehaiteam/amos-data/56c2f9e084aa1cd5eee7d579ed9d4a23279d49fe:
+    resolution: {commit: 56c2f9e084aa1cd5eee7d579ed9d4a23279d49fe, repo: git@github.com:yuehaiteam/amos-data.git, type: git}
+    name: '@yuehaiteam/amos-data'
+    version: 1.0.0-CNREL4.4.0-R20559831-S20338540-D20555221
+    dev: false

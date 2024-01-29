@@ -33,6 +33,7 @@
     "url": "https://github.com/BTMuli/TGAssistent/issues"
   },
   "dependencies": {
+    "@yuehaiteam/amos-data": "github:yuehaiteam/amos-data",
     "app-root-path": "^3.1.0",
     "axios": "^1.6.7",
     "better-sqlite3": "^9.3.0",
