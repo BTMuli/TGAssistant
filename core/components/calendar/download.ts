@@ -4,21 +4,14 @@
  * @since 2.0.1
  */
 
-import process from "node:process";
-
 import axios from "axios";
 import fs from "fs-extra";
 
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import {
-  checkMetadata,
-  getMetadata,
-  getSnapDownloadUrl,
-  updateMetadata,
-} from "../../utils/operGitRepo.ts";
+import { fileCheckObj } from "../../utils/fileCheck.ts";
+import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
 import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
@@ -48,13 +41,6 @@ const requestData = {
 
 Counter.Reset(5);
 logger.default.info("[components][calendar][download] 开始更新 JSON 数据");
-
-// 为避免重复下载，metadata 的获取放在最前面
-const metadata = await getMetadata().catch((e) => {
-  logger.default.error("[components][calendar][download] 获取元数据失败");
-  logger.console.error(e);
-  process.exit(1);
-});
 
 // 下载 amber 数据
 try {
@@ -94,17 +80,11 @@ for (const [key, value] of urlRes) {
   } else {
     savePath = jsonDetailDir.material;
   }
-  if (checkMetadata(key, metadata) && fileCheck(savePath, false)) {
-    logger.console.mark(`[components][calendar][download] ${key} 数据已存在，跳过`);
-    Counter.Skip();
-    continue;
-  }
   try {
     const res = await axios.get(value);
     await fs.writeJson(savePath, res.data, { spaces: 2 });
     logger.default.info(`[components][calendar][download] ${key} 数据下载完成`);
     Counter.Success();
-    await updateMetadata(key, metadata);
   } catch (e) {
     logger.default.error(`[components][calendar][download] ${key} 数据下载失败`);
     console.error(e);

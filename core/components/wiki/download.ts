@@ -1,10 +1,8 @@
 /**
  * @file core/components/wiki/download.ts
  * @description wiki组件下载器
- * @since 2.0.0
+ * @since 2.0.1
  */
-
-import process from "node:process";
 
 import axios from "axios";
 import fs from "fs-extra";
@@ -14,12 +12,7 @@ import { imageDetail, jsonDetail, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import {
-  checkMetadata,
-  getMetadata,
-  getSnapDownloadUrl,
-  updateMetadata,
-} from "../../utils/operGitRepo.ts";
+import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
 
 logger.init();
 Counter.Init("[components][wiki][download]");
@@ -27,12 +20,6 @@ logger.default.info("[components][wiki][download] 运行 download.ts");
 
 fileCheckObj(jsonDir);
 fileCheckObj(imageDetail);
-
-const metadata = await getMetadata().catch((e) => {
-  logger.default.error("[components][wiki][download] 获取元数据失败");
-  logger.console.error(e);
-  process.exit(1);
-});
 
 // 下载 wiki 数据
 Counter.Reset();
@@ -46,17 +33,11 @@ for (const [key, value] of urlRes) {
   } else {
     savePath = jsonDetail.material;
   }
-  if (checkMetadata(key, metadata) && fileCheck(savePath, false)) {
-    logger.console.mark(`[components][wiki][download] ${key} 数据已存在，跳过`);
-    Counter.Skip();
-    continue;
-  }
   try {
     const res = await axios.get(value);
     await fs.writeJSON(savePath, res.data, { spaces: 2 });
     logger.default.info(`[components][wiki][download] ${key} 数据下载完成`);
     Counter.Success();
-    await updateMetadata(key, metadata);
   } catch (e) {
     logger.default.error(`[components][wiki][download] ${key} 数据下载失败`);
     console.error(e);

@@ -29,10 +29,11 @@ for (const dir of dirs) {
   for (const file of files) {
     if (!execFiles.includes(file)) continue;
     const filePath = join(dirPath, file);
-    spawnSync("node --loader ts-node/esm", [filePath], {
+    const child = spawnSync("node --loader ts-node/esm", [filePath], {
       cwd: getProjRootPath(),
       shell: true,
     });
+    if (child.stdout !== null) console.info(child.stdout.toString());
     logger.console.info(`[scripts][updateAll][${dir}] 执行 ${file} 完成`);
     Counter.Success();
   }

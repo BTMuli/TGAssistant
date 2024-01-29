@@ -1,7 +1,7 @@
 /**
  * @file core components weapon download.ts
  * @description 武器组件资源下载
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 import path from "node:path";
@@ -14,12 +14,7 @@ import { jsonDir, imgDir, jsonDetailDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import {
-  checkMetadata,
-  getMetadata,
-  getSnapDownloadUrl,
-  updateMetadata,
-} from "../../utils/operGitRepo.ts";
+import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
 import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
@@ -85,18 +80,11 @@ try {
 }
 // 下载 metadata 数据
 try {
-  const metadata = await getMetadata();
   const url = getSnapDownloadUrl("Weapon");
-  if (checkMetadata("Weapon", metadata) && fileCheck(jsonDetailDir.hutao, false)) {
-    logger.default.mark("[components][weapon][download] Weapon 数据已存在，跳过");
-    Counter.Skip();
-  } else {
-    const res = await axios.get(url);
-    await fs.writeJson(jsonDetailDir.hutao, res.data, { spaces: 2 });
-    logger.default.info("[components][weapon][download] Weapon 数据下载完成");
-    Counter.Success();
-    await updateMetadata("Weapon", metadata);
-  }
+  const res = await axios.get(url);
+  await fs.writeJson(jsonDetailDir.hutao, res.data, { spaces: 2 });
+  logger.default.info("[components][weapon][download] Weapon 数据下载完成");
+  Counter.Success();
 } catch (e) {
   logger.default.warn("[components][weapon][download] Weapon 数据下载失败");
   Counter.Fail();

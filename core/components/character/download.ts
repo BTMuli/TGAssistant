@@ -1,7 +1,7 @@
 /**
  * @file core components character download.ts
  * @description 角色组件资源下载
- * @since 2.0.0
+ * @since 2.0.1
  */
 
 import path from "node:path";
@@ -14,12 +14,7 @@ import { imgDir, jsonDir, jsonDetailDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import {
-  checkMetadata,
-  updateMetadata,
-  getSnapDownloadUrl,
-  getMetadata,
-} from "../../utils/operGitRepo.ts";
+import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
 import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
@@ -85,18 +80,11 @@ try {
 }
 // 下载 metadata 数据
 try {
-  const metadata = await getMetadata();
   const url = getSnapDownloadUrl("Avatar");
-  if (checkMetadata("Avatar", metadata) && fileCheck(jsonDetailDir.hutao, false)) {
-    logger.default.mark("[components][character][download] Avatar 数据已存在，跳过");
-    Counter.Skip();
-  } else {
-    const res = await axios.get(url);
-    await fs.writeJSON(jsonDetailDir.hutao, res.data, { spaces: 2 });
-    logger.default.info("[components][character][download] Avatar 数据下载完成");
-    Counter.Success();
-    await updateMetadata("Avatar", metadata);
-  }
+  const res = await axios.get(url);
+  await fs.writeJSON(jsonDetailDir.hutao, res.data, { spaces: 2 });
+  logger.default.info("[components][character][download] Avatar 数据下载完成");
+  Counter.Success();
 } catch (e) {
   logger.default.warn("[components][character][download] 下载 Avatar 数据失败");
   Counter.Fail();
