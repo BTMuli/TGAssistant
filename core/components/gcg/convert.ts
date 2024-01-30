@@ -45,9 +45,11 @@ for (const item of amberRaw) {
   };
   converData.push(gcg);
   logger.console.mark(`[components][gcg][convert] 卡牌 ${item.name} 转换完成`);
+  Counter.Success();
 }
 Counter.End();
 logger.default.info(`[components][gcg][convert] 第一次处理完成，耗时 ${Counter.getTime()}`);
+Counter.Output();
 
 // 处理 mys.json，添加 contentId 跟魔物牌
 logger.console.info("[components][gcg][convert] 第二次处理：通过 mys.json");
