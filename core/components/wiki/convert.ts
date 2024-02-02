@@ -1,7 +1,7 @@
 /**
  * @file core/components/wiki/convert.ts
  * @description wiki组件转换器
- * @since 2.0.1
+ * @since 2.0.2
  */
 
 import process from "node:process";
@@ -77,14 +77,10 @@ Counter.End();
 // 处理图像
 Counter.Reset();
 for (const character of characterRaw) {
-  await convertMaterials(character.CultivationItems);
   await convertTalents(character.SkillDepot.Skills);
   await convertTalents(character.SkillDepot.Inherents);
   await convertTalent(character.SkillDepot.EnergySkill);
   await convertConstellations(character.SkillDepot.Talents);
-}
-for (const weapon of weaponRaw) {
-  await convertMaterials(weapon.CultivationItems);
 }
 Counter.End();
 
@@ -164,7 +160,7 @@ function transCharacter(
     constellation: raw.SkillDepot.Talents,
     // todo: costume 衣装
     // todo: food 料理
-    talks: transTalks(raw.FetterInfo.Fetters),
+    talks: transTalks(raw.FetterInfo.Fetters, raw.Name),
     stories: raw.FetterInfo.FetterStories,
   };
 }
@@ -197,20 +193,54 @@ function transArea(raw: number): string {
 
 /**
  * @description 转换对话
- * @since 2.0.0
+ * @since 2.0.2
  * @param {TGACore.Components.Character.RhiFetter[]} raw 原始数据
+ * @param {string} name 角色名
  * @returns {TGACore.Components.Character.RhiFetter[]} 转换后的数据
  */
 function transTalks(
   raw: TGACore.Components.Character.RhiFetter[],
+  name: string,
 ): TGACore.Components.Character.RhiFetter[] {
   const res = [];
   for (const r of raw) {
     const item = JSON.parse(JSON.stringify(r));
-    if (r.Title.startsWith("#") && r.Title.includes("{REALNAME[ID(1)]}")) {
-      item.Title = item.Title.substring(1);
-      item.Title = item.Title.replace("{REALNAME[ID(1)]}", "流浪者");
-      logger.console.info("[components][wiki][convert][talk]", r.Title, "->", item.Title);
+    const visionM = "<color=#FFA726>【空视角】</color>\r\n";
+    const visionF = "<color=#FFA726>【荧视角】</color>\r\n";
+    if (name === "流浪者") {
+      if (r.Title.startsWith("#") && r.Title.includes("{REALNAME[ID(1)]}")) {
+        item.Title = item.Title.substring(1);
+        item.Title = item.Title.replace("{REALNAME[ID(1)]}", "流浪者");
+        logger.console.info("[components][wiki][convert][talk]", r.Title, "->", item.Title);
+      }
+    } else if (name === "温迪") {
+      if (r.Context.startsWith("#")) {
+        const specialStr = "{MATEAVATAR#SEXPRO[INFO_MALE_PRONOUN_BOYD|INFO_FEMALE_PRONOUN_GIRLD]}";
+        let transA = r.Context.replace(specialStr, "公主");
+        let transB = r.Context.replace(specialStr, "王子");
+        transA = transA.replace("#", visionM);
+        transB = transB.replace("#", visionF);
+        item.Context = `${transA}\r\n\r\n${transB}`;
+      }
+    } else if (name === "凝光") {
+      if (r.Context.startsWith("#")) {
+        const reg = /\{M#(.*?)}\{F#(.*?)}/;
+        const match = r.Context.match(reg);
+        if (match !== null) {
+          const transA = match[1];
+          const transB = match[2];
+          item.Context = `${visionM}${transA}\r\n\r\n${visionF}${transB}`;
+        }
+      }
+    } else if (name === "菲谢尔") {
+      if (r.Context.startsWith("#")) {
+        const specialStr = "{PLAYERAVATAR#SEXPRO[INFO_MALE_PRONOUN_HE|INFO_FEMALE_PRONOUN_SHE]}";
+        let transA = r.Context.replace(specialStr, "他");
+        let transB = r.Context.replace(specialStr, "她");
+        transA = transA.replace("#", visionM);
+        transB = transB.replace("#", visionF);
+        item.Context = `${transA}\r\n\r\n${transB}`;
+      }
     }
     res.push(item);
   }
@@ -253,21 +283,6 @@ async function getWeaponStory(id: string): Promise<string> {
   } catch (e) {
     logger.default.warn(`[components][wiki][convert] 获取武器 ${id} 故事失败`);
     return "";
-  }
-}
-
-/**
- * @description 转换材料图像
- * @since 2.0.0
- * @param {number[]} materials 材料id数组
- * @returns {Promise<void>}
- */
-async function convertMaterials(materials: number[]): Promise<void> {
-  const imgDir = imageDetail.material;
-  for (const material of materials) {
-    const oriPath = `${imgDir.src}/${material}.png`;
-    const savePath = `${imgDir.out}/${material}.webp`;
-    await convertImage(oriPath, savePath, `材料 ${material}`);
   }
 }
 
