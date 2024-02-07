@@ -1,12 +1,12 @@
 /**
  * @file core types character.d.ts
  * @description 角色类型定义
- * @since 2.0.0
+ * @since 2.0.2
  */
 
 /**
  * @description 角色类型 namespace
- * @since 2.0.0
+ * @since 2.0.2
  * @namespace TGACore.Components.Character
  * @memberof TGACore.Components
  */
@@ -257,12 +257,13 @@ declare namespace TGACore.Components.Character {
 
   /**
    * @description 转换后的数据
-   * @since 2.0.0
+   * @since 2.0.2
    * @memberof TGACore.Components.Character
    * @property {number} id 角色编号
    * @property {number} contentId 观测枢 contentId
    * @property {string} name 角色名称
    * @property {string} title 角色称号
+   * @property {string} area 角色地区
    * @property {[number,number]} birthday 角色生日
    * @property {number} star 角色星级
    * @property {string} element 角色元素类型
@@ -275,6 +276,7 @@ declare namespace TGACore.Components.Character {
     contentId: number;
     name: string;
     title: string;
+    area: string;
     birthday: [number, number];
     star: number;
     element: string;

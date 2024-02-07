@@ -1,7 +1,7 @@
 /**
  * @file core components character convert.ts
  * @description 角色组件数据转换
- * @since 2.0.0
+ * @since 2.0.2
  */
 
 import process from "node:process";
@@ -9,7 +9,7 @@ import process from "node:process";
 import fs from "fs-extra";
 import sharp from "sharp";
 
-import { jsonDetailDir, jsonDir, imgDir } from "./constant.ts";
+import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
@@ -43,6 +43,7 @@ for (const item of hutaoRaw) {
     contentId: 0,
     name: item.Name,
     title: item.FetterInfo.Title,
+    area: transArea(item.FetterInfo.Association),
     birthday: [item.FetterInfo.BirthMonth, item.FetterInfo.BirthDay],
     star: item.Quality === 105 ? 5 : item.Quality,
     element: item.FetterInfo.VisionBefore,
@@ -67,6 +68,7 @@ for (const item of mysRaw) {
       contentId: item.content_id,
       name: item.title,
       title: "",
+      area: "其他",
       birthday: [0, 0],
       star: 5,
       element: "",
@@ -128,3 +130,29 @@ Counter.Output();
 logger.default.info("[components][character][convert] convert.ts 运行完成");
 Counter.EndAll();
 logger.console.info("[components][character][convert] 请执行 update.ts 更新名片数据");
+
+/**
+ * @description 转换地区
+ * @since 2.0.2
+ * @param {number} raw 原始数据
+ * @returns {string} 转换后的数据
+ */
+function transArea(raw: number): string {
+  const AssocList = [
+    "未知",
+    "蒙德",
+    "璃月",
+    "主角",
+    "愚人众",
+    "稻妻",
+    "其他",
+    "须弥",
+    "枫丹",
+    "纳塔",
+    "至冬",
+  ];
+  if (raw >= AssocList.length || raw < 0) {
+    return "未知";
+  }
+  return AssocList[raw];
+}
