@@ -1,7 +1,7 @@
 /**
  * @file core components namecard convert
  * @description 名片组件数据转换
- * @since 2.0.0
+ * @since 2.0.2
  */
 
 import path from "node:path";
@@ -34,7 +34,7 @@ if (!fileCheck(jsonDir.src, false)) {
 // 处理 json 文件
 logger.console.mark("[components][namecard][convert] 处理 json 文件");
 const jsonFile: TGACore.Components.Namecard.RawData[] = await fs.readJson(
-  path.join(jsonDir.src, "app", "namecard.json"),
+  path.join(jsonDir.src, "namecard.json"),
 );
 const outData: TGACore.Components.Namecard.ConvertData[] = [];
 jsonFile.forEach((item) => {
