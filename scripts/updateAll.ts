@@ -1,7 +1,7 @@
 /**
  * @file scripts/updateAll.ts
  * @description 更新所有数据
- * @since 2.0.2
+ * @since 2.1.0
  */
 
 import { spawnSync } from "child_process";
@@ -22,6 +22,7 @@ const dirs = [
   "achievements",
   "namecard",
   "gcg",
+  "gacha",
   "character",
   "weapon",
   "calendar",

@@ -1,12 +1,12 @@
 /**
  * @file core types config.d.ts
  * @description 配置类型声明文件
- * @since 2.0.1
+ * @since 2.1.0
  */
 
 /**
  * @description 配置 namespace
- * @since 2.0.1
+ * @since 2.1.0
  * @namespace TGACore.Config
  * @memberof TGACore
  */
@@ -53,13 +53,14 @@ declare namespace TGACore.Config {
 
   /**
    * @description 应用数据目录配置文件类型枚举
-   * @since 2.0.0
+   * @since 2.1.0
    * @memberof TGACore.Config
    * @enum {number}
    * @property {number} achievement 成就数据目录
    * @property {number} calendar 日历数据目录
    * @property {number} character 角色数据目录
    * @property {number} gcg 卡牌图鉴数据目录
+   * @property {number} gacha 抽卡数据目录
    * @property {number} material 材料数据目录
    * @property {number} namecard 名片数据目录
    * @property {number} weapon 武器数据目录
@@ -73,6 +74,7 @@ declare namespace TGACore.Config {
     calendar,
     character,
     gcg,
+    gacha,
     material,
     namecard,
     weapon,
@@ -141,13 +143,14 @@ declare namespace TGACore.Config {
 
   /**
    * @description Snap.Metadata 所需文件枚举类型
-   * @since 2.0.0
+   * @since 2.1.0
    * @memberof TGACore.Config
    * @enum {number}
    * @readonly
    * @property {number} Achievement 成就数据文件
    * @property {number} AchievementGoal 成就系列数据文件
    * @property {number} Avatar 角色数据文件
+   * @property {number} Gacha 抽卡数据文件
    * @property {number} Meta 元数据文件，用于校验数据更新
    * @property {number} Weapon 武器数据文件
    * @property {number} Material 材料数据文件
@@ -157,6 +160,7 @@ declare namespace TGACore.Config {
     Achievement,
     AchievementGoal,
     Avatar,
+    Gacha,
     Meta,
     Weapon,
     Material,
