@@ -81,6 +81,7 @@ declare namespace TGACore.Components.Gacha {
    * @property {string} from 卡池开始时间 yyyy-MM-ddTHH:mm:ss+08:00
    * @property {string} to 卡池结束时间 yyyy-MM-ddTHH:mm:ss+08:00
    * @property {GachaType} type 卡池类型
+   * @property {string} postId 米游社帖子 id
    * @property {number[]} up5List up五星
    * @property {number[]} up4List up四星
    * @return ConvertHutaoItem 转换后的祈愿数据
@@ -93,6 +94,7 @@ declare namespace TGACore.Components.Gacha {
     from: string;
     to: string;
     type: GachaType;
+    postId: string;
     up5List: number[];
     up4List: number[];
   }
