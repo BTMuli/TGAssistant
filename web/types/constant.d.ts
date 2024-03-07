@@ -77,9 +77,9 @@ declare namespace TGWeb.Constant {
   }
 
   /**
-   * @description Cookie 类型
+   * @description CookieType 的值
    * @since 2.0.0
    * @return CookieType
    */
-  type CookieType = keyof typeof Cookie;
+  type CookieType = valueof<typeof Cookie>;
 }

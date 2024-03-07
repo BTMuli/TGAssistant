@@ -1,7 +1,7 @@
 /**
  * @file web utils readCookie.ts
  * @description 读取 cookie
- * @since 2.0.0
+ * @since 2.1.0
  */
 
 import os from "node:os";
