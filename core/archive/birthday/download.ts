@@ -3,9 +3,9 @@
  * @description 存档-留影叙佳期
  * @since 2.1.0
  */
-import * as console from "console"; // 先处理画片数据
+import * as console from "console";
 
-import fs from "fs-extra"; // 先处理画片数据
+import fs from "fs-extra";
 
 import { getCalendar, getCharacter, getDraw } from "./request.ts";
 
@@ -30,31 +30,25 @@ fs.writeJSONSync("raw_draw.json", drawData, { spaces: 2 });
 console.log("画片数据处理完成,共计：" + drawData.length);
 // 再处理日历数据
 isFinishTask = false;
-let year = 2022;
-const roleList: Array<{ id: number; year: number }> = [];
-const calendarData: Record<number, TGACore.Archive.Birthday.CalendarRoleInfos> = {};
+const roleSet = new Set<number>();
+const calendarData: Record<string, TGACore.Archive.Birthday.CalendarRole[]> = {};
 while (!isFinishTask) {
-  const res = await getCalendar(year.toString());
-  console.log(res.data);
-  calendarData[year] = res.data.calendar_role_infos;
+  const res = await getCalendar();
   Object.keys(res.data.calendar_role_infos).forEach((month) => {
     const val = res.data.calendar_role_infos[month];
     val.calendar_role.forEach((role) => {
-      roleList.push({ id: role.role_id, year });
+      roleSet.add(role.role_id);
     });
-    if (year >= 2024) {
-      isFinishTask = true;
-    } else {
-      year++;
-    }
+    calendarData[month] = val.calendar_role;
   });
+  isFinishTask = true;
 }
 fs.writeJSONSync("raw_calendar.json", calendarData, { spaces: 2 });
-console.log("日历数据处理完成, 共计：" + roleList.length);
+console.log("日历数据处理完成, 共计：" + roleSet.size);
 // 最后处理角色数据
 const roleData: TGACore.Archive.Birthday.InfoData[] = [];
-for (const role of roleList) {
-  const res = await getCharacter(role.id, role.year);
+for (const role of roleSet) {
+  const res = await getCharacter(role);
   roleData.push(res.data);
 }
 fs.writeJSONSync("raw_role.json", roleData, { spaces: 2 });
