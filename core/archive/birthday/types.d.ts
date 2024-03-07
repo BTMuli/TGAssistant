@@ -108,11 +108,11 @@ declare namespace TGACore.Archive.Birthday {
    * @property {string} text - 介绍
    * @property {string} role_birthday - 生日 m/d
    * @property {string} head_icon - 头像
-   * @property {string} head_iamge - 头像
+   * @property {string} head_image - 头像
    * @property {string} introduce - 介绍
    * @property {boolean} is_subscribe - 是否订阅
    * @property {boolean} is_finish_task - 是否完成任务
-   * @property {number} current_compenstate_num - 当前补偿数量
+   * @property {number} current_compensate_num - 当前补偿数量
    * @property {boolean} is_compensate_num - 是否补偿数量
    * @property {number} year_compensate_num - 年份补偿数量
    * @returns InfoData
@@ -128,11 +128,11 @@ declare namespace TGACore.Archive.Birthday {
     text: string;
     role_birthday: string;
     head_icon: string;
-    head_iamge: string;
+    head_image: string;
     introduce: string;
     is_subscribe: boolean;
     is_finish_task: boolean;
-    current_compenstate_num: number;
+    current_compensate_num: number;
     is_compensate_num: boolean;
     year_compensate_num: number;
   }
