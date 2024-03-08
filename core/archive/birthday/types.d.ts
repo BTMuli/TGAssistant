@@ -83,6 +83,35 @@ declare namespace TGACore.Archive.Birthday {
   }
 
   /**
+   * @description 转换后的画片数据
+   * @since 2.1.0
+   * @interface DrawDataTrans
+   * @property {string} word_text - 留言
+   * @property {number} year - 年份
+   * @property {string} birthday - 生日 m/d
+   * @property {number} role_id - 角色 id
+   * @property {string} role_name - 角色名
+   * @property {string[]} take_picture - 画片地址 [荧，空]
+   * @property {string[]} unread_picture - 未读画片地址 [荧，空]
+   * @property {string} gal_xml - 画片 xml
+   * @property {string} gal_resource - 画片资源
+   * @property {number} op_id - 操作 id
+   * @returns DrawDataTrans
+   */
+  interface DrawDataTrans {
+    word_text: string;
+    year: number;
+    birthday: string;
+    role_id: number;
+    role_name: string;
+    take_picture: string[];
+    unread_picture: string[];
+    gal_xml: string;
+    gal_resource: string;
+    op_id: number;
+  }
+
+  /**
    * @description 角色信息响应
    * @since 2.1.0
    * @interface CharacterResponse

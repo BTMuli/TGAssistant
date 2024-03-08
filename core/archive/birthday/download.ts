@@ -4,9 +4,11 @@
  * @since 2.1.0
  */
 import * as console from "console";
+import path from "node:path";
 
 import fs from "fs-extra";
 
+import { ArcBirDir } from "./constant.ts";
 import { getCalendar, getCharacter, getDraw } from "./request.ts";
 
 // 先处理画片数据
@@ -26,7 +28,7 @@ while (!isFinishTask) {
     curPage++;
   }
 }
-fs.writeJSONSync("raw_draw.json", drawData, { spaces: 2 });
+fs.writeJSONSync(path.join(ArcBirDir, "raw_draw.json"), drawData, { spaces: 2 });
 console.log("画片数据处理完成,共计：" + drawData.length);
 // 再处理日历数据
 isFinishTask = false;
@@ -43,7 +45,7 @@ while (!isFinishTask) {
   });
   isFinishTask = true;
 }
-fs.writeJSONSync("raw_calendar.json", calendarData, { spaces: 2 });
+fs.writeJSONSync(path.join(ArcBirDir, "raw_calendar.json"), calendarData, { spaces: 2 });
 console.log("日历数据处理完成, 共计：" + roleSet.size);
 // 最后处理角色数据
 const roleData: TGACore.Archive.Birthday.InfoData[] = [];
@@ -51,5 +53,5 @@ for (const role of roleSet) {
   const res = await getCharacter(role);
   roleData.push(res.data);
 }
-fs.writeJSONSync("raw_role.json", roleData, { spaces: 2 });
+fs.writeJSONSync(path.join(ArcBirDir, "raw_role.json"), roleData, { spaces: 2 });
 console.log("角色数据处理完成, 共计：" + roleData.length);
