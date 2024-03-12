@@ -7,5 +7,7 @@ source/temp
 logs
 # Pnpm lock file
 pnpm-lock.yaml
+# tsconfig
+tsconfig.json
 # qodana
 qodana.yaml

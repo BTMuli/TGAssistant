@@ -91,7 +91,7 @@ for (const post of postRaw) {
           !isFind
         ) {
           item.postId = post.postId;
-          logger.default.info(
+          logger.console.mark(
             `[components][gacha][convert] 找到对应卡池 ${curVersion} ${item.order} ${item.name}`,
           );
           isFind = true;
@@ -112,7 +112,7 @@ for (const post of postRaw) {
           !isFind
         ) {
           item.postId = post.postId;
-          logger.default.info(
+          logger.console.mark(
             `[components][gacha][convert] 找到对应卡池 ${curVersion} ${item.name}`,
           );
           isFind = true;
