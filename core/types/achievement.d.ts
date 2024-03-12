@@ -1,7 +1,7 @@
 /**
  * @file core types achievement.d.ts
  * @description 成就类型声明文件
- * @since 2.0.1
+ * @since 2.1.0
  */
 
 /**
@@ -11,47 +11,6 @@
  * @memberof TGACore.Components
  */
 declare namespace TGACore.Components.Achievement {
-  /**
-   * @description 成就元数据类型-Paimon
-   * @since 2.0.0
-   * @memberof TGACore.Components.Achievement
-   * @return RawPaimon
-   */
-  type RawPaimon = Record<number, PaimonSeries>;
-
-  /**
-   * @description 成就元数据类型-Paimon-成就系列
-   * @since 2.0.0
-   * @memberof TGACore.Components.Achievement
-   * @property {string} name 成就系列名称
-   * @property {[PaimonItem|PaimonItem[]]} achievements 成就列表
-   * @property {number} order 成就系列排序
-   * @return PaimonSeries
-   */
-  interface PaimonSeries {
-    name: string;
-    achievements: [PaimonItem | PaimonItem[]];
-    order: number;
-  }
-  /**
-   * @description 成就元数据类型-Paimon-成就
-   * @since 2.0.0
-   * @memberof TGACore.Components.Achievement
-   * @property {number} id 成就编号
-   * @property {string} name 成就名称
-   * @property {string} desc 成就描述
-   * @property {number} reward 成就奖励
-   * @property {string} ver 成就版本
-   * @return PaimonItem
-   */
-  interface PaimonItem {
-    id: number;
-    name: string;
-    desc: string;
-    reward: number;
-    ver: string;
-  }
-
   /**
    * @description 成就元数据类型-成就
    * @since 2.0.0

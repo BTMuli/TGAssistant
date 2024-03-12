@@ -193,14 +193,12 @@ declare namespace TGACore.Config {
 
   /**
    * @description Github 配置文件类型
-   * @since 2.0.0
+   * @since 2.1.0
    * @memberof TGACore.Config
    * @property {GithubRepoConfig} snap Snap 配置文件类型
-   * @property {GithubRepoConfig} paimon Paimon 配置文件类型
    * @return GithubConfig Github 配置文件类型
    */
   interface GithubConfig {
     snap: GithubRepoConfig;
-    paimon: GithubRepoConfig;
   }
 }
