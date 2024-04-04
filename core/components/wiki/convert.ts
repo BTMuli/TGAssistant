@@ -1,7 +1,7 @@
 /**
  * @file core/components/wiki/convert.ts
  * @description wiki组件转换器
- * @since 2.0.2
+ * @since 2.1.1
  */
 
 import process from "node:process";
@@ -116,7 +116,7 @@ function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMateria
 
 /**
  * @description 转换角色数据
- * @since 2.0.0
+ * @since 2.1.1
  * @param {TGACore.Components.Character.RawHutaoItem} raw 原始数据
  * @returns {TGACore.Components.Character.WikiItem} 转换后的数据
  */
@@ -152,7 +152,7 @@ function transCharacter(
         kr: raw.FetterInfo.CvKorean,
       },
     },
-    star: raw.Quality,
+    star: raw.Quality === 105 ? 5 : raw.Quality,
     element: raw.FetterInfo.VisionBefore,
     weapon: getHutaoWeapon(raw.Weapon),
     materials,
