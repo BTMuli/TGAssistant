@@ -1770,7 +1770,7 @@
     "role_id": 10000074,
     "gal_xml": "https://act-webstatic.mihoyo.com/upload-static-galgame/event/hk4e_cn/novel/b512d9873c76a575f904b9be05f0cd2d/chapters/cbd0a6b7c7b51295cea61fa31867f3cc.xml",
     "gal_resource": "https://act-webstatic.mihoyo.com/upload-static-galgame/event/hk4e_cn/novel/b512d9873c76a575f904b9be05f0cd2d/resources.xml?ts=1702962608744",
-    "is_collected": true,
+    "is_collected": false,
     "op_id": 225,
     "is_compensate": false,
     "role_name": "莱依拉"

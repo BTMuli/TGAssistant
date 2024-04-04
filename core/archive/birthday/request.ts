@@ -1,7 +1,7 @@
 /**
  * @file core/archive/birthday/request.ts
  * @description 存档-留影叙佳期-请求
- * @since 2.1.0
+ * @since 2.1.1
  */
 
 import axios from "axios";
@@ -40,7 +40,7 @@ export async function getDraw(
 
 /**
  * @description 获取日历数据
- * @since 2.1.0
+ * @since 2.1.1
  * @param {string} uid badge_uid
  * @param {string} region badge_region
  * @param {string} biz game_biz
@@ -48,7 +48,7 @@ export async function getDraw(
  * @return {Promise<TGACore.Archive.Birthday.CalendarResponse>} 返回 Promise
  */
 export async function getCalendar(
-  year: string = "2022",
+  year: string = "2024",
   uid: string = "500299765",
   region: string = "cn_qd01",
   biz: string = "hk4e_cn",
