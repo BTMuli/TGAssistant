@@ -1,7 +1,7 @@
 /**
  * @file core components achievements convert.ts
  * @description 成就组件数据转换
- * @since 2.0.0
+ * @since 2.2.0
  */
 
 import process from "node:process";
@@ -79,7 +79,7 @@ seriesRaw.forEach((item) => {
 
 // 排序，写入
 achievement.sort((a, b) => a.id - b.id);
-series.sort((a, b) => a.id - b.id);
+series.sort((a, b) => a.order - b.order);
 fs.writeJSONSync(jsonDetailDir.achievement.out, achievement, { spaces: 2 });
 fs.writeJSONSync(jsonDetailDir.series.out, series, { spaces: 2 });
 Counter.End();

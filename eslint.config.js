@@ -17,6 +17,7 @@ export default [
       "web/**/*.js",
       "pnpm-lock.yaml",
       "qodana.yaml",
+      ".github/workflows/*.yml",
     ],
   },
 ];

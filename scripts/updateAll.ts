@@ -1,10 +1,10 @@
 /**
  * @file scripts/updateAll.ts
  * @description 更新所有数据
- * @since 2.1.0
+ * @since 2.2.0
  */
 
-import { spawnSync } from "child_process";
+import { spawn, spawnSync } from "child_process";
 import { join } from "node:path";
 
 import fs from "fs-extra";
@@ -39,13 +39,11 @@ for (const dir of dirs) {
   for (const file of files) {
     if (!execFiles.includes(file)) continue;
     const filePath = join(dirPath, file);
-    const child = spawnSync("node --loader ts-node/esm", [filePath], {
-      cwd: getProjRootPath(),
-      shell: true,
-    });
-    if (child.stdout !== null) console.info(child.stdout.toString());
-    logger.console.info(`[scripts][updateAll][${dir}] 执行 ${file} 完成`);
-    Counter.Success();
+    if (dir == "achievements" && file == "convert.ts") {
+      await execTsFile(filePath, true);
+    } else {
+      await execTsFile(filePath);
+    }
   }
   Counter.End();
   logger.console.info(`[script][updateAll][${dir}] 更新完成，耗时 ${Counter.getTime()}`);
@@ -55,3 +53,34 @@ spawnSync("pnpm prettier", { cwd: getProjRootPath(), shell: true });
 
 logger.console.info("[scripts][updateAll] 运行 updateAll.ts 完成");
 Counter.EndAll(false);
+
+/**
+ * @description 执行 ts 文件
+ * @param {string} filePath 文件路径
+ * @param {boolean} isTsx 是否采用 tsx 运行
+ * @returns {Promise<void>} 无返回值
+ */
+async function execTsFile(filePath: string, isTsx: boolean = false): Promise<void> {
+  await new Promise<void>((resolve) => {
+    const command = isTsx ? "tsx" : "node --loader ts-node/esm";
+    const child = spawn(command, [filePath], {
+      cwd: getProjRootPath(),
+      shell: true,
+    });
+    child.stdout.on("data", (data: Uint8Array) => {
+      console.info(data.toString());
+    });
+    child.stderr.on("data", (data: Uint8Array) => {
+      console.error(data.toString());
+    });
+    child.on("close", async (code) => {
+      if (code !== 0) {
+        logger.default.error(`[scripts][updateAll] 执行 ${filePath} 出现错误`);
+        resolve();
+      } else {
+        logger.console.info(`[scripts][updateAll] 执行 ${filePath} 完成`);
+        resolve();
+      }
+    });
+  });
+}
