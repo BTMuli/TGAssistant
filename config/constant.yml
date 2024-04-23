@@ -1,15 +1,16 @@
 # =============================================================================
 # ConfigFile: config/constants.yml
 # Description: 一些常量的配置文件
-# Since: 2.1.0
+# Since: 2.2.0
 # =============================================================================
 
 # -----------------------------------------------------------------------------
 # Amber.top 配置
 # version: API版本
+# site: https://ambr.top
 # -----------------------------------------------------------------------------
 amber:
-  version: 45F0
+  version: 46F0
 
 # -----------------------------------------------------------------------------
 # Honeyhunter 配置
@@ -34,4 +35,4 @@ honeyhunter:
       icon: _70.webp
       bg: _back.webp
       profile: _profile.webp
-    endIndex: 194 # https://genshin.honeyhunterworld.com/i_n210194/?lang=CHS
+    endIndex: 199 # https://genshin.honeyhunterworld.com/i_n210199/?lang=CHS

@@ -1,7 +1,7 @@
 import eslint_yml from "eslint-plugin-yml";
 import eslint_yml_parser from "yaml-eslint-parser";
 
-const ymlConfig = {
+const ymlEslintConfig = {
   files: ["*.yaml", "*.yml"],
   plugins: {
     yml: eslint_yml,
@@ -26,4 +26,4 @@ const ymlConfig = {
   },
 };
 
-export const ymlEslintConfig = [...eslint_yml.configs["flat/recommended"], ymlConfig];
+export default ymlEslintConfig;

@@ -1,11 +1,11 @@
 import { jsonEslintConfig } from "./eslint/config_json.js";
-import { ymlEslintConfig } from "./eslint/config_yml.js";
+import ymlEslintConfig from "./eslint/config_yml.js";
 import { tsEslintConfig } from "./eslint/config_ts.js";
 
 export default [
   ...jsonEslintConfig,
-  ...ymlEslintConfig,
   ...tsEslintConfig,
+  ymlEslintConfig,
   {
     ignores: [
       "node_modules",
@@ -17,7 +17,6 @@ export default [
       "web/**/*.js",
       "pnpm-lock.yaml",
       "qodana.yaml",
-      ".github/workflows/*.yml",
     ],
   },
 ];
