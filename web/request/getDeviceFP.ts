@@ -1,13 +1,19 @@
 /**
  * @file web request getDeviceFP
  * @description 获取设备指纹
- * @since 2.0.0
+ * @since 2.2.0
  */
 
 import axios from "axios";
 
 import { getRandomString } from "../utils/getDS.ts";
 import { getMinHeaderMobile } from "../utils/getHeader.ts";
+
+interface DeviceFpData {
+  device_fp: string;
+}
+
+type DeviceFpResponse = TGWeb.Response.CommonT<DeviceFpData>;
 
 /**
  * @description 获取设备指纹
@@ -17,7 +23,11 @@ import { getMinHeaderMobile } from "../utils/getHeader.ts";
  * @param {string} seedTime 种子时间
  * @returns {Promise<void>} 无返回值
  */
-export async function getDeviceFP(model: string, seedID: string, seedTime: string): Promise<any> {
+export async function getDeviceFP(
+  model: string,
+  seedID: string,
+  seedTime: string,
+): Promise<DeviceFpResponse> {
   const deviceId = getRandomString(16);
   const deviceFPHeader: TGWeb.Header.DeviceFP = {
     cpuType: "arm64-v8a",

@@ -1,12 +1,12 @@
 /**
  * @file core/types/material.d.ts
  * @description 材料组件类型定义
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 /**
  * @description 材料类型 namespace
- * @since 2.0.1
+ * @since 2.2.0
  * @namespace TGACore.Components.Material
  * @memberof TGACore.Components
  */
@@ -27,7 +27,7 @@ declare namespace TGACore.Components.Material {
 
   /**
    * @description 材料数据
-   * @since 2.0.1
+   * @since 2.2.0
    * @memberof TGACore.Plugins.Amber
    * @interface RawAmber
    * @property {string} name 材料名称
@@ -45,7 +45,7 @@ declare namespace TGACore.Components.Material {
     name: string;
     description: string;
     type: string;
-    recipe: false | MaterialRecipe;
+    recipe: false | MaterialRecipe | null;
     mapMark: boolean;
     source: null | Array<{
       name: string;

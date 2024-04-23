@@ -100,7 +100,7 @@ async function transMaterial(
   data: TGACore.Components.Material.RawAmber,
 ): Promise<TGACore.Components.Material.WikiItem> {
   const converts: TGACore.Components.Material.Convert[] = [];
-  if (data.recipe !== false) {
+  if (data.recipe !== null && data.recipe != false) {
     const keys = Object.keys(data.recipe);
     for (const key of keys) {
       const convert: TGACore.Components.Material.Convert = {
