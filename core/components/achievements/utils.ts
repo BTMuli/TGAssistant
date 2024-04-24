@@ -1,7 +1,7 @@
 /**
  * @file core/components/achievements/utils.ts
  * @description 成就组件工具函数
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import * as amosData from "@yuehaiteam/amos-data/amos/achievements/index";
@@ -23,6 +23,7 @@ function flattenAchievements(): AmosAchi[] {
 
 /**
  * @description 根据成就 ID 获取成就数据
+ * @since 2.2.0
  * @param {string} id 成就 ID
  * @returns {AmosAchi} 成就数据
  */
@@ -30,7 +31,9 @@ export function getAchiTrigger(id: number): TGACore.Components.Achievement.Trigg
   const totalAchievements = flattenAchievements();
   const achievement = totalAchievements.find((item) => item.id === Number(id));
   if (achievement === undefined || achievement === null) {
-    throw new Error(`Achievement id ${id} not found`);
+    return {
+      type: "Unknown",
+    };
   }
   const task = achievement.trigger.task?.map((taskItem) => {
     return {

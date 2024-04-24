@@ -10,7 +10,8 @@
     "prettier": "prettier --write .",
     "resize": "tsx ./core/utils/resizeImages.ts",
     "auto:update": "tsx ./scripts/updateAll.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "install:amos": "pnpm add github:yuehaiteam/amos-data"
   },
   "lint-staged": {
     "*.ts": "oxlint",
