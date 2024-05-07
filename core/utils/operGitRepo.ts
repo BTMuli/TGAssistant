@@ -1,7 +1,7 @@
 /**
  * @file core utils operGitRepo.ts
  * @description 处理 Github 仓库
- * @since 2.0.1
+ * @since 2.1.1
  */
 
 import { readConfig } from "./readConfig.ts";
@@ -22,6 +22,18 @@ function getDownloadUrl(
 ): string {
   const filename = config.include[fileType];
   return `https://raw.gitmirror.com/${config.repo}/${config.branch}/${config.base}/${filename}`;
+}
+
+/**
+ * @description 获取成就图标下载 url
+ * @since 2.1.1
+ * @param {string} icon 成就图标
+ * @return {string} 下载 url
+ */
+export function getAchiImgDownloadUrl(icon: string): string {
+  const repo = "DGP-Studio/Snap.Static";
+  const base = "AchievementIcon";
+  return `https://jihulab.com/${repo}/-/raw/main/${base}/${icon}.png`;
 }
 
 // 函数重载

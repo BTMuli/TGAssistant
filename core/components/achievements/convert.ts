@@ -8,11 +8,13 @@ import process from "node:process";
 
 import fs from "fs-extra";
 
-import { jsonDir, jsonDetailDir } from "./constant.ts";
+import { jsonDir, jsonDetailDir, imgDir } from "./constant.ts";
 import { getAchiTrigger } from "./utils.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import sharp from "sharp";
+import path from "node:path";
 
 logger.init();
 logger.default.info("[components][achievement][convert] 运行 convert.ts");
@@ -84,5 +86,29 @@ fs.writeJSONSync(jsonDetailDir.achievement.out, achievement, { spaces: 2 });
 fs.writeJSONSync(jsonDetailDir.series.out, series, { spaces: 2 });
 Counter.End();
 
+// 处理成就系列的图像
+Counter.Reset(series.length);
+for (const item of seriesRaw) {
+  const srcPath = path.join(imgDir.src, `${item.Icon}.png`);
+  const outPath = path.join(imgDir.out, `${item.Icon}.webp`);
+  if (!fileCheck(srcPath, false)) {
+    logger.default.warn(`[components][achievement][convert] 成就系列 ${item.Name} 没有图片数据`);
+    Counter.Fail();
+    continue;
+  }
+  if (fileCheck(outPath, false)) {
+    logger.console.mark(`[components][achievement][convert] 成就系列 ${item.Name} 已有图片数据`);
+    Counter.Skip();
+    continue;
+  }
+  await sharp(srcPath).webp().toFile(outPath);
+  logger.console.info(`[components][achievement][convert] 成就系列 ${item.Name} 图片转换完成`);
+  Counter.Success();
+}
+Counter.End();
+logger.default.info(`[components][achievement][convert] 图片处理完成，耗时 ${Counter.getTime()}ms`);
+Counter.Output();
+
 logger.default.info(`[components][achievement][convert] 成就转换完成，耗时 ${Counter.getTime()}ms`);
+Counter.EndAll();
 logger.console.info("[components][achievement][convert] 请执行 update.ts 更新名片数据");

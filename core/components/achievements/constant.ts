@@ -21,3 +21,5 @@ export const jsonDetailDir = {
   },
   namecard: path.join(jsonDir.out, "app", "namecard.json"),
 };
+
+export const imgDir = getAppDirPath("assets", "achievement");

@@ -1,23 +1,25 @@
 /**
  * @file core components achievements download.ts
  * @description 成就组件资源下载
- * @since 2.0.1
+ * @since 2.1.1
  */
 
 import axios from "axios";
 import fs from "fs-extra";
 
-import { jsonDir, jsonDetailDir } from "./constant.ts";
+import { jsonDir, jsonDetailDir, imgDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
-import { fileCheckObj } from "../../utils/fileCheck.ts";
-import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
+import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import { getAchiImgDownloadUrl, getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
+import sharp from "sharp";
 
 logger.init();
 Counter.Init("[components][achievement][download]");
 logger.default.info("[components][achievement][download] 运行 download.ts");
 
 fileCheckObj(jsonDir);
+fileCheckObj(imgDir);
 
 // 更新元数据
 Counter.Reset(2);
@@ -41,7 +43,36 @@ for (const [key, value] of urlRes) {
   }
 }
 Counter.End();
-
 logger.default.info(`[components][achievement][download] 数据更新完成，耗时 ${Counter.getTime()}`);
 Counter.Output();
+
+// 下载图片
+const seriesRaw: TGACore.Components.Achievement.RawSeries[] = await fs.readJSON(
+  jsonDetailDir.series.src,
+);
+Counter.Reset(seriesRaw.length);
+logger.console.info("[components][achievement][download] 开始下载成就图片");
+for (const item of seriesRaw) {
+  const savePath = `${imgDir.src}/${item.Icon}.png`;
+  if (fileCheck(savePath, false)) {
+    logger.console.mark(`[components][achievement][download] ${item.Icon} 图片已存在，跳过`);
+    Counter.Skip();
+    continue;
+  }
+  try {
+    const url = getAchiImgDownloadUrl(item.Icon);
+    const res = await axios.get(url, { responseType: "arraybuffer" });
+    await sharp(<ArrayBuffer>res.data).toFile(savePath);
+    logger.default.info(`[components][achievement][download] ${item.Icon} 图片下载完成`);
+    Counter.Success();
+  } catch (e) {
+    logger.default.warn(`[components][achievement][download] ${item.Icon} 图片下载失败`);
+    Counter.Fail();
+  }
+}
+Counter.End();
+logger.default.info(`[components][achievement][download] 图片下载完成，耗时 ${Counter.getTime()}`);
+Counter.Output();
+
+Counter.EndAll();
 logger.console.info("[components][achievement][download] 请执行 convert.ts 转换数据");
