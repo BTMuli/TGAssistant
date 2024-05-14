@@ -107,9 +107,8 @@ export async function getMixinKey(img?: string, sub?: string): Promise<string> {
 
 /**
  * @description 获取视频播放地址
- * @since 2.0.1
+ * @since 2.2.0
  * @param {string} cid 视频 cid
- * @param {string} [avid] 视频 av 号
  * @param {string} [bvid] 视频 bv 号
  * @returns {Promise<BiliVideoResponse>}
  */
