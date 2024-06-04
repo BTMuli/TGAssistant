@@ -1,7 +1,7 @@
 /**
  * @file core components namecard download
  * @description 名片组件资源下载
- * @since 2.0.0
+ * @since 2.1.1
  */
 
 import path from "node:path";
@@ -79,6 +79,9 @@ for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
       if (typeof nameCardData !== "boolean") {
         if (nameCardData.name === "庆典·倾耳") {
           nameCardData.source = "「万籁协奏」礼包获取。";
+        } else if (nameCardData.name === "塞索斯·跋灵") {
+          nameCardData.name = nameCardData.name.replace("塞索斯", "赛索斯");
+          nameCardData.source = nameCardData.source.replace("塞索斯", "赛索斯");
         }
         nameCardsData.push(nameCardData);
         Counter.Success();
