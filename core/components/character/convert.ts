@@ -1,7 +1,7 @@
 /**
  * @file core components character convert.ts
  * @description 角色组件数据转换
- * @since 2.0.2
+ * @since 2.1.1
  */
 
 import process from "node:process";
@@ -61,7 +61,9 @@ logger.console.info("[components][character][convert] 第二次处理：通过 m
 Counter.Reset();
 const mysRaw: TGACore.Plugins.Observe.WikiItem[] = await fs.readJson(jsonDetailDir.mys);
 for (const item of mysRaw) {
-  const index = converData.findIndex((value) => value.name === item.title);
+  const index = converData.findIndex(
+    (value) => value.name === item.title || `${value.name}【预告】` === item.title,
+  );
   if (index === -1) {
     const character: TGACore.Components.Character.ConvertData = {
       id: item.content_id === 4073 ? 10000007 : 10000005,
