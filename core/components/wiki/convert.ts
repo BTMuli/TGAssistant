@@ -131,6 +131,7 @@ function transCharacter(
   ];
   let skills: Array<Omit<TGACore.Components.Character.RhisdSkill, "Proud">> = [];
   tempSkills.forEach((skill) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { Proud, ...rest } = skill;
     skills.push(rest);
   });
@@ -193,7 +194,7 @@ function transArea(raw: number): string {
 
 /**
  * @description 转换对话
- * @since 2.0.2
+ * @since 2.1.1
  * @param {TGACore.Components.Character.RhiFetter[]} raw 原始数据
  * @param {string} name 角色名
  * @returns {TGACore.Components.Character.RhiFetter[]} 转换后的数据
@@ -237,6 +238,24 @@ function transTalks(
         const specialStr = "{PLAYERAVATAR#SEXPRO[INFO_MALE_PRONOUN_HE|INFO_FEMALE_PRONOUN_SHE]}";
         let transA = r.Context.replace(specialStr, "他");
         let transB = r.Context.replace(specialStr, "她");
+        transA = transA.replace("#", visionM);
+        transB = transB.replace("#", visionF);
+        item.Context = `${transA}\r\n\r\n${transB}`;
+      }
+    } else if (name === "赛索斯") {
+      if (r.Context.startsWith("#")) {
+        const specialStr = "{M#先生}{F#小姐}";
+        let transA = r.Context.replace(specialStr, "先生");
+        let transB = r.Context.replace(specialStr, "小姐");
+        transA = transA.replace("#", visionM);
+        transB = transB.replace("#", visionF);
+        item.Context = `${transA}\r\n\r\n${transB}`;
+      }
+    } else if (name === "克洛琳德") {
+      if (r.Context.startsWith("#")) {
+        const specialStr = "{M#他}{F#她}";
+        let transA = r.Context.replace(specialStr, "他").replace(specialStr, "他");
+        let transB = r.Context.replace(specialStr, "她").replace(specialStr, "她");
         transA = transA.replace("#", visionM);
         transB = transB.replace("#", visionF);
         item.Context = `${transA}\r\n\r\n${transB}`;
