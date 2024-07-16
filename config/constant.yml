@@ -10,7 +10,7 @@
 # site: https://ambr.top
 # -----------------------------------------------------------------------------
 amber:
-  version: 47F1
+  version: 48F3
 
 # -----------------------------------------------------------------------------
 # Honeyhunter 配置
@@ -35,4 +35,4 @@ honeyhunter:
       icon: _70.webp
       bg: _back.webp
       profile: _profile.webp
-    endIndex: 204 # https://genshin.honeyhunterworld.com/i_n210204/?lang=CHS
+    endIndex: 207 # https://genshin.honeyhunterworld.com/i_n210207/?lang=CHS
