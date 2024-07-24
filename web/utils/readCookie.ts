@@ -1,7 +1,7 @@
 /**
  * @file web utils readCookie.ts
  * @description 读取 cookie
- * @since 2.1.0
+ * @since 2.2.0
  */
 
 import os from "node:os";
@@ -37,13 +37,13 @@ export function readCookieItem(cookieType: TGWeb.Constant.CookieType): string {
 
 /**
  * @description 从数据库中读取 cookie，然后写入文件
- * @since 2.0.0
+ * @since 2.2.0
  * @return {string} cookie-db
  */
-export function flushDB(): void {
+export async function flushDB(): Promise<void> {
   const db = new DataBase(cookieDB);
   db.pragma("journal_mode = WAL");
   const res = <{ value: string }>db.prepare("SELECT value FROM AppData WHERE key = 'cookie'").get();
   db.close();
-  fs.writeJSONSync(cookiePath, JSON.parse(res.value), { spaces: 2 });
+  await fs.writeJSON(cookiePath, JSON.parse(res.value), { spaces: 2 });
 }

@@ -8,9 +8,10 @@ import { describe, expect, test } from "vitest";
 
 import logger from "../core/tools/logger.ts";
 import { getUserCollect } from "../web/request/getUserCollect.ts";
-import { readCookieItem } from "../web/utils/readCookie.ts";
+import { flushDB, readCookieItem } from "../web/utils/readCookie.ts";
 
-describe("getUserCollect 测试", () => {
+describe("getUserCollect 测试", async () => {
+  await flushDB();
   const cookie = {
     cookie_token: readCookieItem("cookie_token"),
     account_id: readCookieItem("account_id"),
