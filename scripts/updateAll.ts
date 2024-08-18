@@ -21,7 +21,6 @@ const dirs = [
   "material",
   "achievements",
   "namecard",
-  "gcg",
   "gacha",
   "character",
   "weapon",

@@ -21,10 +21,6 @@ export const jsonDetail = {
     src: path.join(jsonDir.src, "character.json"),
     out: path.join(jsonDir.out, "WIKI", "character.json"),
   },
-  gcg: {
-    src: path.join(jsonDir.src, "gcg.json"),
-    out: path.join(jsonDir.out, "WIKI", "gcg.json"),
-  },
 };
 
 export const imageDetail = {

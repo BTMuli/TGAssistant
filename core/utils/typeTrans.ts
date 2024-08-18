@@ -26,20 +26,3 @@ export function getHutaoWeapon(
       return TGACore.Constant.WeaponType.sword;
   }
 }
-
-/**
- * @description 将 amber.json 的卡牌类型转为所需的卡牌类型
- * @since 2.0.0
- * @param {TGACore.Plugins.Amber.GCGType} cardType 卡牌类型
- * @return {TGACore.Components.GCG.CardType} 卡牌类型
- */
-export function getGCGType(
-  cardType: TGACore.Plugins.Amber.GCGType,
-): TGACore.Components.GCG.CardType {
-  switch (cardType) {
-    case TGACore.Plugins.Amber.GCGType.character:
-      return TGACore.Components.GCG.CardType.character;
-    case TGACore.Plugins.Amber.GCGType.action:
-      return TGACore.Components.GCG.CardType.action;
-  }
-}

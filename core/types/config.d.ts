@@ -59,7 +59,6 @@ declare namespace TGACore.Config {
    * @property {number} achievement 成就数据目录
    * @property {number} calendar 日历数据目录
    * @property {number} character 角色数据目录
-   * @property {number} gcg 卡牌图鉴数据目录
    * @property {number} gacha 抽卡数据目录
    * @property {number} material 材料数据目录
    * @property {number} namecard 名片数据目录
@@ -73,7 +72,6 @@ declare namespace TGACore.Config {
     achievement,
     calendar,
     character,
-    gcg,
     gacha,
     material,
     namecard,

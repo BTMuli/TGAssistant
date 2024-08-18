@@ -163,60 +163,6 @@ declare namespace TGACore.Plugins.Amber {
   }
 
   /**
-   * @description 返回数据-GCG卡牌
-   * @since 2.0.0
-   * @memberof TGACore.Plugins.Amber
-   * @interface ResponseGCG
-   * @template GCGTypeMap, GCG
-   * @extends Response<GCGTypeMap, GCG>
-   * @property {GCGTypeMap} data.types GCG类型对照表
-   * @property {Record<string, GCG>} data.items GCG数据
-   * @return ResponseGCG
-   */
-  interface ResponseGCG extends Response<GCGTypeMap, GCG> {}
-
-  /**
-   * @description GCG数据
-   * @since 2.0.0
-   * @memberof TGACore.Plugins.Amber
-   * @interface GCG
-   * @extends Item
-   * @property {GCGType} type GCG类型
-   * @property {Record<string,string>} tags 标签
-   * @property {Record<string,string>} props 属性
-   * @property {number} sortOrder 排序
-   * @return GCG
-   */
-  interface GCG extends Item {
-    type: GCGType;
-    tags: Record<string, string>;
-    props: Record<string, string>;
-    sortOrder: number;
-  }
-
-  /**
-   * @description GCG类型枚举
-   * @since 2.0.0
-   * @memberof TGACore.Plugins.Amber
-   * @enum {string}
-   * @property {string} character 角色卡
-   * @property {string} action 动作卡
-   * @return GCGType
-   */
-  const enum GCGType {
-    character = "characterCard",
-    action = "actionCard",
-  }
-
-  /**
-   * @description GCG类型对照表
-   * @since 2.0.0
-   * @memberof TGACore.Plugins.Amber
-   * @return GCGTypeMap
-   */
-  type GCGTypeMap = Record<GCGType, GCGType>;
-
-  /**
    * @description 返回数据-材料
    * @since 2.0.1
    * @memberof TGACore.Plugins.Amber
