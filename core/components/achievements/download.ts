@@ -1,7 +1,7 @@
 /**
- * @file core components achievements download.ts
+ * @file core/components/achievements/download.ts
  * @description 成就组件资源下载
- * @since 2.1.1
+ * @since 2.2.0
  */
 
 import axios from "axios";
@@ -11,7 +11,7 @@ import { jsonDir, jsonDetailDir, imgDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { getAchiImgDownloadUrl, getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
+import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
 import sharp from "sharp";
 
 logger.init();
@@ -39,6 +39,7 @@ for (const [key, value] of urlRes) {
   } catch (e) {
     logger.default.warn(`[components][achievement][download] 下载 ${key} 数据失败`);
     logger.console.warn(`[components][achievement][download] url: ${value}`);
+    logger.console.warn(e);
     Counter.Fail();
   }
 }
@@ -60,13 +61,14 @@ for (const item of seriesRaw) {
     continue;
   }
   try {
-    const url = getAchiImgDownloadUrl(item.Icon);
+    const url = `https://api.ambr.top/assets/UI/achievement/${item.Icon}.png`;
     const res = await axios.get(url, { responseType: "arraybuffer" });
     await sharp(<ArrayBuffer>res.data).toFile(savePath);
     logger.default.info(`[components][achievement][download] ${item.Icon} 图片下载完成`);
     Counter.Success();
   } catch (e) {
     logger.default.warn(`[components][achievement][download] ${item.Icon} 图片下载失败`);
+    logger.console.warn(e);
     Counter.Fail();
   }
 }

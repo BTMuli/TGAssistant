@@ -1,7 +1,7 @@
 /**
- * @file core types constant.d.ts
+ * @file core/types/constant.d.ts
  * @description 核心常量类型声明文件
- * @since 2.0.0
+ * @since 2.2.0
  */
 
 /**
@@ -61,7 +61,7 @@ declare namespace TGACore.Constant {
 
   /**
    * @description 国家枚举-索引
-   * @since 2.0.0
+   * @since 2.2.0
    * @memberof TGACore.Constant
    * @enum {number}
    * @property {number} Mondstadt 蒙德 =1
@@ -69,6 +69,7 @@ declare namespace TGACore.Constant {
    * @property {number} Inazuma 稻妻 =3
    * @property {number} Sumeru 须弥 =4
    * @property {number} Fontaine 枫丹 =5
+   * @property {number} Natlan 纳塔 =6
    * @todo 后续版本更新后，需要更新此枚举
    * @return NationIndex
    */
@@ -78,11 +79,12 @@ declare namespace TGACore.Constant {
     Inazuma = 3,
     Sumeru = 4,
     Fontaine = 5,
+    Natlan = 6,
   }
 
   /**
    * @description 国家枚举-中文
-   * @since 2.0.0
+   * @since 2.2.0
    * @memberof TGACore.Constant
    * @enum {string}
    * @property {string} Mondstadt 蒙德
@@ -90,6 +92,7 @@ declare namespace TGACore.Constant {
    * @property {string} Inazuma 稻妻
    * @property {string} Sumeru 须弥
    * @property {string} Fontaine 枫丹
+   * @property {string} Natlan 纳塔
    * @todo 后续版本更新后，需要更新此枚举
    * @return NationType
    */
@@ -99,6 +102,7 @@ declare namespace TGACore.Constant {
     Inazuma = "稻妻",
     Sumeru = "须弥",
     Fontaine = "枫丹",
+    Natlan = "纳塔",
   }
 
   /**

@@ -1,7 +1,7 @@
 /**
  * @file core/components/gacha/download.ts
  * @description gacha 组件资源下载
- * @since 2.1.0
+ * @since 2.2.0
  */
 
 import axios from "axios";
@@ -29,6 +29,7 @@ try {
 } catch (e) {
   logger.default.warn("[components][gacha][download] 下载 gacha 数据失败");
   logger.console.warn(`[components][gacha][download] url: ${urlRes}`);
+  logger.console.warn(e);
   Counter.Fail();
 }
 Counter.End();
@@ -48,7 +49,7 @@ interface MysPostList {
 // 爬取米游社帖子
 const postIdSet = new Set<string>();
 const mhyPosts: PostItem[] = [];
-const skipPost = ["49868038", "7345229", "1748352", "1748347", "11890551"];
+const skipPost = ["49868038", "7345229", "1748352", "1748347", "11890551", "56991610"];
 let isLast = false;
 let lastId = 0;
 while (!isLast) {

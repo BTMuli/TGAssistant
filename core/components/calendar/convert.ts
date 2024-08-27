@@ -1,7 +1,7 @@
 /**
- * @file core components calendar convert.ts
+ * @file core/components/calendar/convert.ts
  * @description 日历组件数据转换
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import process from "node:process";
@@ -329,7 +329,7 @@ function measureAmber(
 
 /**
  * @description 获取秘境所在的国家
- * @since 2.0.0
+ * @since 2.2.0
  * @param {TGACore.Constant.NationIndex} index 国家索引
  * @return {TGACore.Constant.NationType} 国家
  */
@@ -345,6 +345,8 @@ function getAmbetNation(index: TGACore.Constant.NationIndex): TGACore.Constant.N
       return TGACore.Constant.NationType.Sumeru;
     case TGACore.Constant.NationIndex.Fontaine:
       return TGACore.Constant.NationType.Fontaine;
+    case TGACore.Constant.NationIndex.Natlan:
+      return TGACore.Constant.NationType.Natlan;
   }
 }
 

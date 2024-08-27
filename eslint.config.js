@@ -19,4 +19,9 @@ export default [
       "qodana.yaml",
     ],
   },
+  {
+    rules: {
+      "@typescript-eslint/no-unused-expressions": "off",
+    },
+  },
 ];
