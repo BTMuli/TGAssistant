@@ -11,7 +11,7 @@ const snapConfig = configAll.snap;
 
 /**
  * @description 获取下载 url
- * @since 2.0.0
+ * @since 2.2.0
  * @param {TGACore.Config.GithubRepoConfig} config Github 仓库配置
  * @param {TGACore.Config.GithubFile} fileType Snap.Metadata 数据类型
  * @return {string} 下载 url
@@ -21,7 +21,7 @@ function getDownloadUrl(
   fileType: TGACore.Config.GithubFile,
 ): string {
   const filename = config.include[fileType];
-  return `https://raw.gitmirror.com/${config.repo}/${config.branch}/${config.base}/${filename}`;
+  return `https://raw.kkgithub.com/${config.repo}/${config.branch}/${config.base}/${filename}`;
 }
 
 // 函数重载
