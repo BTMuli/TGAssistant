@@ -1,12 +1,12 @@
 /**
  * @file core types config.d.ts
  * @description 配置类型声明文件
- * @since 2.1.0
+ * @since 2.2.0
  */
 
 /**
  * @description 配置 namespace
- * @since 2.1.0
+ * @since 2.2.0
  * @namespace TGACore.Config
  * @memberof TGACore
  */
@@ -106,9 +106,11 @@ declare namespace TGACore.Config {
 
   /**
    * @description Constant 配置文件类型
-   * @since 2.0.0
+   * @since 2.2.0
    * @memberof TGACore.Config
    * @property {string} amber.version Amber 版本号
+   * @property {string} amber.api Amber Api 地址
+   * @property {string} amber.site Amber 地址
    * @property {string} honeyhunter.url HoneyHunter 数据源地址
    * @property {string} honeyhunter.namecard.prefix.old HoneyHunter 旧版名片前缀
    * @property {string} honeyhunter.namecard.prefix.new HoneyHunter 新版名片前缀
@@ -121,6 +123,8 @@ declare namespace TGACore.Config {
   interface ConstantConfig {
     amber: {
       version: string;
+      api: string;
+      site: string;
     };
     honeyhunter: {
       url: string;

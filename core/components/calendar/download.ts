@@ -1,7 +1,7 @@
 /**
  * @file core components calendar download.ts
  * @description 日历组件资源下载
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import axios from "axios";
@@ -21,13 +21,13 @@ logger.default.info("[components][calendar][download] 运行 download.ts");
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 const requestData = {
   amber: {
-    json: "https://api.ambr.top/v2/chs/dailyDungeon",
-    img: "https://api.ambr.top/assets/UI/{img}.png",
+    json: `${amberConfig.api}chs/dailyDungeon`,
+    img: `${amberConfig.site}assets/UI/{img}.png`,
     params: {
-      vh: amberVersion,
+      vh: amberConfig.version,
     },
   },
   mys: {
@@ -52,6 +52,7 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.error("[components][calendar][download] Amber.top 日历数据下载失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 
@@ -66,6 +67,7 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.error("[components][calendar][download] 米游社 日历数据下载失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 

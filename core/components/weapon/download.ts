@@ -1,7 +1,7 @@
 /**
  * @file core components weapon download.ts
  * @description 武器组件资源下载
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import path from "node:path";
@@ -24,13 +24,13 @@ logger.default.info("[components][weapon][download] 运行 download.ts");
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 const requestData = {
   amber: {
-    json: "https://api.ambr.top/v2/chs/weapon",
-    img: "https://api.ambr.top/assets/UI/{img}.png",
+    json: `${amberConfig.api}chs/weapon`,
+    img: `${amberConfig.site}assets/UI/{img}.png`,
     params: {
-      vh: amberVersion,
+      vh: amberConfig.version,
     },
   },
   mys: {
@@ -57,6 +57,7 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.error("[components][weapon][download] Amber.top 武器数据下载失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 // 下载 mys 数据
@@ -76,6 +77,7 @@ try {
   }
 } catch (e) {
   logger.default.warn("[components][weapon][download] 观测枢 武器数据下载失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 // 下载 metadata 数据
@@ -87,6 +89,7 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.warn("[components][weapon][download] Weapon 数据下载失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 Counter.End();
@@ -168,6 +171,7 @@ async function downloadImage(item: TGACore.Plugins.Amber.Weapon, isAwaken: boole
         item.name
       } 图片下载失败`,
     );
+    logger.default.error(e);
     Counter.Fail();
     return;
   }

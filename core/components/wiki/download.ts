@@ -1,7 +1,7 @@
 /**
  * @file core/components/wiki/download.ts
  * @description wiki组件下载器
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import axios from "axios";
@@ -13,10 +13,12 @@ import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
 import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
+import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
 Counter.Init("[components][wiki][download]");
 logger.default.info("[components][wiki][download] 运行 download.ts");
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 
 fileCheckObj(jsonDir);
 fileCheckObj(imageDetail);
@@ -75,7 +77,7 @@ Counter.Output();
 
 /**
  * @description 下载材料图像
- * @since 2.0.0
+ * @since 2.2.0
  * @param {number[]} materials 材料id数组
  * @returns {Promise<void>}
  */
@@ -84,7 +86,7 @@ async function downloadMaterials(materials: number[]): Promise<void> {
   Counter.addTotal(materials.length);
   for (const material of materials) {
     const savePath = `${saveDir}/${material}.png`;
-    const link = `https://api.ambr.top/assets/UI/UI_ItemIcon_${material}.png`;
+    const link = `${amberConfig.site}assets/UI/UI_ItemIcon_${material}.png`;
     await downloadImage(savePath, link, `材料 ${material}`);
   }
 }
@@ -116,7 +118,7 @@ async function downloadTalent(talent: TGACore.Components.Character.RhisdTalent):
   }
   const saveDir = imageDetail.talents.src;
   const savePath = `${saveDir}/${talent.Icon}.png`;
-  const link = `https://api.ambr.top/assets/UI/${talent.Icon}.png`;
+  const link = `${amberConfig.site}assets/UI/${talent.Icon}.png`;
   await downloadImage(savePath, link, `天赋 ${talent.Icon}`);
 }
 
@@ -133,7 +135,7 @@ async function downloadConstellations(
   for (const constellation of constellations) {
     const saveDir = imageDetail.constellations.src;
     const savePath = `${saveDir}/${constellation.Icon}.png`;
-    const link = `https://api.ambr.top/assets/UI/${constellation.Icon}.png`;
+    const link = `${amberConfig.site}assets/UI/${constellation.Icon}.png`;
     await downloadImage(savePath, link, `命座 ${constellation.Icon}`);
   }
 }
@@ -159,6 +161,7 @@ async function downloadImage(savePath: string, link: string, label: string): Pro
     Counter.Success();
   } catch (e) {
     logger.default.error(`[components][wiki][download][icon] ${label} 下载失败`);
+    logger.default.error(e);
     Counter.Fail();
   }
 }

@@ -1,7 +1,7 @@
 /**
  * @file core/components/material/convert.ts
  * @description 材料组件转换
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import path from "node:path";
@@ -24,15 +24,15 @@ logger.default.info("[components][material][download] 运行 download.ts");
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 const rawAmberData: TGACore.Plugins.Amber.Material[] = [];
 
 logger.default.info("[components][material][download] 开始下载 JSON 数据");
 try {
   const res: TGACore.Plugins.Amber.ResponseMaterial = await axios
-    .get("https://api.ambr.top/v2/chs/material", {
+    .get(`${amberConfig.api}chs/material`, {
       params: {
-        vh: amberVersion,
+        vh: amberConfig.version,
       },
     })
     .then((res) => res.data);
@@ -87,14 +87,15 @@ async function downloadJson(data: TGACore.Plugins.Amber.Material): Promise<void>
   let res: TGACore.Components.Material.Response;
   try {
     res = await axios
-      .get(`https://api.ambr.top/v2/chs/material/${data.id}`, {
+      .get(`${amberConfig.api}chs/material/${data.id}`, {
         params: {
-          vh: amberVersion,
+          vh: amberConfig.version,
         },
       })
       .then((res) => res.data);
-  } catch (error) {
+  } catch (e) {
     logger.default.warn(`[components][material][download][${data.id}] ${data.name} JSON 下载失败`);
+    logger.default.error(e);
     Counter.Fail();
     return;
   }
@@ -105,7 +106,7 @@ async function downloadJson(data: TGACore.Plugins.Amber.Material): Promise<void>
 
 /**
  * @description 下载图片
- * @since 2.0.1
+ * @since 2.2.0
  * @param {TGACore.Plugins.Amber.Material} data 材料数据
  * @return {Promise<void>}
  */
@@ -121,12 +122,13 @@ async function downloadImg(data: TGACore.Plugins.Amber.Material): Promise<void> 
   let res: ArrayBuffer;
   try {
     res = await axios
-      .get(`https://api.ambr.top/assets/UI/${data.icon}.png`, {
+      .get(`${amberConfig.site}assets/UI/${data.icon}.png`, {
         responseType: "arraybuffer",
       })
       .then((res) => res.data);
-  } catch (error) {
+  } catch (e) {
     logger.default.warn(`[components][material][download][${data.id}] ${data.name} 图片下载失败`);
+    logger.default.error(e);
     Counter.Fail();
     return;
   }

@@ -13,10 +13,12 @@ import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
 import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
 import sharp from "sharp";
+import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
 Counter.Init("[components][achievement][download]");
 logger.default.info("[components][achievement][download] 运行 download.ts");
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
@@ -61,7 +63,7 @@ for (const item of seriesRaw) {
     continue;
   }
   try {
-    const url = `https://api.ambr.top/assets/UI/achievement/${item.Icon}.png`;
+    const url = `${amberConfig.site}assets/UI/achievement/${item.Icon}.png`;
     const res = await axios.get(url, { responseType: "arraybuffer" });
     await sharp(<ArrayBuffer>res.data).toFile(savePath);
     logger.default.info(`[components][achievement][download] ${item.Icon} 图片下载完成`);

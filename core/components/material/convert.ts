@@ -1,7 +1,7 @@
 /**
  * @file core/components/material/convert.ts
  * @description 材料组件转换
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import path from "node:path";
@@ -20,6 +20,7 @@ import { readConfig } from "../../utils/readConfig.ts";
 logger.init();
 Counter.Init("[components][material][convert]");
 logger.default.info("[components][material][convert] 运行 convert.ts");
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
@@ -176,18 +177,17 @@ async function transMaterial(
 
 /**
  * @description 下载 JSON
- * @since 2.0.1
+ * @since 2.2.0
  * @param {string} id 材料 ID
  * @return {Promise<TGACore.Components.Material.RawAmber|false>}
  */
 async function downloadJson(id: string): Promise<TGACore.Components.Material.RawAmber | false> {
-  const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
   let res: TGACore.Components.Material.Response;
   try {
     res = await axios
-      .get(`https://api.ambr.top/v2/chs/material/${id}`, {
+      .get(`${amberConfig.api}chs/material/${id}`, {
         params: {
-          vh: amberVersion,
+          vh: amberConfig.version,
         },
       })
       .then((res) => res.data);
@@ -201,7 +201,7 @@ async function downloadJson(id: string): Promise<TGACore.Components.Material.Raw
 
 /**
  * @description 下载图片
- * @since 2.0.1
+ * @since 2.2.0
  * @param {string} id 材料 ID
  * @return {Promise<void>}
  */
@@ -214,7 +214,7 @@ async function convertImg(id: string): Promise<void> {
   let res: ArrayBuffer;
   try {
     res = await axios
-      .get(`https://api.ambr.top/assets/UI/UI_ItemIcon_${id}.png`, {
+      .get(`${amberConfig.site}assets/UI/UI_ItemIcon_${id}.png`, {
         responseType: "arraybuffer",
       })
       .then((res) => res.data);

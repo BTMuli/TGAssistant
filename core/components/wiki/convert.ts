@@ -1,7 +1,7 @@
 /**
  * @file core/components/wiki/convert.ts
  * @description wiki组件转换器
- * @since 2.1.1
+ * @since 2.2.0
  */
 
 import process from "node:process";
@@ -56,7 +56,7 @@ for (const character of characterRaw) {
 await fs.writeJSON(jsonDetail.character.out, wikiCharacter, { spaces: 2 });
 // 处理武器
 const wikiWeapon: TGACore.Components.Weapon.WikiItem[] = [];
-const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 for (const weapon of weaponRaw) {
   const data = transWeapon(weapon);
   if (data.id !== 11513) {
@@ -290,17 +290,18 @@ function transWeapon(
 
 /**
  * @description 获取武器故事
- * @since 2.0.0
+ * @since 2.2.0
  * @param {string} id 武器ID
  * @returns {Promise<string>} 武器故事
  */
 async function getWeaponStory(id: string): Promise<string> {
-  const url = `https://api.ambr.top/v2/CHS/readable/Weapon${id}?vh=${amberVersion}`;
+  const url = `${amberConfig.api}CHS/readable/Weapon${id}?vh=${amberConfig.version}`;
   try {
     const res = await axios.get(url);
     return res.data.data;
   } catch (e) {
     logger.default.warn(`[components][wiki][convert] 获取武器 ${id} 故事失败`);
+    logger.default.error(e);
     return "";
   }
 }

@@ -1,7 +1,7 @@
 /**
  * @file core components character download.ts
  * @description 角色组件资源下载
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 import path from "node:path";
@@ -24,13 +24,13 @@ logger.default.info("[components][character][download] 运行 download.ts");
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const amberVersion = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber.version;
+const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
 const requestData = {
   amber: {
-    json: "https://api.ambr.top/v2/chs/avatar",
-    img: "https://api.ambr.top/assets/UI/{img}.png",
+    json: `${amberConfig.api}chs/avatar`,
+    img: `${amberConfig.site}assets/UI/{img}.png`,
     params: {
-      vh: amberVersion,
+      vh: amberConfig.version,
     },
   },
   mys: {
@@ -57,6 +57,7 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.error("[components][character][download] 下载 Amber.top 角色数据失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 // 下载 mys 数据
@@ -76,6 +77,7 @@ try {
   }
 } catch (e) {
   logger.default.warn("[components][character][download] 下载 观测枢 角色数据失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 // 下载 metadata 数据
@@ -87,6 +89,7 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.warn("[components][character][download] 下载 Avatar 数据失败");
+  logger.default.error(e);
   Counter.Fail();
 }
 Counter.End();
@@ -124,6 +127,7 @@ for (const item of amberJson) {
     logger.default.warn(
       `[components][character][download] ${item.id} ${item.name}·${element} Icon 下载失败`,
     );
+    logger.default.error(e);
     Counter.Fail();
     continue;
   }
