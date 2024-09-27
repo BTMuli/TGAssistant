@@ -1,12 +1,12 @@
 /**
  * @file core/types/amber.d.ts
  * @description amber 插件类型定义
- * @since 2.0.1
+ * @since 2.2.0
  */
 
 /**
  * @description amber 插件类型 namespace
- * @since 2.0.1
+ * @since 2.2.0
  * @namespace TGACore.Plugins.Amber
  * @memberof TGACore.Plugins
  */
@@ -42,7 +42,7 @@ declare namespace TGACore.Plugins.Amber {
    * @return Item
    */
   interface Item {
-    id: number;
+    id: string;
     name: string;
     icon: string;
     route: string;
@@ -111,7 +111,7 @@ declare namespace TGACore.Plugins.Amber {
    * @property {Record<string, Character>} data.items 角色数据
    * @return ResponseCharacter
    */
-  interface ResponseCharacter extends Response<WeaponTypeMap, Character> {}
+  type ResponseCharacter = Response<WeaponTypeMap, Character>;
 
   /**
    * @description 角色数据
@@ -145,7 +145,7 @@ declare namespace TGACore.Plugins.Amber {
    * @property {Record<string, Weapon>} data.items 武器数据
    * @return ResponseWeapon
    */
-  interface ResponseWeapon extends Response<WeaponTypeMap, Weapon> {}
+  type ResponseWeapon = Response<WeaponTypeMap, Weapon>;
 
   /**
    * @description 武器数据
@@ -173,7 +173,7 @@ declare namespace TGACore.Plugins.Amber {
    * @property {Record<string, Material>} data.items 材料数据
    * @return ResponseMaterial
    */
-  interface ResponseMaterial extends Response<MaterialTypeMap, Material> {}
+  type ResponseMaterial = Response<MaterialTypeMap, Material>;
 
   /**
    * @description 材料类型对照表

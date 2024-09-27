@@ -14,12 +14,8 @@ import { getProjConfigPath } from "./getBasePaths.ts";
 import logger from "../tools/logger.ts";
 
 // 读取配置文件类型-函数重载
-export function readConfig(
-  fileType: TGACore.Config.ConfigFileEnum.Constant,
-): TGACore.Config.ConstantConfig;
-export function readConfig(
-  fileType: TGACore.Config.ConfigFileEnum.Github,
-): TGACore.Config.GithubConfig;
+export function readConfig(fileType: "constant"): TGACore.Config.ConstantConfig;
+export function readConfig(fileType: "github"): TGACore.Config.GithubConfig;
 
 /**
  * @description 配置读取中转
@@ -27,7 +23,7 @@ export function readConfig(
  * @param {TGACore.Config.ConfigFileEnum} fileType 配置文件类型
  * @return {unknown} 配置文件内容
  */
-export function readConfig(fileType: TGACore.Config.ConfigFileEnum): unknown {
+export function readConfig(fileType: "github" | "constant"): unknown {
   const configDir = getProjConfigPath();
   const filePath = join(configDir, `${fileType}.yml`);
   if (!fileCheck(filePath, false)) {

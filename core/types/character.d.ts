@@ -1,12 +1,12 @@
 /**
- * @file core types character.d.ts
+ * @file core/types/character.d.ts
  * @description 角色类型定义
- * @since 2.0.2
+ * @since 2.2.0
  */
 
 /**
  * @description 角色类型 namespace
- * @since 2.0.2
+ * @since 2.2.0
  * @namespace TGACore.Components.Character
  * @memberof TGACore.Components
  */
@@ -147,13 +147,15 @@ declare namespace TGACore.Components.Character {
 
   /**
    * @description 元数据-胡桃-技能-天赋
-   * @since 2.0.0
+   * @since 2.2.0
    * @memberof TGACore.Components.Character
    * @description RawHutaoItem.SkillDepot.Talents => RhisdTalent
    * @property {number} Id 天赋编号
    * @property {string} Name 天赋名称
    * @property {string} Description 天赋描述
    * @property {string} Icon 天赋图标
+   * @property {number} ExtraLevel?.Index
+   * @property {number} ExtraLevel?.Level
    * @return RhisdTalent
    */
   interface RhisdTalent {
@@ -161,6 +163,10 @@ declare namespace TGACore.Components.Character {
     Name: string;
     Description: string;
     Icon: string;
+    ExtraLevel?: {
+      Index: number;
+      Level: number;
+    };
   }
 
   /**

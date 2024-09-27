@@ -14,7 +14,6 @@ export const jsonDir = getAppDirPath("data", "character");
 export const jsonDetailDir = {
   amber: path.join(jsonDir.src, "amber.json"),
   mys: path.join(jsonDir.src, "mys.json"),
-  hutao: path.join(jsonDir.src, "hutao.json"),
   out: path.join(jsonDir.out, "app", "character.json"),
   namecard: path.join(jsonDir.out, "app", "namecard.json"),
 };

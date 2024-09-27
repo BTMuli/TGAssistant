@@ -1,7 +1,7 @@
 # =============================================================================
 # File: config/github.yml
 # Description: github配置文件
-# Since: 2.1.0
+# Since: 2.2.0
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ snap:
   include:
     Achievement: Achievement.json
     AchievementGoal: AchievementGoal.json
-    Avatar: Avatar.json
+    Avatar: Avatar/
     Gacha: GachaEvent.json
     Meta: Meta.json
     Weapon: Weapon.json

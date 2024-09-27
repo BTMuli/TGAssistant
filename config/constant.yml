@@ -7,12 +7,13 @@
 # -----------------------------------------------------------------------------
 # Amber.top 配置
 # version: API版本
-# site: https://gi.yatta.top/
+# site: https://gi.yatta.moe/
 # -----------------------------------------------------------------------------
 amber:
   version: 50F3
-  api: https://gi.yatta.top/api/v2/
-  site: https://gi.yatta.top/
+  api: https://gi.yatta.moe/api/v2/
+  site: https://gi.yatta.moe/
+  assets: https://gi.yatta.moe/assets/UI/
 
 # -----------------------------------------------------------------------------
 # Honeyhunter 配置

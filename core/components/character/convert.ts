@@ -14,13 +14,14 @@ import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
 import { getHutaoWeapon } from "../../utils/typeTrans.ts";
+import path from "node:path";
 
 logger.init();
 Counter.Init("[components][character][convert]");
 logger.default.info("[components][character][convert] 运行 convert.ts");
 
 // 前置检查
-if (!fileCheck(jsonDetailDir.mys, false) || !fileCheck(jsonDetailDir.hutao, false)) {
+if (!fileCheck(jsonDetailDir.mys, false)) {
   logger.default.error("[components][character][convert] 角色元数据文件不存在");
   logger.console.info("[components][character][convert] 请执行 download.ts");
   process.exit(1);
@@ -30,14 +31,23 @@ fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
 const converData: TGACore.Components.Character.ConvertData[] = [];
+const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amber);
+const idList: number[] = [];
+amberJson.forEach((i) => {
+  if (!isNaN(Number(i.id))) idList.push(Number(i.id));
+});
 
 // 处理 hutao.json
 logger.console.info("[components][character][convert] 第一次处理：通过 hutao.json");
-Counter.Reset();
-const hutaoRaw: TGACore.Components.Character.RawHutaoItem[] = await fs.readJson(
-  jsonDetailDir.hutao,
-);
-for (const item of hutaoRaw) {
+Counter.Reset(idList.length);
+for (const id of idList) {
+  const filePath = path.join(jsonDir.src, `${id}.json`);
+  if (!fs.existsSync(filePath)) {
+    logger.default.error(`[components][character][conver] 角色${id}元数据不存在`);
+    Counter.Fail();
+    continue;
+  }
+  const item: TGACore.Components.Character.RawHutaoItem = await fs.readJson(filePath);
   const avatar: TGACore.Components.Character.ConvertData = {
     id: item.Id,
     contentId: 0,

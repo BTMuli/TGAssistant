@@ -20,7 +20,7 @@ import { readConfig } from "../../utils/readConfig.ts";
 logger.init();
 Counter.Init("[components][material][convert]");
 logger.default.info("[components][material][convert] 运行 convert.ts");
-const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
+const amberConfig = readConfig("constant").amber;
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);

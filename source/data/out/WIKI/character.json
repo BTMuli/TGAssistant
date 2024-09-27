@@ -137,7 +137,11 @@
         "Id": 23,
         "Name": "花白锦画纸吹雪",
         "Description": "<color=#FFD780FF>神里流·霜灭</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ayaka_02"
+        "Icon": "UI_Talent_U_Ayaka_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 24,
@@ -149,7 +153,11 @@
         "Id": 25,
         "Name": "花云钟入月",
         "Description": "<color=#FFD780FF>神里流·冰华</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ayaka_01"
+        "Icon": "UI_Talent_U_Ayaka_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 26,
@@ -610,7 +618,11 @@
         "Id": 33,
         "Name": "西风吹拂之时",
         "Description": "<color=#FFD780FF>蒲公英之风</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Qin_02"
+        "Icon": "UI_Talent_U_Qin_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 34,
@@ -622,7 +634,11 @@
         "Id": 35,
         "Name": "须臾一瞬的烈风",
         "Description": "<color=#FFD780FF>风压剑</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Qin_01"
+        "Icon": "UI_Talent_U_Qin_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 36,
@@ -1087,7 +1103,11 @@
         "Id": 43,
         "Name": "谐振的雷光",
         "Description": "<color=#FFD780FF>蔷薇的雷光</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Lisa_02"
+        "Icon": "UI_Talent_U_Lisa_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 44,
@@ -1099,7 +1119,11 @@
         "Id": 45,
         "Name": "等离态的落雷",
         "Description": "<color=#FFD780FF>苍雷</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Lisa_01"
+        "Icon": "UI_Talent_U_Lisa_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 46,
@@ -1572,7 +1596,11 @@
         "Id": 143,
         "Name": "明日之星",
         "Description": "<color=#FFD780FF>闪耀奇迹♪</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Barbara_02"
+        "Icon": "UI_Talent_U_Barbara_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 144,
@@ -1584,7 +1612,11 @@
         "Id": 145,
         "Name": "纯真的羁绊",
         "Description": "<color=#FFD780FF>演唱，开始♪</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Barbara_01"
+        "Icon": "UI_Talent_U_Barbara_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 146,
@@ -2041,7 +2073,11 @@
         "Id": 153,
         "Name": "凛冽的冰戏",
         "Description": "<color=#FFD780FF>霜袭</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kaeya_01"
+        "Icon": "UI_Talent_U_Kaeya_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 154,
@@ -2053,7 +2089,11 @@
         "Id": 155,
         "Name": "至冷的拥抱",
         "Description": "<color=#FFD780FF>凛冽轮舞</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kaeya_02"
+        "Icon": "UI_Talent_U_Kaeya_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 156,
@@ -2526,7 +2566,11 @@
         "Id": 163,
         "Name": "钢铁炽焰",
         "Description": "<color=#FFD780FF>逆焰之刃</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Diluc_01"
+        "Icon": "UI_Talent_U_Diluc_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 164,
@@ -2538,7 +2582,11 @@
         "Id": 165,
         "Name": "昭告黎明的火之鸟",
         "Description": "<color=#FFD780FF>黎明</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Diluc_02"
+        "Icon": "UI_Talent_U_Diluc_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 166,
@@ -3007,7 +3055,11 @@
         "Id": 203,
         "Name": "兽魂",
         "Description": "<color=#FFD780FF>雷牙</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Razor_02"
+        "Icon": "UI_Talent_U_Razor_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 204,
@@ -3019,7 +3071,11 @@
         "Id": 205,
         "Name": "利爪",
         "Description": "<color=#FFD780FF>利爪与苍雷</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Razor_01"
+        "Icon": "UI_Talent_U_Razor_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 206,
@@ -3460,7 +3516,11 @@
         "Id": 213,
         "Name": "烧起来啦！",
         "Description": "<color=#FFD780FF>箭雨</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ambor_02"
+        "Icon": "UI_Talent_U_Ambor_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 214,
@@ -3472,7 +3532,11 @@
         "Id": 215,
         "Name": "是兔兔伯爵！",
         "Description": "<color=#FFD780FF>爆弹玩偶</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ambor_01"
+        "Icon": "UI_Talent_U_Ambor_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 216,
@@ -3965,7 +4029,11 @@
         "Id": 223,
         "Name": "千风的诗篇",
         "Description": "<color=#FFD780FF>风神之诗</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Venti_02"
+        "Icon": "UI_Talent_U_Venti_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 224,
@@ -3977,7 +4045,11 @@
         "Id": 225,
         "Name": "高天的协奏",
         "Description": "<color=#FFD780FF>高天之歌</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Venti_01"
+        "Icon": "UI_Talent_U_Venti_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 226,
@@ -4446,7 +4518,11 @@
         "Id": 233,
         "Name": "武火急烹",
         "Description": "<color=#FFD780FF>旋火轮</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xiangling_02"
+        "Icon": "UI_Talent_U_Xiangling_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 234,
@@ -4458,7 +4534,11 @@
         "Id": 235,
         "Name": "锅巴凶猛",
         "Description": "<color=#FFD780FF>锅巴出击</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xiangling_01"
+        "Icon": "UI_Talent_U_Xiangling_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 236,
@@ -4923,7 +5003,11 @@
         "Id": 243,
         "Name": "潮奔蓦引电",
         "Description": "<color=#FFD780FF>捉浪</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Beidou_01"
+        "Icon": "UI_Talent_U_Beidou_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 244,
@@ -4935,7 +5019,11 @@
         "Id": 245,
         "Name": "踏浪霞连阶",
         "Description": "<color=#FFD780FF>斫雷</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Beidou_02"
+        "Icon": "UI_Talent_U_Beidou_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 246,
@@ -5396,7 +5484,11 @@
         "Id": 253,
         "Name": "织诗成锦",
         "Description": "<color=#FFD780FF>古华剑·裁雨留虹</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xingqiu_01"
+        "Icon": "UI_Talent_U_Xingqiu_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 254,
@@ -5408,7 +5500,11 @@
         "Id": 255,
         "Name": "雨深闭门",
         "Description": "<color=#FFD780FF>古华剑·画雨笼山</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xingqiu_02"
+        "Icon": "UI_Talent_U_Xingqiu_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 256,
@@ -5893,7 +5989,11 @@
         "Id": 263,
         "Name": "降魔·忿怒显相",
         "Description": "<color=#FFD780FF>风轮两立</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xiao_01"
+        "Icon": "UI_Talent_U_Xiao_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 264,
@@ -5905,7 +6005,11 @@
         "Id": 265,
         "Name": "成劫·无明增长",
         "Description": "<color=#FFD780FF>靖妖傩舞</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xiao_02"
+        "Icon": "UI_Talent_U_Xiao_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 266,
@@ -6370,7 +6474,11 @@
         "Id": 273,
         "Name": "星罗宿列天权临",
         "Description": "<color=#FFD780FF>天权崩玉</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ningguang_02"
+        "Icon": "UI_Talent_U_Ningguang_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 274,
@@ -6382,7 +6490,11 @@
         "Id": 275,
         "Name": "琼屏千扇正天衡",
         "Description": "<color=#FFD780FF>璇玑屏</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ningguang_01"
+        "Icon": "UI_Talent_U_Ningguang_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 276,
@@ -6859,7 +6971,11 @@
         "Id": 293,
         "Name": "可莉特调",
         "Description": "<color=#FFD780FF>蹦蹦炸弹</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Klee_01"
+        "Icon": "UI_Talent_U_Klee_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 294,
@@ -6871,7 +6987,11 @@
         "Id": 295,
         "Name": "轰击之星",
         "Description": "<color=#FFD780FF>轰轰火花</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Klee_02"
+        "Icon": "UI_Talent_U_Klee_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 296,
@@ -7332,7 +7452,11 @@
         "Id": 303,
         "Name": "圭璋，暝仍不移其晖",
         "Description": "<color=#FFD780FF>地心</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Zhongli_01"
+        "Icon": "UI_Talent_U_Zhongli_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 304,
@@ -7344,7 +7468,11 @@
         "Id": 305,
         "Name": "苍璧，驱之长昭天理",
         "Description": "<color=#FFD780FF>天星</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Zhongli_02"
+        "Icon": "UI_Talent_U_Zhongli_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 306,
@@ -7821,7 +7949,11 @@
         "Id": 313,
         "Name": "渊色黑翼",
         "Description": "<color=#FFD780FF>夜巡影翼</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Fischl_01"
+        "Icon": "UI_Talent_U_Fischl_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 314,
@@ -7833,7 +7965,11 @@
         "Id": 315,
         "Name": "至夜默示录",
         "Description": "<color=#FFD780FF>至夜幻现</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Fischl_02"
+        "Icon": "UI_Talent_U_Fischl_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 316,
@@ -8282,7 +8418,11 @@
         "Id": 323,
         "Name": "火热激情",
         "Description": "<color=#FFD780FF>热情过载</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Bennett_01"
+        "Icon": "UI_Talent_U_Bennett_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 324,
@@ -8294,7 +8434,11 @@
         "Id": 325,
         "Name": "开拓的心魂",
         "Description": "<color=#FFD780FF>美妙旅程</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Bennett_02"
+        "Icon": "UI_Talent_U_Bennett_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 326,
@@ -8763,7 +8907,11 @@
         "Id": 333,
         "Name": "深渊之灾·纷争涡源",
         "Description": "<color=#FFD780FF>魔王武装·狂澜</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Tartaglia_01"
+        "Icon": "UI_Talent_U_Tartaglia_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 334,
@@ -8775,7 +8923,11 @@
         "Id": 335,
         "Name": "极恶技·斩水斩雨",
         "Description": "<color=#FFD780FF>极恶技·尽灭闪</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Tartaglia_02"
+        "Icon": "UI_Talent_U_Tartaglia_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 336,
@@ -9280,7 +9432,11 @@
         "Id": 343,
         "Name": "女仆不会受伤",
         "Description": "<color=#FFD780FF>护心铠</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Noel_01"
+        "Icon": "UI_Talent_U_Noel_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 344,
@@ -9292,7 +9448,11 @@
         "Id": 345,
         "Name": "骑士团扫除专家",
         "Description": "<color=#FFD780FF>大扫除</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Noel_02"
+        "Icon": "UI_Talent_U_Noel_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 346,
@@ -9745,7 +9905,11 @@
         "Id": 353,
         "Name": "升天宝诰",
         "Description": "<color=#FFD780FF>仙法·救苦度厄</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Qiqi_01"
+        "Icon": "UI_Talent_U_Qiqi_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 354,
@@ -9757,7 +9921,11 @@
         "Id": 355,
         "Name": "红莲开绽",
         "Description": "<color=#FFD780FF>仙法·寒病鬼差</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Qiqi_02"
+        "Icon": "UI_Talent_U_Qiqi_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 356,
@@ -10210,7 +10378,11 @@
         "Id": 363,
         "Name": "云尽光生",
         "Description": "<color=#FFD780FF>灵刃·云开星落</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Chongyun_01"
+        "Icon": "UI_Talent_U_Chongyun_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 364,
@@ -10222,7 +10394,11 @@
         "Id": 365,
         "Name": "真道正理",
         "Description": "<color=#FFD780FF>灵刃·重华叠霜</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Chongyun_02"
+        "Icon": "UI_Talent_U_Chongyun_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 366,
@@ -10667,7 +10843,11 @@
         "Id": 373,
         "Name": "云行",
         "Description": "<color=#FFD780FF>降众天华</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ganyu_01"
+        "Icon": "UI_Talent_U_Ganyu_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 374,
@@ -10679,7 +10859,11 @@
         "Id": 375,
         "Name": "折草",
         "Description": "<color=#FFD780FF>山泽麟迹</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ganyu_02"
+        "Icon": "UI_Talent_U_Ganyu_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 376,
@@ -11168,7 +11352,11 @@
         "Id": 383,
         "Name": "太阳之华",
         "Description": "<color=#FFD780FF>创生法·拟造阳华</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Albedo_01"
+        "Icon": "UI_Talent_U_Albedo_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 384,
@@ -11180,7 +11368,11 @@
         "Id": 385,
         "Name": "冥古之潮",
         "Description": "<color=#FFD780FF>诞生式·大地之潮</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Albedo_02"
+        "Icon": "UI_Talent_U_Albedo_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 386,
@@ -11617,7 +11809,11 @@
         "Id": 393,
         "Name": "还、还要续杯？",
         "Description": "<color=#FFD780FF>最烈特调</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Diona_01"
+        "Icon": "UI_Talent_U_Diona_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 394,
@@ -11629,7 +11825,11 @@
         "Id": 395,
         "Name": "双份加冰",
         "Description": "<color=#FFD780FF>猫爪冻冻</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Diona_02"
+        "Icon": "UI_Talent_U_Diona_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 396,
@@ -12133,7 +12333,11 @@
         "Id": 413,
         "Name": "不休的天象",
         "Description": "<color=#FFD780FF>星命定轨</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Mona_01"
+        "Icon": "UI_Talent_U_Mona_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 414,
@@ -12145,7 +12349,11 @@
         "Id": 415,
         "Name": "命运的嘲弄",
         "Description": "<color=#FFD780FF>水中幻愿</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Mona_02"
+        "Icon": "UI_Talent_U_Mona_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 416,
@@ -12590,7 +12798,11 @@
         "Id": 423,
         "Name": "登楼",
         "Description": "<color=#FFD780FF>天街巡游</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Keqing_01"
+        "Icon": "UI_Talent_U_Keqing_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 424,
@@ -12602,7 +12814,11 @@
         "Id": 425,
         "Name": "移灯",
         "Description": "<color=#FFD780FF>星斗归位</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Keqing_02"
+        "Icon": "UI_Talent_U_Keqing_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 426,
@@ -13111,7 +13327,11 @@
         "Id": 433,
         "Name": "零失误少女",
         "Description": "<color=#FFD780FF>风灵作成·陆叁零捌</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sucrose_01"
+        "Icon": "UI_Talent_U_Sucrose_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 434,
@@ -13123,7 +13343,11 @@
         "Id": 435,
         "Name": "认真普通瓶",
         "Description": "<color=#FFD780FF>禁·风灵作成·柒伍同构贰型</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sucrose_02"
+        "Icon": "UI_Talent_U_Sucrose_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 436,
@@ -13580,7 +13804,11 @@
         "Id": 443,
         "Name": "摭分的指法",
         "Description": "<color=#FFD780FF>热情拂扫</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xinyan_01"
+        "Icon": "UI_Talent_U_Xinyan_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 444,
@@ -13592,7 +13820,11 @@
         "Id": 445,
         "Name": "返场的高呼",
         "Description": "<color=#FFD780FF>叛逆刮弦</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Xinyan_02"
+        "Icon": "UI_Talent_U_Xinyan_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 446,
@@ -14045,7 +14277,11 @@
         "Id": 453,
         "Name": "告解之仪",
         "Description": "<color=#FFD780FF>噬罪的告解</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Rosaria_01"
+        "Icon": "UI_Talent_U_Rosaria_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 454,
@@ -14057,7 +14293,11 @@
         "Id": 455,
         "Name": "临终祈礼",
         "Description": "<color=#FFD780FF>终命的圣礼</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Rosaria_02"
+        "Icon": "UI_Talent_U_Rosaria_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 456,
@@ -14510,7 +14750,11 @@
         "Id": 463,
         "Name": "逗留采血色",
         "Description": "<color=#FFD780FF>蝶引来生</color>的技能等级提升3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Hutao_01"
+        "Icon": "UI_Talent_U_Hutao_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 464,
@@ -14522,7 +14766,11 @@
         "Id": 465,
         "Name": "无可奈何燃花作香",
         "Description": "<color=#FFD780FF>安神秘法</color>的技能等级提升3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Hutao_02"
+        "Icon": "UI_Talent_U_Hutao_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 466,
@@ -15003,7 +15251,11 @@
         "Id": 473,
         "Name": "枫袖奇谭",
         "Description": "<color=#FFD780FF>千早振</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kazuha_01"
+        "Icon": "UI_Talent_U_Kazuha_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 474,
@@ -15015,7 +15267,11 @@
         "Id": 475,
         "Name": "万世之集",
         "Description": "<color=#FFD780FF>万叶之一刀</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kazuha_02"
+        "Icon": "UI_Talent_U_Kazuha_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 476,
@@ -15484,7 +15740,11 @@
         "Id": 483,
         "Name": "真火炼宝印",
         "Description": "<color=#FFD780FF>丹书立约</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Feiyan_01"
+        "Icon": "UI_Talent_U_Feiyan_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 484,
@@ -15496,7 +15756,11 @@
         "Id": 485,
         "Name": "遵法切结书",
         "Description": "<color=#FFD780FF>凭此结契</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Feiyan_02"
+        "Icon": "UI_Talent_U_Feiyan_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 486,
@@ -15941,7 +16205,11 @@
         "Id": 493,
         "Name": "鼠火戏法",
         "Description": "<color=#FFD780FF>焰硝庭火舞</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yoimiya_01"
+        "Icon": "UI_Talent_U_Yoimiya_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 494,
@@ -15953,7 +16221,11 @@
         "Id": 495,
         "Name": "真夏宵祭锦绘",
         "Description": "<color=#FFD780FF>琉金云间草</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yoimiya_02"
+        "Icon": "UI_Talent_U_Yoimiya_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 496,
@@ -16430,7 +16702,11 @@
         "Id": 503,
         "Name": "御敌的执定",
         "Description": "<color=#FFD780FF>烈烧佑命之侍护</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Tohma_01"
+        "Icon": "UI_Talent_U_Tohma_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 504,
@@ -16442,7 +16718,11 @@
         "Id": 505,
         "Name": "野火的豪烈",
         "Description": "<color=#FFD780FF>真红炽火之大铠</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Tohma_02"
+        "Icon": "UI_Talent_U_Tohma_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 506,
@@ -16907,7 +17187,11 @@
         "Id": 513,
         "Name": "劳伦斯的血脉",
         "Description": "<color=#FFD780FF>凝浪之光剑</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Eula_01"
+        "Icon": "UI_Talent_U_Eula_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 514,
@@ -16919,7 +17203,11 @@
         "Id": 515,
         "Name": "骑士的素质",
         "Description": "<color=#FFD780FF>冰潮的涡旋</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Eula_02"
+        "Icon": "UI_Talent_U_Eula_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 516,
@@ -17412,7 +17700,11 @@
         "Id": 523,
         "Name": "真影旧事",
         "Description": "<color=#FFD780FF>奥义·梦想真说</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Shougun_02"
+        "Icon": "UI_Talent_U_Shougun_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 524,
@@ -17424,7 +17716,11 @@
         "Id": 525,
         "Name": "凶将显形",
         "Description": "<color=#FFD780FF>神变·恶曜开眼</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Shougun_01"
+        "Icon": "UI_Talent_U_Shougun_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 526,
@@ -17905,7 +18201,11 @@
         "Id": 533,
         "Name": "都交给分身吧",
         "Description": "<color=#FFD780FF>呜呼流·影貉缭乱</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sayu_02"
+        "Icon": "UI_Talent_U_Sayu_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 534,
@@ -17917,7 +18217,11 @@
         "Id": 535,
         "Name": "快是第一奥义",
         "Description": "<color=#FFD780FF>呜呼流·风隐急进</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sayu_01"
+        "Icon": "UI_Talent_U_Sayu_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 536,
@@ -18405,7 +18709,11 @@
         "Id": 543,
         "Name": "海渚月舟",
         "Description": "<color=#FFD780FF>海人化羽</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kokomi_02"
+        "Icon": "UI_Talent_U_Kokomi_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 544,
@@ -18417,7 +18725,11 @@
         "Id": 545,
         "Name": "百川集海",
         "Description": "<color=#FFD780FF>海月之誓</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kokomi_01"
+        "Icon": "UI_Talent_U_Kokomi_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 546,
@@ -18866,7 +19178,11 @@
         "Id": 553,
         "Name": "犬爪·势如火",
         "Description": "<color=#FFD780FF>犬坂吠吠方圆阵</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Gorou_01"
+        "Icon": "UI_Talent_U_Gorou_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 554,
@@ -18878,7 +19194,11 @@
         "Id": 555,
         "Name": "犬突·动如雷",
         "Description": "<color=#FFD780FF>兽牙逐突形胜战法</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Gorou_02"
+        "Icon": "UI_Talent_U_Gorou_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 556,
@@ -19339,7 +19659,11 @@
         "Id": 563,
         "Name": "心魔",
         "Description": "<color=#FFD780FF>煌煌千道镇式</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sara_02"
+        "Icon": "UI_Talent_U_Sara_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 564,
@@ -19351,7 +19675,11 @@
         "Id": 565,
         "Name": "咒咏",
         "Description": "<color=#FFD780FF>鸦羽天狗霆雷召咒</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sara_01"
+        "Icon": "UI_Talent_U_Sara_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 566,
@@ -19824,7 +20152,11 @@
         "Id": 573,
         "Name": "水陆自在，牛王同行",
         "Description": "<color=#FFD780FF>魔杀绝技·赤牛发破！</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Itto_01"
+        "Icon": "UI_Talent_U_Itto_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 574,
@@ -19836,7 +20168,11 @@
         "Id": 575,
         "Name": "十年花坂，皆知我名",
         "Description": "<color=#FFD780FF>最恶鬼王·一斗轰临！！</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Itto_02"
+        "Icon": "UI_Talent_U_Itto_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 576,
@@ -20305,7 +20641,11 @@
         "Id": 583,
         "Name": "七段妙变化",
         "Description": "<color=#FFD780FF>野干役咒·杀生樱</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yae_01"
+        "Icon": "UI_Talent_U_Yae_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 584,
@@ -20317,7 +20657,11 @@
         "Id": 585,
         "Name": "暴恶嗤笑面",
         "Description": "<color=#FFD780FF>大密法·天狐显真</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yae_02"
+        "Icon": "UI_Talent_U_Yae_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 586,
@@ -20782,7 +21126,11 @@
         "Id": 593,
         "Name": "暗文隐语谜题册",
         "Description": "<color=#FFD780FF>勠心拳</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Heizo_01"
+        "Icon": "UI_Talent_U_Heizo_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 594,
@@ -20794,7 +21142,11 @@
         "Id": 595,
         "Name": "禁室密所大图鉴",
         "Description": "<color=#FFD780FF>聚风蹴</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Heizo_02"
+        "Icon": "UI_Talent_U_Heizo_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 596,
@@ -21243,7 +21595,11 @@
         "Id": 603,
         "Name": "晃盅者，琼畟药骰",
         "Description": "<color=#FFD780FF>渊图玲珑骰</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yelan_01"
+        "Icon": "UI_Talent_U_Yelan_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 604,
@@ -21255,7 +21611,11 @@
         "Id": 605,
         "Name": "坐庄者，三仙戏法",
         "Description": "<color=#FFD780FF>萦络纵命索</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yelan_02"
+        "Icon": "UI_Talent_U_Yelan_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 606,
@@ -21716,7 +22076,11 @@
         "Id": 613,
         "Name": "万户门牌通识",
         "Description": "<color=#FFD780FF>呜喵町飞足</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Momoka_01"
+        "Icon": "UI_Talent_U_Momoka_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 614,
@@ -21728,7 +22092,11 @@
         "Id": 615,
         "Name": "千里一日",
         "Description": "<color=#FFD780FF>秘法·惊喜特派</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Momoka_02"
+        "Icon": "UI_Talent_U_Momoka_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 616,
@@ -22594,7 +22962,11 @@
         "Id": 633,
         "Name": "潜虚",
         "Description": "<color=#FFD780FF>仰灵威召将役咒</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Shenhe_01"
+        "Icon": "UI_Talent_U_Shenhe_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 634,
@@ -22606,7 +22978,11 @@
         "Id": 635,
         "Name": "化神",
         "Description": "<color=#FFD780FF>神女遣灵真诀</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Shenhe_02"
+        "Icon": "UI_Talent_U_Shenhe_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 636,
@@ -23075,7 +23451,11 @@
         "Id": 643,
         "Name": "牙纛探海",
         "Description": "<color=#FFD780FF>破嶂见旌仪</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yunjin_01"
+        "Icon": "UI_Talent_U_Yunjin_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 644,
@@ -23087,7 +23467,11 @@
         "Id": 645,
         "Name": "翘楚名坤",
         "Description": "<color=#FFD780FF>旋云开相</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yunjin_02"
+        "Icon": "UI_Talent_U_Yunjin_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 646,
@@ -23540,7 +23924,11 @@
         "Id": 653,
         "Name": "割舍痛苦之心",
         "Description": "<color=#FFD780FF>越祓雷草之轮</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Shinobu_01"
+        "Icon": "UI_Talent_U_Shinobu_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 654,
@@ -23552,7 +23940,11 @@
         "Id": 655,
         "Name": "割舍逢迎之心",
         "Description": "<color=#FFD780FF>御咏鸣神刈山祭</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Shinobu_02"
+        "Icon": "UI_Talent_U_Shinobu_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 656,
@@ -23997,7 +24389,11 @@
         "Id": 663,
         "Name": "无意弄花",
         "Description": "<color=#FFD780FF>神里流·镜花</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ayato_02"
+        "Icon": "UI_Talent_U_Ayato_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 664,
@@ -24009,7 +24405,11 @@
         "Id": 665,
         "Name": "万水一露",
         "Description": "<color=#FFD780FF>神里流·水囿</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Ayato_01"
+        "Icon": "UI_Talent_U_Ayato_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 666,
@@ -24466,7 +24866,11 @@
         "Id": 673,
         "Name": "夏堇芳菲",
         "Description": "<color=#FFD780FF>拂花偈叶</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Collei_02"
+        "Icon": "UI_Talent_U_Collei_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 674,
@@ -24478,7 +24882,11 @@
         "Id": 675,
         "Name": "俱象残火",
         "Description": "<color=#FFD780FF>猫猫秘宝</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Collei_01"
+        "Icon": "UI_Talent_U_Collei_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 676,
@@ -24935,7 +25343,11 @@
         "Id": 683,
         "Name": "百巧千奇",
         "Description": "<color=#FFD780FF>卡萨扎莱宫的无微不至</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Dori_02"
+        "Icon": "UI_Talent_U_Dori_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 684,
@@ -24947,7 +25359,11 @@
         "Id": 685,
         "Name": "物超所值",
         "Description": "<color=#FFD780FF>镇灵之灯·烦恼解决炮</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Dori_01"
+        "Icon": "UI_Talent_U_Dori_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 686,
@@ -25416,7 +25832,11 @@
         "Id": 693,
         "Name": "由枝节知晓造化",
         "Description": "<color=#FFD780FF>造生缠藤箭</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Tighnari_01"
+        "Icon": "UI_Talent_U_Tighnari_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 694,
@@ -25428,7 +25848,11 @@
         "Id": 695,
         "Name": "由繁花明了悟觉",
         "Description": "<color=#FFD780FF>识果种雷</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Tighnari_02"
+        "Icon": "UI_Talent_U_Tighnari_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 696,
@@ -25909,7 +26333,11 @@
         "Id": 703,
         "Name": "倾影的莲步",
         "Description": "<color=#FFD780FF>浮莲舞步·远梦聆泉</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Nilou_01"
+        "Icon": "UI_Talent_U_Nilou_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 704,
@@ -25921,7 +26349,11 @@
         "Id": 705,
         "Name": "翩旋的流光",
         "Description": "<color=#FFD780FF>七域舞步</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Nilou_02"
+        "Icon": "UI_Talent_U_Nilou_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 706,
@@ -26366,7 +26798,11 @@
         "Id": 713,
         "Name": "律仪·行度誓惩",
         "Description": "<color=#FFD780FF>圣仪·煟煌随狼行</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Cyno_01"
+        "Icon": "UI_Talent_U_Cyno_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 714,
@@ -26378,7 +26814,11 @@
         "Id": 715,
         "Name": "幽仪·逝往星芒",
         "Description": "<color=#FFD780FF>秘仪·律渊渡魂</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Cyno_02"
+        "Icon": "UI_Talent_U_Cyno_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 716,
@@ -26859,7 +27299,11 @@
         "Id": 723,
         "Name": "织狩的奉祀",
         "Description": "<color=#FFD780FF>圣仪·灰鸰衒潮</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Candace_01"
+        "Icon": "UI_Talent_U_Candace_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 724,
@@ -26871,7 +27315,11 @@
         "Id": 725,
         "Name": "萦金的苍瞳",
         "Description": "<color=#FFD780FF>圣仪·苍鹭庇卫</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Candace_02"
+        "Icon": "UI_Talent_U_Candace_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 726,
@@ -27328,7 +27776,11 @@
         "Id": 733,
         "Name": "熏习成就之芽",
         "Description": "<color=#FFD780FF>所闻遍计</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Nahida_01"
+        "Icon": "UI_Talent_U_Nahida_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 734,
@@ -27340,7 +27792,11 @@
         "Id": 735,
         "Name": "妙谛破愚之叶",
         "Description": "<color=#FFD780FF>心景幻成</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Nahida_02"
+        "Icon": "UI_Talent_U_Nahida_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 736,
@@ -27817,7 +28273,11 @@
         "Id": 743,
         "Name": "长宵宣秘",
         "Description": "<color=#FFD780FF>垂裳端凝之夜</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Layla_01"
+        "Icon": "UI_Talent_U_Layla_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 744,
@@ -27829,7 +28289,11 @@
         "Id": 745,
         "Name": "悬神系流",
         "Description": "<color=#FFD780FF>星流摇床之梦</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Layla_02"
+        "Icon": "UI_Talent_U_Layla_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 746,
@@ -28270,7 +28734,11 @@
         "Id": 753,
         "Name": "三番·久世舞夕颜",
         "Description": "<color=#FFD780FF>狂言·式乐五番</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Wanderer_02"
+        "Icon": "UI_Talent_U_Wanderer_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 754,
@@ -28282,7 +28750,11 @@
         "Id": 755,
         "Name": "末番·今昔渡来殿",
         "Description": "<color=#FFD780FF>羽画·风姿华歌</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Wanderer_01"
+        "Icon": "UI_Talent_U_Wanderer_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 756,
@@ -28795,7 +29267,11 @@
         "Id": 763,
         "Name": "漫行灵圃",
         "Description": "<color=#FFD780FF>非想风天</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Faruzan_01"
+        "Icon": "UI_Talent_U_Faruzan_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 764,
@@ -28807,7 +29283,11 @@
         "Id": 765,
         "Name": "繁想奇境",
         "Description": "<color=#FFD780FF>抟风秘道</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Faruzan_02"
+        "Icon": "UI_Talent_U_Faruzan_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 766,
@@ -29256,7 +29736,11 @@
         "Id": 773,
         "Name": "墩墩善道",
         "Description": "<color=#FFD780FF>云台团团降芦菔</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yaoyao_01"
+        "Icon": "UI_Talent_U_Yaoyao_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 774,
@@ -29268,7 +29752,11 @@
         "Id": 775,
         "Name": "恻隐本义",
         "Description": "<color=#FFD780FF>玉颗珊珊月中落</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Yaoyao_02"
+        "Icon": "UI_Talent_U_Yaoyao_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 776,
@@ -29725,7 +30213,11 @@
         "Id": 783,
         "Name": "遮诠",
         "Description": "<color=#FFD780FF>共相·理式摹写</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Alhatham_01"
+        "Icon": "UI_Talent_U_Alhatham_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 784,
@@ -29737,7 +30229,11 @@
         "Id": 785,
         "Name": "智度",
         "Description": "<color=#FFD780FF>殊境·显象缚结</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Alhatham_02"
+        "Icon": "UI_Talent_U_Alhatham_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 786,
@@ -30182,7 +30678,11 @@
         "Id": 793,
         "Name": "怒势疾迅如焚掠地",
         "Description": "<color=#FFD780FF>炎啸狮子咬</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Dehya_01"
+        "Icon": "UI_Talent_U_Dehya_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 794,
@@ -30194,7 +30694,11 @@
         "Id": 795,
         "Name": "猎兽魁首卓荦不羁",
         "Description": "<color=#FFD780FF>熔铁流狱</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Dehya_02"
+        "Icon": "UI_Talent_U_Dehya_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 796,
@@ -30647,7 +31151,11 @@
         "Id": 803,
         "Name": "游击的心得",
         "Description": "<color=#FFD780FF>苍翎的颂愿</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Mika_01"
+        "Icon": "UI_Talent_U_Mika_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 804,
@@ -30659,7 +31167,11 @@
         "Id": 805,
         "Name": "引示的铃箭",
         "Description": "<color=#FFD780FF>星霜的流旋</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Mika_02"
+        "Icon": "UI_Talent_U_Mika_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 806,
@@ -31140,7 +31652,11 @@
         "Id": 813,
         "Name": "金塔的香献",
         "Description": "<color=#FFD780FF>繁绘隅穹</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kaveh_02"
+        "Icon": "UI_Talent_U_Kaveh_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 814,
@@ -31152,7 +31668,11 @@
         "Id": 815,
         "Name": "圣古的库藏",
         "Description": "<color=#FFD780FF>画则巧施</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kaveh_01"
+        "Icon": "UI_Talent_U_Kaveh_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 816,
@@ -31601,7 +32121,11 @@
         "Id": 823,
         "Name": "八正定气",
         "Description": "<color=#FFD780FF>愈气全形论</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Baizhuer_01"
+        "Icon": "UI_Talent_U_Baizhuer_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 824,
@@ -31613,7 +32137,11 @@
         "Id": 825,
         "Name": "盈虚藏象",
         "Description": "<color=#FFD780FF>太素诊要</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Baizhuer_02"
+        "Icon": "UI_Talent_U_Baizhuer_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 826,
@@ -32074,7 +32602,11 @@
         "Id": 833,
         "Name": "倒错知能的视度",
         "Description": "<color=#FFD780FF>魔术·运变惊奇</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Linette_01"
+        "Icon": "UI_Talent_U_Linette_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 834,
@@ -32086,7 +32618,11 @@
         "Id": 835,
         "Name": "暗昧遮目的障法",
         "Description": "<color=#FFD780FF>谜影障身法</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Linette_02"
+        "Icon": "UI_Talent_U_Linette_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 836,
@@ -32547,7 +33083,11 @@
         "Id": 843,
         "Name": "玄迷灵敏的指法",
         "Description": "<color=#FFD780FF>普通攻击·迫牌易位式</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Liney_01"
+        "Icon": "UI_Talent_U_Liney_01",
+        "ExtraLevel": {
+          "Index": 1,
+          "Level": 3
+        }
       },
       {
         "Id": 844,
@@ -32559,7 +33099,11 @@
         "Id": 845,
         "Name": "穿越隐秘的通术",
         "Description": "<color=#FFD780FF>大魔术·灵迹巡游</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Liney_02"
+        "Icon": "UI_Talent_U_Liney_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 846,
@@ -33024,7 +33568,11 @@
         "Id": 853,
         "Name": "洑流与白砂之歌",
         "Description": "<color=#FFD780FF>普通攻击·洑流剑</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Freminet_01"
+        "Icon": "UI_Talent_U_Freminet_01",
+        "ExtraLevel": {
+          "Index": 1,
+          "Level": 3
+        }
       },
       {
         "Id": 854,
@@ -33036,7 +33584,11 @@
         "Id": 855,
         "Name": "炉火与欢笑之夜",
         "Description": "<color=#FFD780FF>浮冰增压</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Freminet_02"
+        "Icon": "UI_Talent_U_Freminet_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 856,
@@ -33501,7 +34053,11 @@
         "Id": 863,
         "Name": "予婪诈者以谴罚",
         "Description": "<color=#FFD780FF>普通攻击·迅烈倾霜拳</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Wriothesley_01"
+        "Icon": "UI_Talent_U_Wriothesley_01",
+        "ExtraLevel": {
+          "Index": 1,
+          "Level": 3
+        }
       },
       {
         "Id": 864,
@@ -33513,7 +34069,11 @@
         "Id": 865,
         "Name": "予冤诉者以怜恕",
         "Description": "<color=#FFD780FF>黑金狼噬</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Wriothesley_02"
+        "Icon": "UI_Talent_U_Wriothesley_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 866,
@@ -33954,7 +34514,11 @@
         "Id": 873,
         "Name": "溯古的拟制",
         "Description": "<color=#FFD780FF>普通攻击·如水从平</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Neuvillette_01"
+        "Icon": "UI_Talent_U_Neuvillette_01",
+        "ExtraLevel": {
+          "Index": 1,
+          "Level": 3
+        }
       },
       {
         "Id": 874,
@@ -33966,7 +34530,11 @@
         "Id": 875,
         "Name": "公理的决裁",
         "Description": "<color=#FFD780FF>潮水啊，我已归来</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Neuvillette_02"
+        "Icon": "UI_Talent_U_Neuvillette_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 876,
@@ -34439,7 +35007,11 @@
         "Id": 883,
         "Name": "以独立为先决",
         "Description": "<color=#FFD780FF>定格·全方位确证</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Charlotte_01"
+        "Icon": "UI_Talent_U_Charlotte_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 884,
@@ -34451,7 +35023,11 @@
         "Id": 885,
         "Name": "以良知为原则",
         "Description": "<color=#FFD780FF>取景·冰点构图法</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Charlotte_02"
+        "Icon": "UI_Talent_U_Charlotte_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 886,
@@ -34900,7 +35476,11 @@
         "Id": 893,
         "Name": "「秘密藏心间，无人知我名。」",
         "Description": "<color=#FFD780FF>万众狂欢</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Furina_02"
+        "Icon": "UI_Talent_U_Furina_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 894,
@@ -34912,7 +35492,11 @@
         "Id": 895,
         "Name": "「我已有觉察，他名即是…！」",
         "Description": "<color=#FFD780FF>孤心沙龙</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Furina_01"
+        "Icon": "UI_Talent_U_Furina_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 896,
@@ -35369,7 +35953,11 @@
         "Id": 903,
         "Name": "娴熟复装的技巧",
         "Description": "<color=#FFD780FF>近迫式急促拦射</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Chevreuse_01"
+        "Icon": "UI_Talent_U_Chevreuse_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 904,
@@ -35381,7 +35969,11 @@
         "Id": 905,
         "Name": "增量火力的毁伤",
         "Description": "<color=#FFD780FF>圆阵掷弹爆轰术</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Chevreuse_02"
+        "Icon": "UI_Talent_U_Chevreuse_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 906,
@@ -35838,7 +36430,11 @@
         "Id": 913,
         "Name": "经营家的开阔视野",
         "Description": "<color=#FFD780FF>典仪式晶火</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Navia_01"
+        "Icon": "UI_Talent_U_Navia_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 914,
@@ -35850,7 +36446,11 @@
         "Id": 915,
         "Name": "协商人的坚决谈判",
         "Description": "<color=#FFD780FF>如霰澄天的鸣礼</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Navia_02"
+        "Icon": "UI_Talent_U_Navia_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 916,
@@ -36323,7 +36923,11 @@
         "Id": 923,
         "Name": "醒灵擂震",
         "Description": "<color=#FFD780FF>瑞兽登高楼</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Gaming_01"
+        "Icon": "UI_Talent_U_Gaming_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 924,
@@ -36335,7 +36939,11 @@
         "Id": 925,
         "Name": "吼法怖魔",
         "Description": "<color=#FFD780FF>璨焰金猊舞</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Gaming_02"
+        "Icon": "UI_Talent_U_Gaming_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 926,
@@ -36792,7 +37400,11 @@
         "Id": 933,
         "Name": "造化有星月",
         "Description": "<color=#FFD780FF>暮集竹星</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Liuyun_02"
+        "Icon": "UI_Talent_U_Liuyun_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 934,
@@ -36804,7 +37416,11 @@
         "Id": 935,
         "Name": "旋步霞蔚上",
         "Description": "<color=#FFD780FF>朝起鹤云</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Liuyun_01"
+        "Icon": "UI_Talent_U_Liuyun_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 936,
@@ -37257,7 +37873,11 @@
         "Id": 943,
         "Name": "缀锦四分",
         "Description": "<color=#FFD780FF>羽袖一触</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Chiori_01"
+        "Icon": "UI_Talent_U_Chiori_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 944,
@@ -37269,7 +37889,11 @@
         "Id": 945,
         "Name": "绫羽二重",
         "Description": "<color=#FFD780FF>二刀之形·比翼</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Chiori_02"
+        "Icon": "UI_Talent_U_Chiori_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 946,
@@ -37718,7 +38342,11 @@
         "Id": 953,
         "Name": "「最健康的精灵，可否疗愈热症」",
         "Description": "<color=#FFD780FF>弹跳水疗法</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sigewinne_01"
+        "Icon": "UI_Talent_U_Sigewinne_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 954,
@@ -37730,7 +38358,11 @@
         "Id": 955,
         "Name": "「最幸福的精灵，可否消却折磨」",
         "Description": "<color=#FFD780FF>过饱和心意注射</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sigewinne_02"
+        "Icon": "UI_Talent_U_Sigewinne_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 956,
@@ -38207,7 +38839,11 @@
         "Id": 963,
         "Name": "「你将成为我们新的家人…」",
         "Description": "<color=#FFD780FF>普通攻击·斩首之邀</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Arlecchino_01"
+        "Icon": "UI_Talent_U_Arlecchino_01",
+        "ExtraLevel": {
+          "Index": 1,
+          "Level": 3
+        }
       },
       {
         "Id": 964,
@@ -38219,7 +38855,11 @@
         "Id": 965,
         "Name": "「我们已孑然一身，与死无异…」",
         "Description": "<color=#FFD780FF>厄月将升</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Arlecchino_02"
+        "Icon": "UI_Talent_U_Arlecchino_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 966,
@@ -38692,7 +39332,11 @@
         "Id": 973,
         "Name": "月升哲贤颂",
         "Description": "<color=#FFD780FF>普通攻击·王家苇箭术</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sethos_01"
+        "Icon": "UI_Talent_U_Sethos_01",
+        "ExtraLevel": {
+          "Index": 1,
+          "Level": 3
+        }
       },
       {
         "Id": 974,
@@ -38704,7 +39348,11 @@
         "Id": 975,
         "Name": "荒神烈沙录",
         "Description": "<color=#FFD780FF>秘仪·瞑光贯影</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Sethos_02"
+        "Icon": "UI_Talent_U_Sethos_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 976,
@@ -39157,7 +39805,11 @@
         "Id": 983,
         "Name": "「我将铭记白昼的誓言」",
         "Description": "<color=#FFD780FF>狩夜之巡</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Clorinde_02"
+        "Icon": "UI_Talent_U_Clorinde_02",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 984,
@@ -39169,7 +39821,11 @@
         "Id": 985,
         "Name": "「也铭记黎明终将到来」",
         "Description": "<color=#FFD780FF>残光将终</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Clorinde_01"
+        "Icon": "UI_Talent_U_Clorinde_01",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 986,
@@ -39626,7 +40282,11 @@
         "Id": 993,
         "Name": "郁馥臻萃",
         "Description": "<color=#FFD780FF>撷萃调香</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Emilie_01"
+        "Icon": "UI_Talent_U_Emilie_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 994,
@@ -39638,7 +40298,11 @@
         "Id": 995,
         "Name": "纯露凝芳",
         "Description": "<color=#FFD780FF>香氛演绎</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Emilie_02"
+        "Icon": "UI_Talent_U_Emilie_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 996,
@@ -40094,7 +40758,11 @@
         "Id": 1003,
         "Name": "改良型·平衡稳定器",
         "Description": "<color=#FFD780FF>出击，冲天转转！</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kachina_01"
+        "Icon": "UI_Talent_U_Kachina_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 1004,
@@ -40106,7 +40774,11 @@
         "Id": 1005,
         "Name": "迄今为止，所有收藏",
         "Description": "<color=#FFD780FF>现在，认真时间！</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kachina_02"
+        "Icon": "UI_Talent_U_Kachina_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 1006,
@@ -40570,7 +41242,11 @@
         "Id": 1013,
         "Name": "原鳄之爪",
         "Description": "<color=#FFD780FF>悬猎·游骋高狩</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kinich_01"
+        "Icon": "UI_Talent_U_Kinich_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 1014,
@@ -40582,7 +41258,11 @@
         "Id": 1015,
         "Name": "吼猴之尾",
         "Description": "<color=#FFD780FF>向伟大圣龙致意</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Kinich_02"
+        "Icon": "UI_Talent_U_Kinich_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 1016,
@@ -41074,7 +41754,11 @@
         "Id": 1023,
         "Name": "在欢乐海上冲浪",
         "Description": "<color=#FFD780FF>踏鲨破浪</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Mualani_01"
+        "Icon": "UI_Talent_U_Mualani_01",
+        "ExtraLevel": {
+          "Index": 2,
+          "Level": 3
+        }
       },
       {
         "Id": 1024,
@@ -41086,7 +41770,11 @@
         "Id": 1025,
         "Name": "同款冲浪板有售！",
         "Description": "<color=#FFD780FF>爆瀑飞弹</color>的技能等级提高3级。\n至多提升至15级。",
-        "Icon": "UI_Talent_U_Mualani_02"
+        "Icon": "UI_Talent_U_Mualani_02",
+        "ExtraLevel": {
+          "Index": 9,
+          "Level": 3
+        }
       },
       {
         "Id": 1026,

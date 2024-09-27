@@ -21,7 +21,7 @@ declare namespace TGACore.Config {
    * @property {string} Github Github 配置文件类型
    * @return ConfigFileEnum 配置文件类型枚举
    */
-  const enum ConfigFileEnum {
+  enum ConfigFileEnum {
     Constant = "constant",
     Github = "github",
   }
@@ -53,7 +53,7 @@ declare namespace TGACore.Config {
 
   /**
    * @description 应用数据目录配置文件类型枚举
-   * @since 2.1.0
+   * @since 2.2.0
    * @memberof TGACore.Config
    * @enum {number}
    * @property {number} achievement 成就数据目录
@@ -64,6 +64,7 @@ declare namespace TGACore.Config {
    * @property {number} namecard 名片数据目录
    * @property {number} weapon 武器数据目录
    * @property {number} wiki wiki数据目录
+   * @property {number} wikiAvatar 角色wiki数据目录
    * @property {number} talents 角色天赋数据目录
    * @property {number} constellations 角色命座数据目录
    * @return AppDataDirTypeEnum 应用数据目录配置文件类型枚举
@@ -77,6 +78,7 @@ declare namespace TGACore.Config {
     namecard,
     weapon,
     wiki,
+    wikiAvatar,
     talents,
     constellations,
   }
@@ -111,6 +113,7 @@ declare namespace TGACore.Config {
    * @property {string} amber.version Amber 版本号
    * @property {string} amber.api Amber Api 地址
    * @property {string} amber.site Amber 地址
+   * @property {string} amber.assets Amber Assets 地址
    * @property {string} honeyhunter.url HoneyHunter 数据源地址
    * @property {string} honeyhunter.namecard.prefix.old HoneyHunter 旧版名片前缀
    * @property {string} honeyhunter.namecard.prefix.new HoneyHunter 新版名片前缀
@@ -125,6 +128,7 @@ declare namespace TGACore.Config {
       version: string;
       api: string;
       site: string;
+      assets: string;
     };
     honeyhunter: {
       url: string;

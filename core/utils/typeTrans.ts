@@ -14,15 +14,15 @@ export function getHutaoWeapon(
   weaponType: TGACore.Plugins.Hutao.WeaponType,
 ): TGACore.Constant.WeaponType {
   switch (weaponType) {
-    case TGACore.Plugins.Hutao.WeaponType.bow:
-      return TGACore.Constant.WeaponType.bow;
-    case TGACore.Plugins.Hutao.WeaponType.catalyst:
-      return TGACore.Constant.WeaponType.catalyst;
-    case TGACore.Plugins.Hutao.WeaponType.claymore:
-      return TGACore.Constant.WeaponType.claymore;
-    case TGACore.Plugins.Hutao.WeaponType.pole:
-      return TGACore.Constant.WeaponType.pole;
-    case TGACore.Plugins.Hutao.WeaponType.sword:
-      return TGACore.Constant.WeaponType.sword;
+    case 12:
+      return "弓";
+    case 10:
+      return "法器";
+    case 11:
+      return "双手剑";
+    case 13:
+      return "长柄武器";
+    case 1:
+      return "单手剑";
   }
 }

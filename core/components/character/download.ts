@@ -14,7 +14,7 @@ import { imgDir, jsonDir, jsonDetailDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { getSnapDownloadUrl } from "../../utils/operGitRepo.ts";
+import { getSnapAvatarDownloadUrl } from "../../utils/operGitRepo.ts";
 import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
@@ -24,30 +24,14 @@ logger.default.info("[components][character][download] 运行 download.ts");
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
-const requestData = {
-  amber: {
-    json: `${amberConfig.api}chs/avatar`,
-    img: `${amberConfig.site}assets/UI/{img}.png`,
-    params: {
-      vh: amberConfig.version,
-    },
-  },
-  mys: {
-    url: "https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list",
-    params: {
-      app_sn: "ys_obc",
-      channel_id: "189",
-    },
-  },
-};
+const amberConfig = readConfig("constant").amber;
 
 Counter.Reset(3);
 logger.default.info("[components][character][download] 开始更新 JSON 数据");
 // 下载 amber 数据
 try {
   const res: TGACore.Plugins.Amber.ResponseCharacter = await axios
-    .get(requestData.amber.json, { params: requestData.amber.params })
+    .get(`${amberConfig.api}chs/avatar`, { params: { vh: amberConfig.version } })
     .then((res) => res.data);
   // 转成数组存到本地
   const amberData: TGACore.Plugins.Amber.Character[] = [];
@@ -63,7 +47,9 @@ try {
 // 下载 mys 数据
 try {
   const res: TGACore.Plugins.Observe.ResponseWiki = await axios
-    .get(requestData.mys.url, { params: requestData.mys.params })
+    .get("https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list", {
+      params: { app_sn: "ys_obc", channel_id: "189" },
+    })
     .then((res) => res.data);
   const mysData: TGACore.Plugins.Observe.WikiItem[] =
     res.data.list[0].children.find((item) => item.name === "角色")?.list ?? [];
@@ -80,17 +66,31 @@ try {
   logger.default.error(e);
   Counter.Fail();
 }
-// 下载 metadata 数据
-try {
-  const url = getSnapDownloadUrl("Avatar");
-  const res = await axios.get(url);
-  await fs.writeJSON(jsonDetailDir.hutao, res.data, { spaces: 2 });
-  logger.default.info("[components][character][download] Avatar 数据下载完成");
-  Counter.Success();
-} catch (e) {
-  logger.default.warn("[components][character][download] 下载 Avatar 数据失败");
-  logger.default.error(e);
-  Counter.Fail();
+const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amber);
+const idList: number[] = [];
+amberJson.forEach((i) => {
+  if (!isNaN(Number(i.id))) idList.push(Number(i.id));
+});
+const urlRes = getSnapAvatarDownloadUrl(idList);
+Counter.addTotal(idList.length);
+for (const url of urlRes) {
+  const fileName = url.split("/").pop();
+  if (fileName === undefined) {
+    logger.default.error(`[components][wikiAvatar][download] 文件名获取失败: ${url}`);
+    Counter.Fail();
+    continue;
+  }
+  const savePath = path.join(jsonDir.src, fileName);
+  try {
+    const res = await axios.get(url);
+    await fs.writeJSON(savePath, res.data, { spaces: 2 });
+    logger.default.info(`[components][character][download] 角色${fileName}数据下载完成`);
+    Counter.Success();
+  } catch (e) {
+    logger.default.warn(`[components][character][download] 下载角色${fileName}数据失败`);
+    logger.default.error(e);
+    Counter.Fail();
+  }
 }
 Counter.End();
 logger.default.info(`[components][character][download] 数据更新完成，耗时 ${Counter.getTime()}`);
@@ -99,14 +99,12 @@ Counter.Output();
 // 下载图片数据
 Counter.Reset();
 logger.console.info("[components][character][download] 开始下载图片数据");
-
-const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amber);
 Counter.addTotal(amberJson.length);
 for (const item of amberJson) {
-  const url = requestData.amber.img.replace("{img}", item.icon);
+  const url = `${amberConfig.assets}${item.icon}.png`;
   const savePath = path.join(imgDir.src, `${item.id}.png`);
   const element = getAmberElement(item.element);
-  if (isNaN(item.id)) {
+  if (isNaN(Number(item.id))) {
     logger.console.warn(
       `[components][character][download] ${item.id} ${item.name}·${element} Icon 编号异常，跳过`,
     );

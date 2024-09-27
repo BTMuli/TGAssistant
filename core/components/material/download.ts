@@ -24,7 +24,7 @@ logger.default.info("[components][material][download] 运行 download.ts");
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
+const amberConfig = readConfig("constant").amber;
 const rawAmberData: TGACore.Plugins.Amber.Material[] = [];
 
 logger.default.info("[components][material][download] 开始下载 JSON 数据");

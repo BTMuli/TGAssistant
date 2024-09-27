@@ -21,7 +21,7 @@ logger.default.info("[components][calendar][download] 运行 download.ts");
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
+const amberConfig = readConfig("constant").amber;
 const requestData = {
   amber: {
     json: `${amberConfig.api}chs/dailyDungeon`,

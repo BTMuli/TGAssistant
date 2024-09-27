@@ -21,7 +21,7 @@ logger.init();
 Counter.Init("[components][namecard][download]");
 logger.default.info("[components][namecard][download] 运行 download.ts");
 
-const honeyhunterConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).honeyhunter;
+const honeyhunterConfig = readConfig("constant").honeyhunter;
 
 // 检测文件夹是否存在
 fileCheckObj(imgDir);
@@ -62,6 +62,7 @@ try {
     "[components][namecard][download] 文件路径：",
     path.join(jsonDir.src, "namecard.json"),
   );
+  logger.default.error(err);
 }
 const nameCardSet = new Set(nameCardsData.map((item) => item.index));
 for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
@@ -184,6 +185,7 @@ async function downloadImg(
       `[components][namecard][download] 第 ${indexStr} 张名片 ${imgType} 下载失败`,
     );
     logger.default.error(`[components][namecard][download] URL：${url}`);
+    logger.default.error(err);
     Counter.Fail();
   }
 }
@@ -250,6 +252,7 @@ async function getNameCardData(
   } catch (err) {
     logger.default.error(`[components][namecard][download] 第 ${index} 张名片数据获取失败`);
     logger.default.error(`[components][namecard][download] URL：${url}/?lang=CHS`);
+    logger.default.error(err);
     return false;
   }
 }

@@ -26,6 +26,7 @@ const dirs = [
   "weapon",
   "calendar",
   "wiki",
+  "wikiAvatar",
 ];
 for (const dir of dirs) {
   Counter.Init(`[scripts][updateAll][${dir}]`);

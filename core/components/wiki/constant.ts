@@ -17,23 +17,4 @@ export const jsonDetail = {
     src: path.join(jsonDir.src, "weapon.json"),
     out: path.join(jsonDir.out, "WIKI", "weapon.json"),
   },
-  character: {
-    src: path.join(jsonDir.src, "character.json"),
-    out: path.join(jsonDir.out, "WIKI", "character.json"),
-  },
-};
-
-export const imageDetail = {
-  material: {
-    src: getAppDirPath("assets", "material").src,
-    out: getAppDirPath("assets", "material").out,
-  },
-  talents: {
-    src: getAppDirPath("assets", "talents").src,
-    out: getAppDirPath("assets", "talents").out,
-  },
-  constellations: {
-    src: getAppDirPath("assets", "constellations").src,
-    out: getAppDirPath("assets", "constellations").out,
-  },
 };

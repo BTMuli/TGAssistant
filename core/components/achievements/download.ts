@@ -18,7 +18,7 @@ import { readConfig } from "../../utils/readConfig.ts";
 logger.init();
 Counter.Init("[components][achievement][download]");
 logger.default.info("[components][achievement][download] 运行 download.ts");
-const amberConfig = readConfig(TGACore.Config.ConfigFileEnum.Constant).amber;
+const amberConfig = readConfig("constant").amber;
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
