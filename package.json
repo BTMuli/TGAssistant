@@ -1,6 +1,6 @@
 {
   "name": "tg-assistant",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "The assistant for TeyvatGuide",
   "type": "module",
   "scripts": {
@@ -52,7 +52,7 @@
     "@jest/globals": "^29.7.0",
     "@types/better-sqlite3": "^7.6.11",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.7.3",
+    "@types/node": "^22.7.4",
     "@types/uuid": "^10.0.0",
     "@types/yamljs": "^0.2.34",
     "eslint": "^9.11.1",
@@ -64,7 +64,7 @@
     "husky": "^9.1.6",
     "jsonc-eslint-parser": "^2.4.0",
     "lint-staged": "^15.2.10",
-    "oxlint": "^0.9.8",
+    "oxlint": "^0.9.9",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.1",
