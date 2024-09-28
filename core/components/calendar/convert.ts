@@ -58,31 +58,31 @@ const materialRaw: TGACore.Components.Calendar.RawHutaoMaterial[] = await fs.rea
 logger.console.info("[components][calendar][convert] 处理 amber.json");
 logger.console.info("[components][calendar][convert] 处理周一的数据");
 Object.values(amberRaw.data.monday).forEach((value) => {
-  measureAmber(value, TGACore.Constant.Week.monday);
+  measureAmber(value, "monday");
 });
 logger.console.info("[components][calendar][convert] 处理周二的数据");
 Object.values(amberRaw.data.tuesday).forEach((value) => {
-  measureAmber(value, TGACore.Constant.Week.tuesday);
+  measureAmber(value, "tuesday");
 });
 logger.console.info("[components][calendar][convert] 处理周三的数据");
 Object.values(amberRaw.data.wednesday).forEach((value) => {
-  measureAmber(value, TGACore.Constant.Week.wednesday);
+  measureAmber(value, "wednesday");
 });
 logger.console.info("[components][calendar][convert] 处理周四的数据");
 Object.values(amberRaw.data.thursday).forEach((value) => {
-  measureAmber(value, TGACore.Constant.Week.thursday);
+  measureAmber(value, "thursday");
 });
 logger.console.info("[components][calendar][convert] 处理周五的数据");
 Object.values(amberRaw.data.friday).forEach((value) => {
-  measureAmber(value, TGACore.Constant.Week.friday);
+  measureAmber(value, "friday");
 });
 logger.console.info("[components][calendar][convert] 处理周六的数据");
 Object.values(amberRaw.data.saturday).forEach((value) => {
-  measureAmber(value, TGACore.Constant.Week.saturday);
+  measureAmber(value, "saturday");
 });
 logger.console.info("[components][calendar][convert] 处理周日的数据");
 Object.values(amberRaw.data.sunday).forEach((value) => {
-  measureAmber(value, TGACore.Constant.Week.sunday);
+  measureAmber(value, "sunday");
 });
 
 // 处理 character.json 添加 convertData
@@ -131,7 +131,7 @@ for (const avatar of avatarRaw) {
     contentId: 0,
     dropDays,
     name: avatar.Name,
-    itemType: TGACore.Components.Calendar.ItemType.character,
+    itemType: "character",
     star: avatarStar,
     bg: `/icon/bg/${avatarStar}-Star.webp`,
     weaponIcon: `/icon/weapon/${avatarWeapon}.webp`,
@@ -188,7 +188,7 @@ for (const weapon of weaponRaw) {
     contentId: 0,
     dropDays,
     name: weapon.Name,
-    itemType: TGACore.Components.Calendar.ItemType.weapon,
+    itemType: "weapon",
     star: weapon.RankLevel,
     bg: `/icon/bg/${weapon.RankLevel}-Star.webp`,
     weaponIcon: `/icon/weapon/${getHutaoWeapon(weapon.WeaponType)}.webp`,
@@ -209,7 +209,7 @@ if (mysAvatar === undefined || mysWeapon === undefined) {
 }
 logger.console.info("[components][calendar][convert] 处理 mys.json");
 for (const item of converData) {
-  if (item.itemType === TGACore.Components.Calendar.ItemType.character) {
+  if (item.itemType === "character") {
     const findIndex = mysAvatar.list.findIndex((value) => value.title === item.name);
     if (findIndex === -1) {
       logger.default.warn(`[components][calendar][convert] 未找到角色 ${item.name} 的观测枢数据`);
@@ -219,7 +219,7 @@ for (const item of converData) {
     item.contentId = mysAvatar.list[findIndex].content_id;
     logger.console.info(`[components][calendar][convert] 添加角色 ${item.name} 的观测枢数据`);
     Counter.Success();
-  } else if (item.itemType === TGACore.Components.Calendar.ItemType.weapon) {
+  } else if (item.itemType === "weapon") {
     const findIndex = mysWeapon.list.findIndex((value) => value.title === item.name);
     if (findIndex === -1) {
       logger.default.warn(`[components][calendar][convert] 未找到武器 ${item.name} 的观测枢数据`);
@@ -242,18 +242,10 @@ converData.sort((a, b) => {
     return b.star - a.star;
   }
   // 角色按元素、地区、武器排序
-  if (
-    a.itemType === TGACore.Components.Calendar.ItemType.character &&
-    b.itemType === TGACore.Components.Calendar.ItemType.character &&
-    a.elementIcon !== b.elementIcon
-  ) {
+  if (a.itemType === "character" && b.itemType === "character" && a.elementIcon !== b.elementIcon) {
     return a.elementIcon > b.elementIcon ? 1 : -1;
   }
-  if (
-    a.itemType === TGACore.Components.Calendar.ItemType.weapon &&
-    b.itemType === TGACore.Components.Calendar.ItemType.weapon &&
-    a.weaponIcon !== b.weaponIcon
-  ) {
+  if (a.itemType === "weapon" && b.itemType === "weapon" && a.weaponIcon !== b.weaponIcon) {
     return a.weaponIcon > b.weaponIcon ? 1 : -1;
   }
   return a.source.index - b.source.index;
@@ -275,7 +267,7 @@ Counter.EndAll();
  */
 function measureAmber(
   value: TGACore.Components.Calendar.RawAmberItem,
-  week: TGACore.Constant.Week,
+  week: keyof typeof TGACore.Constant.Week,
 ): void {
   const domain = value.name.split("：")[1];
   // 分析 source 是否记录
@@ -333,45 +325,47 @@ function measureAmber(
  * @param {TGACore.Constant.NationIndex} index 国家索引
  * @return {TGACore.Constant.NationType} 国家
  */
-function getAmbetNation(index: TGACore.Constant.NationIndex): TGACore.Constant.NationType {
+function getAmbetNation(index: TGACore.Constant.NationIndex): string {
   switch (index) {
-    case TGACore.Constant.NationIndex.Mondstadt:
-      return TGACore.Constant.NationType.Mondstadt;
-    case TGACore.Constant.NationIndex.Liyue:
-      return TGACore.Constant.NationType.Liyue;
-    case TGACore.Constant.NationIndex.Inazuma:
-      return TGACore.Constant.NationType.Inazuma;
-    case TGACore.Constant.NationIndex.Sumeru:
-      return TGACore.Constant.NationType.Sumeru;
-    case TGACore.Constant.NationIndex.Fontaine:
-      return TGACore.Constant.NationType.Fontaine;
-    case TGACore.Constant.NationIndex.Natlan:
-      return TGACore.Constant.NationType.Natlan;
+    case 1:
+      return "蒙德";
+    case 2:
+      return "璃月";
+    case 3:
+      return "稻妻";
+    case 4:
+      return "须弥";
+    case 5:
+      return "枫丹";
+    case 6:
+      return "纳塔";
+    default:
+      return "未知";
   }
 }
 
 /**
  * @description 获取秘境所在的星期
- * @since 2.0.0
+ * @since 2.2.0
  * @param {TGACore.Constant.Week} week 星期
  * @return {TGACore.Constant.WeekIndex} 星期索引
  */
-function getAmberWeek(week: TGACore.Constant.Week): TGACore.Constant.WeekIndex {
+function getAmberWeek(week: keyof typeof TGACore.Constant.Week): TGACore.Constant.WeekIndex {
   switch (week) {
-    case TGACore.Constant.Week.monday:
-      return TGACore.Constant.WeekIndex.monday;
-    case TGACore.Constant.Week.tuesday:
-      return TGACore.Constant.WeekIndex.tuesday;
-    case TGACore.Constant.Week.wednesday:
-      return TGACore.Constant.WeekIndex.wednesday;
-    case TGACore.Constant.Week.thursday:
-      return TGACore.Constant.WeekIndex.thursday;
-    case TGACore.Constant.Week.friday:
-      return TGACore.Constant.WeekIndex.friday;
-    case TGACore.Constant.Week.saturday:
-      return TGACore.Constant.WeekIndex.saturday;
-    case TGACore.Constant.Week.sunday:
-      return TGACore.Constant.WeekIndex.sunday;
+    case "monday":
+      return 1;
+    case "tuesday":
+      return 2;
+    case "wednesday":
+      return 3;
+    case "thursday":
+      return 4;
+    case "friday":
+      return 5;
+    case "saturday":
+      return 6;
+    case "sunday":
+      return 7;
   }
 }
 

@@ -39,7 +39,7 @@ for (const dir of dirs) {
   for (const file of files) {
     if (!execFiles.includes(file)) continue;
     const filePath = join(dirPath, file);
-    if (dir == "achievements" && file == "convert.ts") {
+    if (file == "convert.ts") {
       await execTsFile(filePath, true);
     } else {
       await execTsFile(filePath);

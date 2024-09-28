@@ -6,7 +6,7 @@
 
 import process from "node:process";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import fs from "fs-extra";
 
 import { jsonDetail, jsonDir } from "./constant.ts";
@@ -124,7 +124,8 @@ async function getWeaponStory(id: string): Promise<string> {
     return res.data.data;
   } catch (e) {
     logger.default.warn(`[components][wiki][convert] 获取武器 ${id} 故事失败`);
-    logger.default.error(e);
+    if (e instanceof AxiosError) logger.default.error(`${e.code} ${e.message}`);
+    else logger.default.error(e);
     return "";
   }
 }

@@ -131,25 +131,24 @@ declare namespace TGACore.Constant {
 
   /**
    * @description 星期枚举
-   * @since 2.0.0
+   * @since 2.2.0
    * @memberof TGACore.Constant
-   * @enum {string}
-   * @property {string} monday 星期一
-   * @property {string} tuesday 星期二
-   * @property {string} wednesday 星期三
-   * @property {string} thursday 星期四
-   * @property {string} friday 星期五
-   * @property {string} saturday 星期六
-   * @property {string} sunday 星期日
+   * @property monday 星期一
+   * @property tuesday 星期二
+   * @property wednesday 星期三
+   * @property thursday 星期四
+   * @property friday 星期五
+   * @property saturday 星期六
+   * @property sunday 星期日
    * @return WeekType
    */
-  const enum Week {
-    monday = "monday",
-    tuesday = "tuesday",
-    wednesday = "wednesday",
-    thursday = "thursday",
-    friday = "friday",
-    saturday = "saturday",
-    sunday = "sunday",
+  enum Week {
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
   }
 }

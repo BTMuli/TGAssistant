@@ -81,6 +81,11 @@ for (const url of urlRes) {
     continue;
   }
   const savePath = path.join(jsonDir.src, fileName);
+  if (fs.existsSync(savePath)) {
+    logger.console.mark(`[components][character][download] 角色${savePath}数据已存在，跳过下载`);
+    Counter.Skip();
+    continue;
+  }
   try {
     const res = await axios.get(url);
     await fs.writeJSON(savePath, res.data, { spaces: 2 });

@@ -1,7 +1,7 @@
 /**
- * @file core components namecard convert
+ * @file core/components/namecard/convert.ts
  * @description 名片组件数据转换
- * @since 2.0.2
+ * @since 2.2.0
  */
 
 import path from "node:path";
@@ -81,11 +81,9 @@ logger.console.info(
   "[components][namecard][convert] 名片数据转换完成，请执行 upload.ts 更新成就数据",
 );
 
-// 用到的函数
-
 /**
  * @description 获取名片类型
- * @since 2.0.0
+ * @since 2.2.0
  * @param {TGACore.Components.Namecard.RawData} item 名片数据
  * @return {TGACore.Components.Namecard.NamecardType} 名片类型
  */
@@ -93,21 +91,12 @@ function getNamcardType(
   item: TGACore.Components.Namecard.RawData,
 ): TGACore.Components.Namecard.NamecardType {
   const sourceStr = item.source.toString();
-  if (sourceStr.includes("成就")) {
-    return TGACore.Components.Namecard.NamecardTypeEnum.achievement;
-  } else if (sourceStr.includes("纪行")) {
-    return TGACore.Components.Namecard.NamecardTypeEnum.journey;
-  } else if (
-    sourceStr.includes("活动") ||
-    sourceStr.includes("庆典") ||
-    sourceStr.includes("礼包")
-  ) {
-    return TGACore.Components.Namecard.NamecardTypeEnum.activity;
-  } else if (sourceStr.includes("好感")) {
-    return TGACore.Components.Namecard.NamecardTypeEnum.character;
-  } else {
-    return TGACore.Components.Namecard.NamecardTypeEnum.other;
-  }
+  if (sourceStr.includes("成就")) return 1;
+  else if (sourceStr.includes("纪行")) return 3;
+  else if (sourceStr.includes("活动") || sourceStr.includes("庆典") || sourceStr.includes("礼包"))
+    return 4;
+  else if (sourceStr.includes("好感")) return 2;
+  else return 0;
 }
 
 /**

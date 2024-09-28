@@ -13,16 +13,16 @@
 declare namespace TGACore.Components.Calendar {
   /**
    * @description 元数据-Amber.top
-   * @since 2.0.0
+   * @since 2.2.0
    * @memberof TGACore.Components.Calendar
    * @interface RawAmber
    * @property {number} response 返回码
-   * @property {Record<TGACore.Constant.Week, Record<string,RawAmberItem>>} data 数据
+   * @property {Record<keyof typeof TGACore.Constant.Week, Record<string,RawAmberItem>>} data 数据
    * @return RawAmber
    */
   interface RawAmber {
     response: number;
-    data: Record<TGACore.Constant.Week, Record<string, RawAmberItem>>;
+    data: Record<keyof typeof TGACore.Constant.Week, Record<string, RawAmberItem>>;
   }
 
   /**
@@ -69,19 +69,6 @@ declare namespace TGACore.Components.Calendar {
   }
 
   /**
-   * @description 转换后的数据类型枚举
-   * @since 2.0.0
-   * @enum {string}
-   * @memberof TGACore.Components.Calendar
-   * @property {string} character 角色
-   * @property {string} weapon 武器
-   * @return ItemType
-   */
-  const enum ItemType {
-    character = "character",
-    weapon = "weapon",
-  }
-  /**
    * @description 转换后的数据
    * @since 2.0.0
    * @memberof TGACore.Components.Calendar
@@ -113,11 +100,11 @@ declare namespace TGACore.Components.Calendar {
     source: ConvertSource;
   } & (
     | {
-        itemType: ItemType.character;
+        itemType: "character";
         elementIcon: string;
       }
     | {
-        itemType: ItemType.weapon;
+        itemType: "weapon";
       }
   );
 
@@ -157,7 +144,7 @@ declare namespace TGACore.Components.Calendar {
    */
   interface ConvertSource {
     index: TGACore.Constant.NationIndex;
-    area: TGACore.Constant.NationType;
+    area: string;
     name: string;
     icon: string;
   }
