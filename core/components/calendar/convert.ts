@@ -1,7 +1,7 @@
 /**
  * @file core/components/calendar/convert.ts
  * @description 日历组件数据转换
- * @since 2.2.0
+ * @since 2.2.1
  */
 
 import process from "node:process";
@@ -13,6 +13,7 @@ import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
 import { getHutaoWeapon } from "../../utils/typeTrans.ts";
+import path from "node:path";
 
 logger.init();
 logger.default.info("[components][calendar][convert] 运行 convert.ts");
@@ -46,13 +47,21 @@ Counter.Reset();
 // 读取日历元数据
 const amberRaw: TGACore.Components.Calendar.RawAmber = await fs.readJson(jsonDetailDir.amber);
 const mysRaw: TGACore.Plugins.Observe.WikiChildren[] = await fs.readJson(jsonDetailDir.mys);
-const avatarRaw: TGACore.Components.Character.RawHutaoItem[] = await fs.readJson(
-  jsonDetailDir.character,
-);
 const weaponRaw: TGACore.Components.Weapon.RawHutaoItem[] = await fs.readJson(jsonDetailDir.weapon);
 const materialRaw: TGACore.Components.Calendar.RawHutaoMaterial[] = await fs.readJson(
   jsonDetailDir.material,
 );
+const avatarRaw: TGACore.Components.Character.RawHutaoItem[] = [];
+const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amberC);
+const idList: number[] = [];
+amberJson.forEach((i) => {
+  if (!isNaN(Number(i.id))) idList.push(Number(i.id));
+});
+for (const i of idList) {
+  const savePath = path.join(jsonDir.src, `${i}.json`);
+  const data: TGACore.Components.Character.RawHutaoItem = await fs.readJson(savePath);
+  avatarRaw.push(data);
+}
 
 // 处理 amber.json 添加 convertSource、convertMaterial、
 logger.console.info("[components][calendar][convert] 处理 amber.json");
