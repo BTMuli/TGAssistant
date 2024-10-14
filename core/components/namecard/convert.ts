@@ -72,12 +72,12 @@ for (const item of jsonFile) {
   ]);
 }
 Counter.End();
-logger.console.info(
+logger.default.info(
   `[components][namecard][convert] 共处理 ${Counter.getTotal()} 张图像，耗时：${Counter.getTime()}`,
 );
 Counter.Output();
 
-logger.console.info(
+logger.default.info(
   "[components][namecard][convert] 名片数据转换完成，请执行 upload.ts 更新成就数据",
 );
 
@@ -85,11 +85,9 @@ logger.console.info(
  * @description 获取名片类型
  * @since 2.2.0
  * @param {TGACore.Components.Namecard.RawData} item 名片数据
- * @return {TGACore.Components.Namecard.NamecardType} 名片类型
+ * @return {number} 名片类型
  */
-function getNamcardType(
-  item: TGACore.Components.Namecard.RawData,
-): TGACore.Components.Namecard.NamecardType {
+function getNamcardType(item: TGACore.Components.Namecard.RawData): number {
   const sourceStr = item.source.toString();
   if (sourceStr.includes("成就")) return 1;
   else if (sourceStr.includes("纪行")) return 3;

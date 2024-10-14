@@ -39,11 +39,7 @@ for (const dir of dirs) {
   for (const file of files) {
     if (!execFiles.includes(file)) continue;
     const filePath = join(dirPath, file);
-    if (file == "convert.ts") {
-      await execTsFile(filePath, true);
-    } else {
-      await execTsFile(filePath);
-    }
+    await execTsFile(filePath);
   }
   Counter.End();
   logger.console.info(`[script][updateAll][${dir}] 更新完成，耗时 ${Counter.getTime()}`);
@@ -57,12 +53,11 @@ Counter.EndAll(false);
 /**
  * @description 执行 ts 文件
  * @param {string} filePath 文件路径
- * @param {boolean} isTsx 是否采用 tsx 运行
  * @returns {Promise<void>} 无返回值
  */
-async function execTsFile(filePath: string, isTsx: boolean = false): Promise<void> {
+async function execTsFile(filePath: string): Promise<void> {
   await new Promise<void>((resolve) => {
-    const command = isTsx ? "tsx" : "node --loader ts-node/esm";
+    const command = "node --import=tsx --experimental-strip-types --no-warnings";
     const child = spawn(command, [filePath], {
       cwd: getProjRootPath(),
       shell: true,

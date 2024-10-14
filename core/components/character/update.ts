@@ -32,10 +32,7 @@ if (!fileCheck(jsonDetailDir.namecard, false)) {
 const converData: TGACore.Components.Character.ConvertData[] = await fs.readJson(jsonDetailDir.out);
 const namecardData: TGACore.Components.Namecard.ConvertData[] = (
   await fs.readJson(jsonDetailDir.namecard)
-).filter(
-  (value: TGACore.Components.Namecard.ConvertData) =>
-    value.type === TGACore.Components.Namecard.NamecardTypeEnum.character,
-);
+).filter((value: TGACore.Components.Namecard.ConvertData) => value.type === 2);
 logger.console.info("[components][character][update] 开始更新角色名片数据");
 Counter.Reset(converData.length);
 for (const item of converData) {

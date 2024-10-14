@@ -157,21 +157,23 @@ logger.console.info("[components][character][download] 请执行 convert.ts 转�
  * @param {TGACore.Plugins.Amber.ElementType} element 元素类型
  * @return {TGACore.Constant.ElementType} 元素类型
  */
-function getAmberElement(element: TGACore.Plugins.Amber.ElementType): TGACore.Constant.ElementType {
+function getAmberElement(element: TGACore.Plugins.Amber.ElementType): string {
   switch (element) {
-    case TGACore.Plugins.Amber.ElementType.anemo:
-      return TGACore.Constant.ElementType.anemo;
-    case TGACore.Plugins.Amber.ElementType.geo:
-      return TGACore.Constant.ElementType.geo;
-    case TGACore.Plugins.Amber.ElementType.electro:
-      return TGACore.Constant.ElementType.electro;
-    case TGACore.Plugins.Amber.ElementType.hydro:
-      return TGACore.Constant.ElementType.hydro;
-    case TGACore.Plugins.Amber.ElementType.pyro:
-      return TGACore.Constant.ElementType.pyro;
-    case TGACore.Plugins.Amber.ElementType.cryo:
-      return TGACore.Constant.ElementType.cryo;
-    case TGACore.Plugins.Amber.ElementType.dendro:
-      return TGACore.Constant.ElementType.dendro;
+    case "Wind":
+      return "风";
+    case "Rock":
+      return "岩";
+    case "Electric":
+      return "雷";
+    case "Water":
+      return "水";
+    case "Fire":
+      return "火";
+    case "Ice":
+      return "冰";
+    case "Grass":
+      return "草";
+    default:
+      throw new Error(`[components][character][download] ${element}`);
   }
 }

@@ -31,10 +31,7 @@ if (!fileCheck(jsonDetailDir.namecard, false)) {
 // 读取文件
 const namecardData: TGACore.Components.Namecard.ConvertData[] = (
   await fs.readJson(jsonDetailDir.namecard)
-).filter(
-  (item: TGACore.Components.Namecard.ConvertData) =>
-    item.type === TGACore.Components.Namecard.NamecardTypeEnum.achievement,
-);
+).filter((item: TGACore.Components.Namecard.ConvertData) => item.type === 1);
 const seriesData: TGACore.Components.Achievement.ConvertSeries[] = await fs.readJson(
   jsonDetailDir.series.out,
 );

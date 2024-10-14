@@ -22,6 +22,7 @@ const pkgJsonConfig = {
           "type",
           "packageManager",
           "scripts",
+          "engine",
           "lint-staged",
           "keywords",
           "author",

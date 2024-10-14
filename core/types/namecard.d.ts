@@ -53,39 +53,12 @@ declare namespace TGACore.Components.Namecard {
   type ImageType = keyof typeof ImageTypeEnum;
 
   /**
-   * @description 名片类型枚举
-   * @since 2.0.0
-   * @memberof TGACore.Components.Namecard
-   * @enum {number} NamecardType
-   * @property {number} achievement 成就
-   * @property {number} journey 纪行
-   * @property {number} activity 活动
-   * @property {number} character 角色好感
-   * @property {number} other 其他
-   */
-  const enum NamecardTypeEnum {
-    achievement = 1,
-    journey = 3,
-    activity = 4,
-    character = 2,
-    other = 0,
-  }
-
-  /**
-   * @description 名片类型
-   * @since 2.0.0
-   * @memberof TGACore.Components.Namecard
-   * @return NamecardType 名片类型
-   */
-  type NamecardType = valueof<NamecardTypeEnum>;
-
-  /**
    * @description 转换后的数据
    * @since 2.0.0
    * @memberof TGACore.Components.Namecard
    * @property {string} name 名片名称
    * @property {number} index 名片编号
-   * @property {NamecardType} type 名片类型
+   * @property {number} type 名片类型 // 0-其他,1-成就,2-角色,3-纪行,4-活动
    * @property {string} desc 名片描述
    * @property {string} source 名片来源
    * @property {string} icon 图标
