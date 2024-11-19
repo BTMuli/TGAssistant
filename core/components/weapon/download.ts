@@ -121,18 +121,20 @@ logger.console.info("[components][weapon][download] 请执行 convert.ts 进行�
  * @param {TGACore.Plugins.Amber.WeaponType} type 武器类型
  * @return {TGACore.Constant.WeaponType} 武器类型
  */
-function getAmberWeapon(type: TGACore.Plugins.Amber.WeaponType): TGACore.Constant.WeaponType {
+function getAmberWeapon(type: TGACore.Plugins.Amber.WeaponType): string {
   switch (type) {
-    case TGACore.Plugins.Amber.WeaponType.sword:
-      return TGACore.Constant.WeaponType.sword;
-    case TGACore.Plugins.Amber.WeaponType.claymore:
-      return TGACore.Constant.WeaponType.claymore;
-    case TGACore.Plugins.Amber.WeaponType.pole:
-      return TGACore.Constant.WeaponType.pole;
-    case TGACore.Plugins.Amber.WeaponType.bow:
-      return TGACore.Constant.WeaponType.bow;
-    case TGACore.Plugins.Amber.WeaponType.catalyst:
-      return TGACore.Constant.WeaponType.catalyst;
+    case "WEAPON_SWORD_ONE_HAND":
+      return "单手剑";
+    case "WEAPON_CLAYMORE":
+      return "双手剑";
+    case "WEAPON_POLE":
+      return "长柄武器";
+    case "WEAPON_BOW":
+      return "弓";
+    case "WEAPON_CATALYST":
+      return "法器";
+    default:
+      return "未知";
   }
 }
 
