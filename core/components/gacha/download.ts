@@ -54,17 +54,22 @@ let isLast = false;
 let lastId = 0;
 while (!isLast) {
   const posts = await getPosts(lastId);
-  if (posts.is_last) isLast = true;
+  if (posts.is_last || posts.list.length === 0) isLast = true;
   else lastId = posts.last_id;
-  posts.list.forEach((post) => {
-    if (!/祈愿|概率UP/.test(post.post.subject)) return;
+  for (const post of posts.list) {
+    if (!/祈愿|概率UP/.test(post.post.subject)) {
+      logger.console.mark(
+        `[components][gacha][download] 跳过帖子 ${post.post.post_id} ${post.post.subject}`,
+      );
+      continue;
+    }
     if (
       post.post.subject.includes("即将开启") &&
       !["8275803", "2277850"].includes(post.post.post_id)
     ) {
-      return;
+      continue;
     }
-    if (skipPost.includes(post.post.post_id)) return;
+    if (skipPost.includes(post.post.post_id)) continue;
     if (!postIdSet.has(post.post.post_id)) {
       postIdSet.add(post.post.post_id);
       mhyPosts.push({
@@ -76,7 +81,7 @@ while (!isLast) {
         `[components][gacha][download] 爬取帖子 ${post.post.post_id} ${post.post.subject}`,
       );
     }
-  });
+  }
 }
 await fs.writeJSON(jsonDetailDir.mhy, mhyPosts, { spaces: 2 });
 logger.default.info("[components][gacha][download] 爬取米游社帖子完成");
@@ -92,7 +97,7 @@ logger.console.info("[components][gacha][download] 请执行 convert.ts 转换�
  * @return {Promise<any>} 米游社帖子
  */
 async function getPosts(lastId: number): Promise<MysPostList> {
-  const url = `https://bbs-api.mihoyo.com/post/wapi/getNewsList?gids=2&page_size=20&type=1&last_id=${lastId}`;
-  const res = await axios.get(url);
+  const url = `https://bbs-api.miyoushe.com/painter/wapi/getNewsList?gids=2&page_size=20&type=1&last_id=${lastId}`;
+  const res = await axios.get(url, { timeout: 3000 });
   return res.data.data;
 }

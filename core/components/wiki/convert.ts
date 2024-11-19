@@ -1,7 +1,7 @@
 /**
  * @file core/components/wiki/convert.ts
  * @description wiki组件转换器
- * @since 2.2.0
+ * @since 2.2.1
  */
 
 import process from "node:process";
@@ -44,11 +44,9 @@ const wikiWeapon: TGACore.Components.Weapon.WikiItem[] = [];
 const amberConfig = readConfig("constant").amber;
 for (const weapon of weaponRaw) {
   const data = transWeapon(weapon);
-  if (data.id !== 11513) {
-    data.story.push(await getWeaponStory(weapon.Id.toString()));
-  } else {
-    data.story.push(await getWeaponStory("11513_1"));
-    data.story.push(await getWeaponStory("11513_2"));
+  data.story = await getWeaponStory(weapon);
+  if (data.story[0] === "") {
+    logger.default.warn(`[components][wiki][convert] 武器 ${weapon.Name} 故事为空`);
   }
   wikiWeapon.push(data);
   logger.console.info(
@@ -113,19 +111,51 @@ function transWeapon(
 
 /**
  * @description 获取武器故事
- * @since 2.2.0
- * @param {string} id 武器ID
+ * @since 2.2.1
+ * @param {TGACore.Components.Weapon.RawHutaoItem} weapon 武器ID
  * @returns {Promise<string>} 武器故事
  */
-async function getWeaponStory(id: string): Promise<string> {
-  const url = `${amberConfig.api}CHS/readable/Weapon${id}?vh=${amberConfig.version}`;
+async function getWeaponStory(weapon: TGACore.Components.Weapon.RawHutaoItem): Promise<string[]> {
+  const url = `${amberConfig.api}CHS/readable/Weapon${weapon.Id}?vh=${amberConfig.version}`;
   try {
     const res = await axios.get(url);
-    return res.data.data;
+    return [res.data.data];
   } catch (e) {
-    logger.default.warn(`[components][wiki][convert] 获取武器 ${id} 故事失败`);
-    if (e instanceof AxiosError) logger.default.error(`${e.code} ${e.message}`);
-    else logger.default.error(e);
-    return "";
+    if (e instanceof AxiosError) {
+      if (e.status === 404) return getWeaponStory2(weapon);
+      else {
+        logger.default.error(e.cause);
+      }
+    } else {
+      logger.default.error(e);
+    }
+    return [];
   }
+}
+
+/**
+ * @description 获取武器故事
+ * @since 2.2.1
+ * @param {TGACore.Components.Weapon.RawHutaoItem} weapon 武器ID
+ * @returns {Promise<string[]>} 武器故事
+ */
+async function getWeaponStory2(weapon: TGACore.Components.Weapon.RawHutaoItem): Promise<string[]> {
+  const res = [];
+  try {
+    const url1 = `${amberConfig.api}CHS/readable/Weapon${weapon.Id}_1?vh=${amberConfig.version}`;
+    const s1 = await axios.get(url1);
+    res.push(s1.data.data);
+  } catch (e) {
+    logger.default.warn(`[components][wiki][convert][s1] 获取武器 ${weapon.Name} 故事1失败`);
+    logger.default.error(e);
+  }
+  try {
+    const url2 = `${amberConfig.api}CHS/readable/Weapon${weapon.Id}_2?vh=${amberConfig.version}`;
+    const s2 = await axios.get(url2);
+    res.push(s2.data.data);
+  } catch (e) {
+    logger.default.warn(`[components][wiki][convert][s2] 获取武器 ${weapon.Name} 故事2失败`);
+    logger.default.error(e);
+  }
+  return res;
 }

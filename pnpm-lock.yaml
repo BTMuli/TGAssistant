@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@yuehaiteam/amos-data':
         specifier: github:yuehaiteam/amos-data
-        version: git+https://git@github.com:yuehaiteam/amos-data.git#c9b993a87b3fdabb53ab9df2aea392c34bfbf2c6
+        version: git+https://git@github.com:yuehaiteam/amos-data.git#04e8a82101cb67e6edec68794121409c580eadf2
       app-root-path:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1096,9 +1096,9 @@ packages:
   '@vitest/utils@2.1.5':
     resolution: {integrity: sha512-yfj6Yrp0Vesw2cwJbP+cl04OC+IHFsuQsrsJBL9pyGeQXE56v1UAOQco+SR55Vf1nQzfV0QJg1Qum7AaWUwwYg==}
 
-  '@yuehaiteam/amos-data@git+https://git@github.com:yuehaiteam/amos-data.git#c9b993a87b3fdabb53ab9df2aea392c34bfbf2c6':
-    resolution: {commit: c9b993a87b3fdabb53ab9df2aea392c34bfbf2c6, repo: git@github.com:yuehaiteam/amos-data.git, type: git}
-    version: 1.0.0-CNRELWin5.1.0-R27297621-S27010947-D27294978
+  '@yuehaiteam/amos-data@git+https://git@github.com:yuehaiteam/amos-data.git#04e8a82101cb67e6edec68794121409c580eadf2':
+    resolution: {commit: 04e8a82101cb67e6edec68794121409c580eadf2, repo: git@github.com:yuehaiteam/amos-data.git, type: git}
+    version: 1.0.0-CNRELWin5.2.0-R28351161-S28035729-D28349297
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -3768,7 +3768,7 @@ snapshots:
       loupe: 3.1.2
       tinyrainbow: 1.2.0
 
-  '@yuehaiteam/amos-data@git+https://git@github.com:yuehaiteam/amos-data.git#c9b993a87b3fdabb53ab9df2aea392c34bfbf2c6': {}
+  '@yuehaiteam/amos-data@git+https://git@github.com:yuehaiteam/amos-data.git#04e8a82101cb67e6edec68794121409c580eadf2': {}
 
   acorn-jsx@5.3.2(acorn@8.14.0):
     dependencies:

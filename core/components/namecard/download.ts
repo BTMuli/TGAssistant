@@ -6,7 +6,7 @@
 
 import path from "node:path";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { load } from "cheerio";
 import fs from "fs-extra";
 import sharp from "sharp";
@@ -252,7 +252,11 @@ async function getNameCardData(
   } catch (err) {
     logger.default.error(`[components][namecard][download] 第 ${index} 张名片数据获取失败`);
     logger.default.error(`[components][namecard][download] URL：${url}/?lang=CHS`);
-    logger.default.error(err);
+    if (err instanceof AxiosError) {
+      logger.default.error(err.cause);
+    } else {
+      logger.default.error(err);
+    }
     return false;
   }
 }
