@@ -70,7 +70,7 @@ declare namespace TGACore.Components.Calendar {
 
   /**
    * @description 转换后的数据
-   * @since 2.0.0
+   * @since 2.3.0
    * @memberof TGACore.Components.Calendar
    * @interface ConvertData
    * @property {number} id 角色/武器 id
@@ -79,10 +79,7 @@ declare namespace TGACore.Components.Calendar {
    * @property {string} name 角色/武器 名称
    * @property {ItemType} itemType 角色/武器 类型
    * @property {number} star 角色/武器 星级
-   * @property {string} bg 角色/武器 背景
-   * @property {string} weaponIcon 武器图标
-   * @property {string} elementIcon 角色元素图标
-   * @property {string} icon 角色/武器 图标
+   * @property {string} element 角色元素
    * @property {ConvertMaterial[]} materials 角色/武器 材料
    * @property {ConvertSource} source 角色/武器 来源
    * @return ConvertData
@@ -93,59 +90,32 @@ declare namespace TGACore.Components.Calendar {
     dropDays: number[];
     name: string;
     star: number;
-    bg: string;
-    weaponIcon: string;
-    icon: string;
+    weapon: string;
     materials: ConvertMaterial[];
     source: ConvertSource;
-  } & (
-    | {
-        itemType: "character";
-        elementIcon: string;
-      }
-    | {
-        itemType: "weapon";
-      }
-  );
+  } & ({ itemType: "character"; element: string } | { itemType: "weapon" });
 
   /**
    * @description 转换后的材料
-   * @since 2.0.0
+   * @since 2.3.0
    * @memberof TGACore.Components.Calendar
    * @interface ConvertMaterial
    * @property {number} id 材料 id
    * @property {string} name 材料名称
    * @property {number} star 材料星级
-   * @property {string} starIcon 材料星级图标
-   * @property {string} bg 材料背景
-   * @property {string} icon 材料图标
    * @return ConvertMaterial
    */
-  interface ConvertMaterial {
-    id: number;
-    name: string;
-    star: number;
-    starIcon: string;
-    bg: string;
-    icon: string;
-  }
+  type ConvertMaterial = { id: number; name: string; star: number };
 
   /**
    * @description 转换后的来源
-   * @since 2.0.0
+   * @since 2.3.0
    * @memberof TGACore.Components.Calendar
    * @interface ConvertSource
    * @property {TGACore.Constant.NationIndex} index 国家索引
    * @property {TGACore.Constant.NationType} area 国家名称
    * @property {string} name 来源名称
-   * @property {string} icon 来源图标
-   * @todo 这边添加 light\dark 模式的图标
    * @return ConvertSource
    */
-  interface ConvertSource {
-    index: TGACore.Constant.NationIndex;
-    area: string;
-    name: string;
-    icon: string;
-  }
+  type ConvertSource = { index: TGACore.Constant.NationIndex; area: string; name: string };
 }

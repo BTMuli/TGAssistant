@@ -44,9 +44,6 @@ jsonFile.forEach((item) => {
     type: 0,
     desc: item.description.replace(/\s/g, ""),
     source: item.source,
-    icon: `/source/nameCard/icon/${item.name}.webp`,
-    bg: `/source/nameCard/bg/${item.name}.webp`,
-    profile: `/source/nameCard/profile/${item.name}.webp`,
   };
   res.type = getNamcardType(item);
   outData.push(res);
@@ -59,7 +56,7 @@ outData.sort((a, b) => {
     return a.type - b.type;
   }
 });
-await fs.writeJson(path.join(jsonDir.out, "app", "namecard.json"), outData, { spaces: 2 });
+await fs.writeJson(path.join(jsonDir.out, "app", "namecard.json"), outData);
 
 // 处理图像文件
 Counter.Reset();

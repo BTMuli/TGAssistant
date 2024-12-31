@@ -1,7 +1,7 @@
 /**
  * @file core/components/calendar/convert.ts
  * @description 日历组件数据转换
- * @since 2.2.1
+ * @since 2.3.0
  */
 
 import process from "node:process";
@@ -59,6 +59,7 @@ amberJson.forEach((i) => {
 });
 for (const i of idList) {
   const savePath = path.join(jsonDir.src, `${i}.json`);
+  if (!fileCheck(savePath, false)) continue;
   const data: TGACore.Components.Character.RawHutaoItem = await fs.readJson(savePath);
   avatarRaw.push(data);
 }
@@ -66,33 +67,19 @@ for (const i of idList) {
 // 处理 amber.json 添加 convertSource、convertMaterial、
 logger.console.info("[components][calendar][convert] 处理 amber.json");
 logger.console.info("[components][calendar][convert] 处理周一的数据");
-Object.values(amberRaw.data.monday).forEach((value) => {
-  measureAmber(value, "monday");
-});
+Object.values(amberRaw.data.monday).forEach((value) => measureAmber(value, "monday"));
 logger.console.info("[components][calendar][convert] 处理周二的数据");
-Object.values(amberRaw.data.tuesday).forEach((value) => {
-  measureAmber(value, "tuesday");
-});
+Object.values(amberRaw.data.tuesday).forEach((value) => measureAmber(value, "tuesday"));
 logger.console.info("[components][calendar][convert] 处理周三的数据");
-Object.values(amberRaw.data.wednesday).forEach((value) => {
-  measureAmber(value, "wednesday");
-});
+Object.values(amberRaw.data.wednesday).forEach((value) => measureAmber(value, "wednesday"));
 logger.console.info("[components][calendar][convert] 处理周四的数据");
-Object.values(amberRaw.data.thursday).forEach((value) => {
-  measureAmber(value, "thursday");
-});
+Object.values(amberRaw.data.thursday).forEach((value) => measureAmber(value, "thursday"));
 logger.console.info("[components][calendar][convert] 处理周五的数据");
-Object.values(amberRaw.data.friday).forEach((value) => {
-  measureAmber(value, "friday");
-});
+Object.values(amberRaw.data.friday).forEach((value) => measureAmber(value, "friday"));
 logger.console.info("[components][calendar][convert] 处理周六的数据");
-Object.values(amberRaw.data.saturday).forEach((value) => {
-  measureAmber(value, "saturday");
-});
+Object.values(amberRaw.data.saturday).forEach((value) => measureAmber(value, "saturday"));
 logger.console.info("[components][calendar][convert] 处理周日的数据");
-Object.values(amberRaw.data.sunday).forEach((value) => {
-  measureAmber(value, "sunday");
-});
+Object.values(amberRaw.data.sunday).forEach((value) => measureAmber(value, "sunday"));
 
 // 处理 character.json 添加 convertData
 logger.console.info("[components][calendar][convert] 处理 character.json");
@@ -142,10 +129,8 @@ for (const avatar of avatarRaw) {
     name: avatar.Name,
     itemType: "character",
     star: avatarStar,
-    bg: `/icon/bg/${avatarStar}-Star.webp`,
-    weaponIcon: `/icon/weapon/${avatarWeapon}.webp`,
-    elementIcon: `/icon/element/${avatar.FetterInfo.VisionBefore}元素.webp`,
-    icon: `/WIKI/character/${avatar.Id}.webp`,
+    weapon: avatarWeapon,
+    element: avatar.FetterInfo.VisionBefore,
     materials,
     source,
   };
@@ -199,9 +184,7 @@ for (const weapon of weaponRaw) {
     name: weapon.Name,
     itemType: "weapon",
     star: weapon.RankLevel,
-    bg: `/icon/bg/${weapon.RankLevel}-Star.webp`,
-    weaponIcon: `/icon/weapon/${getHutaoWeapon(weapon.WeaponType)}.webp`,
-    icon: `/WIKI/weapon/${weapon.Id}.webp`,
+    weapon: getHutaoWeapon(weapon.WeaponType),
     materials,
     source,
   };
@@ -251,15 +234,15 @@ converData.sort((a, b) => {
     return b.star - a.star;
   }
   // 角色按元素、地区、武器排序
-  if (a.itemType === "character" && b.itemType === "character" && a.elementIcon !== b.elementIcon) {
-    return a.elementIcon > b.elementIcon ? 1 : -1;
+  if (a.itemType === "character" && b.itemType === "character" && a.element !== b.element) {
+    return a.element > b.element ? 1 : -1;
   }
-  if (a.itemType === "weapon" && b.itemType === "weapon" && a.weaponIcon !== b.weaponIcon) {
-    return a.weaponIcon > b.weaponIcon ? 1 : -1;
+  if (a.itemType === "weapon" && b.itemType === "weapon" && a.weapon !== b.weapon) {
+    return a.weapon > b.weapon ? 1 : -1;
   }
   return a.source.index - b.source.index;
 });
-await fs.writeJson(jsonDetailDir.out, converData, { spaces: 2 });
+await fs.writeJson(jsonDetailDir.out, converData);
 Counter.End();
 logger.default.info("[components][calendar][convert] 观测枢数据处理完成");
 Counter.Output();
@@ -269,7 +252,7 @@ Counter.EndAll();
 
 /**
  * @description 处理 amber.json
- * @since 2.0.0
+ * @since 2.3.0
  * @param {TGACore.Components.Calendar.RawAmberItem} value 元数据
  * @param {TGACore.Constant.Week} week 星期
  * @return {void}
@@ -291,12 +274,7 @@ function measureAmber(
       }
     }
     const nation = getAmbetNation(value.city);
-    convertSource.push({
-      index: value.city,
-      area: nation,
-      name: domain,
-      icon: `/icon/nation/${nation}.webp`,
-    });
+    convertSource.push({ index: value.city, area: nation, name: domain });
     convertSourceSet.add(value.name);
     logger.console.info(`[components][calendar][convert] 添加秘境来源 ${value.name}`);
   }
@@ -306,14 +284,7 @@ function measureAmber(
       if (material === undefined) {
         throw new Error(`[components][calendar][convert] 未找到掉落 ${item}`);
       }
-      convertMaterial.push({
-        id: material.Id,
-        name: material.Name,
-        star: material.RankLevel,
-        starIcon: `/icon/star/${material.RankLevel}.webp`,
-        bg: `/icon/bg/${material.RankLevel}-Star.webp`,
-        icon: `/icon/material/${material.Id}.webp`,
-      });
+      convertMaterial.push({ id: material.Id, name: material.Name, star: material.RankLevel });
       convertMaterialSet.add(item);
       logger.console.info(`[components][calendar][convert] 添加秘境掉落 ${item}`);
     }
@@ -387,9 +358,7 @@ function getAmberWeek(week: keyof typeof TGACore.Constant.Week): TGACore.Constan
 function getArrayTotal(array: number[]): string {
   const res = [];
   for (const item of array) {
-    if (item > 100000) {
-      res.push(item);
-    }
+    if (item > 100000) res.push(item);
   }
   res.sort((a, b) => a - b);
   return res.join("-");

@@ -56,7 +56,7 @@ for (const item of converData) {
 }
 Counter.End();
 // 写入文件
-fs.writeJsonSync(jsonDetailDir.out, converData, { spaces: 2 });
+fs.writeJsonSync(jsonDetailDir.out, converData);
 
 logger.default.info(`[components][character][update] 更新完成，耗时 ${Counter.getTime()}`);
 Counter.Output();

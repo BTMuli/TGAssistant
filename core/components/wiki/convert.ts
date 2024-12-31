@@ -54,7 +54,7 @@ for (const weapon of weaponRaw) {
   );
   Counter.Success();
 }
-await fs.writeJSON(jsonDetail.weapon.out, wikiWeapon, { spaces: 2 });
+await fs.writeJSON(jsonDetail.weapon.out, wikiWeapon);
 Counter.End();
 
 logger.default.info(`[components][wiki][convert] wiki组件转换完成，耗时${Counter.getTime()}`);
@@ -68,21 +68,14 @@ Counter.Output();
  * @returns {TGACore.Components.Calendar.ConvertMaterial[]} 转换后的数据
  */
 function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMaterial[] {
-  const res = [];
+  const res: TGACore.Components.Calendar.ConvertMaterial[] = [];
   for (const r of raw) {
     const material = materialRaw.find((item) => item.Id === r);
     if (material === undefined) {
       logger.default.warn(`[components][wiki][convert] 缺失ID为 ${r} 的材料数据`);
       continue;
     }
-    res.push({
-      id: material.Id,
-      name: material.Name,
-      star: material.RankLevel,
-      starIcon: `/icon/star/${material.RankLevel}.webp`,
-      bg: `/icon/bg/${material.RankLevel}-Star.webp`,
-      icon: `/icon/material/${material.Id}.webp`,
-    });
+    res.push({ id: material.Id, name: material.Name, star: material.RankLevel });
   }
   return res;
 }

@@ -54,7 +54,7 @@ for (const material of rawList) {
 Counter.End();
 Counter.Output();
 const savePath = path.join(wikiDir.out, "Wiki", "material.json");
-await fs.writeJson(savePath, transJson, { spaces: 2 });
+await fs.writeJson(savePath, transJson);
 logger.default.info(`[components][material][convert] JSON 转换完成，耗时${Counter.getTime()}`);
 
 // 转换图片
@@ -145,27 +145,17 @@ async function transMaterial(
   if (data.source !== null) {
     for (const item of data.source) {
       let days: number[] = [];
-      if (item.days !== undefined) {
-        item.days.map((day: string) => {
-          const index = dayList.indexOf(day);
-          return days.push(index);
-        });
-        days = days.sort((a, b) => a - b);
-        source.push({
-          name: item.name,
-          type: item.type,
-          days,
-        });
-      } else {
-        source.push({
-          name: item.name,
-          type: item.type,
-        });
+      if (item.days === undefined) {
+        source.push({ name: item.name, type: item.type });
+        continue;
       }
+      item.days.forEach((day: string) => days.push(dayList.indexOf(day)));
+      days = days.sort((a, b) => a - b);
+      source.push({ name: item.name, type: item.type, days });
     }
   }
   return {
-    id: material.id,
+    id: Number(material.id),
     name: data.name,
     description: data.description,
     type: data.type,

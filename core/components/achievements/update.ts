@@ -68,7 +68,7 @@ seriesData.forEach((series) => {
   Counter.Success();
 });
 seriesData.sort((a, b) => a.order - b.order);
-await fs.writeJson(jsonDetailDir.series.out, seriesData, { spaces: 2 });
+await fs.writeJson(jsonDetailDir.series.out, seriesData);
 Counter.End();
 
 logger.default.info(

@@ -124,6 +124,6 @@ for (const post of postRaw) {
     logger.default.warn(`[components][gacha][convert] 未找到对应卡池 ${curVersion}`);
   }
 }
-await fs.writeJSON(jsonDetailDir.out, gacha.reverse(), { spaces: 2 });
+await fs.writeJSON(jsonDetailDir.out, gacha.reverse());
 Counter.End();
 logger.default.info(`[components][gacha][convert] gacha 数据转换完成，耗时 ${Counter.getTime()}`);

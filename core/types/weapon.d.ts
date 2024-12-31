@@ -1,15 +1,9 @@
 /**
- * @file core types weapon.d.ts
+ * @file core/types/weapon.d.ts
  * @description 武器组件类型定义
- * @since 2.0.1
+ * @since 2.3.0
  */
 
-/**
- * @description 武器类型 namespace
- * @since 2.0.1
- * @namespace TGACore.Components.Weapon
- * @memberof TGACore.Components
- */
 declare namespace TGACore.Components.Weapon {
   /**
    * @description 元数据-胡桃
@@ -68,16 +62,14 @@ declare namespace TGACore.Components.Weapon {
 
   /**
    * @description 转换后的武器数据
-   * @since 2.0.0
+   * @since 2.3.0
    * @memberof TGACore.Components.Weapon
    * @interface ConvertData
    * @property {number} id 武器 id
    * @property {number} contentId 武器 contentId
    * @property {string} name 武器名称
    * @property {number} star 武器星级
-   * @property {string} bg 武器背景
-   * @property {string} weaponIcon 武器类型图标
-   * @property {string} icon 武器图标
+   * @property {string} weapon 武器类型
    * @return ConvertData
    */
   interface ConvertData {
@@ -85,9 +77,7 @@ declare namespace TGACore.Components.Weapon {
     contentId: number;
     name: string;
     star: number;
-    bg: string;
-    weaponIcon: string;
-    icon: string;
+    weapon: string;
   }
 
   /**

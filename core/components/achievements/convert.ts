@@ -73,7 +73,7 @@ seriesRaw.forEach((item) => {
     name: item.Name,
     version: versionMax[item.Id],
     card: "",
-    icon: `/icon/achievement/${item.Icon}.webp`,
+    icon: item.Icon,
   };
   series.push(seriesItem);
   logger.console.mark(`[components][achievement][convert] 成就系列 ${item.Id} 转换完成`);
@@ -82,8 +82,8 @@ seriesRaw.forEach((item) => {
 // 排序，写入
 achievement.sort((a, b) => a.id - b.id);
 series.sort((a, b) => a.order - b.order);
-fs.writeJSONSync(jsonDetailDir.achievement.out, achievement, { spaces: 2 });
-fs.writeJSONSync(jsonDetailDir.series.out, series, { spaces: 2 });
+fs.writeJSONSync(jsonDetailDir.achievement.out, achievement);
+fs.writeJSONSync(jsonDetailDir.series.out, series);
 Counter.End();
 
 // 处理成就系列的图像

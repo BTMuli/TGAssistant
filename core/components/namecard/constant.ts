@@ -8,8 +8,8 @@ import path from "node:path";
 
 import { getAppDirPath } from "../../utils/getBasePaths.ts";
 
-export const imgDir = getAppDirPath("assets", "namecard");
-export const jsonDir = getAppDirPath("data", "namecard");
+export const imgDir = getAppDirPath("assets", "nameCard");
+export const jsonDir = getAppDirPath("data", "nameCard");
 
 export const imgDetailDir = {
   icon: <TGACore.Config.BaseDirType>{

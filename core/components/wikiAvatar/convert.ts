@@ -42,7 +42,7 @@ for (const id of ids) {
 }
 Counter.End();
 
-await fs.writeJson(jsonDetail.out, wikiCharacter, { spaces: 2 });
+await fs.writeJson(jsonDetail.out, wikiCharacter);
 
 logger.default.info("[components][wikiAvatar][convert] convert.ts 执行完成");
 logger.default.info(`[components][wikiAvatar][convert] 耗时: ${Counter.getTime()}`);
@@ -102,26 +102,19 @@ function transCharacter(
 
 /**
  * @description 获取材料
- * @since 2.2.0
+ * @since 2.3.0
  * @param {number[]} raw 原始数据
  * @returns {TGACore.Components.Calendar.ConvertMaterial[]} 转换后的数据
  */
 function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMaterial[] {
-  const res = [];
+  const res: TGACore.Components.Calendar.ConvertMaterial[] = [];
   for (const r of raw) {
     const material = materialRaw.find((item) => item.Id === r);
     if (material === undefined) {
       logger.default.warn(`[components][wiki][convert] 缺失ID为 ${r} 的材料数据`);
       continue;
     }
-    res.push({
-      id: material.Id,
-      name: material.Name,
-      star: material.RankLevel,
-      starIcon: `/icon/star/${material.RankLevel}.webp`,
-      bg: `/icon/bg/${material.RankLevel}-Star.webp`,
-      icon: `/icon/material/${material.Id}.webp`,
-    });
+    res.push({ id: material.Id, name: material.Name, star: material.RankLevel });
   }
   return res;
 }

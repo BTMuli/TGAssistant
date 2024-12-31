@@ -17,7 +17,7 @@ logger.console.info("[scripts][updateAll] 运行 updateAll.ts");
 
 // 可能的文件命名
 const files = ["download.ts", "convert.ts", "update.ts"];
-const dirs = [
+let dirs = [
   "material",
   "achievements",
   "namecard",
@@ -28,6 +28,11 @@ const dirs = [
   "wiki",
   "wikiAvatar",
 ];
+
+const args = process.argv.slice(2);
+if (args.length > 0 && args[0] !== "all" && dirs.includes(args[0])) dirs = [args[0]];
+
+Counter.Reset(dirs.length);
 for (const dir of dirs) {
   Counter.Init(`[scripts][updateAll][${dir}]`);
   const dirPath = join(getProjRootPath(), "core", "components", dir);

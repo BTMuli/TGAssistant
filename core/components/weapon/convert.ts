@@ -36,15 +36,12 @@ logger.console.info("[components][weapon][convert] 第一次处理：通过 huta
 Counter.Reset();
 const hutaoRaw: TGACore.Components.Weapon.RawHutaoItem[] = await fs.readJson(jsonDetailDir.hutao);
 for (const item of hutaoRaw) {
-  const weaponType = getHutaoWeapon(item.WeaponType);
   const weapon: TGACore.Components.Weapon.ConvertData = {
     id: item.Id,
     contentId: 0,
     name: item.Name,
     star: item.RankLevel,
-    bg: `/icon/bg/${item.RankLevel}-Star.webp`,
-    weaponIcon: `/icon/weapon/${weaponType}.webp`,
-    icon: `/WIKI/weapon/${item.Id}.webp`,
+    weapon: getHutaoWeapon(item.WeaponType),
   };
   converData.push(weapon);
   logger.console.mark(`[components][weapon][convert] 武器 ${item.Id} 转换完成`);
@@ -78,7 +75,7 @@ converData.sort((a, b) => {
   }
   return b.star - a.star;
 });
-await fs.writeJson(jsonDetailDir.out, converData, { spaces: 2 });
+await fs.writeJson(jsonDetailDir.out, converData);
 Counter.End();
 logger.default.info(`[components][weapon][convert] 第二次处理完成，耗时 ${Counter.getTime()}`);
 

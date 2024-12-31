@@ -1,15 +1,9 @@
 /**
  * @file core/types/namecard.d.ts
  * @description 名片类型声明文件
- * @since 2.0.0
+ * @since 2.3.0
  */
 
-/**
- * @description 名片 namespace
- * @since 2.0.0
- * @namespace TGACore.Components.Namecard
- * @memberof TGACore.Components
- */
 declare namespace TGACore.Components.Namecard {
   /**
    * @description 原始数据
@@ -54,7 +48,7 @@ declare namespace TGACore.Components.Namecard {
 
   /**
    * @description 转换后的数据
-   * @since 2.0.0
+   * @since 2.3.0
    * @memberof TGACore.Components.Namecard
    * @property {string} name 名片名称
    * @property {number} index 名片编号
@@ -72,8 +66,5 @@ declare namespace TGACore.Components.Namecard {
     type: NamecardType;
     desc: string;
     source: string;
-    icon: string;
-    bg: string;
-    profile: string;
   }
 }

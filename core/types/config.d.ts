@@ -61,7 +61,7 @@ declare namespace TGACore.Config {
    * @property {number} character 角色数据目录
    * @property {number} gacha 抽卡数据目录
    * @property {number} material 材料数据目录
-   * @property {number} namecard 名片数据目录
+   * @property {number} nameCard 名片数据目录
    * @property {number} weapon 武器数据目录
    * @property {number} wiki wiki数据目录
    * @property {number} wikiAvatar 角色wiki数据目录
@@ -75,7 +75,7 @@ declare namespace TGACore.Config {
     character,
     gacha,
     material,
-    namecard,
+    nameCard,
     weapon,
     wiki,
     wikiAvatar,

@@ -106,12 +106,10 @@ if (noContentId.length > 0) {
 }
 // 排序，写入
 converData.sort((a, b) => {
-  if (a.star === b.star) {
-    return b.id - a.id;
-  }
+  if (a.star === b.star) return b.id - a.id;
   return b.star - a.star;
 });
-fs.writeJSONSync(jsonDetailDir.out, converData, { spaces: 2 });
+fs.writeJSONSync(jsonDetailDir.out, converData);
 Counter.End();
 logger.default.info(`[components][character][convert] 第二次处理完成，耗时 ${Counter.getTime()}`);
 
