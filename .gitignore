@@ -15,3 +15,4 @@ logs/*
 .jest
 # Temp ignore
 web/**/*.js
+temp/

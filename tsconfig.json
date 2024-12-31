@@ -8,9 +8,12 @@
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "rootDir": ".",
     "baseUrl": ".",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "skipLibCheck": true,
     "strict": true
   },
@@ -23,7 +26,9 @@
     "vitest.config.ts",
     "web/**/*.ts"
   ],
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules"
+  ],
   "ts-node": {
     "esm": true,
     "files": true
