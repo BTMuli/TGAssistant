@@ -78,7 +78,7 @@ for (const item of mysRaw) {
     const character: TGACore.Components.Character.ConvertData = {
       id: item.content_id === 4073 ? 10000007 : 10000005,
       contentId: item.content_id,
-      name: item.title,
+      name: item.title.trim(),
       title: "",
       area: "其他",
       birthday: [0, 0],
