@@ -146,6 +146,7 @@ async function transMaterial(
     for (const item of data.source) {
       let days: number[] = [];
       if (item.days === undefined) {
+        if (item.name === "前往采集") continue;
         source.push({ name: item.name, type: item.type });
         continue;
       }

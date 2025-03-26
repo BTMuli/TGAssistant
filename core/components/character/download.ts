@@ -6,11 +6,11 @@
 
 import path from "node:path";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import fs from "fs-extra";
 import sharp from "sharp";
 
-import { imgDir, jsonDir, jsonDetailDir } from "./constant.ts";
+import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
@@ -93,7 +93,11 @@ for (const url of urlRes) {
     Counter.Success();
   } catch (e) {
     logger.default.warn(`[components][character][download] 下载角色${fileName}数据失败`);
-    logger.default.error(e);
+    if (e instanceof AxiosError) {
+      logger.default.error(
+        `[components][character][download] ${e.response?.status} ${e.response?.statusText}`,
+      );
+    } else logger.default.error(e);
     Counter.Fail();
   }
 }
