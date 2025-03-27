@@ -157,6 +157,39 @@ declare namespace TGACore.Plugins.Amber {
   }
 
   /**
+   * @description 返回数据-武器详情
+   * @since 2.3.0
+   * @interface WeaponDetailResp
+   * @property {number} response 返回状态码
+   * @property {WeaponDetail} data 返回数据
+   * @return WeaponDetailResp
+   */
+  type WeaponDetailResp = { response: number; data: WeaponDetail };
+
+  /**
+   * @description 武器详情
+   * @since 2.3.0
+   * @interface WeaponDetail
+   * @description 只写了用到的字段
+   *
+   */
+  type WeaponDetail = {
+    affix: unknown;
+    ascension: unknown;
+    description: string;
+    icon: string;
+    id: number;
+    items: unknown;
+    name: string;
+    rank: number;
+    route: string;
+    specialProp: string;
+    storyId: Array<string>;
+    type: string;
+    upgrade: unknown;
+  };
+
+  /**
    * @description 返回数据-材料
    * @since 2.0.1
    * @memberof TGACore.Plugins.Amber

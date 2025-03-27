@@ -1,7 +1,7 @@
 /**
  * @file core/components/wiki/convert.ts
  * @description wiki组件转换器
- * @since 2.2.1
+ * @since 2.3.0
  */
 
 import process from "node:process";
@@ -25,6 +25,7 @@ fileCheck(jsonDetail.dir);
 const checkObj = {
   weapon: jsonDetail.weapon.src,
   material: jsonDetail.material,
+  amber: jsonDetail.weapon.amber,
 };
 if (!fileCheckObj(checkObj, false)) {
   logger.default.error("[components][wiki][convert] wiki元数据文件不存在");
@@ -36,6 +37,7 @@ Counter.Reset();
 const weaponRaw: TGACore.Components.Weapon.RawHutaoItem[] = await fs.readJSON(
   jsonDetail.weapon.src,
 );
+const amberRaw: TGACore.Plugins.Amber.WeaponDetail[] = await fs.readJSON(jsonDetail.weapon.amber);
 const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
 Counter.addTotal(weaponRaw.length);
 
@@ -109,46 +111,21 @@ function transWeapon(
  * @returns {Promise<string>} 武器故事
  */
 async function getWeaponStory(weapon: TGACore.Components.Weapon.RawHutaoItem): Promise<string[]> {
-  const url = `${amberConfig.api}CHS/readable/Weapon${weapon.Id}?vh=${amberConfig.version}`;
-  try {
-    const res = await axios.get(url);
-    return [res.data.data];
-  } catch (e) {
-    if (e instanceof AxiosError) {
-      if (e.status === 404) return getWeaponStory2(weapon);
-      else {
-        logger.default.error(e.cause);
-      }
-    } else {
-      logger.default.error(e);
-    }
+  const weaponFind = amberRaw.find((item) => item.id === weapon.Id);
+  if (weaponFind === undefined) {
+    logger.default.warn(`[components][wiki][convert] 缺失ID为 ${weapon.Id} 的武器数据`);
     return [];
   }
-}
-
-/**
- * @description 获取武器故事
- * @since 2.2.1
- * @param {TGACore.Components.Weapon.RawHutaoItem} weapon 武器ID
- * @returns {Promise<string[]>} 武器故事
- */
-async function getWeaponStory2(weapon: TGACore.Components.Weapon.RawHutaoItem): Promise<string[]> {
-  const res = [];
-  try {
-    const url1 = `${amberConfig.api}CHS/readable/Weapon${weapon.Id}_1?vh=${amberConfig.version}`;
-    const s1 = await axios.get(url1);
-    res.push(s1.data.data);
-  } catch (e) {
-    logger.default.warn(`[components][wiki][convert][s1] 获取武器 ${weapon.Name} 故事1失败`);
-    logger.default.error(e);
-  }
-  try {
-    const url2 = `${amberConfig.api}CHS/readable/Weapon${weapon.Id}_2?vh=${amberConfig.version}`;
-    const s2 = await axios.get(url2);
-    res.push(s2.data.data);
-  } catch (e) {
-    logger.default.warn(`[components][wiki][convert][s2] 获取武器 ${weapon.Name} 故事2失败`);
-    logger.default.error(e);
+  const res: string[] = [];
+  for (const story of weaponFind.storyId) {
+    const storyUrl = `${amberConfig.api}CHS/readable/Weapon${story}?vh=${amberConfig.version}`;
+    try {
+      const storyRes = await axios.get(storyUrl);
+      res.push(storyRes.data.data);
+    } catch (e) {
+      if (e instanceof AxiosError) logger.default.error(e.cause);
+      else logger.default.error(e);
+    }
   }
   return res;
 }
