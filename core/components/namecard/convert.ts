@@ -107,8 +107,8 @@ async function convertNameCard(
   force: boolean = false,
 ): Promise<void> {
   Counter.addTotal();
-  // 210xxx => xxx
-  const index = item.id % 1000;
+  let index = item.id % 1000;
+  if (index < 122 && index > 116) index -= 4;
   const oriPath = path.join(imgDir.src, type, `${index}.webp`);
   const savePath = path.join(imgDir.out, type, `${item.name}.webp`);
   const indexStr = index.toString().padStart(3, "0");

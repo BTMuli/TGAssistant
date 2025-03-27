@@ -64,30 +64,28 @@ try {
   );
   logger.default.error(err);
 }
-const nameCardSet = new Set(nameCardsData.map((item) => item.id));
+const nameCardSet = new Set(nameCardsData.map((item) => item.id % 1000));
 for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
   const index = i.toString().padStart(3, "0");
-  if (i <= 117 || i >= 122) {
-    Counter.addTotal();
-    if (nameCardSet.has(i)) {
-      logger.console.mark(
-        `[components][namecard][download] 第 ${index} 张名片原始数据已存在，跳过`,
-      );
-      Counter.Skip();
-      continue;
-    }
-    const nameCardData = await getNameCardData(i);
-    if (typeof nameCardData !== "boolean") {
-      nameCardsData.push(nameCardData);
-      Counter.Success();
-    } else {
-      Counter.Fail();
-    }
-  } else {
+  if (i > 33 && i < 38) {
     logger.console.mark(`[components][namecard][download] 第 ${index} 张名片跳过`);
+    continue;
+  }
+  Counter.addTotal();
+  if (nameCardSet.has(i)) {
+    logger.console.mark(`[components][namecard][download] 第 ${index} 张名片原始数据已存在，跳过`);
+    Counter.Skip();
+    continue;
+  }
+  const nameCardData = await getNameCardData(i);
+  if (typeof nameCardData !== "boolean") {
+    nameCardsData.push(nameCardData);
+    Counter.Success();
+  } else {
+    Counter.Fail();
   }
 }
-nameCardsData.sort((a, b) => a.id - b.id);
+nameCardsData.filter((i) => typeof i === "object").sort((a, b) => a.id - b.id);
 fs.writeJSONSync(path.join(jsonDir.src, "namecard.json"), nameCardsData, { spaces: 2 });
 Counter.End();
 logger.default.info(`[components][namecard][download] 数据获取完成，耗时：${Counter.getTime()}`);
@@ -190,13 +188,13 @@ async function getNameCardData(
   index: number,
 ): Promise<TGACore.Plugins.Amber.NameCardDetail | boolean> {
   const realIndex = 210000 + index;
-  const url = `${amberConfig.api}chs/namecard/${realIndex}`;
+  const url = `${amberConfig.api}CHS/namecard/${realIndex}?vh=${amberConfig.version}`;
   try {
-    const res: TGACore.Plugins.Amber.NameCardDetailResp = await axios
-      .get(url, {
-        params: { vh: amberConfig.version },
-      })
-      .then((res) => res.data);
+    const resp = await fetch(url, {
+      method: "GET",
+      headers: { referer: amberConfig.site },
+    });
+    const res = (await resp.json()) as TGACore.Plugins.Amber.NameCardDetailResp;
     return res.data;
   } catch (err) {
     logger.default.error(`[components][namecard][download] 第 ${index} 张名片数据获取失败`);
