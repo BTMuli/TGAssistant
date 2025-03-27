@@ -1,14 +1,14 @@
 /**
  * @file core components achievements convert.ts
  * @description 成就组件数据转换
- * @since 2.2.0
+ * @since 2.3.0
  */
 
 import process from "node:process";
 
 import fs from "fs-extra";
 
-import { jsonDir, jsonDetailDir, imgDir } from "./constant.ts";
+import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
 import { getAchiTrigger } from "./utils.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
@@ -23,10 +23,16 @@ logger.default.info("[components][achievement][convert] 运行 convert.ts");
 fileCheckObj(jsonDir);
 if (
   !fileCheck(jsonDetailDir.achievement.src, false) ||
-  !fileCheck(jsonDetailDir.series.src, false)
+  !fileCheck(jsonDetailDir.series.src, false) ||
+  !fileCheck(jsonDetailDir.amber, false)
 ) {
   logger.default.error("[components][achievement][convert] 成就元数据文件不存在");
   logger.console.info("[components][achievement][convert] 请执行 download.ts");
+  process.exit(1);
+}
+if (!fileCheck(jsonDetailDir.namecard, false)) {
+  logger.default.error("[components][achievement][update] namecard.json 不存在");
+  logger.console.info("[components][achievement][update] 请先运行 namecard/convert.ts");
   process.exit(1);
 }
 
@@ -37,6 +43,10 @@ const achievementRaw: TGACore.Components.Achievement.RawAchievement[] = await fs
 );
 const seriesRaw: TGACore.Components.Achievement.RawSeries[] = await fs.readJson(
   jsonDetailDir.series.src,
+);
+const amberRaw: TGACore.Plugins.Amber.AchiRes = await fs.readJSON(jsonDetailDir.amber);
+const namecardData: TGACore.Components.Namecard.ConvertData[] = await fs.readJson(
+  jsonDetailDir.namecard,
 );
 
 // 转换成就元数据
@@ -67,12 +77,19 @@ achievementRaw.forEach((item) => {
 
 // 再处理成就系列
 seriesRaw.forEach((item) => {
+  const amberSeries = amberRaw[item.Id];
+  let card = "";
+  if (amberSeries.finishReward !== null) {
+    const cardKey = Number(Object.keys(amberSeries.finishReward)[0]);
+    const cardFind = namecardData.find((i) => i.id === cardKey);
+    if (cardFind) card = cardFind.name;
+  }
   const seriesItem: TGACore.Components.Achievement.ConvertSeries = {
     id: item.Id,
     order: item.Order,
     name: item.Name,
     version: versionMax[item.Id],
-    card: "",
+    card: card,
     icon: item.Icon,
   };
   series.push(seriesItem);

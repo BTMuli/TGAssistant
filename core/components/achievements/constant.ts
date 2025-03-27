@@ -1,7 +1,7 @@
 /**
  * @file core components achievements constant.ts
  * @description 成就组件常量
- * @since 2.0.1
+ * @since 2.3.0
  */
 
 import path from "node:path";
@@ -20,6 +20,7 @@ export const jsonDetailDir = {
     out: path.join(jsonDir.out, "app", "achievementSeries.json"),
   },
   namecard: path.join(jsonDir.out, "app", "namecard.json"),
+  amber: path.join(jsonDir.src, "amber.json"),
 };
 
 export const imgDir = getAppDirPath("assets", "achievement");
