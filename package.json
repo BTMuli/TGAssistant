@@ -1,6 +1,6 @@
 {
   "name": "tg-assistant",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "The assistant for TeyvatGuide",
   "type": "module",
   "packageManager": "pnpm@10.6.5",
