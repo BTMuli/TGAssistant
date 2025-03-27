@@ -68,10 +68,6 @@ logger.default.info(
 );
 Counter.Output();
 
-logger.default.info(
-  "[components][namecard][convert] 名片数据转换完成，请执行 upload.ts 更新成就数据",
-);
-
 /**
  * @description 获取名片类型
  * @since 2.3.0

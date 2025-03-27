@@ -1,7 +1,7 @@
 /**
  * @file core components character convert.ts
  * @description 角色组件数据转换
- * @since 2.1.1
+ * @since 2.3.0
  */
 
 import process from "node:process";
@@ -58,7 +58,7 @@ for (const id of idList) {
     star: item.Quality === 105 ? 5 : item.Quality,
     element: item.FetterInfo.VisionBefore,
     weapon: getHutaoWeapon(item.Weapon),
-    nameCard: "",
+    nameCard: item.NameCard.Name,
   };
   converData.push(avatar);
   logger.console.mark(`[components][character][convert] 角色 ${item.Id} 转换完成`);

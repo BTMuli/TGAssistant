@@ -1,19 +1,13 @@
 /**
  * @file core/types/character.d.ts
  * @description 角色类型定义
- * @since 2.2.0
+ * @since 2.3.0
  */
 
-/**
- * @description 角色类型 namespace
- * @since 2.2.0
- * @namespace TGACore.Components.Character
- * @memberof TGACore.Components
- */
 declare namespace TGACore.Components.Character {
   /**
    * @description 元数据-胡桃
-   * @since 2.0.0
+   * @since 2.3.0
    * @memberof TGACore.Components.Character
    * @description RawHutaoItem => Rhi
    * @property {number} Id 角色编号
@@ -53,6 +47,7 @@ declare namespace TGACore.Components.Character {
     FetterInfo: RhiFetterInfo;
     Costumes: RhiCostume[];
     CultivationItems: number[];
+    NameCard: RhiNameCard;
   }
 
   /**
@@ -260,6 +255,19 @@ declare namespace TGACore.Components.Character {
         IsDefault: true;
       }
   );
+
+  /**
+   * @description 元数据-胡桃-名片
+   * @since 2.3.0
+   * @description RawHutaoItem.NameCard => RhiNameCard
+   * @interface RhiNameCard
+   * @property {string} Name 名称
+   * @property {string} Description 描述
+   * @property {string} Icon 图标
+   * @property {string} PicturePrefix 前缀
+   * @return RhiNameCard
+   */
+  type RhiNameCard = { Name: string; Description: string; Icon: string; PicturePrefix: string };
 
   /**
    * @description 转换后的数据
