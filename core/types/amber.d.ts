@@ -1,15 +1,9 @@
 /**
  * @file core/types/amber.d.ts
  * @description amber 插件类型定义
- * @since 2.2.0
+ * @since 2.3.0
  */
 
-/**
- * @description amber 插件类型 namespace
- * @since 2.2.0
- * @namespace TGACore.Plugins.Amber
- * @memberof TGACore.Plugins
- */
 declare namespace TGACore.Plugins.Amber {
   /**
    * @description 通用 api 返回数据类型
@@ -201,4 +195,41 @@ declare namespace TGACore.Plugins.Amber {
     mapMark: boolean;
     rank: number;
   }
+
+  /**
+   * @description 返回响应-名片详情
+   * @since 2.3.0
+   * @interface NameCardDetailResp
+   * @property {number} response 返回状态码
+   * @property {NameCardDetail} data 返回数据
+   * @return NameCardDetailResp
+   */
+  type NameCardDetailResp = { response: number; data: NameCardDetail };
+
+  /**
+   * @description 名片详情
+   * @since 2.3.0
+   * @interface NameCardDetail
+   * @property {string} description 描述
+   * @property {number} descriptionSpecial 特殊描述
+   * @property {string} icon 图标
+   * @property {number} id 编号
+   * @property {string} name 名称
+   * @property {number} rank 星级
+   * @property {string} route 路由
+   * @property {string} source 来源
+   * @property {string} type 类型
+   * @return NameCardDetail
+   */
+  type NameCardDetail = {
+    description: string;
+    descriptionSpecial: number;
+    icon: string;
+    id: number;
+    name: string;
+    rank: number;
+    route: string;
+    source: string | null;
+    type: string;
+  };
 }

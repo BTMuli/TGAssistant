@@ -1,7 +1,7 @@
 /**
  * @file core/components/namecard/convert.ts
  * @description 名片组件数据转换
- * @since 2.2.0
+ * @since 2.3.0
  */
 
 import path from "node:path";
@@ -33,29 +33,23 @@ if (!fileCheck(jsonDir.src, false)) {
 
 // 处理 json 文件
 logger.console.mark("[components][namecard][convert] 处理 json 文件");
-const jsonFile: TGACore.Components.Namecard.RawData[] = await fs.readJson(
+const jsonFile: TGACore.Plugins.Amber.NameCardDetail[] = await fs.readJson(
   path.join(jsonDir.src, "namecard.json"),
 );
 const outData: TGACore.Components.Namecard.ConvertData[] = [];
 jsonFile.forEach((item) => {
   const res = {
+    id: item.id,
     name: item.name,
-    index: item.index,
-    type: 0,
-    desc: item.description.replace(/\s/g, ""),
-    source: item.source,
+    type: getNamcardType(item.type),
+    // 替换空格跟换行 xx\\nxx => xxxx
+    desc: item.description.replace(/\\n/g, ""),
+    source: item.source || "",
   };
-  res.type = getNamcardType(item);
   outData.push(res);
 });
 // 先按 type 排序，再按 index 排序
-outData.sort((a, b) => {
-  if (a.type === b.type) {
-    return a.index - b.index;
-  } else {
-    return a.type - b.type;
-  }
-});
+outData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id);
 await fs.writeJson(path.join(jsonDir.out, "app", "namecard.json"), outData);
 
 // 处理图像文件
@@ -80,18 +74,27 @@ logger.default.info(
 
 /**
  * @description 获取名片类型
- * @since 2.2.0
- * @param {TGACore.Components.Namecard.RawData} item 名片数据
+ * @since 2.3.0
+ * @param {string} type 名片类型
  * @return {number} 名片类型
  */
-function getNamcardType(item: TGACore.Components.Namecard.RawData): number {
-  const sourceStr = item.source.toString();
-  if (sourceStr.includes("成就")) return 1;
-  else if (sourceStr.includes("纪行")) return 3;
-  else if (sourceStr.includes("活动") || sourceStr.includes("庆典") || sourceStr.includes("礼包"))
-    return 4;
-  else if (sourceStr.includes("好感")) return 2;
-  else return 0;
+function getNamcardType(type: string): string {
+  switch (type) {
+    case "achievement":
+      return "成就";
+    case "battlePass":
+      return "纪行";
+    case "bond":
+      return "好感";
+    case "event":
+      return "活动";
+    case "other":
+      return "其他";
+    case "reputation":
+      return "声望";
+    default:
+      return "未知";
+  }
 }
 
 /**
@@ -103,14 +106,16 @@ function getNamcardType(item: TGACore.Components.Namecard.RawData): number {
  * @return {Promise<void>} 无返回值
  */
 async function convertNameCard(
-  item: TGACore.Components.Namecard.RawData,
+  item: TGACore.Plugins.Amber.NameCardDetail,
   type: TGACore.Components.Namecard.ImageType,
   force: boolean = false,
 ): Promise<void> {
   Counter.addTotal();
-  const oriPath = path.join(imgDir.src, type, `${item.index}.webp`);
+  // 210xxx => xxx
+  const index = item.id % 1000;
+  const oriPath = path.join(imgDir.src, type, `${index}.webp`);
   const savePath = path.join(imgDir.out, type, `${item.name}.webp`);
-  const indexStr = item.index.toString().padStart(3, "0");
+  const indexStr = index.toString().padStart(3, "0");
   if (!fileCheck(oriPath, false)) {
     logger.default.warn(
       `[components][namecard][convert] No.${indexStr} ${item.name} ${type} 原始图像不存在`,

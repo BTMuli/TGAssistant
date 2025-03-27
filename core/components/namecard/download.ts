@@ -7,7 +7,6 @@
 import path from "node:path";
 
 import axios, { AxiosError } from "axios";
-import { load } from "cheerio";
 import fs from "fs-extra";
 import sharp from "sharp";
 
@@ -22,6 +21,7 @@ Counter.Init("[components][namecard][download]");
 logger.default.info("[components][namecard][download] 运行 download.ts");
 
 const honeyhunterConfig = readConfig("constant").honeyhunter;
+const amberConfig = readConfig("constant").amber;
 
 // 检测文件夹是否存在
 fileCheckObj(imgDir);
@@ -48,12 +48,12 @@ Counter.Output();
 // 获取原始数据
 Counter.Reset();
 logger.default.info("[components][namecard][download] 开始获取原始数据");
-let nameCardsData: TGACore.Components.Namecard.RawData[] = [];
+let nameCardsData: TGACore.Plugins.Amber.NameCardDetail[] = [];
 try {
   const jsonRead = fs.readJSONSync(path.join(jsonDir.src, "namecard.json"), "utf-8");
   if (Array.isArray(jsonRead)) {
     nameCardsData = jsonRead.filter((item) =>
-      Object.values(<TGACore.Components.Namecard.RawData>item).every((value) => value !== ""),
+      Object.values(<TGACore.Plugins.Amber.NameCardDetail>item).every((value) => value !== ""),
     );
   }
 } catch (err) {
@@ -64,7 +64,7 @@ try {
   );
   logger.default.error(err);
 }
-const nameCardSet = new Set(nameCardsData.map((item) => item.index));
+const nameCardSet = new Set(nameCardsData.map((item) => item.id));
 for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
   const index = i.toString().padStart(3, "0");
   if (i <= 117 || i >= 122) {
@@ -74,30 +74,20 @@ for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
         `[components][namecard][download] 第 ${index} 张名片原始数据已存在，跳过`,
       );
       Counter.Skip();
+      continue;
+    }
+    const nameCardData = await getNameCardData(i);
+    if (typeof nameCardData !== "boolean") {
+      nameCardsData.push(nameCardData);
+      Counter.Success();
     } else {
-      const isOld = i <= 117;
-      const nameCardData = await getNameCardData(i, isOld);
-      if (typeof nameCardData !== "boolean") {
-        if (nameCardData.name === "庆典·倾耳") {
-          nameCardData.source = "「万籁协奏」礼包获取。";
-        } else if (nameCardData.name === "塞索斯·跋灵") {
-          nameCardData.name = nameCardData.name.replace("塞索斯", "赛索斯");
-          nameCardData.source = nameCardData.source.replace("塞索斯", "赛索斯");
-        }
-        nameCardsData.push(nameCardData);
-        Counter.Success();
-      } else if (nameCardData) {
-        logger.default.warn(`[components][namecard][download] 第 ${index} 张名片数据不完整`);
-        Counter.Fail();
-      } else {
-        Counter.Fail();
-      }
+      Counter.Fail();
     }
   } else {
     logger.console.mark(`[components][namecard][download] 第 ${index} 张名片跳过`);
   }
 }
-nameCardsData.sort((a, b) => a.index - b.index);
+nameCardsData.sort((a, b) => a.id - b.id);
 fs.writeJSONSync(path.join(jsonDir.src, "namecard.json"), nameCardsData, { spaces: 2 });
 Counter.End();
 logger.default.info(`[components][namecard][download] 数据获取完成，耗时：${Counter.getTime()}`);
@@ -192,66 +182,25 @@ async function downloadImg(
 
 /**
  * @description 获取名片原始数据
- * @since 2.0.0
+ * @since 2.3.0
  * @param {number} index 名片编号
- * @param {boolean} isOld 是否为旧版名片
- * @return {Promise<TGACore.Components.Namecard.RawData | boolean>} 名片原始数据
+ * @return {Promise<TGACore.Plugins.Amber.NameCardDetail | boolean>} 名片原始数据
  */
 async function getNameCardData(
   index: number,
-  isOld: boolean,
-): Promise<TGACore.Components.Namecard.RawData | boolean> {
-  let url;
-  if (isOld) {
-    url =
-      honeyhunterConfig.url +
-      honeyhunterConfig.namecard.prefix.old +
-      index.toString().padStart(3, "0");
-  } else {
-    url =
-      honeyhunterConfig.url +
-      honeyhunterConfig.namecard.prefix.new +
-      index.toString().padStart(3, "0");
-  }
+): Promise<TGACore.Plugins.Amber.NameCardDetail | boolean> {
+  const realIndex = 210000 + index;
+  const url = `${amberConfig.api}chs/namecard/${realIndex}`;
   try {
-    const html = await axios.get(url, { params: { lang: "CHS" } });
-    const tbSelector =
-      "body > div.wp-site-blocks > div.wp-block-columns > div:nth-child(3) > div.entry-content.wp-block-post-content > table";
-    const htmlDom = load(<string>html.data);
-    const trsGet = htmlDom(tbSelector).find("tr");
-    const namecard: TGACore.Components.Namecard.RawData = {
-      index,
-      name: "",
-      description: "",
-      source: "",
-    };
-    trsGet.each((index, element) => {
-      isNaN(index);
-      const tdsGet = htmlDom(element).find("td");
-      if (tdsGet.length === 3 && htmlDom(tdsGet[1]).text().trim() === "Name") {
-        namecard.name = htmlDom(tdsGet[2]).text().trim();
-      }
-      if (tdsGet.length === 2) {
-        if (htmlDom(tdsGet[0]).text().trim().startsWith("Description")) {
-          namecard.description = htmlDom(tdsGet[1]).text().trim();
-        }
-        if (htmlDom(tdsGet[0]).text().trim().startsWith("Item Source")) {
-          namecard.source = htmlDom(tdsGet[1]).text().trim();
-        }
-      }
-    });
-    if (namecard.name === "？？？" || namecard.name === "") {
-      return true;
-    }
-    logger.console.info(
-      `[components][namecard][download] 第 ${index.toString().padStart(3, "0")} 张名片 ${
-        namecard.name
-      } 数据获取成功`,
-    );
-    return namecard;
+    const res: TGACore.Plugins.Amber.NameCardDetailResp = await axios
+      .get(url, {
+        params: { vh: amberConfig.version },
+      })
+      .then((res) => res.data);
+    return res.data;
   } catch (err) {
     logger.default.error(`[components][namecard][download] 第 ${index} 张名片数据获取失败`);
-    logger.default.error(`[components][namecard][download] URL：${url}/?lang=CHS`);
+    logger.default.error(`[components][namecard][download] URL：${url}`);
     if (err instanceof AxiosError) {
       logger.default.error(err.cause);
     } else {
