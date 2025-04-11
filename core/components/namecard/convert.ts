@@ -1,7 +1,7 @@
 /**
  * @file core/components/namecard/convert.ts
  * @description 名片组件数据转换
- * @since 2.3.0
+ * @since 2.3.1
  */
 
 import path from "node:path";
@@ -36,7 +36,7 @@ logger.console.mark("[components][namecard][convert] 处理 json 文件");
 const jsonFile: TGACore.Plugins.Amber.NameCardDetail[] = await fs.readJson(
   path.join(jsonDir.src, "namecard.json"),
 );
-const outData: TGACore.Components.Namecard.ConvertData[] = [];
+let outData: TGACore.Components.Namecard.ConvertData[] = [];
 jsonFile.forEach((item) => {
   const res = {
     id: item.id,
@@ -50,6 +50,15 @@ jsonFile.forEach((item) => {
 });
 // 先按 type 排序，再按 index 排序
 outData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id);
+const tmpData: TGACore.Components.Namecard.ConvertData[] = [];
+let curId: number | undefined;
+for (const item of outData) {
+  if (item.id === curId) continue;
+  curId = item.id;
+  tmpData.push(item);
+}
+outData = tmpData;
+// 写入文件
 await fs.writeJson(path.join(jsonDir.out, "app", "namecard.json"), outData);
 
 // 处理图像文件

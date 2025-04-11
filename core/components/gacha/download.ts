@@ -1,10 +1,10 @@
 /**
  * @file core/components/gacha/download.ts
  * @description gacha 组件资源下载
- * @since 2.2.0
+ * @since 2.3.1
  */
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import fs from "fs-extra";
 
 import { jsonDetailDir, jsonDir, type PostItem } from "./constant.ts";
@@ -29,7 +29,8 @@ try {
 } catch (e) {
   logger.default.warn("[components][gacha][download] 下载 gacha 数据失败");
   logger.console.warn(`[components][gacha][download] url: ${urlRes}`);
-  logger.console.warn(e);
+  if (e instanceof AxiosError) logger.console.warn(`${e.code} ${e.message}`);
+  else logger.console.warn(e);
   Counter.Fail();
 }
 Counter.End();
