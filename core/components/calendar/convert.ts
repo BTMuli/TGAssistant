@@ -1,7 +1,7 @@
 /**
  * @file core/components/calendar/convert.ts
  * @description 日历组件数据转换
- * @since 2.3.0
+ * @since 2.4.0
  */
 
 import process from "node:process";
@@ -273,8 +273,7 @@ function measureAmber(
         throw new Error(`[components][calendar][convert] 秘境 ${domain} 的掉落材料不一致`);
       }
     }
-    const nation = getAmbetNation(value.city);
-    convertSource.push({ index: value.city, area: nation, name: domain });
+    convertSource.push(getAmberSource(value));
     convertSourceSet.add(value.name);
     logger.console.info(`[components][calendar][convert] 添加秘境来源 ${value.name}`);
   }
@@ -362,4 +361,32 @@ function getArrayTotal(array: number[]): string {
   }
   res.sort((a, b) => a - b);
   return res.join("-");
+}
+
+/**
+ * @description 获取秘境
+ * @since 2.4.0
+ * @param {TGACore.Components.Calendar.RawAmberItem} value 元数据
+ * @return {TGACore.Components.Calendar.ConvertSource} 秘境
+ */
+function getAmberSource(
+  value: TGACore.Components.Calendar.RawAmberItem,
+): TGACore.Components.Calendar.ConvertSource {
+  const indexMap: Record<number, Array<string>> = {
+    1: ["霜凝祭坛", "冰封废渊", "沉睡之国", "水光之城", "深没之谷", "渴水的废都"],
+    2: ["炽炎祭场", "深炎之底", "焚尽之环", "雷云祭坛", "鸣雷城墟", "古雷试炼场"],
+    3: ["初雷幽谷", "真葛废都", "菫染之国", "沉沙之渊", "砂之祭场", "流沙之葬"],
+    4: ["律藏", "圆镜", "妙语", "云垢", "引业", "思惑"],
+    5: ["琅诵", "旋韵", "箴铭", "匠理", "机思", "奇械"],
+    6: ["空华", "转竟", "旋复", "测度", "究观", "冥见"],
+  };
+  for (const key of Object.keys(indexMap)) {
+    const nameMin = value.name.split("：")[1];
+    if (indexMap[Number(key)].includes(nameMin)) {
+      const index = Number(key);
+      const area = getAmbetNation(index);
+      return { index, area, name: nameMin };
+    }
+  }
+  throw new Error(`[components][calendar][convert] 秘境 ${value.name} 的索引不正确`);
 }
