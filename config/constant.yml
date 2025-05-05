@@ -10,7 +10,7 @@
 # site: https://gi.yatta.moe/
 # -----------------------------------------------------------------------------
 amber:
-  version: 55F1
+  version: 56F1
   api: https://gi.yatta.moe/api/v2/
   site: https://gi.yatta.moe/
   assets: https://gi.yatta.moe/assets/UI/
@@ -38,4 +38,4 @@ honeyhunter:
       icon: _70.webp
       bg: _back.webp
       profile: _profile.webp
-    endIndex: 240 # https://genshin.honeyhunterworld.com/i_n210240/?lang=CHS
+    endIndex: 243 # https://genshin.honeyhunterworld.com/i_n210240/?lang=CHS
