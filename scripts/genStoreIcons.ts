@@ -1,7 +1,7 @@
 /**
  * @file scripts/genStoreIcons.ts
  * @description 生成 store icons
- * @since 2.0.0
+ * @since 2.4.0
  */
 
 import path from "node:path";
@@ -38,7 +38,7 @@ for (const referFile of referFiles) {
   if (fs.existsSync(savePath)) {
     logger.console.info(`[scripts][GSI] ${referFile} 已存在，覆盖`);
   }
-  const referInfo = imageSize(path.join(baseDir, "refer", referFile));
+  const referInfo = imageSize(fs.readFileSync(path.join(baseDir, "refer", referFile)));
   await sharp(path.join(baseDir, "icon.png"))
     .png()
     .resize({
