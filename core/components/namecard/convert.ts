@@ -1,7 +1,7 @@
 /**
  * @file core/components/namecard/convert.ts
  * @description 名片组件数据转换
- * @since 2.3.1
+ * @since 2.4.0
  */
 
 import path from "node:path";
@@ -51,7 +51,7 @@ jsonFile.forEach((item) => {
 // 先按 type 排序，再按 index 排序
 outData.sort((a, b) => a.type.localeCompare(b.type) || a.id - b.id);
 const tmpData: TGACore.Components.Namecard.ConvertData[] = [];
-let curId: number | undefined;
+let curId: number | undefined = undefined;
 for (const item of outData) {
   if (item.id === curId) continue;
   curId = item.id;
@@ -130,11 +130,19 @@ async function convertNameCard(
     return;
   }
   if (fileCheck(savePath, false) && !force) {
-    logger.console.mark(
-      `[components][namecard][convert] No.${indexStr} ${item.name} ${type} 目标图像已存在，跳过`,
-    );
-    Counter.Skip();
-    return;
+    const file = fs.readFileSync(path.join(savePath, `${savePath}.webp`));
+    // 获取文件大小，如果是0字节
+    if (file.length !== 0) {
+      logger.console.mark(
+        `[components][namecard][convert] No.${indexStr} ${item.name} ${type} 目标图像已存在，跳过`,
+      );
+      Counter.Skip();
+      return;
+    } else {
+      logger.default.warn(
+        `[compoents][namecard][convert] No.${indexStr} ${item.name} ${type} 目标图像未正常转换`,
+      );
+    }
   }
   switch (type) {
     case "icon":

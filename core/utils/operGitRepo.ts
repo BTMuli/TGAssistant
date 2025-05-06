@@ -28,7 +28,7 @@ function getDownloadUrl(
   } else {
     fileName = `${config.include[fileType]}${param}.json`;
   }
-  return `https://raw.gitmirror.com/${config.repo}/${config.branch}/${config.base}/${fileName}`;
+  return `https://raw.github.com/${config.repo}/${config.branch}/${config.base}/${fileName}`;
 }
 
 /**
