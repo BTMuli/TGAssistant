@@ -214,6 +214,9 @@ function transTalks(
         item.Context = `${transA}\r\n\r\n${transB}`;
       }
     }
+    // 将 {LINK#xxx}xxx{/LINK} 替换成 xxx
+    const regLink = /\{LINK(.*?)}(.*?)\{\/LINK}/g;
+    while (item.Context.match(regLink)) item.Context = item.Context.replace(regLink, "$2");
     res.push(item);
   }
   return res;
