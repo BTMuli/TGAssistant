@@ -151,15 +151,16 @@ async function convertNameCard(
     switch (type) {
       case "icon":
         await sharp(oriPath)
+          .resize(256, 256, { fit: "cover" })
           .extract({ left: 13, top: 53, width: 230, height: 150 })
           .toFormat("webp")
           .toFile(savePath);
         break;
       case "bg":
-        await sharp(oriPath).toFormat("webp").toFile(savePath);
+        await sharp(oriPath).resize(1024, 140).toFormat("webp").toFile(savePath);
         break;
       case "profile":
-        await sharp(oriPath).toFormat("webp").toFile(savePath);
+        await sharp(oriPath).resize(840, 400).toFormat("webp").toFile(savePath);
         break;
     }
   } catch (e) {
