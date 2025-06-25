@@ -56,11 +56,12 @@ class Counter {
 
   /**
    * @description 计数器失败
-   * @since 2.0.0
+   * @since 2.4.0
+   * @param {number} failNum 失败的数量，默认为 1
    * @return {void} 无返回值
    */
-  public Fail(): void {
-    this.fail++;
+  public Fail(failNum?: number): void {
+    this.fail += failNum ?? 1;
   }
 
   /**

@@ -38,11 +38,6 @@ for (const id of ids) {
   await convertTalent(avatarRaw.SkillDepot.EnergySkill);
   await convertConstellations(avatarRaw.SkillDepot.Talents);
   const savePath = path.join(jsonDetail.out, `${id}.json`);
-  // if (fileCheck(savePath, false)) {
-  //   logger.default.warn(`[components][wikiAvatar][convert] 角色${id}JSON已存在，跳过`);
-  //   Counter.Skip();
-  //   continue;
-  // }
   await fs.writeJSON(savePath, avatarTrans);
   logger.default.info(`[components][wikiAvatar][convert] 角色${id}转换完成`);
   Counter.Success();

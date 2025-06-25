@@ -1,7 +1,7 @@
 /**
  * @file core/types/amber.d.ts
  * @description amber 插件类型定义
- * @since 2.3.0
+ * @since 2.4.0
  */
 
 declare namespace TGACore.Plugins.Amber {
@@ -228,6 +228,31 @@ declare namespace TGACore.Plugins.Amber {
     mapMark: boolean;
     rank: number;
   }
+
+  /**
+   * @description 返回响应-名片列表
+   * @since 2.4.0
+   * @interface NameCardListResp
+   * @extends Response<NameCardTypeMap, NameCard>
+   */
+  type NameCardListResp = Response<NameCardTypeMap, NameCard>;
+
+  /**
+   * @description 名片类型对照表
+   * @since 2.4.0
+   * @interface NameCardTypeMap
+   */
+  type NameCardTypeMap = Record<string, string>;
+
+  /**
+   * @description 名片数据
+   * @since 2.4.0
+   * @interface NameCard
+   * @extends Item
+   * @property {string} type 类型
+   * @property {number} rank 星级
+   */
+  type NameCard = Item & { type: string; rank: number };
 
   /**
    * @description 返回响应-名片详情

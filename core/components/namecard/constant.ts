@@ -1,7 +1,7 @@
 /**
  * @file core components namecard constant.ts
  * @description 名片组件常量
- * @since 2.0.0
+ * @since 2.4.0
  */
 
 import path from "node:path";
@@ -10,7 +10,6 @@ import { getAppDirPath } from "../../utils/getBasePaths.ts";
 
 export const imgDir = getAppDirPath("assets", "nameCard");
 export const jsonDir = getAppDirPath("data", "nameCard");
-
 export const imgDetailDir = {
   icon: <TGACore.Config.BaseDirType>{
     src: path.join(imgDir.src, "icon"),

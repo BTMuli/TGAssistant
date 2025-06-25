@@ -1,7 +1,7 @@
 /**
  * @file core/types/character.d.ts
  * @description 角色类型定义
- * @since 2.3.0
+ * @since 2.4.0
  */
 
 declare namespace TGACore.Components.Character {

@@ -1,26 +1,26 @@
 /**
  * @file core components namecard download
  * @description 名片组件资源下载
- * @since 2.1.1
+ * @since 2.4.0
  */
 
 import path from "node:path";
 
 import axios, { AxiosError } from "axios";
 import fs from "fs-extra";
-import sharp from "sharp";
 
 import { imgDetailDir, imgDir, jsonDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
 import { readConfig } from "../../utils/readConfig.ts";
+import process from "node:process";
+import { getImageFileName } from "./utils.ts";
 
 logger.init();
 Counter.Init("[components][namecard][download]");
 logger.default.info("[components][namecard][download] 运行 download.ts");
 
-const honeyhunterConfig = readConfig("constant").honeyhunter;
 const amberConfig = readConfig("constant").amber;
 
 // 检测文件夹是否存在
@@ -28,58 +28,32 @@ fileCheckObj(imgDir);
 fileCheckObj(jsonDir);
 fileCheckObj(imgDetailDir);
 
-// 下载名片
-Counter.Reset();
-logger.default.info("[components][namecard][download] 开始下载名片");
-for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
-  if (i <= 117) {
-    await downloadOldImg(i);
-  } else if (i >= 122) {
-    await downloadNewImg(i);
-  } else {
-    const index = i.toString().padStart(3, "0");
-    logger.console.mark(`[components][namecard][download] 不存在第 ${index} 张名片，跳过`);
-  }
-}
-Counter.End();
-logger.default.info(`[components][namecard][download] 名片下载完成，耗时：${Counter.getTime()}`);
-Counter.Output();
+const listData: TGACore.Plugins.Amber.NameCard[] = [];
+const nameCardsData: TGACore.Plugins.Amber.NameCardDetail[] = [];
 
-// 获取原始数据
-Counter.Reset();
-logger.default.info("[components][namecard][download] 开始获取原始数据");
-let nameCardsData: TGACore.Plugins.Amber.NameCardDetail[] = [];
+// 下载列表数据
 try {
-  const jsonRead = fs.readJSONSync(path.join(jsonDir.src, "namecard.json"), "utf-8");
-  if (Array.isArray(jsonRead)) {
-    nameCardsData = jsonRead.filter((item) =>
-      Object.values(<TGACore.Plugins.Amber.NameCardDetail>item).every((value) => value !== ""),
-    );
-  }
+  const link = `${amberConfig.api}CHS/namecard?vh=${amberConfig.version}`;
+  const resp = await fetch(link, {
+    method: "GET",
+    headers: { referer: amberConfig.site },
+  });
+  const res = (await resp.json()) as TGACore.Plugins.Amber.NameCardListResp;
+  Object.keys(res.data.items).forEach((id) => listData.push(res.data.items[id]));
+  logger.default.info(`[components][namecard][download] 成功获取 ${listData.length} 条名片数据`);
 } catch (err) {
-  logger.default.error("[components][namecard][download] 获取原始数据失败，请检查 JSON 文件");
-  logger.default.error(
-    "[components][namecard][download] 文件路径：",
-    path.join(jsonDir.src, "namecard.json"),
-  );
+  logger.default.error(`[components][namecard][download] 获取名片列表数据失败`);
   logger.default.error(err);
+  Counter.Fail();
+  process.exit(1);
 }
-const nameCardSet = new Set(nameCardsData.map((item) => item.id % 1000));
-for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
-  const index = i.toString().padStart(3, "0");
-  if (i > 33 && i < 38) {
-    logger.console.mark(`[components][namecard][download] 第 ${index} 张名片跳过`);
-    continue;
-  }
-  Counter.addTotal();
-  if (nameCardSet.has(i)) {
-    logger.console.mark(`[components][namecard][download] 第 ${index} 张名片原始数据已存在，跳过`);
-    Counter.Skip();
-    continue;
-  }
-  const nameCardData = await getNameCardData(i);
+
+// 获取详细数据
+for (const namecard of listData) {
+  const nameCardData = await getNameCardData(namecard.id);
   if (typeof nameCardData !== "boolean") {
     nameCardsData.push(nameCardData);
+    logger.default.mark(`[components][namecard][download] 名片 ${nameCardData.id} 数据获取成功`);
     Counter.Success();
   } else {
     Counter.Fail();
@@ -88,90 +62,78 @@ for (let i = 1; i <= honeyhunterConfig.namecard.endIndex; i++) {
 nameCardsData.filter((i) => typeof i === "object").sort((a, b) => a.id - b.id);
 fs.writeJSONSync(path.join(jsonDir.src, "namecard.json"), nameCardsData, { spaces: 2 });
 Counter.End();
+
+// 下载名片
+Counter.Reset(nameCardsData.length * 3);
+logger.default.info("[components][namecard][download] 开始下载名片图片");
+for (const namecard of nameCardsData) {
+  const iconName = namecard.icon.split("_").pop();
+  if (!iconName) {
+    logger.default.error(`[components][namecard][download] 名片 ${namecard.id} 图标名称解析失败`);
+    Counter.Fail(3);
+    continue;
+  }
+  await downloadNameCard("icon", iconName);
+  await downloadNameCard("bg", iconName);
+  await downloadNameCard("profile", iconName);
+}
+Counter.End();
+
 logger.default.info(`[components][namecard][download] 数据获取完成，耗时：${Counter.getTime()}`);
 Counter.Output();
 
 Counter.EndAll();
 logger.console.info("[components][namecard][download] 请执行 convert.ts 进行转换");
 
-// 用到的函数
-
-/**
- * @description 下载旧版名片
- * @since 2.0.0
- * @param {number} index 名片编号
- * @return {Promise<void>} 无返回值
- */
-async function downloadOldImg(index: number): Promise<void> {
-  const urlPrefix =
-    honeyhunterConfig.url +
-    honeyhunterConfig.namecard.prefix.old +
-    index.toString().padStart(3, "0");
-  await downloadImg(urlPrefix, index, "icon");
-  await downloadImg(urlPrefix, index, "bg");
-  await downloadImg(urlPrefix, index, "profile");
-}
-
-/**
- * @description 下载新版名片
- * @since 2.0.0
- * @param {number} index 名片编号
- * @return {Promise<void>} 无返回值
- */
-async function downloadNewImg(index: number): Promise<void> {
-  const urlPrefix =
-    honeyhunterConfig.url +
-    honeyhunterConfig.namecard.prefix.new +
-    index.toString().padStart(3, "0");
-  await downloadImg(urlPrefix, index, "icon");
-  await downloadImg(urlPrefix, index, "bg");
-  await downloadImg(urlPrefix, index, "profile");
-}
-
 /**
  * @description 下载名片图片
- * @since 2.0.0
- * @param {string} urlPrefix 名片图片前缀
- * @param {number} index 名片编号
- * @param {TGACore.Components.Namecard.ImageType} imgType 图片类型
+ * @since 2.4.0
+ * @param {string} dir 目录类型，icon、bg 或 profile
+ * @param {string} name 名片名称
  * @return {Promise<void>} 无返回值
  */
-async function downloadImg(
-  urlPrefix: string,
-  index: number,
-  imgType: TGACore.Components.Namecard.ImageType,
-): Promise<void> {
-  Counter.addTotal();
-  const savePath = path.join(imgDetailDir[imgType].src, index.toString() + ".webp");
-  const indexStr = index.toString().padStart(3, "0");
+async function downloadNameCard(dir: string, name: string): Promise<void> {
+  const fullName = getImageFileName(dir, name);
+  let savePath: string | undefined;
+  let assetsDir: string | undefined;
+  switch (dir) {
+    case "icon":
+      savePath = path.join(imgDetailDir.icon.src, `${fullName}.png`);
+      assetsDir = "NameCardIcon";
+      break;
+    case "bg":
+      savePath = path.join(imgDetailDir.bg.src, `${fullName}.png`);
+      assetsDir = "NameCardPicAlpha";
+      break;
+    case "profile":
+      savePath = path.join(imgDetailDir.profile.src, `${fullName}.png`);
+      assetsDir = "NameCardPic";
+      break;
+    default:
+      logger.default.error(`[components][namecard][download] 未知目录：${dir}`);
+      return;
+  }
   if (fileCheck(savePath, false)) {
-    logger.console.mark(
-      `[components][namecard][download] 第 ${indexStr} 张名片 ${imgType} 已存在，跳过`,
-    );
+    logger.console.mark(`[components][namecard][download] 名片 ${fullName} 已存在，跳过`);
     Counter.Skip();
     return;
   }
-  const url = urlPrefix + honeyhunterConfig.namecard.suffix[imgType];
+  const url = `https://static.snapgenshin.cn/${assetsDir}/${fullName}.png`;
   try {
     const res = await axios.get(url, { responseType: "arraybuffer" });
-    if (res.data.length === 2358) {
-      logger.console.warn(
-        `[components][namecard][download] 第 ${indexStr} 张名片 ${imgType} 不存在`,
-      );
+    // 如果大小小于1KB，则认为下载失败
+    const size = Buffer.byteLength(res.data);
+    if (size < 1024) {
+      logger.default.error(`[components][namecard][download] 名片 ${fullName} 下载失败，文件过小`);
+      logger.default.error(`[components][namecard][download] URL：${url}`);
       Counter.Fail();
       return;
     }
-    await sharp(<ArrayBuffer>res.data)
-      .webp()
-      .toFile(savePath);
-    logger.default.info(
-      `[components][namecard][download] 第 ${indexStr} 张名片 ${imgType} 下载成功`,
-    );
+    await fs.writeFile(savePath, res.data);
+    logger.default.mark(`[components][namecard][download] 名片 ${fullName} 下载成功`);
     Counter.Success();
   } catch (err) {
-    logger.default.error(
-      `[components][namecard][download] 第 ${indexStr} 张名片 ${imgType} 下载失败`,
-    );
+    logger.default.error(`[components][namecard][download] 名片 ${fullName} 下载失败`);
     logger.default.error(`[components][namecard][download] URL：${url}`);
     logger.default.error(err);
     Counter.Fail();
@@ -180,15 +142,14 @@ async function downloadImg(
 
 /**
  * @description 获取名片原始数据
- * @since 2.3.0
+ * @since 2.4.0
  * @param {number} index 名片编号
  * @return {Promise<TGACore.Plugins.Amber.NameCardDetail | boolean>} 名片原始数据
  */
 async function getNameCardData(
-  index: number,
+  index: string,
 ): Promise<TGACore.Plugins.Amber.NameCardDetail | boolean> {
-  const realIndex = 210000 + index;
-  const url = `${amberConfig.api}CHS/namecard/${realIndex}?vh=${amberConfig.version}`;
+  const url = `${amberConfig.api}CHS/namecard/${index}?vh=${amberConfig.version}`;
   try {
     const resp = await fetch(url, {
       method: "GET",
