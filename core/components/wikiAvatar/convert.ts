@@ -1,7 +1,7 @@
 /**
  * @file core/components/wikiAvatar/convert.ts
  * @description wikiAvatar 组件转换器
- * @since 2.2.0
+ * @since 2.4.0
  */
 
 import { fileCheck, fileCheckObj } from "core/utils/fileCheck.ts";
@@ -19,10 +19,10 @@ logger.default.info("[components][wikiAvatar][convert] 运行 convert.ts");
 // 前置检查 ambr
 fileCheckObj(jsonDir);
 fileCheck(jsonDetail.amber);
+fileCheck(jsonDetail.out);
 
 const ids: number[] = await fs.readJSON(jsonDetail.amber);
 const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
-const wikiCharacter: TGACore.Components.Character.WikiItem[] = [];
 Counter.Reset(ids.length);
 for (const id of ids) {
   const filePath = path.join(jsonDir.src, `${id}.json`);
@@ -32,17 +32,22 @@ for (const id of ids) {
     continue;
   }
   const avatarRaw: TGACore.Components.Character.RawHutaoItem = await fs.readJson(filePath);
-  wikiCharacter.push(transCharacter(avatarRaw));
-  logger.default.info(`[components][wikiAvatar][convert] 角色${id}转换完成`);
-  Counter.Success();
+  const avatarTrans: TGACore.Components.Character.WikiItem = transCharacter(avatarRaw);
   await convertTalents(avatarRaw.SkillDepot.Skills);
   await convertTalents(avatarRaw.SkillDepot.Inherents);
   await convertTalent(avatarRaw.SkillDepot.EnergySkill);
   await convertConstellations(avatarRaw.SkillDepot.Talents);
+  const savePath = path.join(jsonDetail.out, `${id}.json`);
+  // if (fileCheck(savePath, false)) {
+  //   logger.default.warn(`[components][wikiAvatar][convert] 角色${id}JSON已存在，跳过`);
+  //   Counter.Skip();
+  //   continue;
+  // }
+  await fs.writeJSON(savePath, avatarTrans);
+  logger.default.info(`[components][wikiAvatar][convert] 角色${id}转换完成`);
+  Counter.Success();
 }
 Counter.End();
-
-await fs.writeJson(jsonDetail.out, wikiCharacter);
 
 logger.default.info("[components][wikiAvatar][convert] convert.ts 执行完成");
 logger.default.info(`[components][wikiAvatar][convert] 耗时: ${Counter.getTime()}`);
@@ -214,9 +219,6 @@ function transTalks(
         item.Context = `${transA}\r\n\r\n${transB}`;
       }
     }
-    // 将 {LINK#xxx}xxx{/LINK} 替换成 xxx
-    // const regLink = /\{LINK(.*?)}(.*?)\{\/LINK}/g;
-    // while (item.Context.match(regLink)) item.Context = item.Context.replace(regLink, "$2");
     res.push(item);
   }
   return res;

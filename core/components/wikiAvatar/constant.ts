@@ -1,7 +1,7 @@
 /**
  * @file core/components/wikiAvatar/constant.ts
  * @description 角色Wiki组件常量
- * @since 2.2.0
+ * @since 2.4.0
  */
 
 import path from "node:path";
@@ -12,7 +12,7 @@ export const jsonDir = getAppDirPath("data", "wikiAvatar");
 export const jsonDetail = {
   amber: path.join(jsonDir.src, "amber.json"),
   material: path.join(getAppDirPath("data", "wiki").src, "material.json"),
-  out: path.join(getAppDirPath("data", "wiki").out, "WIKI", "character.json"),
+  out: path.join(getAppDirPath("data", "wiki").out, "WIKI", "character"),
 };
 export const imageDetail = {
   talents: {

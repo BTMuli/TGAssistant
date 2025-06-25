@@ -1,7 +1,7 @@
 /**
  * @file core/components/wikiAvatar/download
  * @description 角色Wiki组件资源下载
- * @since 2.2.0
+ * @since 2.4.0
  */
 
 import axios from "axios";
@@ -36,9 +36,7 @@ try {
     .then((res) => res.data);
   // 获取角色ID列表存到本地
   Object.values(res.data.items).forEach((i) => {
-    if (!isNaN(Number(i.id))) {
-      avatarIds.push(Number(i.id));
-    }
+    if (!isNaN(Number(i.id))) avatarIds.push(Number(i.id));
   });
   await fs.writeJSON(jsonDetail.amber, avatarIds);
   logger.default.info(`[components][wikiAvatar][download] 成功获取 ${avatarIds.length} 条角色ID`);
