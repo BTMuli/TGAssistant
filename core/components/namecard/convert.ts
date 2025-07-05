@@ -46,7 +46,6 @@ jsonFile.forEach((item) => {
     type: getNamcardType(item.type),
     desc: item.description.replace(/\\n/g, ""),
     source: item.source || "",
-    icon: item.icon.split("_").pop() || "",
   };
   outData.push(res);
 });
