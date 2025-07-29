@@ -80,8 +80,8 @@ seriesRaw.forEach((item) => {
   const amberSeries = amberRaw[item.Id];
   let card = "";
   if (amberSeries.finishReward !== null) {
-    const cardKey = Number(Object.keys(amberSeries.finishReward)[0]);
-    const cardFind = namecardData.find((i) => i.id === cardKey);
+    const cardKey = Object.keys(amberSeries.finishReward)[0];
+    const cardFind = namecardData.find((i) => i.id.toString() === cardKey);
     if (cardFind) card = cardFind.name;
   }
   const seriesItem: TGACore.Components.Achievement.ConvertSeries = {
