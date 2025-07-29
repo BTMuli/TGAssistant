@@ -10,7 +10,7 @@
 # site: https://gi.yatta.moe/
 # -----------------------------------------------------------------------------
 amber:
-  version: 57F0
+  version: 58F0
   api: https://gi.yatta.moe/api/v2/
   site: https://gi.yatta.moe/
   assets: https://gi.yatta.moe/assets/UI/
