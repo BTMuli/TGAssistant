@@ -44,7 +44,7 @@ jsonFile.forEach((item) => {
     id: item.id,
     name: item.name,
     type: getNamcardType(item.type),
-    desc: item.description.replace(/\\n/g, ""),
+    desc: item.description.replace(/\\n/g, "").trim(),
     source: item.source || "",
   };
   outData.push(res);
