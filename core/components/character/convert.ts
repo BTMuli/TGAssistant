@@ -33,9 +33,10 @@ fileCheckObj(imgDir);
 const converData: TGACore.Components.Character.ConvertData[] = [];
 const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amber);
 const idList: number[] = [];
-amberJson.forEach((i) => {
+
+for (const i of amberJson) {
   if (!isNaN(Number(i.id))) idList.push(Number(i.id));
-});
+}
 
 // 处理 hutao.json
 logger.console.info("[components][character][convert] 第一次处理：通过 hutao.json");
@@ -75,19 +76,22 @@ for (const item of mysRaw) {
     (value) => value.name === item.title || `${value.name}【预告】` === item.title,
   );
   if (index === -1) {
-    const character: TGACore.Components.Character.ConvertData = {
-      id: item.content_id === 4073 ? 10000007 : 10000005,
-      contentId: item.content_id,
-      name: item.title.trim(),
-      title: "",
-      area: "其他",
-      birthday: [0, 0],
-      star: 5,
-      element: "",
-      weapon: "单手剑",
-      nameCard: "",
-    };
-    if (item.content_id === 4073 || item.content_id === 4074) {
+    if (item.title.trim().startsWith("旅行者")) {
+      const lumineList = [4073, 505505, 505498, 505496, 505497, 505504];
+      const element = item.title.trim().split("·").pop() ?? "";
+      const isLumine = lumineList.includes(item.content_id);
+      const character: TGACore.Components.Character.ConvertData = {
+        id: isLumine ? 10000007 : 10000005,
+        contentId: item.content_id,
+        name: isLumine ? `荧·${element}` : `空·${element}`,
+        title: "",
+        area: "其他",
+        birthday: [0, 0],
+        star: 5,
+        element: element,
+        weapon: "单手剑",
+        nameCard: "",
+      };
       converData.push(character);
       logger.default.info(`[components][character][convert] 添加遗漏角色 ${item.title} 数据`);
     }

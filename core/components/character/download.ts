@@ -1,12 +1,11 @@
 /**
  * @file core components character download.ts
  * @description 角色组件资源下载
- * @since 2.2.0
+ * @since 2.4.0
  */
 
 import path from "node:path";
 
-import axios, { AxiosError } from "axios";
 import fs from "fs-extra";
 import sharp from "sharp";
 
@@ -28,11 +27,11 @@ const amberConfig = readConfig("constant").amber;
 
 Counter.Reset(3);
 logger.default.info("[components][character][download] 开始更新 JSON 数据");
+
 // 下载 amber 数据
 try {
-  const res: TGACore.Plugins.Amber.ResponseCharacter = await axios
-    .get(`${amberConfig.api}chs/avatar`, { params: { vh: amberConfig.version } })
-    .then((res) => res.data);
+  const resp = await fetch(`${amberConfig.api}chs/avatar?vh=${amberConfig.version}`);
+  const res = <TGACore.Plugins.Amber.ResponseCharacter>await resp.json();
   // 转成数组存到本地
   const amberData: TGACore.Plugins.Amber.Character[] = [];
   Object.keys(res.data.items).forEach((id) => amberData.push(res.data.items[id]));
@@ -44,13 +43,13 @@ try {
   logger.default.error(e);
   Counter.Fail();
 }
+
 // 下载 mys 数据
 try {
-  const res: TGACore.Plugins.Observe.ResponseWiki = await axios
-    .get("https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list", {
-      params: { app_sn: "ys_obc", channel_id: "189" },
-    })
-    .then((res) => res.data);
+  const resp = await fetch(
+    `https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list?app_sn=ys_obc&channel_id=189`,
+  );
+  const res = <TGACore.Plugins.Observe.ResponseWiki>await resp.json();
   const mysData: TGACore.Plugins.Observe.WikiItem[] =
     res.data.list[0].children.find((item) => item.name === "角色")?.list ?? [];
   if (mysData.length === 0) {
@@ -66,11 +65,13 @@ try {
   logger.default.error(e);
   Counter.Fail();
 }
+
 const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amber);
 const idList: number[] = [];
-amberJson.forEach((i) => {
-  if (!isNaN(Number(i.id))) idList.push(Number(i.id));
-});
+for (const item of amberJson) {
+  if (!isNaN(Number(item.id))) idList.push(Number(item.id));
+}
+
 const urlRes = getSnapAvatarDownloadUrl(idList);
 Counter.addTotal(idList.length);
 for (const url of urlRes) {
@@ -87,17 +88,14 @@ for (const url of urlRes) {
     continue;
   }
   try {
-    const res = await axios.get(url);
-    await fs.writeJSON(savePath, res.data, { spaces: 2 });
+    const resp = await fetch(url);
+    const res = <TGACore.Components.Character.RawHutaoItem>await resp.json();
+    await fs.writeJSON(savePath, res, { spaces: 2 });
     logger.default.info(`[components][character][download] 角色${fileName}数据下载完成`);
     Counter.Success();
   } catch (e) {
     logger.default.warn(`[components][character][download] 下载角色${fileName}数据失败`);
-    if (e instanceof AxiosError) {
-      logger.default.error(
-        `[components][character][download] ${e.response?.status} ${e.response?.statusText}`,
-      );
-    } else logger.default.error(e);
+    logger.default.error(e);
     Counter.Fail();
   }
 }
@@ -127,9 +125,10 @@ for (const item of amberJson) {
     Counter.Skip();
     continue;
   }
-  let res;
+  let res: ArrayBuffer | undefined;
   try {
-    res = await axios.get(url, { responseType: "arraybuffer" });
+    const resp = await fetch(url, { method: "GET" });
+    res = await resp.arrayBuffer();
   } catch (e) {
     logger.default.warn(
       `[components][character][download] ${item.id} ${item.name}·${element} Icon 下载失败`,
@@ -138,7 +137,7 @@ for (const item of amberJson) {
     Counter.Fail();
     continue;
   }
-  await sharp(<ArrayBuffer>res.data).toFile(savePath);
+  await sharp(res).toFile(savePath);
   logger.default.info(
     `[components][character][download] ${item.id} ${item.name}·${element} Icon 下载完成`,
   );
@@ -152,8 +151,6 @@ Counter.Output();
 logger.default.info("[components][character][download] download.ts 运行结束");
 Counter.EndAll();
 logger.console.info("[components][character][download] 请执行 convert.ts 转换图片");
-
-// 用到的函数
 
 /**
  * @description 获取 Amber.top 角色元素
