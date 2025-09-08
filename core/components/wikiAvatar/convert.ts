@@ -121,7 +121,7 @@ function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMateria
 
 /**
  * @description 转换地区
- * @since 2.2.0
+ * @since 2.4.0
  * @param {number} raw 原始数据
  * @returns {string} 转换后的数据
  */
@@ -138,6 +138,8 @@ function transArea(raw: number): string {
     "枫丹",
     "纳塔",
     "至冬",
+    "11占位符", // TODO: 待确认
+    "挪德卡莱", // TODO: 待确认
   ];
   if (raw >= AssocList.length || raw < 0) {
     return "未知";
