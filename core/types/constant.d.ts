@@ -61,7 +61,7 @@ declare namespace TGACore.Constant {
 
   /**
    * @description 国家枚举-索引
-   * @since 2.2.0
+   * @since 2.4.0
    * @memberof TGACore.Constant
    * @enum {number}
    * @property {number} Mondstadt 蒙德 =1
@@ -70,6 +70,7 @@ declare namespace TGACore.Constant {
    * @property {number} Sumeru 须弥 =4
    * @property {number} Fontaine 枫丹 =5
    * @property {number} Natlan 纳塔 =6
+   * @property {number} NodKrai 挪德卡莱 =7
    * @todo 后续版本更新后，需要更新此枚举
    * @return NationIndex
    */
@@ -80,6 +81,7 @@ declare namespace TGACore.Constant {
     Sumeru = 4,
     Fontaine = 5,
     Natlan = 6,
+    NodKrai = 7,
   }
 
   /**

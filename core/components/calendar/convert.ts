@@ -318,6 +318,8 @@ function getAmbetNation(index: TGACore.Constant.NationIndex): string {
       return "枫丹";
     case 6:
       return "纳塔";
+    case 7:
+      return "挪德卡莱";
     default:
       return "未知";
   }
@@ -379,6 +381,7 @@ function getAmberSource(
     4: ["律藏", "圆镜", "妙语", "云垢", "引业", "思惑"],
     5: ["琅诵", "旋韵", "箴铭", "匠理", "机思", "奇械"],
     6: ["空华", "转竟", "旋复", "测度", "究观", "冥见"],
+    7: ["墟都", "遗荫", "覆巢", "明辉", "祷颂", "祭月"],
   };
   for (const key of Object.keys(indexMap)) {
     const nameMin = value.name.split("：")[1];
