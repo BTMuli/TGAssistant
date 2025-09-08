@@ -160,13 +160,14 @@ async function downloadImage(savePath: string, link: string, label: string): Pro
     return;
   }
   try {
-    const res = await fetch(link);
+    const res = await fetch(link, { method: "GET" });
     const buffer = await res.arrayBuffer();
     await sharp(buffer).toFile(savePath);
     logger.default.info(`[components][wikiAvatar][download][icon] ${label} 下载完成`);
     Counter.Success();
   } catch (e) {
     logger.default.error(`[components][wikiAvatar][download][icon] ${label} 下载失败`);
+    logger.default.error(`URL: ${link}`);
     logger.default.error(e);
     Counter.Fail();
   }
