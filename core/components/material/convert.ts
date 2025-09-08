@@ -1,7 +1,7 @@
 /**
  * @file core/components/material/convert.ts
  * @description 材料组件转换
- * @since 2.2.0
+ * @since 2.4.0
  */
 
 import path from "node:path";
@@ -91,7 +91,7 @@ Counter.EndAll();
 
 /**
  * @description 转换材料数据
- * @since 2.0.1
+ * @since 2.4.0
  * @param {TGACore.Plugins.Amber.Material} material 原始材料数据
  * @param {TGACore.Components.Material.RawAmber} data 材料数据
  * @return {TGACore.Components.Material.WikiItem} 转换后的材料数据
@@ -147,6 +147,7 @@ async function transMaterial(
       let days: number[] = [];
       if (item.days === undefined) {
         if (item.name === "前往采集") continue;
+        if (item.name === "占位-可合成数量:{0}") continue;
         source.push({ name: item.name, type: item.type });
         continue;
       }
