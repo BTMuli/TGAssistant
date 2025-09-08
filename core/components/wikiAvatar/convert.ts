@@ -125,7 +125,7 @@ function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMateria
  * @param {number} raw 原始数据
  * @returns {string} 转换后的数据
  */
-function transArea(raw: number): string {
+export function transArea(raw: number): string {
   const AssocList = [
     "未知",
     "蒙德",

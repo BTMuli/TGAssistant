@@ -1,7 +1,7 @@
 /**
  * @file core components character convert.ts
  * @description 角色组件数据转换
- * @since 2.3.0
+ * @since 2.4.0
  */
 
 import process from "node:process";
@@ -15,6 +15,7 @@ import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
 import { getHutaoWeapon } from "../../utils/typeTrans.ts";
 import path from "node:path";
+import { transArea } from "../wikiAvatar/convert.ts";
 
 logger.init();
 Counter.Init("[components][character][convert]");
@@ -144,29 +145,3 @@ Counter.Output();
 logger.default.info("[components][character][convert] convert.ts 运行完成");
 Counter.EndAll();
 logger.console.info("[components][character][convert] 请执行 update.ts 更新名片数据");
-
-/**
- * @description 转换地区
- * @since 2.0.2
- * @param {number} raw 原始数据
- * @returns {string} 转换后的数据
- */
-function transArea(raw: number): string {
-  const AssocList = [
-    "未知",
-    "蒙德",
-    "璃月",
-    "主角",
-    "愚人众",
-    "稻妻",
-    "其他",
-    "须弥",
-    "枫丹",
-    "纳塔",
-    "至冬",
-  ];
-  if (raw >= AssocList.length || raw < 0) {
-    return "未知";
-  }
-  return AssocList[raw];
-}
