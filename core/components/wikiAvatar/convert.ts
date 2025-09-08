@@ -133,13 +133,13 @@ function transArea(raw: number): string {
     "主角",
     "愚人众",
     "稻妻",
-    "其他",
+    "游侠",
     "须弥",
     "枫丹",
     "纳塔",
     "至冬",
-    "11占位符", // TODO: 待确认
-    "挪德卡莱", // TODO: 待确认
+    "寰宇劫灭",
+    "挪德卡莱",
   ];
   if (raw >= AssocList.length || raw < 0) {
     return "未知";
