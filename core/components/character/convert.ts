@@ -85,7 +85,7 @@ for (const item of mysRaw) {
         contentId: item.content_id,
         name: isLumine ? `荧·${element}` : `空·${element}`,
         title: "",
-        area: "其他",
+        area: "主角",
         birthday: [0, 0],
         star: 5,
         element: element,
