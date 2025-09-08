@@ -4,7 +4,6 @@
  * @since 2.4.0
  */
 
-import axios from "axios";
 import fs from "fs-extra";
 import sharp from "sharp";
 
@@ -31,9 +30,9 @@ const avatarIds: number[] = [];
 Counter.Reset();
 logger.default.info("[components][wikiAvatar][download] 下载 amber 角色数据");
 try {
-  const res: TGACore.Plugins.Amber.ResponseCharacter = await axios
-    .get(`${ambrConfig.api}chs/avatar`, { params: { vh: ambrConfig.version } })
-    .then((res) => res.data);
+  const link = `${ambrConfig.api}chs/avatar?vh=${ambrConfig.version}`;
+  const resp = await fetch(link);
+  const res = <TGACore.Plugins.Amber.ResponseCharacter>await resp.json();
   // 获取角色ID列表存到本地
   Object.values(res.data.items).forEach((i) => {
     if (!isNaN(Number(i.id))) avatarIds.push(Number(i.id));
@@ -63,8 +62,9 @@ for (const url of urlRes) {
     continue;
   }
   try {
-    const res = await axios.get(url);
-    await fs.writeJSON(savePath, res.data, { spaces: 2 });
+    const resp = await fetch(url);
+    const res = await resp.json();
+    await fs.writeJSON(savePath, res, { spaces: 2 });
     logger.default.info(`[components][wikiAvatar][download] ${fileName} 下载完成`);
     Counter.Success();
   } catch (error) {
@@ -124,7 +124,7 @@ async function downloadTalent(talent: TGACore.Components.Character.RhisdSkill): 
     return;
   }
   const savePath = path.join(imageDetail.talents.src, `${talent.Icon}.png`);
-  const link = `${ambrConfig.assets}${talent.Icon}.png`;
+  const link = `https://static.snapgenshin.cn/Skill/${talent.Icon}.png`;
   await downloadImage(savePath, link, `天赋 ${talent.Icon}(${talent.Id})`);
 }
 
@@ -160,8 +160,9 @@ async function downloadImage(savePath: string, link: string, label: string): Pro
     return;
   }
   try {
-    const res = await axios.get(link, { responseType: "arraybuffer" });
-    await sharp(<ArrayBuffer>res.data).toFile(savePath);
+    const res = await fetch(link);
+    const buffer = await res.arrayBuffer();
+    await sharp(buffer).toFile(savePath);
     logger.default.info(`[components][wikiAvatar][download][icon] ${label} 下载完成`);
     Counter.Success();
   } catch (e) {
