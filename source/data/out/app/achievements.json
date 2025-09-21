@@ -16032,6 +16032,8 @@
       "type": "FINISH_QUEST_AND",
       "task": [
         { "questId": 22107, "name": "好兆头", "type": "每日委托" },
+        { "questId": 2610001, "name": "捕鱼", "type": "subtask" },
+        { "questId": 2610002, "name": "落叶", "type": "subtask" },
         { "questId": 2610003, "name": "赶走鸽子", "type": "subtask" },
         { "questId": 2610004, "name": "小狗", "type": "subtask" }
       ]
@@ -16253,8 +16255,7 @@
       "type": "FINISH_QUEST_AND",
       "task": [
         { "questId": 72812, "name": "故事构思法", "type": "世界任务" },
-        { "questId": 84538, "name": "编辑部的一己之见", "type": "achievement" },
-        { "questId": 72812, "name": "故事构思法", "type": "quest" }
+        { "questId": 84538, "name": "编辑部的一己之见", "type": "achievement" }
       ]
     }
   },
@@ -16272,8 +16273,7 @@
         { "questId": 22050, "name": "鸣神寻踪", "type": "世界任务" },
         { "questId": 41330, "name": "神社大扫除", "type": "task" },
         { "questId": 41280, "name": "鱼之味", "type": "task" },
-        { "questId": 41290, "name": "猫之迹", "type": "task" },
-        { "questId": 22050, "name": "鸣神寻踪", "type": "quest" }
+        { "questId": 41290, "name": "猫之迹", "type": "task" }
       ]
     }
   },

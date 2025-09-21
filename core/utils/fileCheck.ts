@@ -1,7 +1,7 @@
 /**
- * @file core utils fileCheck
+ * @file core/utils/fileCheck.ts
  * @description 文件检查
- * @since 2.0.0
+ * @since 2.4.0
  */
 
 import fs from "fs-extra";
@@ -10,20 +10,19 @@ import logger from "../tools/logger.ts";
 
 /**
  * @description 检查文件/目录是否存在
+ * @since 2.4.0
+ * @function fileCheck
  * @param {string} checkPath 要检查的路径
  * @param {boolean} isDir 是否为目录
  * @returns {boolean}
  */
 export function fileCheck(checkPath: string, isDir: boolean = true): boolean {
-  if (isDir) {
-    if (!fs.existsSync(checkPath)) {
-      fs.mkdirSync(checkPath, { recursive: true });
-      logger.default.info(`[utils][fileCheck] 目录 ${checkPath} 不存在，已创建`);
-    }
+  const isExist = fs.pathExistsSync(checkPath);
+  if (isDir && !isExist) {
+    fs.ensureDirSync(checkPath, { recursive: true });
+    logger.default.info(`[utils][fileCheck] 目录 ${checkPath} 不存在，已创建`);
     return true;
-  } else {
-    return fs.existsSync(checkPath);
-  }
+  } else return isExist;
 }
 
 /**

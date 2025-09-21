@@ -1,12 +1,12 @@
 /**
  * @file core components achievements constant.ts
  * @description 成就组件常量
- * @since 2.3.0
+ * @since 2.4.0
  */
 
 import path from "node:path";
 
-import { getAppDirPath } from "../../utils/getBasePaths.ts";
+import { getAppDirPath } from "@utils/getBasePaths.ts";
 
 export const jsonDir = getAppDirPath("data", "achievement");
 

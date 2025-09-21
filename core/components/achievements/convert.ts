@@ -7,23 +7,20 @@
 import process from "node:process";
 import fs from "fs-extra";
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import sharp from "sharp";
 import path from "node:path";
-import amosTool from "../../plugins/amos/amos.ts";
+import amosTool from "@amos/amos.ts";
+import hutaoTool from "@hutao/hutao.ts";
 
 logger.init();
 logger.default.info("[components][achievement][convert] 运行 convert.ts");
 
 // 前置检查
 fileCheckObj(jsonDir);
-if (
-  !fileCheck(jsonDetailDir.achievement.src, false) ||
-  !fileCheck(jsonDetailDir.series.src, false) ||
-  !fileCheck(jsonDetailDir.amber, false)
-) {
+if (!fileCheck(jsonDetailDir.amber, false)) {
   logger.default.error("[components][achievement][convert] 成就元数据文件不存在");
   logger.console.info("[components][achievement][convert] 请执行 download.ts");
   process.exit(1);
@@ -36,11 +33,11 @@ if (!fileCheck(jsonDetailDir.namecard, false)) {
 
 Counter.Reset();
 // 读取成就元数据
-const achievementRaw: TGACore.Components.Achievement.RawAchievement[] = await fs.readJson(
-  jsonDetailDir.achievement.src,
+const achievementRaw = await hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievement>(
+  hutaoTool.enum.file.Achievement,
 );
-const seriesRaw: TGACore.Components.Achievement.RawSeries[] = await fs.readJson(
-  jsonDetailDir.series.src,
+const seriesRaw = await hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievementGoal>(
+  hutaoTool.enum.file.AchievementGoal,
 );
 const amberRaw: TGACore.Plugins.Amber.AchiRes = await fs.readJSON(jsonDetailDir.amber);
 const namecardData: TGACore.Components.Namecard.ConvertData[] = await fs.readJson(
@@ -48,8 +45,8 @@ const namecardData: TGACore.Components.Namecard.ConvertData[] = await fs.readJso
 );
 
 // 转换成就元数据
-const achievement: TGACore.Components.Achievement.ConvertAchievement[] = [];
-const series: TGACore.Components.Achievement.ConvertSeries[] = [];
+const achievement: Array<TGACore.Components.Achievement.Achievement> = [];
+const series: Array<TGACore.Components.Achievement.Series> = [];
 const versionMax: Record<number, string> = {};
 const rawAmosAchievements = amosTool.flattern();
 // 先处理成就
@@ -57,7 +54,7 @@ achievementRaw.forEach((item) => {
   let trigger: TGACore.Components.Achievement.Trigger = { type: "Unknown" };
   const triggerFind = rawAmosAchievements.find((rawItem) => rawItem.id === Number(item.Id));
   if (triggerFind) trigger = amosTool.parse(triggerFind);
-  const achievementItem: TGACore.Components.Achievement.ConvertAchievement = {
+  const achievementItem: TGACore.Components.Achievement.Achievement = {
     id: item.Id,
     series: item.Goal,
     order: item.Order,
@@ -85,7 +82,7 @@ seriesRaw.forEach((item) => {
     const cardFind = namecardData.find((i) => i.id.toString() === cardKey);
     if (cardFind) card = cardFind.name;
   }
-  const seriesItem: TGACore.Components.Achievement.ConvertSeries = {
+  const seriesItem: TGACore.Components.Achievement.Series = {
     id: item.Id,
     order: item.Order,
     name: item.Name,

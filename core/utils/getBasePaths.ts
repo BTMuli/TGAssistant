@@ -1,7 +1,7 @@
 /**
  * @file utils getBasePaths.ts
  * @description 获取项目一些路径
- * @since 2.0.0
+ * @since 2.4.0
  */
 
 import path from "node:path";
@@ -37,12 +37,19 @@ export function getProjLogPath(): string {
 
 /**
  * @description 获取项目数据文件路径
- * @since 2.0.0
+ * @since 2.4.0
  * @param {TGACore.Config.AppDirType} dirType 目录类型
+ * @param {Array<string>} [args] 其他路径参数
  * @returns {string} 项目数据文件路径
  */
-export function getProjDataPath(dirType: TGACore.Config.AppDirType): string {
-  return path.join(getProjRootPath(), "source", dirType);
+export function getProjDataPath(dirType: TGACore.Config.AppDirType): string;
+export function getProjDataPath(dirType: TGACore.Config.AppDirType, ...args: string[]): string;
+export function getProjDataPath(
+  dirType: TGACore.Config.AppDirType,
+  ...args: Array<string> | undefined
+): string {
+  if (!args || args.length === 0) return path.join(getProjRootPath(), "source", dirType);
+  return path.join(getProjRootPath(), "source", dirType, ...args);
 }
 
 /**

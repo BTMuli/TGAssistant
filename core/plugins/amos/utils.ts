@@ -97,21 +97,14 @@ function parsePartialTask(
       parsedName += nameText;
       continue;
     }
-    // 判断是否正则
-    const regex = /^\/(.+)\/$/;
-    const match = namePart.match(regex);
-    if (!match) {
+    if (!namePart.startsWith("/") || !namePart.endsWith("/")) {
       parsedName += namePart;
       continue;
     }
-    // 对已有文本进行正则替换
-    const pattern = match[1];
-    const reg = new RegExp(pattern);
-    const existingText = textMap[task.questId.toString()];
-    if (existingText === undefined || existingText === null) {
-      throw new Error(`缺失文本 ID 为 ${task.questId} 的文本数据`);
-    }
-    parsedName += existingText.replace(reg, "");
+    const reg = new RegExp(namePart.slice(1, -1));
+    const match = reg.exec(parsedName);
+    if (match && match.length > 1) parsedName = match[1];
+    else throw new Error(`正则 ${namePart} 在 ${parsedName} 中未匹配到任何内容，无法提取任务名称`);
   }
   return { questId: task.id, name: parsedName, type: task.type };
 }

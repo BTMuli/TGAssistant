@@ -8,9 +8,9 @@ import process from "node:process";
 import fs from "fs-extra";
 
 import { jsonDetailDir } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck } from "../../utils/fileCheck.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import { fileCheck } from "@utils/fileCheck.ts";
 
 logger.init();
 Counter.Init("[components][achievement][update]");
@@ -32,7 +32,7 @@ if (!fileCheck(jsonDetailDir.namecard, false)) {
 const namecardData: TGACore.Components.Namecard.ConvertData[] = (
   await fs.readJson(jsonDetailDir.namecard)
 ).filter((item: TGACore.Components.Namecard.ConvertData) => item.type === "成就");
-const seriesData: TGACore.Components.Achievement.ConvertSeries[] = await fs.readJson(
+const seriesData: Array<TGACore.Components.Achievement.Series> = await fs.readJson(
   jsonDetailDir.series.out,
 );
 
