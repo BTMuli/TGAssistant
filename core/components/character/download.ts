@@ -22,6 +22,7 @@ logger.default.info("[components][character][download] 运行 download.ts");
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
+fileCheckObj(jsonDetailDir, false);
 
 const amberConfig = readConfig("constant").amber;
 

@@ -12,8 +12,8 @@ export const jsonDir = getAppDirPath("data", "wikiAvatar");
 export const jsonDetail = {
   amber: path.join(jsonDir.src, "amber.json"),
   material: path.join(getAppDirPath("data", "wiki").src, "material.json"),
-  out: path.join(getAppDirPath("data", "wiki").out, "WIKI", "character"),
 };
+export const jsonOutDir = path.join(getAppDirPath("data", "wiki").out, "WIKI", "character");
 export const imageDetail = {
   talents: {
     src: getAppDirPath("assets", "talents").src,

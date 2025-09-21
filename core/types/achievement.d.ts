@@ -1,15 +1,9 @@
 /**
- * @file core types achievement.d.ts
+ * @file core/types/achievement.d.ts
  * @description 成就类型声明文件
- * @since 2.1.0
+ * @since 2.4.0
  */
 
-/**
- * @description 成就 namespace
- * @since 2.0.1
- * @namespace TGACore.Components.Achievement
- * @memberof TGACore.Components
- */
 declare namespace TGACore.Components.Achievement {
   /**
    * @description 成就元数据类型-成就
@@ -25,22 +19,18 @@ declare namespace TGACore.Components.Achievement {
    * @property {boolean} IsDeleteWatcherAfterFinish 完成后是否删除观察者
    * @property {number} Progress 成就进度
    * @property {string} Version 成就版本
-   * @return RawAchievement
    */
-  interface RawAchievement {
+  type RawAchievement = {
     Id: number;
     Goal: number;
     Order: number;
     Title: string;
     Description: string;
-    FinishReward: {
-      Id: number;
-      Count: number;
-    };
+    FinishReward: { Id: number; Count: number };
     IsDeleteWatcherAfterFinish: boolean;
     Progress: number;
     Version: string;
-  }
+  };
 
   /**
    * @description 成就元数据类型-成就系列
@@ -50,14 +40,8 @@ declare namespace TGACore.Components.Achievement {
    * @property {number} Order 成就系列排序
    * @property {string} Name 成就系列名称
    * @property {string} Icon 成就系列图标
-   * @return RawSeries
    */
-  interface RawSeries {
-    Id: number;
-    Order: number;
-    Name: string;
-    Icon: string;
-  }
+  type RawSeries = { Id: number; Order: number; Name: string; Icon: string };
 
   /**
    * @description 转换后的成就系列数据
@@ -69,16 +53,15 @@ declare namespace TGACore.Components.Achievement {
    * @property {string} version 成就系列版本
    * @property {string} card 成就系列名片
    * @property {string} icon 成就系列图标
-   * @return ConvertSeries 转换后的成就系列数据
    */
-  interface ConvertSeries {
+  type ConvertSeries = {
     id: number;
     order: number;
     name: string;
     version: string;
     card: string;
     icon: string;
-  }
+  };
 
   /**
    * @description 转换后的成就数据
@@ -92,9 +75,8 @@ declare namespace TGACore.Components.Achievement {
    * @property {number} reward 成就奖励
    * @property {string} version 成就版本
    * @property {Trigger} trigger 成就触发条件
-   * @return ConvertAchievement 转换后的成就数据
    */
-  interface ConvertAchievement {
+  type ConvertAchievement = {
     id: number;
     series: number;
     order: number;
@@ -103,11 +85,11 @@ declare namespace TGACore.Components.Achievement {
     reward: number;
     version: string;
     trigger: Trigger;
-  }
+  };
 
   /**
-   * @description 成就触发条件
-   * @since 2.0.1
+   * @description 转换后的成就触发条件
+   * @since 2.4.0
    * @memberof TGACore.Components.Achievement
    * @property {string} type 成就触发类型
    * @property {object} task 成就触发任务
@@ -115,14 +97,16 @@ declare namespace TGACore.Components.Achievement {
    * @property {string} task.questId 成就触发任务所属任务编号
    * @property {string} task.name 成就触发任务名称
    * @property {string} task.type 成就触发任务类型
-   * @return Trigger 成就触发条件
    */
-  interface Trigger {
-    type: string;
-    task?: Array<{
-      questId: number;
-      name: string;
-      type: string;
-    }>;
-  }
+  type Trigger = { type: string; task?: Array<TriggerTask> };
+
+  /**
+   * @description 转换后的任务数据
+   * @since 2.4.0
+   * @memberof TGACore.Components.Achievement
+   * @property {number} questId 任务所属任务编号
+   * @property {string} name 任务名称
+   * @property {string} type 任务类型
+   */
+  type TriggerTask = { questId: number; name: string; type: string };
 }

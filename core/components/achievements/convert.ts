@@ -1,20 +1,18 @@
 /**
  * @file core components achievements convert.ts
  * @description 成就组件数据转换
- * @since 2.3.0
+ * @since 2.4.0
  */
 
 import process from "node:process";
-
 import fs from "fs-extra";
-
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
-import { getAchiTrigger } from "./utils.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
 import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
 import sharp from "sharp";
 import path from "node:path";
+import amosTool from "../../plugins/amos/amos.ts";
 
 logger.init();
 logger.default.info("[components][achievement][convert] 运行 convert.ts");
@@ -53,9 +51,12 @@ const namecardData: TGACore.Components.Namecard.ConvertData[] = await fs.readJso
 const achievement: TGACore.Components.Achievement.ConvertAchievement[] = [];
 const series: TGACore.Components.Achievement.ConvertSeries[] = [];
 const versionMax: Record<number, string> = {};
-
+const rawAmosAchievements = amosTool.flattern();
 // 先处理成就
 achievementRaw.forEach((item) => {
+  let trigger: TGACore.Components.Achievement.Trigger = { type: "Unknown" };
+  const triggerFind = rawAmosAchievements.find((rawItem) => rawItem.id === Number(item.Id));
+  if (triggerFind) trigger = amosTool.parse(triggerFind);
   const achievementItem: TGACore.Components.Achievement.ConvertAchievement = {
     id: item.Id,
     series: item.Goal,
@@ -64,7 +65,7 @@ achievementRaw.forEach((item) => {
     description: item.Description,
     reward: item.FinishReward.Count,
     version: item.Version,
-    trigger: getAchiTrigger(item.Id),
+    trigger: trigger,
   };
   achievement.push(achievementItem);
   logger.console.mark(`[components][achievement][convert] 成就 ${item.Id} 转换完成`);

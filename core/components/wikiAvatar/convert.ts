@@ -7,7 +7,7 @@
 import { fileCheck, fileCheckObj } from "core/utils/fileCheck.ts";
 import logger from "../../tools/logger.ts";
 import fs from "fs-extra";
-import { imageDetail, jsonDetail, jsonDir } from "./constant.ts";
+import { imageDetail, jsonDetail, jsonDir, jsonOutDir } from "./constant.ts";
 import path from "node:path";
 import Counter from "../../tools/counter.ts";
 import sharp from "sharp";
@@ -17,9 +17,9 @@ logger.init();
 logger.default.info("[components][wikiAvatar][convert] 运行 convert.ts");
 
 // 前置检查 ambr
-fileCheckObj(jsonDir);
-fileCheck(jsonDetail.amber);
-fileCheck(jsonDetail.out);
+fileCheckObj(jsonDir, false);
+fileCheck(jsonDetail.amber, false);
+fileCheck(jsonOutDir);
 
 const ids: number[] = await fs.readJSON(jsonDetail.amber);
 const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
@@ -37,7 +37,7 @@ for (const id of ids) {
   await convertTalents(avatarRaw.SkillDepot.Inherents);
   await convertTalent(avatarRaw.SkillDepot.EnergySkill);
   await convertConstellations(avatarRaw.SkillDepot.Talents);
-  const savePath = path.join(jsonDetail.out, `${id}.json`);
+  const savePath = path.join(jsonOutDir, `${id}.json`);
   await fs.writeJSON(savePath, avatarTrans);
   logger.default.info(`[components][wikiAvatar][convert] 角色${id}转换完成`);
   Counter.Success();

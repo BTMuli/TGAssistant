@@ -21,7 +21,7 @@ Counter.Init("[components][wikiAvatar][download]");
 logger.default.info("[components][wikiAvatar][download] 运行 download.ts");
 const ambrConfig = readConfig("constant").amber;
 
-fileCheckObj(jsonDir);
+fileCheckObj(jsonDir, false);
 fileCheckObj(imageDetail);
 
 const avatarIds: number[] = [];

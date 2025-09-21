@@ -1,15 +1,9 @@
 /**
  * @file core types hutao.d.ts
  * @description 胡桃类型定义
- * @since 2.0.0
+ * @since 2.4.0
  */
 
-/**
- * @description 胡桃插件 namespace
- * @since 2.0.0
- * @namespace TGACore.Plugins.Hutao
- * @memberof TGACore.Plugins
- */
 declare namespace TGACore.Plugins.Hutao {
   /**
    * @description 武器类型枚举
@@ -21,7 +15,6 @@ declare namespace TGACore.Plugins.Hutao {
    * @property {number} claymore 双手剑 = 11
    * @property {number} bow 弓 = 12
    * @property {number} pole 长柄武器 = 13
-   * @return WeaponType
    */
   const enum WeaponType {
     sword = 1,
@@ -42,7 +35,6 @@ declare namespace TGACore.Plugins.Hutao {
    * @property {string} Description - 材料描述
    * @property {string} TypeDescription - 物品类型描述
    * @property {string} Icon - 材料图标
-   * @return Material
    */
   interface Material {
     MaterialType: number;
