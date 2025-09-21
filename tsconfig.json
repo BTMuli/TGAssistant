@@ -15,7 +15,16 @@
       "esnext"
     ],
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@core/*": ["./core/*"],
+      "@comp/*": ["./core/components/*"],
+      "@amos/*": ["./core/plugins/amos/*"],
+      "@hutao/*": ["./core/plugins/hutao/*"],
+      "@yatta/*": ["./core/plugins/yatta/*"],
+      "@utils/*": ["./core/utils/*"],
+      "@tools/*": ["./core/tools/*"],
+    }
   },
   "include": [
     "*.json",
