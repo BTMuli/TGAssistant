@@ -1,9 +1,9 @@
+arrowParens: always
+bracketSpacing: true
+endOfLine: auto
 printWidth: 100
-tabWidth: 2
-useTabs: false
+quoteProps: consistent
 semi: true
 singleQuote: false
-quoteProps: consistent
-bracketSpacing: true
-arrowParens: always
-endOfLine: auto
+tabWidth: 2
+useTabs: false

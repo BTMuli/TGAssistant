@@ -11,9 +11,7 @@
     "resolveJsonModule": true,
     "rootDir": ".",
     "baseUrl": ".",
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "skipLibCheck": true,
     "strict": true,
     "paths": {
@@ -23,7 +21,7 @@
       "@hutao/*": ["./core/plugins/hutao/*"],
       "@yatta/*": ["./core/plugins/yatta/*"],
       "@utils/*": ["./core/utils/*"],
-      "@tools/*": ["./core/tools/*"],
+      "@tools/*": ["./core/tools/*"]
     }
   },
   "include": [
@@ -35,11 +33,6 @@
     "vitest.config.ts",
     "web/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ],
-  "ts-node": {
-    "esm": true,
-    "files": true
-  }
+  "exclude": ["node_modules", ".github"],
+  "ts-node": {"esm": true, "files": true}
 }
