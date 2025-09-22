@@ -1,23 +1,24 @@
 /**
- * @file core components achievement update.ts
+ * @file core/components/achievement/update.ts
  * @description 名片组件数据更新
  * @since 2.4.0
  */
 import process from "node:process";
 
-import fs from "fs-extra";
-
-import { jsonDetailDir } from "./constant.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck } from "@utils/fileCheck.ts";
+import fs from "fs-extra";
+
+import { jsonDetailDir } from "./constant.ts";
 
 logger.init();
 Counter.Init("[components][achievement][update]");
 logger.default.info("[components][achievement][update] 运行 update.ts");
 
+// TODO: 重构完Namecard后再重构此脚本
 // 检测文件是否存在
-if (!fileCheck(jsonDetailDir.series.out, false)) {
+if (!fileCheck(jsonDetailDir.series, false)) {
   logger.default.error("[components][achievement][update] achievementSeries.json 不存在");
   logger.console.info("[components][achievement][update] 请先运行 convert.ts");
   process.exit(1);
@@ -29,11 +30,11 @@ if (!fileCheck(jsonDetailDir.namecard, false)) {
 }
 
 // 读取文件
-const namecardData: TGACore.Components.Namecard.ConvertData[] = (
+const namecardData: Array<TGACore.Components.Namecard.ConvertData> = (
   await fs.readJson(jsonDetailDir.namecard)
 ).filter((item: TGACore.Components.Namecard.ConvertData) => item.type === "成就");
 const seriesData: Array<TGACore.Components.Achievement.Series> = await fs.readJson(
-  jsonDetailDir.series.out,
+  jsonDetailDir.series,
 );
 
 // 更新数据
@@ -75,7 +76,7 @@ seriesData.forEach((series) => {
   Counter.Success();
 });
 seriesData.sort((a, b) => a.order - b.order);
-await fs.writeJson(jsonDetailDir.series.out, seriesData);
+await fs.writeJson(jsonDetailDir.series, seriesData);
 Counter.End();
 
 logger.default.info(

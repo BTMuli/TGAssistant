@@ -1,26 +1,33 @@
 /**
- * @file core components achievements convert.ts
+ * @file core/components/achievements/convert.ts
  * @description 成就组件数据转换
  * @since 2.4.0
  */
 
+import path from "node:path";
 import process from "node:process";
-import fs from "fs-extra";
-import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
+
+import amosTool from "@amos/amos.ts";
+import { HutaoGithubFileEnum } from "@hutao/enum.ts";
+import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
+import fs from "fs-extra";
 import sharp from "sharp";
-import path from "node:path";
-import amosTool from "@amos/amos.ts";
-import hutaoTool from "@hutao/hutao.ts";
+
+import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
 
 logger.init();
 logger.default.info("[components][achievement][convert] 运行 convert.ts");
 
 // 前置检查
 fileCheckObj(jsonDir);
-if (!fileCheck(jsonDetailDir.amber, false)) {
+if (
+  !fileCheck(jsonDetailDir.yatta, false) ||
+  !hutaoTool.check(HutaoGithubFileEnum.Achievement) ||
+  !hutaoTool.check(HutaoGithubFileEnum.AchievementGoal)
+) {
   logger.default.error("[components][achievement][convert] 成就元数据文件不存在");
   logger.console.info("[components][achievement][convert] 请执行 download.ts");
   process.exit(1);
@@ -39,7 +46,7 @@ const achievementRaw = await hutaoTool.read<TGACore.Plugins.Hutao.Achievement.Ra
 const seriesRaw = await hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievementGoal>(
   hutaoTool.enum.file.AchievementGoal,
 );
-const amberRaw: TGACore.Plugins.Amber.AchiRes = await fs.readJSON(jsonDetailDir.amber);
+const amberRaw: TGACore.Plugins.Yatta.Achievement.AchiRes = await fs.readJSON(jsonDetailDir.yatta);
 const namecardData: TGACore.Components.Namecard.ConvertData[] = await fs.readJson(
   jsonDetailDir.namecard,
 );
@@ -97,8 +104,8 @@ seriesRaw.forEach((item) => {
 // 排序，写入
 achievement.sort((a, b) => a.id - b.id);
 series.sort((a, b) => a.order - b.order);
-fs.writeJSONSync(jsonDetailDir.achievement.out, achievement);
-fs.writeJSONSync(jsonDetailDir.series.out, series);
+fs.writeJSONSync(jsonDetailDir.achievement, achievement);
+fs.writeJSONSync(jsonDetailDir.series, series);
 Counter.End();
 
 // 处理成就系列的图像

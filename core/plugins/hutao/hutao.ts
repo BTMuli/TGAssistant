@@ -4,12 +4,12 @@
  * @since 2.4.0
  */
 
-import { readRawJson } from "./utils.ts";
-import { updateJson, fetchMeta } from "./metaUtils.ts";
 import { HutaoGithubFileEnum } from "./enum.ts";
+import { readRawJson, updateJson, fetchMeta, checkLocalJson } from "./utils.ts";
 
 const hutaoTool = {
   sync: fetchMeta,
+  check: checkLocalJson,
   update: updateJson,
   read: readRawJson,
   enum: { file: HutaoGithubFileEnum },

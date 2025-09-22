@@ -4,25 +4,28 @@
  * @since 2.4.0
  */
 
-import fs from "fs-extra";
 import path from "node:path";
-import { HutaoGithubFileEnum } from "./enum.ts";
-import { jsonDir } from "./constant.ts";
+
 import { fileCheck } from "@utils/fileCheck.ts";
+import fs from "fs-extra";
+
+import { jsonDir } from "./constant.ts";
+import { HutaoGithubFileEnum } from "./enum.ts";
 
 /**
  * @description 获取JSON下载路径
  * @since 2.4.0
+ * @function getJsonDownloadUrl
  * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {string} 下载 url
  */
-export function getJsonDownloadUrl(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): string;
-export function getJsonDownloadUrl(
+function getJsonDownloadUrl(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): string;
+function getJsonDownloadUrl(
   fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
   param: string,
 ): string;
-export function getJsonDownloadUrl(
+function getJsonDownloadUrl(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
 ): string {
@@ -32,57 +35,152 @@ export function getJsonDownloadUrl(
 }
 
 /**
+ * @description 获取JSON保存路径
+ * @since 2.4.0
+ * @function getSavePath
+ * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
+ * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
+ * @return {string} 保存路径
+ */
+function getSavePath(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): string;
+function getSavePath(fileType: TGACore.Plugins.Hutao.Base.AvatarFileType, param: string): string;
+function getSavePath(
+  fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
+  param?: string,
+): string {
+  let savePath: Array<string>;
+  if (fileType !== HutaoGithubFileEnum.Avatar) savePath = [fileType];
+  else savePath = [fileType, `${param}.json`];
+  return path.join(jsonDir, ...savePath);
+}
+
+/**
  * @description 下载JSON数据
  * @since 2.4.0
+ * @function downloadJson
  * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {Promise<void>} JSON数据
  */
-export async function downloadJson(
-  fileType: TGACore.Plugins.Hutao.Base.SingleFileType,
-): Promise<void>;
-export async function downloadJson(
+async function downloadJson(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): Promise<void>;
+async function downloadJson(
   fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
   param: string,
 ): Promise<void>;
-export async function downloadJson(
+async function downloadJson(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
 ): Promise<void> {
   const downloadLink = getJsonDownloadUrl(fileType, param);
   const resp = await fetch(downloadLink);
   const json = await resp.json();
-  let savePath: Array<string>;
-  if (fileType !== HutaoGithubFileEnum.Avatar) savePath = [fileType];
-  else savePath = [fileType, `${param}.json`];
-  const fullPath = path.join(jsonDir, ...savePath);
-  await fs.writeJson(fullPath, json, { spaces: 2 });
+  const savePath = getSavePath(fileType, param);
+  await fs.writeJson(savePath, json, { spaces: 2 });
+}
+
+/**
+ * @description 获取远程Meta数据
+ * @function fetchMeta
+ * @since 2.4.0
+ * @returns {Promise<Record<string,string>>} Meta数据
+ */
+export async function fetchMeta(): Promise<Record<string, string>> {
+  const downloadLink = getJsonDownloadUrl(HutaoGithubFileEnum.Meta);
+  const resp = await fetch(downloadLink);
+  return await resp.json();
+}
+
+/**
+ * @description 检测文件是否存在
+ * @since 2.4.0
+ * @function checkLocalJson
+ * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
+ * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
+ * @return {boolean} true表示存在，false表示不存在
+ */
+export function checkLocalJson(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): boolean;
+export function checkLocalJson(
+  fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
+  param: string,
+): boolean;
+export function checkLocalJson(
+  fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
+  param?: string,
+): boolean {
+  const savePath = getSavePath(fileType, param);
+  return fileCheck(savePath, false);
 }
 
 /**
  * @description 读取JSON数据
  * @since 2.4.0
+ * @function readRawJson
  * @template T
  * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
- * @return {Promise<T>} JSON数据
+ * @return {T} JSON数据
  */
-export async function readRawJson<T>(
-  fileType: TGACore.Plugins.Hutao.Base.SingleFileType,
-): Promise<T>;
-export async function readRawJson<T>(
+export function readRawJson<T>(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): T;
+export function readRawJson<T>(
   fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
   param: string,
-): Promise<T>;
-export async function readRawJson<T>(
+): T;
+export function readRawJson<T>(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
-): Promise<T> {
-  let localPath: Array<string>;
-  if (fileType !== HutaoGithubFileEnum.Avatar) localPath = [fileType];
-  else localPath = [fileType, `${param}.json`];
-  const fullPath = path.join(jsonDir, ...localPath);
-  const check = await fileCheck(fullPath, false);
-  if (!check) throw new Error(`Hutao JSON文件不存在: ${fullPath}`);
-  return await fs.readJson(fullPath);
+): T {
+  const savePath = getSavePath(fileType, param);
+  return fs.readJsonSync(savePath);
+}
+
+/**
+ * @description 传入Meta数据跟比对数据，自动更新Meta数据
+ * @function updateJson
+ * @since 2.4.0
+ * @param {Record<string,string>} metaData 胡桃Meta数据
+ * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
+ * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
+ * @returns {Promise<boolean>} true表示更新，undefined表示无需更新,false表示更新失败
+ */
+export async function updateJson(
+  metaData: Record<string, string>,
+  fileType: TGACore.Plugins.Hutao.Base.SingleFileType,
+): Promise<boolean>;
+export async function updateJson(
+  metaData: Record<string, string>,
+  fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
+  param: string,
+): Promise<boolean>;
+export async function updateJson(
+  metaData: Record<string, string>,
+  fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
+  param?: string,
+): Promise<boolean> {
+  fileCheck(jsonDir);
+  let key: string;
+  if (fileType !== HutaoGithubFileEnum.Avatar) key = fileType;
+  else key = `${fileType}${param}.json`;
+  key = key.replace(".json", "");
+  const remoteMeta = metaData[key] ?? undefined;
+  let needUpdate = true;
+  let localMeta: Record<string, string> = {};
+  if (checkLocalJson(HutaoGithubFileEnum.Meta)) {
+    localMeta = await readRawJson<Record<string, string>>(HutaoGithubFileEnum.Meta);
+    if (localMeta[key] && remoteMeta && localMeta[key] === remoteMeta) {
+      const check = checkLocalJson(fileType, param);
+      if (check) needUpdate = false;
+    }
+  }
+  if (!needUpdate) {
+    logger.console.info(`[Hutao][metaUtils] ${key} 数据无需更新，保持 ${localMeta[key]}`);
+    return false;
+  }
+  logger.default.info(
+    `[Hutao][metaUtils] ${key} 数据需要更新，${localMeta[key] ?? "undefined"} → ${metaData[key]}`,
+  );
+  await downloadJson(fileType, param);
+  localMeta[key] = metaData[key];
+  fs.writeJsonSync(getSavePath(HutaoGithubFileEnum.Meta), localMeta, { spaces: 2 });
+  logger.default.info(`[Hutao][metaUtils] ${key} 数据更新完成 ${localMeta[key]}`);
+  return true;
 }
