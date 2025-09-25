@@ -2,12 +2,12 @@
 Author: 目棃
 Description: 说明文档
 Date: 2023-05-01
-Update: 2024-07-16
+Update: 2025-09-25
 ---
 
 > 本文档 [`Frontmatter`](https://github.com/BTMuli/MuCli#Frontmatter) 由 [MuCli](https://github.com/BTMuli/Mucli) 自动生成于 `2023-05-01 21:57:11`
 >
-> 更新于 `2024-07-16 21:21:34`
+> 更新于 `2025-09-25 22:14:36`
 
 ![](https://img.shields.io/github/last-commit/BTMuli/TGAssistant?style=for-the-badge) ![](https://img.shields.io/github/license/BTMuli/TGAssistant?style=for-the-badge)
 
@@ -19,7 +19,7 @@ Update: 2024-07-16
 
 ![](https://img.shields.io/github/v/release/BTMuli/Tauri.Genshin?include_prereleases&style=for-the-badge)
 
-适应版本：`0.5.0+`
+适应版本：`0.8.0+`
 
 ## 仓库概况
 
