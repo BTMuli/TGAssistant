@@ -44,65 +44,44 @@ declare namespace TGACore.Components.Weapon {
   }
 
   /**
-   * @description 精炼描述
-   * @since 2.0.0
-   * @memberof TGACore.Components.Weapon
-   * @interface RhiAffix
-   * @property {string} Name 精炼名称
-   * @property {Array<{Level: number; Description: string}>} Description 精炼描述
-   * @return RhiAffix
-   */
-  interface RhiAffix {
-    Name: string;
-    Description: Array<{
-      Level: number;
-      Description: string;
-    }>;
-  }
-
-  /**
    * @description 转换后的武器数据
-   * @since 2.3.0
-   * @memberof TGACore.Components.Weapon
-   * @interface ConvertData
+   * @since 2.4.0
+   * @interface Weapon
    * @property {number} id 武器 id
    * @property {number} contentId 武器 contentId
    * @property {string} name 武器名称
    * @property {number} star 武器星级
    * @property {string} weapon 武器类型
-   * @return ConvertData
    */
-  interface ConvertData {
+  type Weapon = {
     id: number;
     contentId: number;
     name: string;
     star: number;
     weapon: string;
-  }
+  };
 
   /**
    * @description 转换后的武器数据
-   * @since 2.0.1
+   * @since 2.4.0
    * @interface WikiItem
-   * @memberof TGACore.Components.Weapon
    * @property {number} id 武器 id
    * @property {string} name 武器名称
    * @property {string} description 武器简介
    * @property {number} star 武器星级
    * @property {string} weapon 武器类型
-   * @property {TGACore.Components.Calendar.ConvertMaterial[]} materials 武器材料
-   * @property {RhiAffix} affix 精炼描述
-   * @property {string[]} story 武器故事
-   * @return WikiItem
+   * @property {TGACore.Components.Calendar.Material[]} materials 武器材料
+   * @property {TGACore.Plugins.Hutao.Weapon.WeaponAffix} affix 精炼描述
+   * @property {Array<string>} story 武器故事
    */
-  interface WikiItem {
+  type WikiItem = {
     id: number;
     name: string;
     description: string;
     star: number;
     weapon: string;
-    materials: TGACore.Components.Calendar.ConvertMaterial[];
-    affix?: RhiAffix;
+    materials: Array<TGACore.Components.Calendar.Material>;
+    affix?: TGACore.Plugins.Hutao.Weapon.WeaponAffix;
     story: string[];
-  }
+  };
 }

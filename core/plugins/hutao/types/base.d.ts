@@ -14,6 +14,7 @@ declare namespace TGACore.Plugins.Hutao.Base {
    * @property {string} AchievementGoal 成就系列
    * @property {string} Avatar 角色
    * @property {string} Gacha 祈愿
+   * @property {string} NameCard 名片
    * @property {string} Material 材料
    * @property {string} Meta 元数据
    * @property {string} Weapon 武器
@@ -23,6 +24,7 @@ declare namespace TGACore.Plugins.Hutao.Base {
     AchievementGoal: "AchievementGoal.json",
     Avatar: "Avatar/",
     Gacha: "GachaEvent.json",
+    NameCard: "NameCard.json",
     Meta: "Meta.json",
     Weapon: "Weapon.json",
     Material: "Material.json",

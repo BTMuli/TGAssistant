@@ -7,20 +7,19 @@
 import path from "node:path";
 import process from "node:process";
 
-import axios from "axios";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
+import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDir, wikiDir } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
 Counter.Init("[components][material][convert]");
 logger.default.info("[components][material][convert] 运行 convert.ts");
-const amberConfig = readConfig("constant").amber;
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
@@ -31,25 +30,21 @@ if (!fileCheck(rawPath, false)) {
   process.exit(1);
 }
 
-const rawData: Record<string, TGACore.Plugins.Amber.Material> = await fs.readJson(rawPath);
+const rawData: Array<TGACore.Plugins.Yatta.Material.MaterialItem> = await fs.readJson(rawPath);
 const rawList = Object.values(rawData);
-const transJson: TGACore.Components.Material.WikiItem[] = [];
+const transJson: Array<TGACore.Components.Material.WikiItem> = [];
 // 转换json
-for (const material of rawList) {
-  const oriPath = path.join(jsonDir.src, `${material.id}.json`);
+for (const item of rawList) {
+  const oriPath = path.join(jsonDir.src, `${item.id}.json`);
   if (!fileCheck(oriPath, false)) {
-    logger.default.error(
-      `[components][material][convert][${material.id}] ${material.name} JSON 文件不存在`,
-    );
+    logger.default.error(`[components][material][convert][${item.id}] ${item.name} JSON 不存在`);
     Counter.Fail();
     continue;
   }
-  const oriData: TGACore.Components.Material.RawAmber = await fs.readJson(oriPath);
-  const transData: TGACore.Components.Material.WikiItem = await transMaterial(material, oriData);
+  const oriData: TGACore.Plugins.Yatta.Material.MaterialDetail = await fs.readJson(oriPath);
+  const transData = await transMaterial(item, oriData);
   transJson.push(transData);
-  logger.console.info(
-    `[components][material][convert][${material.id}] ${material.name} JSON 转换完成`,
-  );
+  logger.console.info(`[components][material][convert][${item.id}] ${item.name} JSON 转换完成`);
 }
 Counter.End();
 Counter.Output();
@@ -59,27 +54,21 @@ logger.default.info(`[components][material][convert] JSON 转换完成，耗时$
 
 // 转换图片
 Counter.Reset(rawList.length);
-for (const material of rawList) {
-  const oriPath = path.join(imgDir.src, `${material.id}.png`);
-  const outPath = path.join(imgDir.out, `${material.id}.webp`);
+for (const item of rawList) {
+  const oriPath = path.join(imgDir.src, `${item.id}.png`);
+  const outPath = path.join(imgDir.out, `${item.id}.webp`);
   if (!fileCheck(oriPath, false)) {
-    logger.default.error(
-      `[components][material][convert][${material.id}] ${material.name} PNG 文件不存在`,
-    );
+    logger.default.error(`[components][material][convert][${item.id}] ${item.name} PNG 不存在`);
     Counter.Fail();
     continue;
   }
   if (fileCheck(outPath, false)) {
-    logger.console.mark(
-      `[components][material][convert][${material.id}] ${material.name} WEBP 已存在`,
-    );
+    logger.console.mark(`[components][material][convert][${item.id}] ${item.name} WEBP 已存在`);
     Counter.Skip();
     continue;
   }
   await sharp(oriPath).png().resize(256, 256).webp().toFile(outPath);
-  logger.console.info(
-    `[components][material][convert][${material.id}] ${material.name} WEBP 转换完成`,
-  );
+  logger.console.info(`[components][material][convert][${item.id}] ${item.name} WEBP 转换完成`);
 }
 
 Counter.End();
@@ -92,59 +81,69 @@ Counter.EndAll();
 /**
  * @description 转换材料数据
  * @since 2.4.0
- * @param {TGACore.Plugins.Amber.Material} material 原始材料数据
- * @param {TGACore.Components.Material.RawAmber} data 材料数据
+ * @param {TGACore.Plugins.Yatta.Material.MaterialItem} material 原始材料数据
+ * @param {TGACore.Plugins.Yatta.Material.MaterialDetail} data 材料数据
  * @return {TGACore.Components.Material.WikiItem} 转换后的材料数据
  */
 async function transMaterial(
-  material: TGACore.Plugins.Amber.Material,
-  data: TGACore.Components.Material.RawAmber,
+  material: TGACore.Plugins.Yatta.Material.MaterialItem,
+  data: TGACore.Plugins.Yatta.Material.MaterialDetail,
 ): Promise<TGACore.Components.Material.WikiItem> {
-  const converts: TGACore.Components.Material.Convert[] = [];
-  if (data.recipe !== null && data.recipe != false) {
-    const keys = Object.keys(data.recipe);
-    for (const key of keys) {
-      const convert: TGACore.Components.Material.Convert = {
-        id: key,
-        source: [],
-      };
-      const recipe = data.recipe[key];
-      const recipeKeys = Object.keys(recipe);
-      for (const recipeKey of recipeKeys) {
-        const materialJson = path.join(jsonDir.src, `${recipeKey}.json`);
-        let materialData: TGACore.Components.Material.RawAmber;
+  // 处理合成
+  const converts: Array<TGACore.Components.Material.Convert> = [];
+  if (data.recipe) {
+    const recipeAllKeys = Object.keys(data.recipe);
+    for (const item of recipeAllKeys) {
+      const convert: TGACore.Components.Material.Convert = { id: item, source: [] };
+      const recipeItem = data.recipe[item];
+      const recipeMaterials = Object.keys(recipeItem);
+      for (const key of recipeMaterials) {
+        const materialJson = path.join(jsonDir.src, `${key}.json`);
         if (!fileCheck(materialJson, false)) {
           logger.default.warn(
-            `[components][material][convert][${material.id}] ${recipeKey} JSON 文件不存在，尝试下载`,
+            `[components][material][convert][${material.id}] ${key} JSON 文件不存在，尝试下载`,
           );
-          await convertImg(recipeKey);
-          const data = await downloadJson(recipeKey);
-          if (data === false) {
-            logger.default.warn(
-              `[components][material][convert][${material.id}] ${recipeKey} JSON 下载失败`,
+          try {
+            const json = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Material.DetailResponse>(
+              `CHS/material/${key}`,
             );
+            fs.writeJSONSync(materialJson, json.data, { spaces: 2 });
+            const savePath = path.join(imgDir.out, `${key}.webp`);
+            if (!fileCheck(savePath, false)) {
+              const iconBuffer = await fetchSgBuffer("ItemIcon", `${json.data.icon}.png`);
+              await sharp(iconBuffer).png().resize(256, 256).webp().toFile(savePath);
+            }
+            logger.default.info(
+              `[components][material][convert][${material.id}] ${key} 数据补充完成`,
+            );
+          } catch (e) {
+            logger.default.error(
+              `[components][material][convert][${material.id}] ${key} JSON 下载失败`,
+            );
+            logger.default.error(e);
+            Counter.Fail();
             continue;
           }
-          materialData = data;
-        } else {
-          materialData = await fs.readJson(materialJson);
         }
+        const materialData: TGACore.Plugins.Yatta.Material.MaterialDetail =
+          await fs.readJson(materialJson);
         convert.source.push({
-          id: recipeKey,
+          id: key,
           name: materialData.name,
           type: materialData.type,
           star: materialData.rank,
-          count: recipe[recipeKey].count,
+          count: recipeItem[key].count,
         });
       }
       converts.push(convert);
     }
   }
-  const source: TGACore.Components.Material.Source[] = [];
+  // 处理来源
+  const source: Array<TGACore.Components.Material.Source> = [];
   const dayList = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-  if (data.source !== null) {
+  if (data.source) {
     for (const item of data.source) {
-      let days: number[] = [];
+      let days: Array<number> = [];
       if (item.days === undefined) {
         if (item.name === "前往采集") continue;
         if (item.name === "占位-可合成数量:{0}") continue;
@@ -165,56 +164,4 @@ async function transMaterial(
     source,
     convert: converts,
   };
-}
-
-/**
- * @description 下载 JSON
- * @since 2.2.0
- * @param {string} id 材料 ID
- * @return {Promise<TGACore.Components.Material.RawAmber|false>}
- */
-async function downloadJson(id: string): Promise<TGACore.Components.Material.RawAmber | false> {
-  let res: TGACore.Components.Material.Response;
-  try {
-    res = await axios
-      .get(`${amberConfig.api}chs/material/${id}`, {
-        params: {
-          vh: amberConfig.version,
-        },
-      })
-      .then((res) => res.data);
-  } catch (error) {
-    logger.default.error(`[components][material][convert][${id}] 下载 JSON 数据失败`);
-    logger.console.error(error);
-    return false;
-  }
-  return res.data;
-}
-
-/**
- * @description 下载图片
- * @since 2.2.0
- * @param {string} id 材料 ID
- * @return {Promise<void>}
- */
-async function convertImg(id: string): Promise<void> {
-  const savePath = path.join(imgDir.out, `${id}.webp`);
-  if (fileCheck(savePath, false)) {
-    logger.console.mark(`[components][material][convert][${id}] 图片已存在，跳过下载`);
-    return;
-  }
-  let res: ArrayBuffer;
-  try {
-    res = await axios
-      .get(`${amberConfig.site}assets/UI/UI_ItemIcon_${id}.png`, {
-        responseType: "arraybuffer",
-      })
-      .then((res) => res.data);
-  } catch (error) {
-    logger.default.error(`[components][material][convert][${id}] 下载图片失败`);
-    logger.console.error(error);
-    return;
-  }
-  await sharp(res).png().resize(256, 256).webp().toFile(savePath);
-  logger.default.info(`[components][material][convert][${id}] 图片转换完成`);
 }

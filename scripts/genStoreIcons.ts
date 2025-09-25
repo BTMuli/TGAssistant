@@ -6,14 +6,13 @@
 
 import path from "node:path";
 
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import { fileCheck } from "@utils/fileCheck.ts";
+import { getProjRootPath } from "@utils/getBasePaths.ts";
 import fs from "fs-extra";
 import imageSize from "image-size";
 import sharp from "sharp";
-
-import Counter from "../core/tools/counter.ts";
-import logger from "../core/tools/logger.ts";
-import { fileCheck } from "../core/utils/fileCheck.ts";
-import { getProjRootPath } from "../core/utils/getBasePaths.ts";
 
 logger.init();
 Counter.Init("[scripts][GSI]");

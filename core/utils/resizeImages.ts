@@ -9,10 +9,11 @@ import path from "node:path";
 import fs from "fs-extra";
 import sharp from "sharp";
 
-import { fileCheckObj } from "./fileCheck.ts";
-import { getAppDirPath } from "./getBasePaths.ts";
 import Counter from "../tools/counter.ts";
 import logger from "../tools/logger.ts";
+
+import { fileCheckObj } from "./fileCheck.ts";
+import { getAppDirPath } from "./getBasePaths.ts";
 
 const tempDir = getAppDirPath("temp");
 
@@ -40,7 +41,7 @@ for (const file of files) {
     Counter.Skip();
     continue;
   }
-  const out = await sharp(path.join(tempDir.src, file)).webp().toFile(savePath);
+  const out = await sharp(path.join(tempDir.src, file)).resize(256, 256).webp().toFile(savePath);
   logger.console.mark(`[utils][resizeImages] 图片 ${file} 处理完成，大小为 ${out.size} 字节`);
   Counter.Success();
 }

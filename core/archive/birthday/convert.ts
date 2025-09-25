@@ -8,9 +8,10 @@ import path from "node:path";
 
 import fs from "fs-extra";
 
-import { ArcBirDir } from "./constant.ts";
 import Counter from "../../tools/counter.ts";
 import logger from "../../tools/logger.ts";
+
+import { ArcBirDir } from "./constant.ts";
 
 logger.init();
 logger.default.info("[core][archive][birthday][convert] 运行 convert.ts");

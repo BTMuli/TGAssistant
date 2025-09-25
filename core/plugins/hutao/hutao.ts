@@ -4,15 +4,28 @@
  * @since 2.4.0
  */
 
-import { HutaoGithubFileEnum } from "./enum.ts";
-import { readRawJson, updateJson, fetchMeta, checkLocalJson } from "./utils.ts";
+import { getWeaponTypeString, HutaoGithubFileEnum, HutaoWeaponTypeEnum } from "./enum.ts";
+import {
+  readRawJson,
+  updateJson,
+  fetchMeta,
+  checkLocalJson,
+  getAreaName,
+  getAllAvatarId,
+} from "./utils.ts";
 
 const hutaoTool = {
   sync: fetchMeta,
   check: checkLocalJson,
   update: updateJson,
   read: readRawJson,
-  enum: { file: HutaoGithubFileEnum },
+  readIds: getAllAvatarId,
+  enum: {
+    file: HutaoGithubFileEnum,
+    weapon: HutaoWeaponTypeEnum,
+    area: getAreaName,
+    transW: getWeaponTypeString,
+  },
 };
 
 export default hutaoTool;

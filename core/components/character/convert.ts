@@ -1,21 +1,19 @@
 /**
- * @file core components character convert.ts
+ * @file core/components/character/convert.ts
  * @description 角色组件数据转换
  * @since 2.4.0
  */
-
+import path from "node:path";
 import process from "node:process";
 
+import hutaoTool from "@hutao/hutao.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { getHutaoWeapon } from "../../utils/typeTrans.ts";
-import path from "node:path";
-import { transArea } from "../wikiAvatar/convert.ts";
 
 logger.init();
 Counter.Init("[components][character][convert]");
@@ -31,47 +29,48 @@ if (!fileCheck(jsonDetailDir.mys, false)) {
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const converData: TGACore.Components.Character.ConvertData[] = [];
-const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amber);
-const idList: number[] = [];
-
-for (const i of amberJson) {
-  if (!isNaN(Number(i.id))) idList.push(Number(i.id));
-}
+const converData: Array<TGACore.Components.Character.Character> = [];
+const meta = hutaoTool.read<Record<string, string>>(hutaoTool.enum.file.Meta);
+const paramList = hutaoTool.readIds(meta);
 
 // 处理 hutao.json
 logger.console.info("[components][character][convert] 第一次处理：通过 hutao.json");
-Counter.Reset(idList.length);
-for (const id of idList) {
-  const filePath = path.join(jsonDir.src, `${id}.json`);
-  if (!fs.existsSync(filePath)) {
-    logger.default.error(`[components][character][conver] 角色${id}元数据不存在`);
+Counter.Reset(paramList.length);
+for (const param of paramList) {
+  const check = hutaoTool.check(hutaoTool.enum.file.Avatar, param);
+  if (!check) {
+    logger.default.error(`[components][character][conver] 角色${param}元数据文件不存在`);
     Counter.Fail();
     continue;
   }
-  const item: TGACore.Components.Character.RawHutaoItem = await fs.readJson(filePath);
-  const avatar: TGACore.Components.Character.ConvertData = {
-    id: item.Id,
+  const rawAvatar = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+    hutaoTool.enum.file.Avatar,
+    param,
+  );
+  const avatar: TGACore.Components.Character.Character = {
+    id: rawAvatar.Id,
     contentId: 0,
-    name: item.Name,
-    title: item.FetterInfo.Title,
-    area: transArea(item.FetterInfo.Association),
-    birthday: [item.FetterInfo.BirthMonth, item.FetterInfo.BirthDay],
-    star: item.Quality === 105 ? 5 : item.Quality,
-    element: item.FetterInfo.VisionBefore,
-    weapon: getHutaoWeapon(item.Weapon),
-    nameCard: item.NameCard.Name,
+    name: rawAvatar.Name,
+    title: rawAvatar.FetterInfo.Title,
+    area: hutaoTool.enum.area(rawAvatar.FetterInfo.Association),
+    birthday: [rawAvatar.FetterInfo.BirthMonth, rawAvatar.FetterInfo.BirthDay],
+    star: rawAvatar.Quality === 105 ? 5 : rawAvatar.Quality,
+    element: rawAvatar.FetterInfo.VisionBefore,
+    weapon: hutaoTool.enum.transW(rawAvatar.Weapon),
+    nameCard: rawAvatar.NameCard.Name,
   };
   converData.push(avatar);
-  logger.console.mark(`[components][character][convert] 角色 ${item.Id} 转换完成`);
+  logger.console.mark(`[components][character][convert] 角色 ${rawAvatar.Id} 转换完成`);
 }
 Counter.End();
 logger.default.info(`[components][character][convert] 第一次处理完成，耗时 ${Counter.getTime()}`);
 
 // 处理 mys.json，添加 contentId
 logger.console.info("[components][character][convert] 第二次处理：通过 mys.json 添加 contentId");
+
 Counter.Reset();
-const mysRaw: TGACore.Plugins.Observe.WikiItem[] = await fs.readJson(jsonDetailDir.mys);
+const mysRaw: Array<TGACore.Plugins.Mys.WikiItem> = await fs.readJson(jsonDetailDir.mys);
+
 for (const item of mysRaw) {
   const index = converData.findIndex(
     (value) => value.name === item.title || `${value.name}【预告】` === item.title,
@@ -81,7 +80,7 @@ for (const item of mysRaw) {
       const lumineList = [4073, 505505, 505498, 505496, 505497, 505504];
       const element = item.title.trim().split("·").pop() ?? "";
       const isLumine = lumineList.includes(item.content_id);
-      const character: TGACore.Components.Character.ConvertData = {
+      const character: TGACore.Components.Character.Character = {
         id: isLumine ? 10000007 : 10000005,
         contentId: item.content_id,
         name: isLumine ? `荧·${element}` : `空·${element}`,
@@ -105,15 +104,12 @@ for (const item of mysRaw) {
 const noContentId = converData.filter((item) => item.contentId === 0);
 if (noContentId.length > 0) {
   logger.default.warn("[components][character][convert] 以下角色没有 contentId");
-  noContentId.forEach((item) => {
+  for (const item of noContentId) {
     logger.default.warn(`[components][character][convert] ${item.id}·${item.name}`);
-  });
+  }
 }
 // 排序，写入
-converData.sort((a, b) => {
-  if (a.star === b.star) return b.id - a.id;
-  return b.star - a.star;
-});
+converData.sort((a, b) => (a.star === b.star ? b.id - a.id : b.star - a.star));
 fs.writeJSONSync(jsonDetailDir.out, converData);
 Counter.End();
 logger.default.info(`[components][character][convert] 第二次处理完成，耗时 ${Counter.getTime()}`);
@@ -122,8 +118,8 @@ logger.default.info(`[components][character][convert] 第二次处理完成，�
 logger.console.info("[components][character][convert] 第三次处理：处理图片数据");
 Counter.Reset(converData.length);
 for (const item of converData) {
-  const srcPath = `${imgDir.src}/${item.id}.png`;
-  const outPath = `${imgDir.out}/${item.id}.webp`;
+  const srcPath = path.join(imgDir.src, `${item.id}.png`);
+  const outPath = path.join(imgDir.out, `${item.id}.webp`);
   if (!fileCheck(srcPath, false)) {
     logger.default.warn(`[components][character][convert] 角色 ${item.id} 没有图片数据`);
     Counter.Fail();

@@ -4,42 +4,49 @@
  * @since 2.4.0
  */
 
-import { fileCheck, fileCheckObj } from "core/utils/fileCheck.ts";
-import logger from "../../tools/logger.ts";
-import fs from "fs-extra";
-import { imageDetail, jsonDetail, jsonDir, jsonOutDir } from "./constant.ts";
 import path from "node:path";
-import Counter from "../../tools/counter.ts";
+
+import hutaoTool from "@hutao/hutao.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import matchMaterials from "@utils/matchMaterials.ts";
+import { fileCheck } from "core/utils/fileCheck.ts";
+import fs from "fs-extra";
 import sharp from "sharp";
-import { getHutaoWeapon } from "../../utils/typeTrans.ts";
+
+import { imageDetail, jsonOutDir } from "./constant.ts";
 
 logger.init();
 logger.default.info("[components][wikiAvatar][convert] 运行 convert.ts");
 
-// 前置检查 ambr
-fileCheckObj(jsonDir, false);
-fileCheck(jsonDetail.amber, false);
+// 前置检查
 fileCheck(jsonOutDir);
+const localMeta = hutaoTool.read<Record<string, string>>(hutaoTool.enum.file.Meta);
+const paramList = hutaoTool.readIds(localMeta);
 
-const ids: number[] = await fs.readJSON(jsonDetail.amber);
-const materialRaw: TGACore.Plugins.Hutao.Material[] = await fs.readJSON(jsonDetail.material);
-Counter.Reset(ids.length);
-for (const id of ids) {
-  const filePath = path.join(jsonDir.src, `${id}.json`);
-  if (!fs.existsSync(filePath)) {
-    logger.default.error(`[components][wikiAvatar][convert] 角色${id}JSON不存在，请重新下载`);
+Counter.Reset(paramList.length);
+for (const param of paramList) {
+  const check = hutaoTool.check(hutaoTool.enum.file.Avatar, param);
+  if (!check) {
+    logger.default.error(`[components][wikiAvatar][convert] 角色${param}元数据文件不存在`);
     Counter.Fail();
     continue;
   }
-  const avatarRaw: TGACore.Components.Character.RawHutaoItem = await fs.readJson(filePath);
+
+  const avatarRaw = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+    hutaoTool.enum.file.Avatar,
+    param,
+  );
+  // 处理图像
+  for (const skill of avatarRaw.SkillDepot.Skills) await convertSkill(skill);
+  for (const inherent of avatarRaw.SkillDepot.Inherents) await convertSkill(inherent);
+  await convertSkill(avatarRaw.SkillDepot.EnergySkill);
+  for (const talent of avatarRaw.SkillDepot.Talents) await convertTalent(talent);
+  // 转换数据
   const avatarTrans: TGACore.Components.Character.WikiItem = transCharacter(avatarRaw);
-  await convertTalents(avatarRaw.SkillDepot.Skills);
-  await convertTalents(avatarRaw.SkillDepot.Inherents);
-  await convertTalent(avatarRaw.SkillDepot.EnergySkill);
-  await convertConstellations(avatarRaw.SkillDepot.Talents);
-  const savePath = path.join(jsonOutDir, `${id}.json`);
+  const savePath = path.join(jsonOutDir, `${param}.json`);
   await fs.writeJSON(savePath, avatarTrans);
-  logger.default.info(`[components][wikiAvatar][convert] 角色${id}转换完成`);
+  logger.default.info(`[components][wikiAvatar][convert] 角色${param}转换完成`);
   Counter.Success();
 }
 Counter.End();
@@ -57,7 +64,7 @@ Counter.Output();
 function transCharacter(
   raw: TGACore.Components.Character.RawHutaoItem,
 ): TGACore.Components.Character.WikiItem {
-  const materials = getMaterials(raw.CultivationItems);
+  const materials = matchMaterials(raw.CultivationItems);
   const tempSkills = [
     ...raw.SkillDepot.Skills,
     raw.SkillDepot.EnergySkill,
@@ -89,7 +96,7 @@ function transCharacter(
     },
     star: raw.Quality === 105 ? 5 : raw.Quality,
     element: raw.FetterInfo.VisionBefore,
-    weapon: getHutaoWeapon(raw.Weapon),
+    weapon: hutaoTool.enum.transW(raw.Weapon),
     materials,
     skills,
     constellation: raw.SkillDepot.Talents,
@@ -98,25 +105,6 @@ function transCharacter(
     talks: transTalks(raw.FetterInfo.Fetters, raw.Name),
     stories: raw.FetterInfo.FetterStories,
   };
-}
-
-/**
- * @description 获取材料
- * @since 2.3.0
- * @param {number[]} raw 原始数据
- * @returns {TGACore.Components.Calendar.ConvertMaterial[]} 转换后的数据
- */
-function getMaterials(raw: number[]): TGACore.Components.Calendar.ConvertMaterial[] {
-  const res: TGACore.Components.Calendar.ConvertMaterial[] = [];
-  for (const r of raw) {
-    const material = materialRaw.find((item) => item.Id === r);
-    if (material === undefined) {
-      logger.default.warn(`[components][wiki][convert] 缺失ID为 ${r} 的材料数据`);
-      continue;
-    }
-    res.push({ id: material.Id, name: material.Name, star: material.RankLevel });
-  }
-  return res;
 }
 
 /**
@@ -223,49 +211,35 @@ function transTalks(
 
 /**
  * @description 转换天赋图像
- * @since 2.2.0
- * @param {TGACore.Components.Character.RhisdSkill[]} talents 天赋数组
+ * @since 2.4.0
+ * @function convertSkill
+ * @param {TGACore.Plugins.Hutao.Avatar.Skill} skill 天赋
  * @returns {Promise<void>}
  */
-async function convertTalents(talents: TGACore.Components.Character.RhisdTalent[]): Promise<void> {
-  for (const talent of talents) {
-    await convertTalent(talent);
-  }
-}
-
-/**
- * @description 转换天赋图像
- * @since 2.2.0
- * @param {TGACore.Components.Character.RhisdSkill} talent 天赋
- * @returns {Promise<void>}
- */
-async function convertTalent(talent: TGACore.Components.Character.RhisdTalent): Promise<void> {
+async function convertSkill(skill: TGACore.Plugins.Hutao.Avatar.Skill): Promise<void> {
   const imgDir = imageDetail.talents;
-  if (talent.Icon === "") {
+  if (skill.Icon === "") {
     Counter.addTotal();
-    logger.default.warn(`[components][wiki][convert][icon] 天赋 ${talent.Name} 无图标`);
+    logger.default.warn(`[components][wiki][convert][icon] 天赋 ${skill.Name} 无图标`);
     Counter.Skip();
     return;
   }
-  const oriPath = `${imgDir.src}/${talent.Icon}.png`;
-  const savePath = `${imgDir.out}/${talent.Icon}.webp`;
-  await convertImage(oriPath, savePath, `天赋 ${talent.Icon}`);
+  const oriPath = `${imgDir.src}/${skill.Icon}.png`;
+  const savePath = `${imgDir.out}/${skill.Icon}.webp`;
+  await convertImage(oriPath, savePath, `天赋 ${skill.Icon}`);
 }
 
 /**
  * @description 转换命座图像
- * @since 2.2.0
- * @param {TGACore.Components.Character.RhisdSkill[]} constellations 命座数组
+ * @since 2.4.0
+ * @function convertTalent
+ * @param {TGACore.Plugins.Hutao.Avatar.Talent} talent 命座数组
  * @returns {Promise<void>}
  */
-async function convertConstellations(
-  constellations: TGACore.Components.Character.RhisdTalent[],
-): Promise<void> {
-  for (const constellation of constellations) {
-    const oriPath = `${imageDetail.constellations.src}/${constellation.Icon}.png`;
-    const savePath = `${imageDetail.constellations.out}/${constellation.Icon}.webp`;
-    await convertImage(oriPath, savePath, `命座 ${constellation.Icon}`);
-  }
+async function convertTalent(talent: TGACore.Plugins.Hutao.Avatar.Talent): Promise<void> {
+  const oriPath = `${imageDetail.constellations.src}/${talent.Icon}.png`;
+  const savePath = `${imageDetail.constellations.out}/${talent.Icon}.webp`;
+  await convertImage(oriPath, savePath, `命座 ${talent.Icon}`);
 }
 
 /**

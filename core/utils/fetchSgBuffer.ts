@@ -16,7 +16,7 @@ const SG_STATIC_URL = "https://static.snapgenshin.cn/";
  */
 async function fecthSgBuffer(dir: string, filename: string): Promise<Buffer> {
   const link = `${SG_STATIC_URL}${dir}/${filename}`;
-  const resp = await fetch(link, { method: "GET", responseType: "arraybuffer" });
+  const resp = await fetch(link);
   const arrayBuffer = await resp.arrayBuffer();
   return Buffer.from(arrayBuffer);
 }

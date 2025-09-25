@@ -4,91 +4,62 @@
  * @since 2.4.0
  */
 
-import fs from "fs-extra";
+import path from "node:path";
+
+import hutaoTool from "@hutao/hutao.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import sharp from "sharp";
 
-import { imageDetail, jsonDir, jsonDetail } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { getSnapAvatarDownloadUrl } from "../../utils/operGitRepo.ts";
-import { readConfig } from "../../utils/readConfig.ts";
-import process from "node:process";
-import path from "node:path";
+import { imageDetail } from "./constant.ts";
 
 logger.init();
 Counter.Init("[components][wikiAvatar][download]");
 logger.default.info("[components][wikiAvatar][download] 运行 download.ts");
-const ambrConfig = readConfig("constant").amber;
 
-fileCheckObj(jsonDir, false);
 fileCheckObj(imageDetail);
 
-const avatarIds: number[] = [];
-
-// 下载ambr的角色数据
-Counter.Reset();
-logger.default.info("[components][wikiAvatar][download] 下载 amber 角色数据");
-try {
-  const link = `${ambrConfig.api}chs/avatar?vh=${ambrConfig.version}`;
-  const resp = await fetch(link);
-  const res = <TGACore.Plugins.Amber.ResponseCharacter>await resp.json();
-  // 获取角色ID列表存到本地
-  Object.values(res.data.items).forEach((i) => {
-    if (!isNaN(Number(i.id))) avatarIds.push(Number(i.id));
-  });
-  await fs.writeJSON(jsonDetail.amber, avatarIds);
-  logger.default.info(`[components][wikiAvatar][download] 成功获取 ${avatarIds.length} 条角色ID`);
-} catch (error) {
-  logger.default.error("[components][wikiAvatar][download] 获取角色ID列表失败");
-  logger.console.error(error);
-  process.exit(1);
-}
-
-// 下载 metadata 元数据
-Counter.Reset(avatarIds.length);
-const urlRes = getSnapAvatarDownloadUrl(avatarIds);
-for (const url of urlRes) {
-  const fileName = url.split("/").pop();
-  if (fileName === undefined) {
-    logger.default.error(`[components][wikiAvatar][download] 文件名获取失败: ${url}`);
-    Counter.Fail();
-    continue;
-  }
-  const savePath = path.join(jsonDir.src, fileName);
-  if (fs.existsSync(savePath)) {
-    logger.default.mark(`[components][wikiAvatar][download] ${fileName} 已存在，跳过`);
-    Counter.Skip();
-    continue;
-  }
+const meta = await hutaoTool.sync();
+const paramList: Array<string> = Object.keys(meta)
+  .filter((key) => key.startsWith(hutaoTool.enum.file.Avatar))
+  .map((key) => key.replace(hutaoTool.enum.file.Avatar, ""));
+Counter.addTotal(paramList.length);
+for (const param of paramList) {
   try {
-    const resp = await fetch(url);
-    const res = await resp.json();
-    await fs.writeJSON(savePath, res, { spaces: 2 });
-    logger.default.info(`[components][wikiAvatar][download] ${fileName} 下载完成`);
-    Counter.Success();
-  } catch (error) {
-    logger.default.error(`[components][wikiAvatar][download] ${fileName} 下载失败`);
-    logger.console.error(error);
+    const statKey = await hutaoTool.update(meta, hutaoTool.enum.file.Avatar, param);
+    if (statKey) {
+      logger.default.info(`[components][wikiAvatar][download][${param}] 成功更新 Metadata 数据`);
+      Counter.Success();
+    } else {
+      logger.console.mark(`[components][wikiAvatar][download][${param}] 无需更新 Metadata 数据`);
+      Counter.Skip();
+    }
+  } catch (e) {
+    logger.default.error(`[components][wikiAvatar][download][${param}] 更新 Metadata 数据失败`);
+    logger.console.error(`[components][wikiAvatar][download][${param}] ${e}`);
     Counter.Fail();
   }
 }
-Counter.End();
 
 // 下载角色天赋&命座数据
 Counter.Reset();
-for (const id of avatarIds) {
-  const filePath = path.join(jsonDir.src, `${id}.json`);
-  if (!fs.existsSync(filePath)) {
-    logger.default.error(`[components][wikiAvatar][download] 角色 ${id} JSON不存在`);
+for (const param of paramList) {
+  const check = hutaoTool.check(hutaoTool.enum.file.Avatar, param);
+  if (!check) {
+    logger.default.error(`[components][wikiAvatar][download][${param}] 角色元数据文件不存在`);
     Counter.Fail();
     continue;
   }
-  const rawAvatar: TGACore.Components.Character.RawHutaoItem = await fs.readJson(filePath);
-  await downloadTalents(rawAvatar.SkillDepot.Skills);
-  await downloadTalent(rawAvatar.SkillDepot.EnergySkill);
-  await downloadTalents(rawAvatar.SkillDepot.Inherents);
-  await downloadConstellations(rawAvatar.SkillDepot.Talents);
+  const rawAvatar = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+    hutaoTool.enum.file.Avatar,
+    param,
+  );
+  for (const skill of rawAvatar.SkillDepot.Skills) await downloadSkill(skill);
+  await downloadSkill(rawAvatar.SkillDepot.EnergySkill);
+  for (const inherent of rawAvatar.SkillDepot.Inherents) await downloadSkill(inherent);
+  await downloadTalents(rawAvatar.SkillDepot.Talents);
 }
 Counter.End();
 
@@ -97,78 +68,76 @@ logger.default.info(`[components][wikiAvatar][download] 耗时：${Counter.getTi
 Counter.Output();
 
 /**
- * @description 下载天赋图像（批量）
- * @since 2.2.0
- * @param {TGACore.Components.Character.RhisdSkill[]} talents
- * @returns {Promise<void>}
- */
-async function downloadTalents(talents: TGACore.Components.Character.RhisdSkill[]): Promise<void> {
-  for (const talent of talents) {
-    await downloadTalent(talent);
-  }
-}
-
-/**
  * @description 下载天赋图像（单个）
- * @since 2.2.0
- * @param {TGACore.Components.Character.RhisdSkill} talent
+ * @since 2.4.0
+ * @function downloadSkill
+ * @param {TGACore.Plugins.Hutao.Avatar.Skill} skill 天赋数据
  * @returns {Promise<void>}
  */
-async function downloadTalent(talent: TGACore.Components.Character.RhisdSkill): Promise<void> {
+async function downloadSkill(skill: TGACore.Plugins.Hutao.Avatar.Skill): Promise<void> {
   Counter.addTotal(1);
-  if (talent.Icon === "") {
+  if (skill.Icon === "") {
     logger.default.warn(
-      `[components][wikiAvatar][download][icon] 天赋 ${talent.Name}(${talent.Id}) 无图标，跳过`,
+      `[components][wikiAvatar][download][icon] 天赋 ${skill.Name}(${skill.Id}) 无图标，跳过`,
     );
     Counter.Skip();
     return;
   }
-  const savePath = path.join(imageDetail.talents.src, `${talent.Icon}.png`);
-  const link = `https://static.snapgenshin.cn/Skill/${talent.Icon}.png`;
-  await downloadImage(savePath, link, `天赋 ${talent.Icon}(${talent.Id})`);
-}
-
-/**
- * @description 下载命座图像
- * @since 2.2.0
- * @param {TGACore.Components.Character.RhisdTalent[]} constellations 命座数据
- * @returns {Promise<void>}
- */
-async function downloadConstellations(
-  constellations: TGACore.Components.Character.RhisdTalent[],
-): Promise<void> {
-  Counter.addTotal(constellations.length);
-  for (const constellation of constellations) {
-    const savePath = path.join(imageDetail.constellations.src, `${constellation.Icon}.png`);
-    const link = `${ambrConfig.assets}${constellation.Icon}.png`;
-    await downloadImage(savePath, link, `命座 ${constellation.Icon}(${constellation.Id})`);
-  }
-}
-
-/**
- * @description 下载图像
- * @since 2.2.0
- * @param {string} savePath 保存路径
- * @param {string} link 图像链接
- * @param {string} label 描述
- * @returns {Promise<void>}
- */
-async function downloadImage(savePath: string, link: string, label: string): Promise<void> {
+  const savePath = path.join(imageDetail.talents.src, `${skill.Icon}.png`);
   if (fileCheck(savePath, false)) {
-    logger.console.mark(`[components][wikiAvatar][download][icon] ${label}已存在，跳过下载`);
+    logger.console.mark(
+      `[components][wikiAvatar][download][icon] 天赋 ${skill.Name}(${skill.Id}) 已存在，跳过下载`,
+    );
     Counter.Skip();
     return;
   }
   try {
-    const res = await fetch(link, { method: "GET" });
-    const buffer = await res.arrayBuffer();
+    const buffer = await fetchSgBuffer("Skill", `${skill.Icon}.png`);
     await sharp(buffer).toFile(savePath);
-    logger.default.info(`[components][wikiAvatar][download][icon] ${label} 下载完成`);
+    logger.default.info(
+      `[components][wikiAvatar][download][icon] 天赋 ${skill.Name}(${skill.Id}) 下载完成`,
+    );
     Counter.Success();
   } catch (e) {
-    logger.default.error(`[components][wikiAvatar][download][icon] ${label} 下载失败`);
-    logger.default.error(`URL: ${link}`);
+    logger.default.error(
+      `[components][wikiAvatar][download][icon] 天赋 ${skill.Name}(${skill.Id}) 下载失败`,
+    );
     logger.default.error(e);
     Counter.Fail();
+  }
+}
+
+/**
+ * @description 下载命座图像
+ * @since 2.4.0
+ * @function downloadTalents
+ * @param {Array<TGACore.Plugins.Hutao.Avatar.Talent>} talents 命座数据
+ * @returns {Promise<void>}
+ */
+async function downloadTalents(talents: Array<TGACore.Plugins.Hutao.Avatar.Talent>): Promise<void> {
+  Counter.addTotal(talents.length);
+  for (const talent of talents) {
+    const savePath = path.join(imageDetail.constellations.src, `${talent.Icon}.png`);
+    if (fileCheck(savePath, false)) {
+      logger.console.mark(
+        `[components][wikiAvatar][download][icon] 命座 ${talent.Icon}(${talent.Id}) 已存在，跳过下载`,
+      );
+      Counter.Skip();
+      continue;
+    }
+    try {
+      const buffer = await fetchSgBuffer("Talent", `${talent.Icon}.png`);
+      await sharp(buffer).toFile(savePath);
+      logger.default.info(
+        `[components][wikiAvatar][download][icon] 命座 ${talent.Icon}(${talent.Id}) 下载完成`,
+      );
+      Counter.Success();
+    } catch (e) {
+      logger.default.error(
+        `[components][wikiAvatar][download][icon] 命座 ${talent.Icon}(${talent.Id}) 下载失败`,
+      );
+      logger.default.error(e);
+      Counter.Fail();
+    }
   }
 }

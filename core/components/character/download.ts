@@ -1,20 +1,22 @@
 /**
- * @file core components character download.ts
+ * @file core/components/character/download.ts
  * @description 角色组件资源下载
  * @since 2.4.0
  */
 
 import path from "node:path";
 
+import hutaoTool from "@hutao/hutao.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import fetchMysObserver from "@utils/fetchMysObserver.ts";
+import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
+import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { getSnapAvatarDownloadUrl } from "../../utils/operGitRepo.ts";
-import { readConfig } from "../../utils/readConfig.ts";
 
 logger.init();
 Counter.Init("[components][character][download]");
@@ -24,19 +26,30 @@ fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 fileCheckObj(jsonDetailDir, false);
 
-const amberConfig = readConfig("constant").amber;
-
 Counter.Reset(3);
 logger.default.info("[components][character][download] 开始更新 JSON 数据");
 
-// 下载 amber 数据
+// 下载Metadata数据
+const meta = await hutaoTool.sync();
+const paramList: Array<string> = Object.keys(meta)
+  .filter((key) => key.startsWith(hutaoTool.enum.file.Avatar))
+  .map((key) => key.replace(hutaoTool.enum.file.Avatar, ""));
+Counter.addTotal(paramList.length);
+for (const param of paramList) {
+  try {
+    const statKey = await hutaoTool.update(meta, hutaoTool.enum.file.Avatar, param);
+    if (statKey) Counter.Success();
+    else Counter.Skip();
+  } catch (e) {
+    logger.default.error(`[components][character][download][${param}] 下载 Metadata 数据失败`);
+    logger.console.error(`[components][character][download][${param}] ${e}`);
+    Counter.Fail();
+  }
+}
+// 下载 Yatta 数据
 try {
-  const resp = await fetch(`${amberConfig.api}chs/avatar?vh=${amberConfig.version}`);
-  const res = <TGACore.Plugins.Amber.ResponseCharacter>await resp.json();
-  // 转成数组存到本地
-  const amberData: TGACore.Plugins.Amber.Character[] = [];
-  Object.keys(res.data.items).forEach((id) => amberData.push(res.data.items[id]));
-  await fs.writeJson(jsonDetailDir.amber, amberData, { spaces: 2 });
+  const res = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Avatar.AvatarResponse>("CHS/avatar");
+  await fs.writeJson(jsonDetailDir.yatta, res.data.items, { spaces: 2 });
   logger.default.info("[components][character][download] Amber.top 角色数据下载完成");
   Counter.Success();
 } catch (e) {
@@ -44,15 +57,11 @@ try {
   logger.default.error(e);
   Counter.Fail();
 }
-
 // 下载 mys 数据
 try {
-  const resp = await fetch(
-    `https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list?app_sn=ys_obc&channel_id=189`,
-  );
-  const res = <TGACore.Plugins.Observe.ResponseWiki>await resp.json();
-  const mysData: TGACore.Plugins.Observe.WikiItem[] =
-    res.data.list[0].children.find((item) => item.name === "角色")?.list ?? [];
+  const res = await fetchMysObserver();
+  const mysData: Array<TGACore.Plugins.Mys.WikiItem> =
+    res[0].children.find((item) => item.name === "角色")?.list ?? [];
   if (mysData.length === 0) {
     logger.default.warn("[components][character][download] 观测枢 角色数据为空");
     Counter.Fail();
@@ -67,39 +76,6 @@ try {
   Counter.Fail();
 }
 
-const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amber);
-const idList: number[] = [];
-for (const item of amberJson) {
-  if (!isNaN(Number(item.id))) idList.push(Number(item.id));
-}
-
-const urlRes = getSnapAvatarDownloadUrl(idList);
-Counter.addTotal(idList.length);
-for (const url of urlRes) {
-  const fileName = url.split("/").pop();
-  if (fileName === undefined) {
-    logger.default.error(`[components][wikiAvatar][download] 文件名获取失败: ${url}`);
-    Counter.Fail();
-    continue;
-  }
-  const savePath = path.join(jsonDir.src, fileName);
-  if (fs.existsSync(savePath)) {
-    logger.console.mark(`[components][character][download] 角色${savePath}数据已存在，跳过下载`);
-    Counter.Skip();
-    continue;
-  }
-  try {
-    const resp = await fetch(url);
-    const res = <TGACore.Components.Character.RawHutaoItem>await resp.json();
-    await fs.writeJSON(savePath, res, { spaces: 2 });
-    logger.default.info(`[components][character][download] 角色${fileName}数据下载完成`);
-    Counter.Success();
-  } catch (e) {
-    logger.default.warn(`[components][character][download] 下载角色${fileName}数据失败`);
-    logger.default.error(e);
-    Counter.Fail();
-  }
-}
 Counter.End();
 logger.default.info(`[components][character][download] 数据更新完成，耗时 ${Counter.getTime()}`);
 Counter.Output();
@@ -107,42 +83,35 @@ Counter.Output();
 // 下载图片数据
 Counter.Reset();
 logger.console.info("[components][character][download] 开始下载图片数据");
-Counter.addTotal(amberJson.length);
-for (const item of amberJson) {
-  const url = `${amberConfig.assets}${item.icon}.png`;
-  const savePath = path.join(imgDir.src, `${item.id}.png`);
-  const element = getAmberElement(item.element);
-  if (isNaN(Number(item.id))) {
-    logger.console.warn(
-      `[components][character][download] ${item.id} ${item.name}·${element} Icon 编号异常，跳过`,
-    );
-    Counter.Skip();
-    continue;
-  }
+const yattaRaw: Record<string, TGACore.Plugins.Yatta.Avatar.AvatarItem> = await fs.readJson(
+  jsonDetailDir.yatta,
+);
+const yattaAvatar = Object.values(yattaRaw);
+Counter.addTotal(yattaAvatar.length);
+for (const avatar of yattaAvatar) {
+  const id = avatar.id.toString().split("-")[0];
+  const savePath = path.join(imgDir.src, `${id}.png`);
   if (fileCheck(savePath, false)) {
     logger.console.mark(
-      `[components][character][download] ${item.id} ${item.name}·${element} Icon 已存在，跳过`,
+      `[components][character][download] ${avatar.id} ${avatar.name} Icon 已存在，跳过`,
     );
     Counter.Skip();
     continue;
   }
-  let res: ArrayBuffer | undefined;
   try {
-    const resp = await fetch(url, { method: "GET" });
-    res = await resp.arrayBuffer();
+    const res = await fetchSgBuffer("AvatarIcon", `${avatar.icon}.png`);
+    await sharp(res).toFile(savePath);
+    logger.default.info(
+      `[components][character][download] ${avatar.id} ${avatar.name} Icon 下载完成`,
+    );
+    Counter.Success();
   } catch (e) {
     logger.default.warn(
-      `[components][character][download] ${item.id} ${item.name}·${element} Icon 下载失败`,
+      `[components][character][download] ${avatar.id} ${avatar.name} Icon 下载失败`,
     );
     logger.default.error(e);
     Counter.Fail();
-    continue;
   }
-  await sharp(res).toFile(savePath);
-  logger.default.info(
-    `[components][character][download] ${item.id} ${item.name}·${element} Icon 下载完成`,
-  );
-  Counter.Success();
 }
 
 Counter.End();
@@ -152,30 +121,3 @@ Counter.Output();
 logger.default.info("[components][character][download] download.ts 运行结束");
 Counter.EndAll();
 logger.console.info("[components][character][download] 请执行 convert.ts 转换图片");
-
-/**
- * @description 获取 Amber.top 角色元素
- * @since 2.0.0
- * @param {TGACore.Plugins.Amber.ElementType} element 元素类型
- * @return {TGACore.Constant.ElementType} 元素类型
- */
-function getAmberElement(element: TGACore.Plugins.Amber.ElementType): string {
-  switch (element) {
-    case "Wind":
-      return "风";
-    case "Rock":
-      return "岩";
-    case "Electric":
-      return "雷";
-    case "Water":
-      return "水";
-    case "Fire":
-      return "火";
-    case "Ice":
-      return "冰";
-    case "Grass":
-      return "草";
-    default:
-      throw new Error(`[components][character][download] ${element}`);
-  }
-}

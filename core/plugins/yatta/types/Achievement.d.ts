@@ -9,10 +9,9 @@ declare namespace TGACore.Plugins.Yatta.Achievement {
    * @description 接口返回响应
    * @since 2.4.0
    * @interface AchiResp
-   * @property {number} response 状态码
-   * @property {AchiRes} data 数据
+   * @extends TGACore.Plugins.Yatta.Base.Response<AchiRes>
    */
-  type AchiResp = { response: number; data: AchiRes };
+  type AchiResp = TGACore.Plugins.Yatta.Base.Response<AchiRes>;
 
   /**
    * @description 接口返回数据
@@ -38,7 +37,7 @@ declare namespace TGACore.Plugins.Yatta.Achievement {
     order: number;
     icon: string;
     achievementList: Record<string, AchiList>;
-    finishReward: Record<string, AchiReward>;
+    finishReward: Record<string, AchiReward> | null;
   };
 
   /**

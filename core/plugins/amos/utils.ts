@@ -31,7 +31,7 @@ function hasTaskTrigger(
   if (!achievement.trigger.task || achievement.trigger.task.length === 0) return false;
   const partialJson = <TGACore.Plugins.Amos.TriggerMeta>amosPartialJson;
   const partial = partialJson[achievement.id];
-  if (partial === undefined || partial === null) return true;
+  if (partial === undefined || partial === null) return false;
   return partial;
 }
 

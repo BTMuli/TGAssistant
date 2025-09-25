@@ -11,6 +11,7 @@ import appRootPath from "app-root-path";
 /**
  * @description 获取项目根路径
  * @since 2.0.0
+ * @function getProjRootPath
  * @returns {string} 项目根路径
  */
 export function getProjRootPath(): string {
@@ -18,17 +19,9 @@ export function getProjRootPath(): string {
 }
 
 /**
- * @description 获取项目配置文件路径
- * @since 2.0.0
- * @returns {string} 项目配置文件路径
- */
-export function getProjConfigPath(): string {
-  return path.join(getProjRootPath(), "config");
-}
-
-/**
  * @description 获取项目日志文件路径
  * @since 2.0.0
+ * @function getProjLogPath
  * @returns {string} 项目日志文件路径
  */
 export function getProjLogPath(): string {
@@ -38,15 +31,14 @@ export function getProjLogPath(): string {
 /**
  * @description 获取项目数据文件路径
  * @since 2.4.0
+ * @function getProjDataPath
  * @param {TGACore.Config.AppDirType} dirType 目录类型
  * @param {Array<string>} [args] 其他路径参数
  * @returns {string} 项目数据文件路径
  */
-export function getProjDataPath(dirType: TGACore.Config.AppDirType): string;
-export function getProjDataPath(dirType: TGACore.Config.AppDirType, ...args: string[]): string;
 export function getProjDataPath(
   dirType: TGACore.Config.AppDirType,
-  ...args: Array<string> | undefined
+  ...args: Array<string>
 ): string {
   if (!args || args.length === 0) return path.join(getProjRootPath(), "source", dirType);
   return path.join(getProjRootPath(), "source", dirType, ...args);
@@ -55,6 +47,7 @@ export function getProjDataPath(
 /**
  * @description 获取特定目录路径
  * @since 2.0.0
+ * @function getAppDirPath
  * @param {TGACore.Config.AppDirType} dirType 目录类型
  * @param {TGACore.Config.AppDataDirType} dirName 数据目录类型
  * @return {TGACore.Config.BaseDirType} 目录路径

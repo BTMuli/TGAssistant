@@ -1,35 +1,38 @@
 /**
  * @file core/components/gacha/convert.ts
  * @description gacha 组件资源转换
- * @since 2.1.0
+ * @since 2.4.0
  */
 
 import process from "node:process";
 
+import hutaoTool from "@hutao/hutao.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 
-import { jsonDetailDir, jsonDir, type PostItem } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
+import { jsonDetailDir, jsonDir } from "./constant.ts";
 
 logger.init();
 Counter.Init("[components][gacha][convert]");
 
 // 前置检查
 fileCheckObj(jsonDir);
-if (!fileCheck(jsonDetailDir.src, false) || !fileCheck(jsonDetailDir.mhy, false)) {
+
+if (!fileCheck(jsonDetailDir.mhy, false) || !hutaoTool.check(hutaoTool.enum.file.Gacha)) {
   logger.default.error("[components][gacha][convert] gacha 数据文件不存在");
   logger.console.info("[components][gacha][convert] 请执行 download.ts");
   process.exit(1);
 }
 
 Counter.Reset();
-const gachaRaw: TGACore.Components.Gacha.RawHutao = await fs.readJSON(jsonDetailDir.src);
-const postRaw: PostItem[] = await fs.readJSON(jsonDetailDir.mhy);
-let gacha: TGACore.Components.Gacha.ConvertItem[] = [];
-gachaRaw.forEach((item) => {
-  const convert: TGACore.Components.Gacha.ConvertItem = {
+const gachaRaw = hutaoTool.read<TGACore.Plugins.Hutao.Gacha.RawGacha>(hutaoTool.enum.file.Gacha);
+const postRaw: TGACore.Components.Gacha.MysPosts = await fs.readJSON(jsonDetailDir.mhy);
+
+let gacha: Array<TGACore.Components.Gacha.Pool> = [];
+for (const item of gachaRaw) {
+  const convert: TGACore.Components.Gacha.Pool = {
     name: item.Name,
     version: item.Version,
     order: item.Order,
@@ -42,7 +45,7 @@ gachaRaw.forEach((item) => {
     up4List: item.UpPurpleList,
   };
   gacha.push(convert);
-});
+}
 gacha = gacha.reverse();
 let curVersion = gacha[0].version;
 for (const post of postRaw) {
@@ -57,7 +60,7 @@ for (const post of postRaw) {
   if (post.title.includes("神铸赋形")) {
     const wishWeapon = filter.find((item) => item.name === "神铸赋形");
     if (wishWeapon != null) {
-      gacha.forEach((item) => {
+      for (const item of gacha) {
         if (
           item.version === curVersion &&
           item.name === "神铸赋形" &&
@@ -70,7 +73,7 @@ for (const post of postRaw) {
           );
           isFind = true;
         }
-      });
+      }
     }
     continue;
   }
@@ -82,7 +85,7 @@ for (const post of postRaw) {
     logger.console.warn(`[components][gacha][convert] 未匹配到卡池 ${post.title}`);
     const wishWeapon = filter.find((item) => item.name === "神铸赋形" && item.postId === "");
     if (wishWeapon != null) {
-      gacha.forEach((item) => {
+      for (const item of gacha) {
         if (
           item.version === curVersion &&
           item.order === wishWeapon.order &&
@@ -96,7 +99,7 @@ for (const post of postRaw) {
           );
           isFind = true;
         }
-      });
+      }
     } else {
       logger.default.warn(`[components][gacha][convert] 未找到对应卡池 ${curVersion}`);
     }
@@ -104,7 +107,7 @@ for (const post of postRaw) {
     const wishName = wishMatch[1];
     const wishFind = filter.find((item) => item.name === wishName);
     if (wishFind != null) {
-      gacha.forEach((item) => {
+      for (const item of gacha) {
         if (
           item.version === curVersion &&
           item.name === wishName &&
@@ -117,7 +120,7 @@ for (const post of postRaw) {
           );
           isFind = true;
         }
-      });
+      }
     }
   }
   if (!isFind) {

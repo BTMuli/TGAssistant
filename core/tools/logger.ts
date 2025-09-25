@@ -4,10 +4,9 @@
  * @since 2.0.0
  */
 
+import { getProjLogPath } from "@utils/getBasePaths.ts";
+import { getDate } from "@utils/getDate.ts";
 import log4js from "log4js";
-
-import { getProjLogPath } from "../utils/getBasePaths.ts";
-import { getDate } from "../utils/getDate.ts";
 
 const logDir = getProjLogPath();
 

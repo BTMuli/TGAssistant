@@ -20,14 +20,13 @@ declare namespace TGACore.Components.Character {
    * @property {string} Description 角色简介
    * @property {string} BeginTime 上线时间 // 2021-03-02T16:00:00+08:00
    * @property {number} Quality 角色星级
-   * @property {TGACore.Plugins.Hutao.WeaponType} Weapon 武器类型
+   * @property {TGACore.Plugins.Hutao.WeaponTypeEnum} Weapon 武器类型
    * @property {RhiBaseValue} BaseValue 角色基础属性
    * @property {RhiGrowCurve[]} GrowCurves 未知
    * @property {RhiSkillDepot} SkillDepot 角色技能
    * @property {RhiFetterInfo} FetterInfo 好感信息
    * @property {RhiCostume[]} Costumes 角色皮肤
    * @property {number[]} CultivationItems 角色培养材料
-   * @return RawHutaoItem
    */
   interface RawHutaoItem {
     Id: number;
@@ -40,7 +39,7 @@ declare namespace TGACore.Components.Character {
     Description: string;
     BeginTime: string;
     Quality: number;
-    Weapon: TGACore.Plugins.Hutao.WeaponType;
+    Weapon: TGACore.Plugins.Hutao.Weapon.WeaponTypeEnum;
     BaseValue: RhiBaseValue;
     GrowCurves: RhiGrowCurve[];
     SkillDepot: RhiSkillDepot;
@@ -271,8 +270,8 @@ declare namespace TGACore.Components.Character {
 
   /**
    * @description 转换后的数据
-   * @since 2.0.2
-   * @memberof TGACore.Components.Character
+   * @since 2.4.0
+   * @interface Character
    * @property {number} id 角色编号
    * @property {number} contentId 观测枢 contentId
    * @property {string} name 角色名称
@@ -283,9 +282,8 @@ declare namespace TGACore.Components.Character {
    * @property {string} element 角色元素类型
    * @property {string} weapon 角色武器类型
    * @property {string} nameCard 角色名片
-   * @return ConvertData
    */
-  interface ConvertData {
+  type Character = {
     id: number;
     contentId: number;
     name: string;
@@ -296,7 +294,7 @@ declare namespace TGACore.Components.Character {
     element: string;
     weapon: string;
     nameCard: string;
-  }
+  };
 
   /**
    * @description 转换后的wiki数据
@@ -308,49 +306,52 @@ declare namespace TGACore.Components.Character {
    * @property {string} title 角色称号
    * @property {string} description 角色简介
    * @property {string} area 角色地区
-   * @property {object} brief 角色简介
-   * @property {string} brief.camp 角色地区
-   * @property {string} brief.constellation 角色星座
-   * @property {string} brief.birth 角色生日
-   * @property {object} brief.cv 角色声优
-   * @property {string} brief.cv.cn 角色声优-中文
-   * @property {string} brief.cv.jp 角色声优-日文
-   * @property {string} brief.cv.en 角色声优-英文
-   * @property {string} brief.cv.kr 角色声优-韩文
+   * @property {WikiBrief} brief 角色简介信息
    * @property {number} star 角色星级
    * @property {string} element 角色元素类型
-   * @property {TGACore.Constant.WeaponType} weapon 角色武器类型
-   * @property {TGACore.Components.Calendar.ConvertMaterial[]} materials 角色培养材料
+   * @property {string} weapon 角色武器类型
+   * @property {TGACore.Components.Calendar.Material[]} materials 角色培养材料
    * @property {RhisdSkill[]} skills 角色技能
    * @property {RhisdTalent[]} constellation 角色命座
    * @property {RhiFetter[]} talks 闲聊
    * @property {RhiFetter[]} stories 故事
-   * @return WikiItem
    */
-  interface WikiItem {
+  type WikiItem = {
     id: number;
     name: string;
     title: string;
     description: string;
     area: string;
-    brief: {
-      camp: string;
-      constellation: string;
-      birth: string;
-      cv: {
-        cn: string;
-        jp: string;
-        en: string;
-        kr: string;
-      };
-    };
+    brief: WikiBrief;
     star: number;
     element: string;
-    weapon: TGACore.Constant.WeaponType;
-    materials: TGACore.Components.Calendar.ConvertMaterial[];
+    weapon: string;
+    materials: TGACore.Components.Calendar.Material[];
     skills: Array<Omit<RhisdSkill, "Proud">>;
     constellation: RhisdTalent[];
     talks: RhiFetter[];
     stories: RhiFetter[];
-  }
+  };
+
+  /**
+   * @description wiki简介
+   * @since 2.4.0
+   * @interface WikiBrief
+   * @property {string} camp 角色地区
+   * @property {string} constellation 角色星座
+   * @property {string} birth 角色生日
+   * @property {WikiCv} cv 角色声优
+   */
+  type WikiBrief = { camp: string; constellation: string; birth: string; cv: WikiCv };
+
+  /**
+   * @description wiki声优
+   * @since 2.4.0
+   * @interface WikiCv
+   * @property {string} cn 角色声优-中文
+   * @property {string} jp 角色声优-日文
+   * @property {string} en 角色声优-英文
+   * @property {string} kr 角色声优-韩文
+   */
+  type WikiCv = { cn: string; jp: string; en: string; kr: string };
 }

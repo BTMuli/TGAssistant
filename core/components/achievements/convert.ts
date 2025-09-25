@@ -8,7 +8,6 @@ import path from "node:path";
 import process from "node:process";
 
 import amosTool from "@amos/amos.ts";
-import { HutaoGithubFileEnum } from "@hutao/enum.ts";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
@@ -24,31 +23,26 @@ logger.default.info("[components][achievement][convert] 运行 convert.ts");
 // 前置检查
 fileCheckObj(jsonDir);
 if (
-  !fileCheck(jsonDetailDir.yatta, false) ||
-  !hutaoTool.check(HutaoGithubFileEnum.Achievement) ||
-  !hutaoTool.check(HutaoGithubFileEnum.AchievementGoal)
+  !hutaoTool.check(hutaoTool.enum.file.Achievement) ||
+  !hutaoTool.check(hutaoTool.enum.file.AchievementGoal) ||
+  !hutaoTool.check(hutaoTool.enum.file.NameCard)
 ) {
   logger.default.error("[components][achievement][convert] 成就元数据文件不存在");
   logger.console.info("[components][achievement][convert] 请执行 download.ts");
   process.exit(1);
 }
-if (!fileCheck(jsonDetailDir.namecard, false)) {
-  logger.default.error("[components][achievement][update] namecard.json 不存在");
-  logger.console.info("[components][achievement][update] 请先运行 namecard/convert.ts");
-  process.exit(1);
-}
 
 Counter.Reset();
 // 读取成就元数据
-const achievementRaw = await hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievement>(
+const achievementRaw = hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievement>(
   hutaoTool.enum.file.Achievement,
 );
-const seriesRaw = await hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievementGoal>(
+const seriesRaw = hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievementGoal>(
   hutaoTool.enum.file.AchievementGoal,
 );
 const amberRaw: TGACore.Plugins.Yatta.Achievement.AchiRes = await fs.readJSON(jsonDetailDir.yatta);
-const namecardData: TGACore.Components.Namecard.ConvertData[] = await fs.readJson(
-  jsonDetailDir.namecard,
+const namecardRaw = hutaoTool.read<TGACore.Plugins.Hutao.NameCard.RawNameCard>(
+  hutaoTool.enum.file.NameCard,
 );
 
 // 转换成就元数据
@@ -57,7 +51,7 @@ const series: Array<TGACore.Components.Achievement.Series> = [];
 const versionMax: Record<number, string> = {};
 const rawAmosAchievements = amosTool.flattern();
 // 先处理成就
-achievementRaw.forEach((item) => {
+for (const item of achievementRaw) {
   let trigger: TGACore.Components.Achievement.Trigger = { type: "Unknown" };
   const triggerFind = rawAmosAchievements.find((rawItem) => rawItem.id === Number(item.Id));
   if (triggerFind) trigger = amosTool.parse(triggerFind);
@@ -72,22 +66,26 @@ achievementRaw.forEach((item) => {
     trigger: trigger,
   };
   achievement.push(achievementItem);
-  logger.console.mark(`[components][achievement][convert] 成就 ${item.Id} 转换完成`);
+  logger.console.mark(`[components][achievement][convert][${item.Id}] 成就 ${item.Title} 转换完成`);
   if (versionMax[item.Goal] === undefined) {
     versionMax[item.Goal] = item.Version;
   } else if (versionMax[item.Goal] < item.Version) {
     versionMax[item.Goal] = item.Version;
   }
-});
+}
 
 // 再处理成就系列
-seriesRaw.forEach((item) => {
+for (const item of seriesRaw) {
   const amberSeries = amberRaw[item.Id];
   let card = "";
   if (amberSeries.finishReward !== null) {
     const cardKey = Object.keys(amberSeries.finishReward)[0];
-    const cardFind = namecardData.find((i) => i.id.toString() === cardKey);
-    if (cardFind) card = cardFind.name;
+    const icon = amberSeries.finishReward[cardKey].icon;
+    const cardFind = namecardRaw.find((i) => i.Icon === icon);
+    if (cardFind) card = cardFind.Name;
+  }
+  if (card === "") {
+    logger.default.warn(`[components][achievement][convert] 成就系列 ${item.Name} 未找到对应名片`);
   }
   const seriesItem: TGACore.Components.Achievement.Series = {
     id: item.Id,
@@ -98,8 +96,8 @@ seriesRaw.forEach((item) => {
     icon: item.Icon,
   };
   series.push(seriesItem);
-  logger.console.mark(`[components][achievement][convert] 成就系列 ${item.Id} 转换完成`);
-});
+  logger.console.mark(`[components][achievement][convert] 成就系列 ${item.Name} 转换完成`);
+}
 
 // 排序，写入
 achievement.sort((a, b) => a.id - b.id);

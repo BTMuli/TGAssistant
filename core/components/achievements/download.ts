@@ -25,28 +25,29 @@ fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
 // 更新Metadata数据
-logger.console.info("[components][achievement][download] 开始下载 Snap.Metadata 成就数据");
-Counter.addTotal(2);
+logger.console.info("[components][achievement][download] 开始下载 Metadata 成就数据");
+Counter.Reset(3);
 const remoteMeta = await hutaoTool.sync();
+// 更新成就数据
 try {
   const statAchi = await hutaoTool.update(remoteMeta, hutaoTool.enum.file.Achievement);
   if (statAchi) Counter.Success();
   else Counter.Skip();
 } catch (e) {
-  logger.default.error("[components][achievement][download] 下载 Snap.Metadata 成就数据失败");
+  logger.default.error("[components][achievement][download] 下载 Metadata 成就数据失败");
   logger.console.error(`[components][achievement][download] ${e}`);
   Counter.Fail();
 }
+// 更新名片数据
 try {
-  const statGoal = await hutaoTool.update(remoteMeta, hutaoTool.enum.file.AchievementGoal);
-  if (statGoal) Counter.Success();
+  const statNameCard = await hutaoTool.update(remoteMeta, hutaoTool.enum.file.NameCard);
+  if (statNameCard) Counter.Success();
   else Counter.Skip();
 } catch (e) {
-  logger.default.error("[components][achievement][download] 下载 Snap.Metadata 成就系列数据失败");
+  logger.default.error("[components][achievement][download] 下载 Metadata 名片数据失败");
   logger.console.error(`[components][achievement][download] ${e}`);
   Counter.Fail();
 }
-
 // 更新Yatta数据
 logger.console.info("[components][achievement][download] 开始下载Yatta成就数据");
 try {
@@ -56,8 +57,8 @@ try {
   logger.default.info("[components][achievement][download2] 下载 Amber 成就数据成功");
   Counter.Success();
 } catch (e) {
-  logger.default.error("[components][achievement][download2] 下载 Amber 成就数据失败");
-  logger.console.error(`[components][achievement][download2] ${e}`);
+  logger.default.error("[components][achievement][download] 下载 Amber 成就数据失败");
+  logger.console.error(`[components][achievement][download] ${e}`);
   Counter.Fail();
 }
 
@@ -66,7 +67,7 @@ logger.default.info(`[components][achievement][download] 数据更新完成，�
 Counter.Output();
 
 // 下载图片
-const seriesRaw = await hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievementGoal>(
+const seriesRaw = hutaoTool.read<TGACore.Plugins.Hutao.Achievement.RawAchievementGoal>(
   hutaoTool.enum.file.AchievementGoal,
 );
 Counter.Reset(seriesRaw.length);

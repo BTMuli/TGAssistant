@@ -6,10 +6,11 @@
 
 import path from "node:path";
 
+import logger from "@tools/logger.ts";
 import { fileCheck } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 
-import { jsonDir } from "./constant.ts";
+import { AREA_LIST, avatarDir, jsonDir } from "./constant.ts";
 import { HutaoGithubFileEnum } from "./enum.ts";
 
 /**
@@ -20,11 +21,6 @@ import { HutaoGithubFileEnum } from "./enum.ts";
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {string} 下载 url
  */
-function getJsonDownloadUrl(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): string;
-function getJsonDownloadUrl(
-  fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
-  param: string,
-): string;
 function getJsonDownloadUrl(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
@@ -42,8 +38,6 @@ function getJsonDownloadUrl(
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {string} 保存路径
  */
-function getSavePath(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): string;
-function getSavePath(fileType: TGACore.Plugins.Hutao.Base.AvatarFileType, param: string): string;
 function getSavePath(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
@@ -62,11 +56,6 @@ function getSavePath(
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {Promise<void>} JSON数据
  */
-async function downloadJson(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): Promise<void>;
-async function downloadJson(
-  fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
-  param: string,
-): Promise<void>;
 async function downloadJson(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
@@ -87,7 +76,7 @@ async function downloadJson(
 export async function fetchMeta(): Promise<Record<string, string>> {
   const downloadLink = getJsonDownloadUrl(HutaoGithubFileEnum.Meta);
   const resp = await fetch(downloadLink);
-  return await resp.json();
+  return <Record<string, string>>await resp.json();
 }
 
 /**
@@ -98,11 +87,6 @@ export async function fetchMeta(): Promise<Record<string, string>> {
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {boolean} true表示存在，false表示不存在
  */
-export function checkLocalJson(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): boolean;
-export function checkLocalJson(
-  fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
-  param: string,
-): boolean;
 export function checkLocalJson(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
@@ -120,16 +104,14 @@ export function checkLocalJson(
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {T} JSON数据
  */
-export function readRawJson<T>(fileType: TGACore.Plugins.Hutao.Base.SingleFileType): T;
-export function readRawJson<T>(
-  fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
-  param: string,
-): T;
 export function readRawJson<T>(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
 ): T {
-  const savePath = getSavePath(fileType, param);
+  let savePath: string;
+  if (fileType !== HutaoGithubFileEnum.Avatar) savePath = getSavePath(fileType);
+  else if (param) savePath = getSavePath(fileType, param);
+  else throw new Error(`[Hutao][metaUtils][readRawJson] 读取 ${fileType} 时缺少参数`);
   return fs.readJsonSync(savePath);
 }
 
@@ -144,19 +126,11 @@ export function readRawJson<T>(
  */
 export async function updateJson(
   metaData: Record<string, string>,
-  fileType: TGACore.Plugins.Hutao.Base.SingleFileType,
-): Promise<boolean>;
-export async function updateJson(
-  metaData: Record<string, string>,
-  fileType: TGACore.Plugins.Hutao.Base.AvatarFileType,
-  param: string,
-): Promise<boolean>;
-export async function updateJson(
-  metaData: Record<string, string>,
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
 ): Promise<boolean> {
   fileCheck(jsonDir);
+  if (fileType === HutaoGithubFileEnum.Avatar) fileCheck(avatarDir);
   let key: string;
   if (fileType !== HutaoGithubFileEnum.Avatar) key = fileType;
   else key = `${fileType}${param}.json`;
@@ -165,7 +139,7 @@ export async function updateJson(
   let needUpdate = true;
   let localMeta: Record<string, string> = {};
   if (checkLocalJson(HutaoGithubFileEnum.Meta)) {
-    localMeta = await readRawJson<Record<string, string>>(HutaoGithubFileEnum.Meta);
+    localMeta = readRawJson<Record<string, string>>(HutaoGithubFileEnum.Meta);
     if (localMeta[key] && remoteMeta && localMeta[key] === remoteMeta) {
       const check = checkLocalJson(fileType, param);
       if (check) needUpdate = false;
@@ -175,12 +149,40 @@ export async function updateJson(
     logger.console.info(`[Hutao][metaUtils] ${key} 数据无需更新，保持 ${localMeta[key]}`);
     return false;
   }
-  logger.default.info(
-    `[Hutao][metaUtils] ${key} 数据需要更新，${localMeta[key] ?? "undefined"} → ${metaData[key]}`,
-  );
+  const diff = `${localMeta[key] ?? "undefined"} → ${metaData[key]}`;
+  logger.default.info(`[Hutao][metaUtils] ${key} 即将更新 ${diff}`);
   await downloadJson(fileType, param);
   localMeta[key] = metaData[key];
   fs.writeJsonSync(getSavePath(HutaoGithubFileEnum.Meta), localMeta, { spaces: 2 });
-  logger.default.info(`[Hutao][metaUtils] ${key} 数据更新完成 ${localMeta[key]}`);
+  logger.default.info(`[Hutao][metaUtils] ${key} 数据更新完成 ${diff}`);
   return true;
+}
+
+/**
+ * @description 传入地区索引，返回对应的地区名称
+ * @since 2.4.0
+ * @function getAreaName
+ * @param {number} index 地区索引
+ * @return {string} 地区名称
+ */
+export function getAreaName(index: number): string {
+  if (index >= AREA_LIST.length || index < 0) return "未知";
+  return AREA_LIST[index];
+}
+
+/**
+ * @description 从本地Meta数据中获取所有角色ID
+ * @since 2.4.0
+ * @function getAllAvatarId
+ * @param {Record<string,string>} meta 胡桃Meta数据
+ * @returns {Array<string>}
+ */
+export function getAllAvatarId(meta: Record<string, string>): Array<string> {
+  const ids: Array<string> = [];
+  for (const key in meta) {
+    if (key.startsWith(HutaoGithubFileEnum.Avatar)) {
+      ids.push(key.replace(HutaoGithubFileEnum.Avatar, ""));
+    }
+  }
+  return ids;
 }

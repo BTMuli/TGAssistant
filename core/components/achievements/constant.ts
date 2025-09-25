@@ -13,7 +13,6 @@ export const jsonDir = getAppDirPath("data", "achievement");
 export const jsonDetailDir = {
   achievement: path.join(jsonDir.out, "app", "achievements.json"),
   series: path.join(jsonDir.out, "app", "achievementSeries.json"),
-  namecard: path.join(jsonDir.out, "app", "namecard.json"),
   yatta: path.join(jsonDir.src, "yatta.json"),
 };
 

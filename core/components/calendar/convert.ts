@@ -2,26 +2,26 @@
  * @file core/components/calendar/convert.ts
  * @description 日历组件数据转换
  * @since 2.4.0
+ * @todo 重构处理逻辑
  */
-
 import process from "node:process";
 
+import hutaoTool from "@hutao/hutao.ts";
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
+import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
 
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
-import Counter from "../../tools/counter.ts";
-import logger from "../../tools/logger.ts";
-import { fileCheck, fileCheckObj } from "../../utils/fileCheck.ts";
-import { getHutaoWeapon } from "../../utils/typeTrans.ts";
-import path from "node:path";
 
 logger.init();
 logger.default.info("[components][calendar][convert] 运行 convert.ts");
 
 if (
-  !fileCheck(jsonDetailDir.amber, false) ||
+  !fileCheck(jsonDetailDir.domain, false) ||
   !fileCheck(jsonDetailDir.mys, false) ||
-  !fileCheck(jsonDetailDir.material, false)
+  !hutaoTool.check(hutaoTool.enum.file.Material)
 ) {
   logger.default.error("[components][calendar][convert] 日历元数据文件不存在");
   logger.console.info("[components][calendar][convert] 请执行 download.ts");
@@ -32,10 +32,10 @@ if (
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-const converData: TGACore.Components.Calendar.ConvertData[] = [];
-const convertMaterial: TGACore.Components.Calendar.ConvertMaterial[] = [];
+const converData: TGACore.Components.Calendar.CalendarItem[] = [];
+const convertMaterial: TGACore.Components.Calendar.Material[] = [];
 const convertMaterialSet = new Set<number>();
-const convertSource: TGACore.Components.Calendar.ConvertSource[] = [];
+const convertSource: TGACore.Components.Calendar.Source[] = [];
 const convertSourceSet = new Set<string>();
 
 // 秘境-掉落对照表
@@ -44,42 +44,55 @@ const domainMaterialMap: Record<string, string> = {};
 const domainDateMap: Record<string, number[]> = {};
 
 Counter.Reset();
+
 // 读取日历元数据
-const amberRaw: TGACore.Components.Calendar.RawAmber = await fs.readJson(jsonDetailDir.amber);
-const mysRaw: TGACore.Plugins.Observe.WikiChildren[] = await fs.readJson(jsonDetailDir.mys);
-const weaponRaw: TGACore.Components.Weapon.RawHutaoItem[] = await fs.readJson(jsonDetailDir.weapon);
-const materialRaw: TGACore.Components.Calendar.RawHutaoMaterial[] = await fs.readJson(
-  jsonDetailDir.material,
+const amberRaw: TGACore.Plugins.Yatta.DailyDungeon.DailyRes = await fs.readJson(
+  jsonDetailDir.domain,
 );
-const avatarRaw: TGACore.Components.Character.RawHutaoItem[] = [];
-const amberJson: TGACore.Plugins.Amber.Character[] = await fs.readJson(jsonDetailDir.amberC);
-const idList: number[] = [];
-amberJson.forEach((i) => {
-  if (!isNaN(Number(i.id))) idList.push(Number(i.id));
-});
-for (const i of idList) {
-  const savePath = path.join(jsonDir.src, `${i}.json`);
-  if (!fileCheck(savePath, false)) continue;
-  const data: TGACore.Components.Character.RawHutaoItem = await fs.readJson(savePath);
-  avatarRaw.push(data);
+const mysRaw: Array<TGACore.Plugins.Mys.WikiChildren> = await fs.readJson(jsonDetailDir.mys);
+const weaponRaw = hutaoTool.read<TGACore.Plugins.Hutao.Weapon.RawWeapon>(
+  hutaoTool.enum.file.Weapon,
+);
+const materialRaw = hutaoTool.read<TGACore.Plugins.Hutao.Material.RawMaterial>(
+  hutaoTool.enum.file.Material,
+);
+
+// 读取角色元数据
+const avatarRaw: Array<TGACore.Plugins.Hutao.Avatar.RawAvatar> = [];
+const localMeta = hutaoTool.read<Record<string, string>>(hutaoTool.enum.file.Meta);
+const filterKey = Object.keys(localMeta).filter((key) =>
+  key.startsWith(hutaoTool.enum.file.Avatar),
+);
+for (const key of filterKey) {
+  const param = key.replace(hutaoTool.enum.file.Avatar, "");
+  const check = hutaoTool.check(hutaoTool.enum.file.Avatar, param);
+  if (!check) {
+    logger.default.warn(`[components][calendar][convert] 角色元数据 ${param} 不存在，跳过`);
+    continue;
+  }
+  const res = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+    hutaoTool.enum.file.Avatar,
+    param,
+  );
+  avatarRaw.push(res);
 }
 
 // 处理 amber.json 添加 convertSource、convertMaterial、
 logger.console.info("[components][calendar][convert] 处理 amber.json");
 logger.console.info("[components][calendar][convert] 处理周一的数据");
-Object.values(amberRaw.data.monday).forEach((value) => measureAmber(value, "monday"));
+Object.values(amberRaw.monday).forEach((value) => measureAmber(value, "monday"));
 logger.console.info("[components][calendar][convert] 处理周二的数据");
-Object.values(amberRaw.data.tuesday).forEach((value) => measureAmber(value, "tuesday"));
+Object.values(amberRaw.tuesday).forEach((value) => measureAmber(value, "tuesday"));
 logger.console.info("[components][calendar][convert] 处理周三的数据");
-Object.values(amberRaw.data.wednesday).forEach((value) => measureAmber(value, "wednesday"));
+Object.values(amberRaw.wednesday).forEach((value) => measureAmber(value, "wednesday"));
 logger.console.info("[components][calendar][convert] 处理周四的数据");
-Object.values(amberRaw.data.thursday).forEach((value) => measureAmber(value, "thursday"));
+Object.values(amberRaw.thursday).forEach((value) => measureAmber(value, "thursday"));
 logger.console.info("[components][calendar][convert] 处理周五的数据");
-Object.values(amberRaw.data.friday).forEach((value) => measureAmber(value, "friday"));
+Object.values(amberRaw.friday).forEach((value) => measureAmber(value, "friday"));
 logger.console.info("[components][calendar][convert] 处理周六的数据");
-Object.values(amberRaw.data.saturday).forEach((value) => measureAmber(value, "saturday"));
+Object.values(amberRaw.saturday).forEach((value) => measureAmber(value, "saturday"));
 logger.console.info("[components][calendar][convert] 处理周日的数据");
-Object.values(amberRaw.data.sunday).forEach((value) => measureAmber(value, "sunday"));
+Object.values(amberRaw.sunday).forEach((value) => measureAmber(value, "sunday"));
 
 // 处理 character.json 添加 convertData
 logger.console.info("[components][calendar][convert] 处理 character.json");
@@ -109,7 +122,7 @@ for (const avatar of avatarRaw) {
     );
   }
   // 获取材料数据
-  const materials: TGACore.Components.Calendar.ConvertMaterial[] = [];
+  const materials: TGACore.Components.Calendar.Material[] = [];
   avatar.CultivationItems.forEach((item) => {
     if (convertMaterialSet.has(item)) {
       convertMaterial.forEach((value) => {
@@ -121,8 +134,8 @@ for (const avatar of avatarRaw) {
     }
   });
   const avatarStar = avatar.Quality === 105 ? 5 : avatar.Quality;
-  const avatarWeapon = getHutaoWeapon(avatar.Weapon);
-  const convertData: TGACore.Components.Calendar.ConvertData = {
+  const avatarWeapon = hutaoTool.enum.transW(avatar.Weapon);
+  const convertData: TGACore.Components.Calendar.CalendarItem = {
     id: avatar.Id,
     contentId: 0,
     dropDays,
@@ -166,7 +179,7 @@ for (const weapon of weaponRaw) {
     );
   }
   // 获取材料数据
-  const materials: TGACore.Components.Calendar.ConvertMaterial[] = [];
+  const materials: TGACore.Components.Calendar.Material[] = [];
   weapon.CultivationItems.forEach((item) => {
     if (convertMaterialSet.has(item)) {
       convertMaterial.forEach((value) => {
@@ -177,14 +190,14 @@ for (const weapon of weaponRaw) {
       });
     }
   });
-  const convertData: TGACore.Components.Calendar.ConvertData = {
+  const convertData: TGACore.Components.Calendar.CalendarItem = {
     id: weapon.Id,
     contentId: 0,
     dropDays,
     name: weapon.Name,
     itemType: "weapon",
     star: weapon.RankLevel,
-    weapon: getHutaoWeapon(weapon.WeaponType),
+    weapon: hutaoTool.enum.transW(weapon.WeaponType),
     materials,
     source,
   };
@@ -252,14 +265,14 @@ Counter.EndAll();
 
 /**
  * @description 处理 amber.json
- * @since 2.3.0
- * @param {TGACore.Components.Calendar.RawAmberItem} value 元数据
- * @param {TGACore.Constant.Week} week 星期
+ * @since 2.4.0
+ * @param {TGACore.Plugins.Yatta.DailyDungeon.DomainItem} value 元数据
+ * @param {TGACore.Plugins.Yatta.DailyDungeon.WeekKey} week 星期
  * @return {void}
  */
 function measureAmber(
-  value: TGACore.Components.Calendar.RawAmberItem,
-  week: keyof typeof TGACore.Constant.Week,
+  value: TGACore.Plugins.Yatta.DailyDungeon.DomainItem,
+  week: TGACore.Plugins.Yatta.DailyDungeon.WeekKey,
 ): void {
   const domain = value.name.split("：")[1];
   // 分析 source 是否记录
@@ -290,63 +303,11 @@ function measureAmber(
   });
   if (domainDateMap[domain] === undefined) {
     domainDateMap[domain] = [];
-    domainDateMap[domain].push(getAmberWeek(week));
+    domainDateMap[domain].push(yattaTool.enum.week[week]);
     logger.console.info(`[components][calendar][convert] 添加秘境 ${domain} 的掉落日期 ${week}`);
   } else {
-    domainDateMap[domain].push(getAmberWeek(week));
+    domainDateMap[domain].push(yattaTool.enum.week[week]);
     logger.console.info(`[components][calendar][convert] 更新秘境 ${domain} 的掉落日期 ${week}`);
-  }
-}
-
-/**
- * @description 获取秘境所在的国家
- * @since 2.2.0
- * @param {TGACore.Constant.NationIndex} index 国家索引
- * @return {TGACore.Constant.NationType} 国家
- */
-function getAmbetNation(index: TGACore.Constant.NationIndex): string {
-  switch (index) {
-    case 1:
-      return "蒙德";
-    case 2:
-      return "璃月";
-    case 3:
-      return "稻妻";
-    case 4:
-      return "须弥";
-    case 5:
-      return "枫丹";
-    case 6:
-      return "纳塔";
-    case 7:
-      return "挪德卡莱";
-    default:
-      return "未知";
-  }
-}
-
-/**
- * @description 获取秘境所在的星期
- * @since 2.2.0
- * @param {TGACore.Constant.Week} week 星期
- * @return {TGACore.Constant.WeekIndex} 星期索引
- */
-function getAmberWeek(week: keyof typeof TGACore.Constant.Week): TGACore.Constant.WeekIndex {
-  switch (week) {
-    case "monday":
-      return 1;
-    case "tuesday":
-      return 2;
-    case "wednesday":
-      return 3;
-    case "thursday":
-      return 4;
-    case "friday":
-      return 5;
-    case "saturday":
-      return 6;
-    case "sunday":
-      return 7;
   }
 }
 
@@ -358,9 +319,7 @@ function getAmberWeek(week: keyof typeof TGACore.Constant.Week): TGACore.Constan
  */
 function getArrayTotal(array: number[]): string {
   const res = [];
-  for (const item of array) {
-    if (item > 100000) res.push(item);
-  }
+  for (const item of array) if (item > 100000) res.push(item);
   res.sort((a, b) => a - b);
   return res.join("-");
 }
@@ -368,12 +327,12 @@ function getArrayTotal(array: number[]): string {
 /**
  * @description 获取秘境
  * @since 2.4.0
- * @param {TGACore.Components.Calendar.RawAmberItem} value 元数据
- * @return {TGACore.Components.Calendar.ConvertSource} 秘境
+ * @param {TGACore.Plugins.Yatta.DailyDungeon.DomainItem} value 元数据
+ * @return {TGACore.Components.Calendar.Source} 秘境
  */
 function getAmberSource(
-  value: TGACore.Components.Calendar.RawAmberItem,
-): TGACore.Components.Calendar.ConvertSource {
+  value: TGACore.Plugins.Yatta.DailyDungeon.DomainItem,
+): TGACore.Components.Calendar.Source {
   const indexMap: Record<number, Array<string>> = {
     1: ["霜凝祭坛", "冰封废渊", "沉睡之国", "水光之城", "深没之谷", "渴水的废都"],
     2: ["炽炎祭场", "深炎之底", "焚尽之环", "雷云祭坛", "鸣雷城墟", "古雷试炼场"],
@@ -387,7 +346,7 @@ function getAmberSource(
     const nameMin = value.name.split("：")[1];
     if (indexMap[Number(key)].includes(nameMin)) {
       const index = Number(key);
-      const area = getAmbetNation(index);
+      const area = yattaTool.nation(index);
       return { index, area, name: nameMin };
     }
   }

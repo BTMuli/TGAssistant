@@ -4,7 +4,7 @@
  * @since 2.0.1
  */
 
-import { getAppDirPath } from "../../utils/getBasePaths.ts";
+import { getAppDirPath } from "@utils/getBasePaths.ts";
 
 export const imgDir = getAppDirPath("assets", "material");
 export const jsonDir = getAppDirPath("data", "material");

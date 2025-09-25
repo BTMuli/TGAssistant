@@ -19,7 +19,7 @@ import logger from "../tools/logger.ts";
 export function fileCheck(checkPath: string, isDir: boolean = true): boolean {
   const isExist = fs.pathExistsSync(checkPath);
   if (isDir && !isExist) {
-    fs.ensureDirSync(checkPath, { recursive: true });
+    fs.ensureDirSync(checkPath);
     logger.default.info(`[utils][fileCheck] 目录 ${checkPath} 不存在，已创建`);
     return true;
   } else return isExist;
