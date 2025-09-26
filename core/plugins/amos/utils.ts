@@ -1,7 +1,7 @@
 /**
  * @file core/plugins/amos/utils.ts
  * @description amos-data 触发器解析
- * @since 2.4.0
+ * @since 2.4.1
  */
 import amosIndexJson from "@yuehaiteam/amos-data/json/achievements/index.json" assert { type: "json" };
 import amosPartialJson from "@yuehaiteam/amos-data/json/achievements/partial.json" assert { type: "json" };
@@ -21,17 +21,18 @@ export function flattenAchievements(): Array<TGACore.Plugins.Amos.Achievement> {
 
 /**
  * @description 判断成就是否有任务触发器
- * @since 2.4.0
+ * @since 2.4.1
+ * @function hasTaskTrigger
  * @param {TGACore.Plugins.Amos.Achievement} achievement 成就数据
  * @return {boolean | Array<TGACore.Plugins.Amos.TriggerMetaItem>} 如果有任务触发器则返回任务触发器数组，否则返回 false
  */
 function hasTaskTrigger(
   achievement: TGACore.Plugins.Amos.Achievement,
-): false | Array<TGACore.Plugins.Amos.TriggerMetaItem> {
+): boolean | Array<TGACore.Plugins.Amos.TriggerMetaItem> {
   if (!achievement.trigger.task || achievement.trigger.task.length === 0) return false;
   const partialJson = <TGACore.Plugins.Amos.TriggerMeta>amosPartialJson;
   const partial = partialJson[achievement.id];
-  if (partial === undefined || partial === null) return false;
+  if (partial === undefined || partial === null) return true;
   return partial;
 }
 
