@@ -1,19 +1,17 @@
 /**
- * @file core utils resizeImages.ts
+ * @file scripts/esizeImages.ts
  * @description 图片大小调整工具
  * @since 2.0.0
  */
 
 import path from "node:path";
 
+import Counter from "@tools/counter.ts";
+import logger from "@tools/logger.ts";
+import { fileCheckObj } from "@utils/fileCheck.ts";
+import { getAppDirPath } from "@utils/getBasePaths.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
-
-import Counter from "../tools/counter.ts";
-import logger from "../tools/logger.ts";
-
-import { fileCheckObj } from "./fileCheck.ts";
-import { getAppDirPath } from "./getBasePaths.ts";
 
 const tempDir = getAppDirPath("temp");
 
@@ -41,7 +39,8 @@ for (const file of files) {
     Counter.Skip();
     continue;
   }
-  const out = await sharp(path.join(tempDir.src, file)).resize(256, 256).webp().toFile(savePath);
+  // const out = await sharp(path.join(tempDir.src, file)).resize(256, 256).webp().toFile(savePath);
+  const out = await sharp(path.join(tempDir.src, file)).webp().toFile(savePath);
   logger.console.mark(`[utils][resizeImages] 图片 ${file} 处理完成，大小为 ${out.size} 字节`);
   Counter.Success();
 }
