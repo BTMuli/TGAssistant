@@ -1,7 +1,7 @@
 /**
  * @file core components namecard download
  * @description 名片组件资源下载
- * @since 2.4.0
+ * @since 2.4.1
  */
 
 import path from "node:path";
@@ -84,11 +84,11 @@ for (const raw of nameCardRaw) {
     Counter.Fail();
   }
   try {
-    if (raw.Pictures[1] === "") {
+    if (raw.Pictures[0] === "") {
       logger.console.mark(`[components][namecard][download][bg] ${raw.Id} 为空，跳过`);
       Counter.Skip();
     } else {
-      const bgName = `${raw.Pictures[1]}.png`;
+      const bgName = `${raw.Pictures[0]}.png`;
       const savePath = path.join(imgDetailDir.bg.src, `${raw.Icon}.png`);
       if (fileCheck(savePath, false)) {
         logger.console.mark(`[components][namecard][download][bg] ${raw.Id} 已存在，跳过`);
@@ -106,7 +106,7 @@ for (const raw of nameCardRaw) {
     Counter.Fail();
   }
   try {
-    const profileName = `${raw.Pictures[2]}.png`;
+    const profileName = `${raw.Pictures[1]}.png`;
     const savePath = path.join(imgDetailDir.profile.src, `${raw.Icon}.png`);
     if (fileCheck(savePath, false)) {
       logger.console.mark(`[components][namecard][download][profile] ${raw.Id} 已存在，跳过`);
