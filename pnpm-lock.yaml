@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@yuehaiteam/amos-data':
         specifier: github:yuehaiteam/amos-data
-        version: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/7ac41775fc0f1b11a284e49bb51bd9cf229b0c5a
+        version: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/a58d089f9f264887eb89adf5b278fd2690b533c6
       app-root-path:
         specifier: ^3.1.0
         version: 3.1.0
@@ -1082,9 +1082,9 @@ packages:
   '@vitest/utils@3.2.4':
     resolution: {integrity: sha512-fB2V0JFrQSMsCo9HiSq3Ezpdv4iYaXRG1Sx8edX3MwxfyNn83mKiGzOcH+Fkxt4MHxr3y42fQi1oeAInqgX2QA==}
 
-  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/7ac41775fc0f1b11a284e49bb51bd9cf229b0c5a':
-    resolution: {tarball: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/7ac41775fc0f1b11a284e49bb51bd9cf229b0c5a}
-    version: 1.0.0-CNRELWin6.0.0-Unk-NoBin
+  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/a58d089f9f264887eb89adf5b278fd2690b533c6':
+    resolution: {tarball: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/a58d089f9f264887eb89adf5b278fd2690b533c6}
+    version: 1.0.0-CNRELWin6.1.0-Unk-NoBin
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -3805,7 +3805,7 @@ snapshots:
       loupe: 3.2.1
       tinyrainbow: 2.0.0
 
-  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/7ac41775fc0f1b11a284e49bb51bd9cf229b0c5a': {}
+  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/a58d089f9f264887eb89adf5b278fd2690b533c6': {}
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:

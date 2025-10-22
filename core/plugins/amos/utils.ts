@@ -112,7 +112,7 @@ function parsePartialTask(
 
 /**
  * @description 解析成就触发器
- * @since 2.4.0
+ * @since 2.4.1
  * @param {TGACore.Plugins.Amos.Achievement} achievement 成就数据
  * @return {TGACore.Components.Achievement.Trigger} 解析后的成就触发器
  */
@@ -121,11 +121,11 @@ export function parseTrigger(
 ): TGACore.Components.Achievement.Trigger {
   const hasTask = hasTaskTrigger(achievement);
   if (!hasTask) return { type: achievement.trigger.type };
-  let taskArr = [];
+  let taskArr: Array<TGACore.Components.Achievement.TriggerTask> = [];
   if (achievement.trigger.task && achievement.trigger.task.length > 0) {
     for (const taskItem of achievement.trigger.task) {
       const parsedTask = parseTask(taskItem);
-      taskArr.push(parsedTask);
+      if (!taskArr.includes(parsedTask)) taskArr.push(parsedTask);
     }
   }
   if (Array.isArray(hasTask)) {

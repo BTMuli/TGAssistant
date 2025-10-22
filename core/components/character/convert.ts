@@ -100,6 +100,33 @@ for (const item of mysRaw) {
   converData[index].contentId = item.content_id;
   logger.console.mark(`[components][character][convert] 角色 ${item.title} 添加 contentId 完成`);
 }
+
+// 添加奇偶数据
+converData.push({
+  id: 10000117,
+  contentId: -1,
+  name: "奇偶·男性",
+  title: "",
+  area: "主角",
+  birthday: [0, 0],
+  star: 5,
+  element: "火",
+  weapon: "单手剑",
+  nameCard: "",
+});
+converData.push({
+  id: 10000118,
+  contentId: -1,
+  name: "奇偶·女性",
+  title: "",
+  area: "主角",
+  birthday: [0, 0],
+  star: 5,
+  element: "火",
+  weapon: "单手剑",
+  nameCard: "",
+});
+
 // 获取没有 contentId 的角色
 const noContentId = converData.filter((item) => item.contentId === 0);
 if (noContentId.length > 0) {

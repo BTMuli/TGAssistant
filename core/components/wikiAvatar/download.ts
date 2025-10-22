@@ -1,7 +1,7 @@
 /**
  * @file core/components/wikiAvatar/download
  * @description 角色Wiki组件资源下载
- * @since 2.4.0
+ * @since 2.4.1
  */
 
 import path from "node:path";
@@ -58,7 +58,7 @@ for (const param of paramList) {
   );
   for (const skill of rawAvatar.SkillDepot.Skills) await downloadSkill(skill);
   await downloadSkill(rawAvatar.SkillDepot.EnergySkill);
-  for (const inherent of rawAvatar.SkillDepot.Inherents) await downloadSkill(inherent);
+  for (const inherent of rawAvatar.SkillDepot.Inherents) await downloadSkill(inherent, true);
   await downloadTalents(rawAvatar.SkillDepot.Talents);
 }
 Counter.End();
@@ -74,7 +74,10 @@ Counter.Output();
  * @param {TGACore.Plugins.Hutao.Avatar.Skill} skill 天赋数据
  * @returns {Promise<void>}
  */
-async function downloadSkill(skill: TGACore.Plugins.Hutao.Avatar.Skill): Promise<void> {
+async function downloadSkill(
+  skill: TGACore.Plugins.Hutao.Avatar.Skill,
+  isDepot: boolean = false,
+): Promise<void> {
   Counter.addTotal(1);
   if (skill.Icon === "") {
     logger.default.warn(
@@ -92,7 +95,8 @@ async function downloadSkill(skill: TGACore.Plugins.Hutao.Avatar.Skill): Promise
     return;
   }
   try {
-    const buffer = await fetchSgBuffer("Skill", `${skill.Icon}.png`);
+    const staticDir = isDepot ? "Talent" : "Skill";
+    const buffer = await fetchSgBuffer(staticDir, `${skill.Icon}.png`);
     await sharp(buffer).toFile(savePath);
     logger.default.info(
       `[components][wikiAvatar][download][icon] 天赋 ${skill.Name}(${skill.Id}) 下载完成`,

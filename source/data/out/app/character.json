@@ -36,6 +36,30 @@
     "nameCard": "菈乌玛·枝角"
   },
   {
+    "id": 10000118,
+    "contentId": -1,
+    "name": "奇偶·女性",
+    "title": "",
+    "area": "主角",
+    "birthday": [0, 0],
+    "star": 5,
+    "element": "火",
+    "weapon": "单手剑",
+    "nameCard": ""
+  },
+  {
+    "id": 10000117,
+    "contentId": -1,
+    "name": "奇偶·男性",
+    "title": "",
+    "area": "主角",
+    "birthday": [0, 0],
+    "star": 5,
+    "element": "火",
+    "weapon": "单手剑",
+    "nameCard": ""
+  },
+  {
     "id": 10000116,
     "contentId": 505631,
     "name": "伊涅芙",
