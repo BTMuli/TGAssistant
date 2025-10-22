@@ -1,5 +1,17 @@
 [
   {
+    "id": 10000122,
+    "contentId": 506676,
+    "name": "奈芙尔",
+    "title": "湮沙的秘闻",
+    "area": "挪德卡莱",
+    "birthday": [5, 9],
+    "star": 5,
+    "element": "草",
+    "weapon": "法器",
+    "nameCard": "奈芙尔·秘闻"
+  },
+  {
     "id": 10000120,
     "contentId": 505971,
     "name": "菲林斯",

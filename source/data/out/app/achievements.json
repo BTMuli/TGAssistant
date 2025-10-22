@@ -9878,7 +9878,7 @@
     "id": 81584,
     "series": 0,
     "order": 1579,
-    "name": "梦中的帕伊提提",
+    "name": "梦中的帕依提提",
     "description": "在梦里发现埋藏在提提岛的宝藏。",
     "reward": 5,
     "version": "5.8",
@@ -10233,6 +10233,16 @@
     "reward": 5,
     "version": "6.0",
     "trigger": { "type": "QUEST_GLOBAL_VAR_EQUAL" }
+  },
+  {
+    "id": 81624,
+    "series": 0,
+    "order": 1618,
+    "name": "金之旅人、银之月",
+    "description": "完成「伴月纪闻·其二」。",
+    "reward": 5,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
   },
   {
     "id": 82001,
@@ -13095,6 +13105,16 @@
     "trigger": { "type": "COMBAT_CONFIG_COMMON" }
   },
   {
+    "id": 82302,
+    "series": 0,
+    "order": 2302,
+    "name": "搁浅的星座",
+    "description": "在霜夜巡天灵主未进行元素转化的情况下，将其击败。",
+    "reward": 5,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
+  },
+  {
     "id": 84000,
     "series": 0,
     "order": 4001,
@@ -15679,6 +15699,76 @@
     "reward": 10,
     "version": "6.0",
     "trigger": { "type": "FINISH_QUEST_AND" }
+  },
+  {
+    "id": 84359,
+    "series": 0,
+    "order": 5138,
+    "name": "火力压制",
+    "description": "对未被邀请之人的接待方式。",
+    "reward": 5,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
+  },
+  {
+    "id": 84360,
+    "series": 0,
+    "order": 5139,
+    "name": "唯遗余烬",
+    "description": "残月留下了最后的光辉。",
+    "reward": 5,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
+  },
+  {
+    "id": 84361,
+    "series": 0,
+    "order": 5140,
+    "name": "不存在的国土",
+    "description": "完成「不存在的国土」。",
+    "reward": 10,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
+  },
+  {
+    "id": 84362,
+    "series": 0,
+    "order": 5141,
+    "name": "无月之夜",
+    "description": "那是罪人们尚未犯下大罪之时…",
+    "reward": 5,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
+  },
+  {
+    "id": 84363,
+    "series": 0,
+    "order": 5142,
+    "name": "血与沙的游戏",
+    "description": "不过是一捧尘沙罢了。",
+    "reward": 5,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
+  },
+  {
+    "id": 84364,
+    "series": 0,
+    "order": 5143,
+    "name": "在月坠之前",
+    "description": "战胜五大罪人之一的「猎月人」。",
+    "reward": 5,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
+  },
+  {
+    "id": 84365,
+    "series": 0,
+    "order": 5144,
+    "name": "回望湮灭的月光",
+    "description": "完成「回望湮灭的月光」。",
+    "reward": 10,
+    "version": "6.1",
+    "trigger": { "type": "Unknown" }
   },
   {
     "id": 84501,
