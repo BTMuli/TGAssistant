@@ -1,7 +1,7 @@
 /**
  * @file scripts/updateAll.ts
  * @description 更新所有数据
- * @since 2.4.0
+ * @since 2.5.0
  */
 
 import { spawn, spawnSync } from "child_process";
@@ -20,6 +20,7 @@ let dirs = [
   "achievements",
   "namecard",
   "gacha",
+  "gachaB",
   "character",
   "weapon",
   "calendar",

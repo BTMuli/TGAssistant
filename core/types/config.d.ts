@@ -1,7 +1,6 @@
 /**
- * @file core/types/config.d.ts
- * @description 配置类型声明文件
- * @since 2.4.0
+ * 配置类型声明文件
+ * @since 2.5.0
  */
 
 declare namespace TGACore.Config {
@@ -30,32 +29,33 @@ declare namespace TGACore.Config {
   type AppDirType = keyof typeof AppDirTypeEnum;
 
   /**
-   * @description 应用数据目录配置文件类型枚举
-   * @since 2.2.0
-   * @enum {number}
-   * @property {number} achievement 成就数据目录
-   * @property {number} calendar 日历数据目录
-   * @property {number} character 角色数据目录
-   * @property {number} gacha 抽卡数据目录
-   * @property {number} material 材料数据目录
-   * @property {number} nameCard 名片数据目录
-   * @property {number} weapon 武器数据目录
-   * @property {number} wiki wiki数据目录
-   * @property {number} wikiAvatar 角色wiki数据目录
-   * @property {number} talents 角色天赋数据目录
-   * @property {number} constellations 角色命座数据目录
+   * 应用数据目录配置文件类型枚举
+   * @since 2.5.0
    */
   enum AppDataDirTypeEnum {
+    /** 成就 */
     achievement,
+    /** 素材日历 */
     calendar,
+    /** 角色 */
     character,
+    /** 祈愿 */
     gacha,
+    /** 千星奇域祈愿 */
+    gachaB,
+    /** 材料 */
     material,
+    /** 名片 */
     nameCard,
+    /** 武器 */
     weapon,
+    /** 维基 */
     wiki,
+    /** 维基-角色 */
     wikiAvatar,
+    /** 角色天赋 */
     talents,
+    /** 角色命座 */
     constellations,
   }
 

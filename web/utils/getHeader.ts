@@ -4,9 +4,10 @@
  * @since 2.0.0
  */
 
+import MysClient from "../constant/mys.ts";
+
 import { getDS } from "./getDS.ts";
 import { transCookie } from "./transData.ts";
-import MysClient from "../constant/mys.ts";
 
 /**
  * @description 获取请求头-PC端
