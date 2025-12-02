@@ -1,7 +1,6 @@
 /**
- * @file core/components/character/convert.ts
- * @description 角色组件数据转换
- * @since 2.4.0
+ * 角色组件数据转换
+ * @since 2.5.0
  */
 import path from "node:path";
 import process from "node:process";
@@ -104,7 +103,7 @@ for (const item of mysRaw) {
 // 添加奇偶数据
 converData.push({
   id: 10000117,
-  contentId: -1,
+  contentId: 506960,
   name: "奇偶·男性",
   title: "",
   area: "主角",
@@ -116,7 +115,7 @@ converData.push({
 });
 converData.push({
   id: 10000118,
-  contentId: -1,
+  contentId: 506961,
   name: "奇偶·女性",
   title: "",
   area: "主角",
