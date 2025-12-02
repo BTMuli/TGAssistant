@@ -16,3 +16,5 @@ logs/*
 # Temp ignore
 web/**/*.js
 temp/
+# sub repos
+repos/
