@@ -1,21 +1,21 @@
 /**
- * @file core/plugins/hutao/utils.ts
- * @description 一些关于胡桃的工具函数
- * @since 2.4.0
+ * 一些关于胡桃的工具函数
+ * @since 2.5.0
  */
 
 import path from "node:path";
 
 import logger from "@tools/logger.ts";
 import { fileCheck } from "@utils/fileCheck.ts";
+import appRootPath from "app-root-path";
 import fs from "fs-extra";
 
 import { AREA_LIST, avatarDir, jsonDir } from "./constant.ts";
 import { HutaoGithubFileEnum } from "./enum.ts";
 
 /**
- * @description 获取JSON下载路径
- * @since 2.4.0
+ * 获取JSON下载路径
+ * @since 2.5.0
  * @function getJsonDownloadUrl
  * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
@@ -25,7 +25,7 @@ function getJsonDownloadUrl(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
 ): string {
-  const rawPath = "https://raw.github.com/DGP-Studio/Snap.Metadata/main/Genshin/CHS/";
+  const rawPath = `${appRootPath.path}/repos/Snap.Metadata/Genshin/CHS/`;
   if (fileType !== HutaoGithubFileEnum.Avatar) return `${rawPath}${fileType}`;
   else return `${rawPath}${fileType}${param}.json`;
 }
@@ -49,8 +49,8 @@ function getSavePath(
 }
 
 /**
- * @description 下载JSON数据
- * @since 2.4.0
+ * 下载JSON数据
+ * @since 2.5.0
  * @function downloadJson
  * @param {TGACore.Plugins.Hutao.Base.GithubFileTypeEnum} fileType 文件类型
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
@@ -61,22 +61,20 @@ async function downloadJson(
   param?: string,
 ): Promise<void> {
   const downloadLink = getJsonDownloadUrl(fileType, param);
-  const resp = await fetch(downloadLink);
-  const json = await resp.json();
+  const resp = await fs.readJson(downloadLink);
   const savePath = getSavePath(fileType, param);
-  await fs.writeJson(savePath, json, { spaces: 2 });
+  await fs.writeJson(savePath, resp, { spaces: 2 });
 }
 
 /**
- * @description 获取远程Meta数据
- * @function fetchMeta
- * @since 2.4.0
+ * 获取远程Meta数据
+ * @since 2.5.0
  * @returns {Promise<Record<string,string>>} Meta数据
  */
 export async function fetchMeta(): Promise<Record<string, string>> {
   const downloadLink = getJsonDownloadUrl(HutaoGithubFileEnum.Meta);
-  const resp = await fetch(downloadLink);
-  return <Record<string, string>>await resp.json();
+  const resp = await fs.readJson(downloadLink);
+  return <Record<string, string>>resp;
 }
 
 /**

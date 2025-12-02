@@ -1,11 +1,10 @@
 /**
- * @file core/plugins/yatta/yatta.ts
- * @description Yatta 插件主文件
- * @since 2.4.1
+ * Yatta 插件主文件
+ * @since 2.5.0
  */
 import { YattaWeekDayEnum } from "./enum.ts";
 
-const YATTA_API_VERSION = "61F0";
+const YATTA_API_VERSION = "62F3";
 const YATTA_API_URL = "https://gi.yatta.moe/api/v2/";
 const YATTA_SITE_URL = "https://gi.yatta.moe/";
 // const YATTA_ASSET_URL = "https://gi.yatta.moe/assets/UI/";

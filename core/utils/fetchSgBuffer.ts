@@ -1,14 +1,16 @@
 /**
- * @file core/utils/fetchSgBuffer.ts
- * @description 获取 SnapGenshin 静态资源图片 buffer
- * @since 2.4.0
+ * 获取 SnapGenshin 静态资源图片 buffer
+ * @since 2.5.0
  */
+import fs from "node:fs/promises";
 
-const SG_STATIC_URL = "https://static.snapgenshin.cn/";
+import appRootPath from "app-root-path";
+
+const SG_STATIC_URL = `${appRootPath.path}/repos/Snap.Static/`;
 
 /**
- * @description 获取图片 buffer
- * @since 2.4.0
+ * 获取图片 buffer
+ * @since 2.5.0
  * @function fecthSgBuffer
  * @param {string} dir 目录
  * @param {string} filename 文件名
@@ -16,9 +18,9 @@ const SG_STATIC_URL = "https://static.snapgenshin.cn/";
  */
 async function fecthSgBuffer(dir: string, filename: string): Promise<Buffer> {
   const link = `${SG_STATIC_URL}${dir}/${filename}`;
-  const resp = await fetch(link);
-  const arrayBuffer = await resp.arrayBuffer();
-  return Buffer.from(arrayBuffer);
+  // 读取文件
+  const res = await fs.readFile(link);
+  return <Buffer>(<unknown>res.buffer);
 }
 
 export default fecthSgBuffer;
