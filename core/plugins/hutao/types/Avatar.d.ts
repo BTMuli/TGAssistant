@@ -78,6 +78,7 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
   type SkillDepot = {
     Arkhe: number;
     Skills: Array<Skill>;
+    SpecialSkills?: Array<Skill>;
     EnergySkill: Skill;
     Inherents: Array<Skill>;
     Talents: Array<Talent>;

@@ -41,6 +41,7 @@ for (const param of paramList) {
   for (const skill of avatarRaw.SkillDepot.Skills) await convertSkill(skill);
   for (const inherent of avatarRaw.SkillDepot.Inherents) await convertSkill(inherent);
   await convertSkill(avatarRaw.SkillDepot.EnergySkill);
+  for (const skill of avatarRaw.SkillDepot?.SpecialSkills ?? []) await convertSkill(skill);
   for (const talent of avatarRaw.SkillDepot.Talents) await convertTalent(talent);
   // 转换数据
   const avatarTrans: TGACore.Components.Character.WikiItem = transCharacter(avatarRaw);
@@ -62,14 +63,16 @@ Counter.Output();
  * @returns {TGACore.Components.Character.WikiItem} 转换后的数据
  */
 function transCharacter(
-  raw: TGACore.Components.Character.RawHutaoItem,
+  raw: TGACore.Plugins.Hutao.Avatar.RawAvatar,
 ): TGACore.Components.Character.WikiItem {
   const materials = matchMaterials(raw.CultivationItems);
   const tempSkills = [
     ...raw.SkillDepot.Skills,
     raw.SkillDepot.EnergySkill,
+    ...(raw.SkillDepot?.SpecialSkills ?? []),
     ...raw.SkillDepot.Inherents,
   ];
+  // TODO:对Skill排序
   let skills: Array<Omit<TGACore.Components.Character.RhisdSkill, "Proud">> = [];
   tempSkills.forEach((skill) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

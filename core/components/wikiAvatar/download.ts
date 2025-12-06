@@ -60,6 +60,7 @@ for (const param of paramList) {
   await downloadSkill(rawAvatar.SkillDepot.EnergySkill);
   for (const inherent of rawAvatar.SkillDepot.Inherents) await downloadSkill(inherent, true);
   await downloadTalents(rawAvatar.SkillDepot.Talents);
+  for (const skill of rawAvatar.SkillDepot?.SpecialSkills ?? []) await downloadSkill(skill, true);
 }
 Counter.End();
 
@@ -72,6 +73,7 @@ Counter.Output();
  * @since 2.4.0
  * @function downloadSkill
  * @param {TGACore.Plugins.Hutao.Avatar.Skill} skill 天赋数据
+ * @param {boolean} isDepot 是否是技能
  * @returns {Promise<void>}
  */
 async function downloadSkill(
