@@ -81,6 +81,13 @@
       "Icon": "Skill_E_Durin_01"
     },
     {
+      "GroupId": 12351,
+      "Id": 1235101,
+      "Name": "魔女的前夜礼·升华赞歌",
+      "Description": "完成<color=#FFD780FF>魔女的课业·此世之题</color>后，杜林将成为<color=#FFD780FF>魔导</color>角色。队伍中编入至少2名魔导角色时，将获得<color=#FFD780FF>魔导·秘仪</color>效果，使魔导角色获得强化。\n\n<color=#FFD780FF>魔导·秘仪</color>\n除持续时间外，突破天赋{LINK#P1232101}<color=#FFD780FF>「光灵遵神数显现」</color>{/LINK}中的所有效果提升75%。",
+      "Icon": "UI_Talent_S_Durin_03"
+    },
+    {
       "GroupId": 12321,
       "Id": 1232101,
       "Name": "光灵遵神数显现",
