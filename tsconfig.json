@@ -18,6 +18,7 @@
       "@core/*": ["./core/*"],
       "@comp/*": ["./core/components/*"],
       "@amos/*": ["./core/plugins/amos/*"],
+      "@hakushi/*": ["./core/plugins/hakushi/*"],
       "@hutao/*": ["./core/plugins/hutao/*"],
       "@yatta/*": ["./core/plugins/yatta/*"],
       "@utils/*": ["./core/utils/*"],
