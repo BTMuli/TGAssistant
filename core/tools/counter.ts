@@ -1,26 +1,27 @@
 /**
- * @file core tools counter
- * @description 计数器
- * @since 2.0.1
+ * 计数器
+ * @since 2.5.0
  */
 
 import chalk from "chalk";
 
 import logger from "./logger.ts";
 
-/**
- * @description 计数器 class
- * @since 2.0.1
- * @class Counter
- */
 class Counter {
+  /** 输出前缀 */
   protected prefix: string = "";
+  /** 总计数 */
   protected total: number = 0;
+  /** 失败计数 */
   protected fail: number = 0;
+  /** 成功计数 */
   protected success: number = 0;
+  /** 跳过计数 */
   protected skip: number = 0;
-  protected time: number = 0;
-  protected cost: number = 0; // 总耗时
+  /** 开始时间 */
+  protected startTime: number = 0;
+  /** 总耗时 */
+  protected cost: number = 0;
 
   constructor() {
     this.prefix = "";
@@ -28,12 +29,12 @@ class Counter {
     this.fail = 0;
     this.success = 0;
     this.skip = 0;
-    this.time = 0;
+    this.startTime = new Date().getTime();
     this.cost = 0;
   }
 
   /**
-   * @description 初始化-设置前缀
+   * 初始化-设置前缀
    * @since 2.0.1
    * @param {string} prefix 前缀
    * @return {void} 无返回值
@@ -41,11 +42,11 @@ class Counter {
   public Init(prefix: string): void {
     this.prefix = prefix;
     this.cost = 0;
-    this.time = new Date().getTime();
+    this.startTime = new Date().getTime();
   }
 
   /**
-   * @description 增加计数器总数
+   * 增加计数器总数
    * @since 2.0.0
    * @param {number} addNum 增加的数量
    * @return {void} 无返回值
@@ -55,7 +56,7 @@ class Counter {
   }
 
   /**
-   * @description 计数器失败
+   * 计数器失败
    * @since 2.4.0
    * @param {number} failNum 失败的数量，默认为 1
    * @return {void} 无返回值
@@ -65,7 +66,7 @@ class Counter {
   }
 
   /**
-   * @description 计数器成功
+   * 计数器成功
    * @since 2.0.0
    * @return {void} 无返回值
    */
@@ -74,9 +75,9 @@ class Counter {
   }
 
   /**
-   * @description 计数器跳过
+   * 计数器跳过
    * @since 2.0.0
-   * @param {[number]} skipNum 跳过的数量，默认为 1
+   * @param {number} [skipNum] 跳过的数量，默认为 1
    * @return {void} 无返回值
    */
   public Skip(skipNum?: number): void {
@@ -84,14 +85,13 @@ class Counter {
   }
 
   /**
-   * @description 结束
+   * 结束
    * @since 2.0.0
    * @return {void} 无返回值
    */
   public End(): void {
     const endTime = new Date().getTime();
-    this.time = endTime - this.time;
-    this.cost += this.time;
+    this.cost += endTime - this.startTime;
   }
 
   /**
@@ -107,7 +107,7 @@ class Counter {
   }
 
   /**
-   * @description 重置计数器
+   * 重置计数器
    * @since 2.0.0
    * @param {number} total 总数
    * @return {void} 无返回值
@@ -117,11 +117,11 @@ class Counter {
     this.fail = 0;
     this.success = 0;
     this.skip = 0;
-    this.time = new Date().getTime();
+    this.startTime = new Date().getTime();
   }
 
   /**
-   * @description 获取 Total
+   * 获取 Total
    * @since 2.0.0
    * @param {boolean} isOutput 是否输出
    * @return {string} Total
@@ -132,7 +132,7 @@ class Counter {
   }
 
   /**
-   * @description 获取 Fail
+   * 获取 Fail
    * @since 2.0.0
    * @param {boolean} isOutput 是否输出
    * @return {string} Fail
@@ -143,7 +143,7 @@ class Counter {
   }
 
   /**
-   * @description 获取 Success
+   * 获取 Success
    * @since 2.0.0
    * @param {boolean} isOutput 是否输出
    * @return {string} Success
@@ -154,7 +154,7 @@ class Counter {
   }
 
   /**
-   * @description 获取 Skip
+   * 获取 Skip
    * @since 2.0.0
    * @param {boolean} isOutput 是否输出
    * @return {string} Skip
@@ -165,7 +165,7 @@ class Counter {
   }
 
   /**
-   * @description 获取 Time
+   * 获取 Time
    * @since 2.0.0
    * @description isOutput 为 false 时返回秒数
    * @return {string} Time
@@ -173,12 +173,12 @@ class Counter {
   public getTime(): string;
   public getTime(isOutput: false): number;
   public getTime(isOutput?: boolean): unknown {
-    if (isOutput !== undefined && !isOutput) return this.time;
-    return (this.time / 1000).toFixed(2) + "s";
+    if (isOutput !== undefined && !isOutput) return this.cost;
+    return (this.cost / 1000).toFixed(2) + "s";
   }
 
   /**
-   * @description 输出
+   * 输出
    * @since 2.0.0
    * @return {void} 无返回值
    */
