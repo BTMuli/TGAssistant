@@ -17,6 +17,12 @@ declare namespace TGACore.Plugins.Hakushi.Beyond {
   type SuitResp = Record<string, SuitInfo>;
 
   /**
+   * 物品返回响应
+   * @since 2.5.0
+   */
+  type ItemResp = Record<string, ItemInfo>;
+
+  /**
    * 部件稀有度类型
    * @since 2.5.0
    */
@@ -69,5 +75,23 @@ declare namespace TGACore.Plugins.Hakushi.Beyond {
     Body: Array<BeyondBody>;
     /** 颜色 */
     Color: Array<string>;
+  };
+
+  /**
+   * 物品信息
+   * @since 2.5.0
+   */
+  type ItemInfo = {
+    /** 名称 */
+    Name: string;
+    /** 星级 */
+    Rank: number;
+    /** 图标 */
+    Icon: string;
+    /**
+     * 类型
+     * @todo 这里的类型也是枚举值
+     */
+    Type: string;
   };
 }

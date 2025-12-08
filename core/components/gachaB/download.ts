@@ -21,62 +21,53 @@ logger.default.info(`[components][gachaB][download] 执行 download.ts`);
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
-// logger.default.info(`[GachaB][Download] 开始下载部件数据`);
-// try {
-//   const res = await hakushiTool.fetchJson<TGACore.Plugins.Hakushi.Beyond.CostumeResp>(
-//     "data/zh/beyond/costume.json",
-//   );
-//   logger.default.info(`[GachaB][Download] 部件数据下载完成`);
-//   Counter.Success();
-//   const savePath = jsonDetailDir.costume;
-//   await fs.writeJson(savePath, res, { spaces: 2 });
-// } catch (error) {
-//   logger.default.error(`[GachaB][Download] 下载部件数据失败`);
-//   logger.console.error(error);
-//   Counter.Fail();
-// }
+const rawItem: Array<TGACore.Plugins.Hakushi.Beyond.ItemInfo> = [];
 
-let rawSuits: Array<TGACore.Plugins.Hakushi.Beyond.SuitInfo>;
-
-logger.default.info(`[component][gachaB][Download] 开始下载套装数据`);
+logger.default.info(`[component][gachaB][download] 开始下载物品数据`);
 try {
-  const res = await hakushiTool.fetchJson<TGACore.Plugins.Hakushi.Beyond.SuitResp>(
-    "data/zh/beyond/costume_suit.json",
+  const res = await hakushiTool.fetchJson<TGACore.Plugins.Hakushi.Beyond.ItemResp>(
+    "data/zh/beyond/item.json",
   );
-  rawSuits = Object.values(res);
-  logger.default.info(`[GachaB][Download] 套装数据下载完成`);
-  const savePath = jsonDetailDir.suit;
+  logger.default.info(`[component][gachaB][download] 物品数据下载完成`);
+  rawItem.push(...Object.values(res));
+  const savePath = jsonDetailDir.item;
   await fs.writeJson(savePath, res, { spaces: 2 });
 } catch (error) {
-  logger.default.error(`[GachaB][Download] 下载套装数据失败`);
+  logger.default.error(`[component][gachaB][download] 下载物品数据失败`);
   logger.console.error(error);
   Counter.Fail();
-  process.exit(1);
 }
 
-Counter.addTotal(rawSuits.length);
-logger.default.info("[components][gachaB][download] 开始下载套装图片");
-for (const info of rawSuits) {
-  const savePath = path.join(imgDir.src, `${info.Icon}.webp`);
-  const check = fileCheck(savePath, false);
-  if (check) {
-    logger.console.mark(`[components][gachaB][download] ${info.Icon} 已存在，跳过`);
-    Counter.Skip();
-    continue;
-  }
-  try {
-    const buffer = await hakushiTool.fetchBuffer(info.Icon);
-    await sharp(buffer).toFile(savePath);
-    logger.default.info(`[components][gachaB][download] ${info.Icon} 下载成功`);
-    Counter.Success();
-  } catch (e) {
-    logger.default.warn(`[components][gachaB][download] ${info.Icon} 下载失败`);
-    logger.default.error(e);
-    Counter.Fail();
-  }
+for (const item of rawItem) {
+  await downloadImg(item.Icon, item.Name);
 }
-Counter.End();
 
 logger.default.info(`[components][gachaB][download] 数据下载完成，耗时 ${Counter.getTime()}`);
 Counter.EndAll();
 Counter.Output();
+
+/**
+ * 下载图片
+ * @param {string} icon 图片名称
+ * @param {string} name 名称
+ * @return {Promise<void>}
+ */
+async function downloadImg(icon: string, name: string): Promise<void> {
+  const savePath = path.join(imgDir.src, `${icon}.webp`);
+  const check = fileCheck(savePath, false);
+  if (check) {
+    logger.console.mark(`[components][gachaB][download] ${name} ${icon} 已存在，跳过`);
+    Counter.Skip();
+    return;
+  }
+  try {
+    const buffer = await hakushiTool.fetchBuffer(icon);
+    await sharp(buffer).toFile(savePath);
+    logger.default.info(`[components][gachaB][download] ${name} ${icon} 下载成功`);
+    Counter.Success();
+  } catch (e) {
+    logger.default.warn(`[components][gachaB][download] ${name} ${icon} 下载失败`);
+    logger.default.error(e);
+    Counter.Fail();
+  }
+}
