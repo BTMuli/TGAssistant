@@ -12,3 +12,4 @@ export const jsonDetailDir = {
   suit: path.join(jsonDir.src, "suits.json"),
   out: path.join(jsonDir.out, "app", "gachaB.json"),
 };
+export const imgDir = getAppDirPath("assets", "gachaB");

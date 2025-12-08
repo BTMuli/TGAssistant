@@ -2,6 +2,7 @@
  * Hakushi 千星奇域类型
  * @since 2.5.0
  */
+
 declare namespace TGACore.Plugins.Hakushi.Beyond {
   /**
    * 部件返回响应
