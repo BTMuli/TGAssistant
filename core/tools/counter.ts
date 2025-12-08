@@ -20,8 +20,12 @@ class Counter {
   protected skip: number = 0;
   /** 开始时间 */
   protected startTime: number = 0;
+  /** 上一次获取耗时时间 */
+  protected midTime: number = 0;
   /** 总耗时 */
   protected cost: number = 0;
+  /** 是否结束 */
+  protected isEnd: boolean = false;
 
   constructor() {
     this.prefix = "";
@@ -30,7 +34,9 @@ class Counter {
     this.success = 0;
     this.skip = 0;
     this.startTime = new Date().getTime();
+    this.midTime = this.startTime;
     this.cost = 0;
+    this.isEnd = false;
   }
 
   /**
@@ -43,6 +49,9 @@ class Counter {
     this.prefix = prefix;
     this.cost = 0;
     this.startTime = new Date().getTime();
+    this.midTime = this.startTime;
+    this.cost = 0;
+    this.isEnd = false;
   }
 
   /**
@@ -91,7 +100,8 @@ class Counter {
    */
   public End(): void {
     const endTime = new Date().getTime();
-    this.cost += endTime - this.startTime;
+    this.cost = endTime - this.midTime;
+    this.midTime = endTime;
   }
 
   /**
@@ -101,7 +111,9 @@ class Counter {
    * @return {void} 无返回值
    */
   public EndAll(write: boolean = true): void {
-    const str = `${this.prefix} 总计耗时 ${(this.cost / 1000).toFixed(2)}s`;
+    this.isEnd = true;
+    const totalCost = new Date().getTime() - this.startTime;
+    const str = `${this.prefix} 总计耗时 ${(totalCost / 1000).toFixed(2)}s`;
     if (write !== undefined && !write) logger.console.info(str);
     else logger.default.info(str);
   }
@@ -173,8 +185,9 @@ class Counter {
   public getTime(): string;
   public getTime(isOutput: false): number;
   public getTime(isOutput?: boolean): unknown {
-    if (isOutput !== undefined && !isOutput) return this.cost;
-    return (this.cost / 1000).toFixed(2) + "s";
+    const cost = this.isEnd ? new Date().getTime() - this.midTime : this.cost;
+    if (isOutput !== undefined && !isOutput) return cost;
+    return (cost / 1000).toFixed(2) + "s";
   }
 
   /**
