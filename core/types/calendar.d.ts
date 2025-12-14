@@ -1,7 +1,6 @@
 /**
- * @file core/types/calendar.d.ts
- * @description 日历组件类型定义
- * @since 2.4.0
+ * 日历组件类型定义
+ * @since 2.5.0
  */
 
 declare namespace TGACore.Components.Calendar {
@@ -30,14 +29,17 @@ declare namespace TGACore.Components.Calendar {
   };
 
   /**
-   * @description 日历角色项
-   * @since 2.4.0
-   * @interface CalendarAvatar
-   * @extends CalendarBase
-   * @property {"character"} itemType 角色/武器 类型
-   * @property {string} element 角色元素
+   * 日历角色项
+   * @since 2.5.0
    */
-  type CalendarAvatar = CalendarBase & { itemType: "character"; element: string };
+  type CalendarAvatar = CalendarBase & {
+    /** 类型 */
+    itemType: "character";
+    /** 元素 */
+    element: string;
+    /** 上线时间 */
+    release: string;
+  };
 
   /**
    * @description 日历武器项

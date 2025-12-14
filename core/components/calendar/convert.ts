@@ -1,7 +1,6 @@
 /**
- * @file core/components/calendar/convert.ts
- * @description 日历组件数据转换
- * @since 2.4.0
+ * 日历组件数据转换
+ * @since 2.5.0
  * @todo 重构处理逻辑
  */
 import process from "node:process";
@@ -21,7 +20,8 @@ logger.default.info("[components][calendar][convert] 运行 convert.ts");
 if (
   !fileCheck(jsonDetailDir.domain, false) ||
   !fileCheck(jsonDetailDir.mys, false) ||
-  !hutaoTool.check(hutaoTool.enum.file.Material)
+  !hutaoTool.check(hutaoTool.enum.file.Material) ||
+  !fileCheck(jsonDetailDir.hakushi, false)
 ) {
   logger.default.error("[components][calendar][convert] 日历元数据文件不存在");
   logger.console.info("[components][calendar][convert] 请执行 download.ts");
@@ -55,6 +55,9 @@ const weaponRaw = hutaoTool.read<TGACore.Plugins.Hutao.Weapon.RawWeapon>(
 );
 const materialRaw = hutaoTool.read<TGACore.Plugins.Hutao.Material.RawMaterial>(
   hutaoTool.enum.file.Material,
+);
+const hakushiRaw: Record<string, TGACore.Plugins.Hakushi.Avatar.AvatarBrief> = await fs.readJson(
+  jsonDetailDir.hakushi,
 );
 
 // 读取角色元数据
@@ -144,6 +147,7 @@ for (const avatar of avatarRaw) {
     star: avatarStar,
     weapon: avatarWeapon,
     element: avatar.FetterInfo.VisionBefore,
+    release: hakushiRaw[avatar.Id].release,
     materials,
     source,
   };

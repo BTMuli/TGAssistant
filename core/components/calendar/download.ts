@@ -1,8 +1,8 @@
 /**
- * @file core components calendar download.ts
- * @description 日历组件资源下载
- * @since 2.2.1
+ * 日历组件资源下载
+ * @since 2.5.0
  */
+import hakushiTool from "@hakushi/hakushi.ts";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
@@ -54,6 +54,18 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.error("[components][calendar][download] 米游社 日历数据下载失败");
+  logger.default.error(e);
+  Counter.Fail();
+}
+// 下载Hakushi角色数据
+try {
+  const res =
+    await hakushiTool.fetchJson<TGACore.Plugins.Hakushi.Avatar.BriefResp>("data/character.json");
+  await fs.writeJson(jsonDetailDir.hakushi, res, { spaces: 2 });
+  logger.default.info("[components][calendar][download] Hakushi 角色数据下载完成");
+  Counter.Success();
+} catch (e) {
+  logger.default.error("[components][calendar][download] Hakushi 角色数据下载失败");
   logger.default.error(e);
   Counter.Fail();
 }

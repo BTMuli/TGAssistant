@@ -1,7 +1,6 @@
 /**
- * @file core/components/calendar/constant.ts
- * @description 日历组件常量
- * @since 2.4.0
+ * 日历组件常量
+ * @since 2.5.0
  */
 
 import path from "node:path";
@@ -15,5 +14,6 @@ export const jsonDetailDir = {
   mys: path.join(jsonDir.src, "mys.json"),
   domain: path.join(jsonDir.src, "domain.json"),
   avatar: path.join(jsonDir.src, "avatar.json"),
+  hakushi: path.join(jsonDir.src, "hakushi.json"),
   out: path.join(jsonDir.out, "app", "calendar.json"),
 };
