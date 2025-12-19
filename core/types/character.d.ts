@@ -292,6 +292,7 @@ declare namespace TGACore.Components.Character {
     birthday: [number, number];
     star: number;
     element: string;
+    release: string;
     weapon: string;
     nameCard: string;
   };

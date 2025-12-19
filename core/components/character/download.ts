@@ -1,11 +1,11 @@
 /**
- * @file core/components/character/download.ts
- * @description 角色组件资源下载
- * @since 2.4.0
+ * 角色组件资源下载
+ * @since 2.5.0
  */
 
 import path from "node:path";
 
+import hakushiTool from "@hakushi/hakushi.ts";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
@@ -72,6 +72,18 @@ try {
   }
 } catch (e) {
   logger.default.warn("[components][character][download] 下载 观测枢 角色数据失败");
+  logger.default.error(e);
+  Counter.Fail();
+}
+// 下载Hakushi角色数据
+try {
+  const res =
+    await hakushiTool.fetchJson<TGACore.Plugins.Hakushi.Avatar.BriefResp>("data/character.json");
+  await fs.writeJson(jsonDetailDir.hakushi, res, { spaces: 2 });
+  logger.default.info("[components][character][download] Hakushi 角色数据下载完成");
+  Counter.Success();
+} catch (e) {
+  logger.default.error("[components][character][download] Hakushi 角色数据下载失败");
   logger.default.error(e);
   Counter.Fail();
 }

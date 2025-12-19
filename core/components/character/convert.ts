@@ -19,7 +19,11 @@ Counter.Init("[components][character][convert]");
 logger.default.info("[components][character][convert] 运行 convert.ts");
 
 // 前置检查
-if (!fileCheck(jsonDetailDir.mys, false)) {
+if (
+  !fileCheck(jsonDetailDir.mys, false) ||
+  !fileCheck(jsonDetailDir.yatta, false) ||
+  !fileCheck(jsonDetailDir.hakushi, false)
+) {
   logger.default.error("[components][character][convert] 角色元数据文件不存在");
   logger.console.info("[components][character][convert] 请执行 download.ts");
   process.exit(1);
@@ -31,7 +35,9 @@ fileCheckObj(imgDir);
 const converData: Array<TGACore.Components.Character.Character> = [];
 const meta = hutaoTool.read<Record<string, string>>(hutaoTool.enum.file.Meta);
 const paramList = hutaoTool.readIds(meta);
-
+const hakushiRaw: Record<string, TGACore.Plugins.Hakushi.Avatar.AvatarBrief> = await fs.readJson(
+  jsonDetailDir.hakushi,
+);
 // 处理 hutao.json
 logger.console.info("[components][character][convert] 第一次处理：通过 hutao.json");
 Counter.Reset(paramList.length);
@@ -46,6 +52,7 @@ for (const param of paramList) {
     hutaoTool.enum.file.Avatar,
     param,
   );
+  const hakushiAvatar = hakushiRaw[param];
   const avatar: TGACore.Components.Character.Character = {
     id: rawAvatar.Id,
     contentId: 0,
@@ -55,6 +62,7 @@ for (const param of paramList) {
     birthday: [rawAvatar.FetterInfo.BirthMonth, rawAvatar.FetterInfo.BirthDay],
     star: rawAvatar.Quality === 105 ? 5 : rawAvatar.Quality,
     element: rawAvatar.FetterInfo.VisionBefore,
+    release: hakushiAvatar.release,
     weapon: hutaoTool.enum.transW(rawAvatar.Weapon),
     nameCard: rawAvatar.NameCard.Name,
   };
@@ -88,6 +96,7 @@ for (const item of mysRaw) {
         birthday: [0, 0],
         star: 5,
         element: element,
+        release: "",
         weapon: "单手剑",
         nameCard: "",
       };
@@ -110,6 +119,7 @@ converData.push({
   birthday: [0, 0],
   star: 5,
   element: "火",
+  release: "",
   weapon: "单手剑",
   nameCard: "",
 });
@@ -122,6 +132,7 @@ converData.push({
   birthday: [0, 0],
   star: 5,
   element: "火",
+  release: "",
   weapon: "单手剑",
   nameCard: "",
 });

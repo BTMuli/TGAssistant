@@ -1,7 +1,6 @@
 /**
- * @file core components character constant.ts
- * @description 角色组件常量
- * @since 2.0.1
+ * 角色组件常量
+ * @since 2.5.0
  */
 
 import path from "node:path";
@@ -16,4 +15,5 @@ export const jsonDetailDir = {
   mys: path.join(jsonDir.src, "mys.json"),
   out: path.join(jsonDir.out, "app", "character.json"),
   namecard: path.join(jsonDir.out, "app", "namecard.json"),
+  hakushi: path.join(jsonDir.src, "hakushi.json"),
 };
