@@ -43,7 +43,10 @@ for (const dir of dirs) {
   }
 }
 // prettier
+logger.console.info(`[scripts][updateAll]执行 pnpm prettier`);
 spawnSync("pnpm prettier", { cwd: getProjRootPath(), shell: true });
+logger.console.info(`[scripts][updateAll]执行 pnpm eslint --fix`);
+spawnSync("pnpm eslint --fix", { cwd: getProjRootPath(), shell: true });
 
 logger.console.info("[scripts][updateAll] 运行 updateAll.ts 完成");
 
