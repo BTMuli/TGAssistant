@@ -139,7 +139,7 @@ async function transMaterial(
     }
   }
   // 处理来源
-  const source: Array<TGACore.Components.Material.Source> = [];
+  let source: Array<TGACore.Components.Material.Source> = [];
   const dayList = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
   if (data.source) {
     for (const item of data.source) {
@@ -154,6 +154,11 @@ async function transMaterial(
       days = days.sort((a, b) => a - b);
       source.push({ name: item.name, type: item.type, days });
     }
+  }
+  // 移除摩拉获取方式
+  if (["105", "102", "202"].includes(material.id.toString())) {
+    source = source.filter((i) => i.type !== "domain");
+    source.push({ type: "single", name: "秘境获取" });
   }
   return {
     id: Number(material.id),
