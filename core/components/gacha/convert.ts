@@ -36,7 +36,7 @@ for (const item of gachaRaw) {
     name: item.Name,
     version: item.Version,
     order: item.Order,
-    banner: item.Banner,
+    banner: item.Banner.replace("https://sdk.hoyoverse.com", "https://sdk-webstatic.mihoyo.com"),
     from: item.From,
     to: item.To,
     type: item.Type,

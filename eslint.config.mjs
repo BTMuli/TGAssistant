@@ -28,8 +28,10 @@ export default [
       "source/data/http",
       "source/data/src",
       "web/**/*.js",
+      "core/archive/birthday/*.json",
       "pnpm-lock.yaml",
       "qodana.yaml",
+      "repos",
     ],
   },
 ];
