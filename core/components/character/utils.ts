@@ -147,11 +147,14 @@ export async function downloadCostumeFull(
 export function transHutaoCostume(
   raw: TGACore.Plugins.Hutao.Avatar.Costume,
 ): TGACore.Components.Character.Costume {
+  let desc = raw.Description;
+  // 流浪者衣装
+  if (raw.Id === 207500) desc = desc.replace("#{REALNAME[ID(1)]}", "流浪者");
   return {
     id: raw.Id,
     isDefault: raw.IsDefault,
     name: raw.Name,
-    desc: raw.Description,
+    desc: desc,
   };
 }
 

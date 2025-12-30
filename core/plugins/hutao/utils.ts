@@ -144,7 +144,7 @@ export async function updateJson(
     }
   }
   if (!needUpdate) {
-    logger.console.info(`[Hutao][metaUtils] ${key} 数据无需更新，保持 ${localMeta[key]}`);
+    logger.console.mark(`[Hutao][metaUtils] ${key} 数据无需更新，保持 ${localMeta[key]}`);
     return false;
   }
   const diff = `${localMeta[key] ?? "undefined"} → ${metaData[key]}`;
