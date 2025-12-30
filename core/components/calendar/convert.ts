@@ -53,7 +53,7 @@ const mysRaw: Array<TGACore.Plugins.Mys.WikiChildren> = await fs.readJson(jsonDe
 const weaponRaw = hutaoTool.read<TGACore.Plugins.Hutao.Weapon.RawWeapon>(
   hutaoTool.enum.file.Weapon,
 );
-const materialRaw = hutaoTool.read<TGACore.Plugins.Hutao.Material.RawMaterial>(
+const materialRaw = hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(
   hutaoTool.enum.file.Material,
 );
 const hakushiRaw: Record<string, TGACore.Plugins.Hakushi.Avatar.AvatarBrief> = await fs.readJson(
@@ -61,7 +61,7 @@ const hakushiRaw: Record<string, TGACore.Plugins.Hakushi.Avatar.AvatarBrief> = a
 );
 
 // 读取角色元数据
-const avatarRaw: Array<TGACore.Plugins.Hutao.Avatar.RawAvatar> = [];
+const avatarRaw: Array<TGACore.Plugins.Hutao.Avatar.FullInfo> = [];
 const localMeta = hutaoTool.read<Record<string, string>>(hutaoTool.enum.file.Meta);
 const filterKey = Object.keys(localMeta).filter((key) =>
   key.startsWith(hutaoTool.enum.file.Avatar),
@@ -73,7 +73,7 @@ for (const key of filterKey) {
     logger.default.warn(`[components][calendar][convert] 角色元数据 ${param} 不存在，跳过`);
     continue;
   }
-  const res = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+  const res = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.FullInfo>(
     hutaoTool.enum.file.Avatar,
     param,
   );

@@ -1,40 +1,48 @@
 /**
- * @file core/plugins/hutao/types/Material.d.ts
- * @description 胡桃材料类型声明文件
+ * 材料类型声明文件
  * @since 2.4.0
  */
 
 declare namespace TGACore.Plugins.Hutao.Material {
   /**
-   * @description 材料数据返回响应
+   * 材料数据
    * @since 2.4.0
-   * @interface RawMaterial
    */
-  type RawMaterial = Array<Material>;
+  type FullInfo = Array<MaterialItem>;
 
   /**
-   * @description 材料数据
+   * 材料数据
    * @since 2.4.0
-   * @interface Material
-   * @property {number} Rank 材料星级
-   * @property {number} MaterialType 材料类型
-   * @property {number} Id 材料编号
-   * @property {number} RankLevel 材料星级
-   * @property {number} ItemType 材料类型
-   * @property {string} Name 材料名称
-   * @property {string} Description 材料描述
-   * @property {string} TypeDescription 材料类型描述
-   * @property {string} Icon 材料图标
    */
-  type Material = {
+  type MaterialItem = {
+    /** 分组 */
     Rank: number;
+    /**
+     * 类型
+     * @remarks 枚举类
+     */
     MaterialType: number;
+    /** 效果 */
+    EffectDescription?: string;
+    /** ID */
     Id: number;
+    /** 星级 */
     RankLevel: number;
+    /**
+     * 材料类型
+     * @remarks 枚举类
+     */
     ItemType: number;
+    /** 名称 */
     Name: string;
+    /** 描述 */
     Description: string;
+    /** 类型描述 */
     TypeDescription: string;
+    /**
+     * 图标
+     * @remarks ItemIcon/
+     */
     Icon: string;
   };
 }

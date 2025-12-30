@@ -33,7 +33,7 @@ for (const param of paramList) {
     continue;
   }
 
-  const avatarRaw = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+  const avatarRaw = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.FullInfo>(
     hutaoTool.enum.file.Avatar,
     param,
   );
@@ -44,7 +44,7 @@ for (const param of paramList) {
   for (const skill of avatarRaw.SkillDepot?.SpecialSkills ?? []) await convertSkill(skill);
   for (const talent of avatarRaw.SkillDepot.Talents) await convertTalent(talent);
   // 转换数据
-  const avatarTrans: TGACore.Components.Character.WikiItem = transCharacter(avatarRaw);
+  const avatarTrans: TGACore.Components.Character.Wiki = transCharacter(avatarRaw);
   const savePath = path.join(jsonOutDir, `${param}.json`);
   await fs.writeJSON(savePath, avatarTrans);
   logger.default.info(`[components][wikiAvatar][convert] 角色${param}转换完成`);
@@ -59,12 +59,12 @@ Counter.Output();
 /**
  * @description 转换角色数据
  * @since 2.2.0
- * @param {TGACore.Components.Character.RawHutaoItem} raw 原始数据
- * @returns {TGACore.Components.Character.WikiItem} 转换后的数据
+ * @param raw - 原始数据
+ * @returns 转换后的数据
  */
 function transCharacter(
-  raw: TGACore.Plugins.Hutao.Avatar.RawAvatar,
-): TGACore.Components.Character.WikiItem {
+  raw: TGACore.Plugins.Hutao.Avatar.FullInfo,
+): TGACore.Components.Character.Wiki {
   const materials = matchMaterials(raw.CultivationItems);
   const tempSkills = [
     ...raw.SkillDepot.Skills,
@@ -73,7 +73,7 @@ function transCharacter(
     ...raw.SkillDepot.Inherents,
   ];
   // TODO:对Skill排序
-  let skills: Array<Omit<TGACore.Components.Character.RhisdSkill, "Proud">> = [];
+  let skills: Array<TGACore.Components.Character.WikiSkill> = [];
   tempSkills.forEach((skill) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { Proud, ...rest } = skill;
@@ -139,16 +139,16 @@ export function transArea(raw: number): string {
 }
 
 /**
- * @description 转换对话
+ * 转换对话
  * @since 2.2.0
- * @param {TGACore.Components.Character.RhiFetter[]} raw 原始数据
- * @param {string} name 角色名
- * @returns {TGACore.Components.Character.RhiFetter[]} 转换后的数据
+ * @param raw - 原始数据
+ * @param name - 角色名
+ * @returns 转换后的数据
  */
 function transTalks(
-  raw: TGACore.Components.Character.RhiFetter[],
+  raw: TGACore.Plugins.Hutao.Avatar.Text[],
   name: string,
-): TGACore.Components.Character.RhiFetter[] {
+): TGACore.Plugins.Hutao.Avatar.Text[] {
   const res = [];
   for (const r of raw) {
     const item = JSON.parse(JSON.stringify(r));
@@ -236,10 +236,10 @@ async function convertSkill(skill: TGACore.Plugins.Hutao.Avatar.Skill): Promise<
  * @description 转换命座图像
  * @since 2.4.0
  * @function convertTalent
- * @param {TGACore.Plugins.Hutao.Avatar.Talent} talent 命座数组
+ * @param {TGACore.Plugins.Hutao.Avatar.Constellation} talent 命座数组
  * @returns {Promise<void>}
  */
-async function convertTalent(talent: TGACore.Plugins.Hutao.Avatar.Talent): Promise<void> {
+async function convertTalent(talent: TGACore.Plugins.Hutao.Avatar.Constellation): Promise<void> {
   const oriPath = `${imageDetail.constellations.src}/${talent.Icon}.png`;
   const savePath = `${imageDetail.constellations.out}/${talent.Icon}.webp`;
   await convertImage(oriPath, savePath, `命座 ${talent.Icon}`);

@@ -50,4 +50,15 @@ declare namespace TGACore.Plugins.Hutao.Base {
    * @interface SingleFileType
    */
   type SingleFileType = Exclude<GithubFileTypeEnum, AvatarFileType>;
+
+  /**
+   * 属性
+   * @since 2.5.0
+   */
+  type Prop = {
+    /** 类型 */
+    Type: number;
+    /** 值 */
+    Value: number;
+  };
 }

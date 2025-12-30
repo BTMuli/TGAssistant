@@ -17,7 +17,7 @@ import logger from "@tools/logger.ts";
 function matchMaterials(materialIds: Array<number>): Array<TGACore.Components.Calendar.Material> {
   const check = hutaoTool.check(hutaoTool.enum.file.Material);
   if (!check) throw new Error(`[utils][matchMaterials] 缺失元数据文件 Material.json，请检查`);
-  const rawMaterials = hutaoTool.read<TGACore.Plugins.Hutao.Material.RawMaterial>(
+  const rawMaterials = hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(
     hutaoTool.enum.file.Material,
   );
   const res: Array<TGACore.Components.Calendar.Material> = [];

@@ -52,7 +52,7 @@ for (const param of paramList) {
     Counter.Fail();
     continue;
   }
-  const rawAvatar = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+  const rawAvatar = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.FullInfo>(
     hutaoTool.enum.file.Avatar,
     param,
   );
@@ -117,10 +117,12 @@ async function downloadSkill(
  * @description 下载命座图像
  * @since 2.4.0
  * @function downloadTalents
- * @param {Array<TGACore.Plugins.Hutao.Avatar.Talent>} talents 命座数据
+ * @param {Array<TGACore.Plugins.Hutao.Avatar.Constellation>} talents 命座数据
  * @returns {Promise<void>}
  */
-async function downloadTalents(talents: Array<TGACore.Plugins.Hutao.Avatar.Talent>): Promise<void> {
+async function downloadTalents(
+  talents: Array<TGACore.Plugins.Hutao.Avatar.Constellation>,
+): Promise<void> {
   Counter.addTotal(talents.length);
   for (const talent of talents) {
     const savePath = path.join(imageDetail.constellations.src, `${talent.Icon}.png`);

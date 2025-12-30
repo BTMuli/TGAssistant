@@ -13,27 +13,25 @@ declare namespace TGACore.Plugins.Hutao.Weapon {
   type RawWeapon = Array<Weapon>;
 
   /**
-   * @description 武器类型枚举
+   * 武器类型
    * @since 2.4.0
-   * @const WeaponType
-   * @property {number} sword 单手剑 = 1
-   * @property {number} catalyst 法器 = 10
-   * @property {number} claymore 双手剑 = 11
-   * @property {number} bow 弓 = 12
-   * @property {number} pole 长柄武器 = 13
    */
   const WeaponType = <const>{
+    /** 单手剑 */
     sword: 1,
+    /** 法器 */
     catalyst: 10,
+    /** 双手剑 */
     claymore: 11,
+    /** 弓 */
     bow: 12,
+    /** 长柄武器 */
     pole: 13,
   };
 
   /**
-   * @description 武器类型枚举
+   * 武器类型枚举
    * @since 2.4.0
-   * @interface WeaponTypeEnum
    */
   type WeaponTypeEnum = (typeof WeaponType)[keyof typeof WeaponType];
 

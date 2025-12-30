@@ -6,8 +6,9 @@
 
 import md5 from "node:crypto";
 
-import { transParams } from "./transData.ts";
 import MysClient from "../constant/mys.ts";
+
+import { transParams } from "./transData.ts";
 
 /**
  * @description 获取 salt

@@ -1,69 +1,81 @@
 /**
- * @file core/plugins/hutao/types/Avatar.d.ts
- * @description 胡桃角色类型声明文件
+ * 角色类型声明文件
+ * @remarks Avatar/[id].json
  * @since 2.4.0
  */
 
 declare namespace TGACore.Plugins.Hutao.Avatar {
   /**
-   * @description 单角色文件类型
+   * 单角色文件类型
+   *
    * @since 2.4.0
-   * @interface RawAvatar
-   * @property {number} Id 角色编号
-   * @property {number} PromoteId 角色突破编号
-   * @property {number} Sort 角色排序
-   * @property {number} Body 角色身体类型
-   * @property {string} Icon 角色头像
-   * @property {string} SideIcon 角色侧面头像
-   * @property {string} Name 角色名称
-   * @property {string} Description 角色描述
-   * @property {string} BeginTime 角色上线时间
-   * @property {number} Quality 角色品质
-   * @property {TGACore.Plugins.Hutao.Weapon.WeaponTypeEnum} Weapon 角色武器类型
-   * @property {BaseValue} BaseValue 角色基础属性
-   * @property {Array<GrowCurve>} GrowCurves 角色成长曲线
-   * @property {SkillDepot} SkillDepot 角色技能
-   * @property {FetterInfo} FetterInfo 角色好感
    */
-  type RawAvatar = {
+  type FullInfo = {
+    /** ID */
     Id: number;
+    /**
+     * 突破 ID
+     * @remarks 该数据与 {@link TGACore.Plugins.Hutao.AvatarPromote.FullInfo} 有关
+     */
     PromoteId: number;
+    /** 排序 */
     Sort: number;
+    /**
+     * 身体类型
+     * @remarks 枚举值
+     */
     Body: number;
+    /**
+     * 头像
+     * @remarks AvatarIcon/
+     */
     Icon: string;
+    /**
+     * 侧面头像
+     * @remarks AvatarIcon/
+     */
     SideIcon: string;
+    /** 姓名 */
     Name: string;
+    /** 描述 */
     Description: string;
+    /** 上线时间 */
     BeginTime: string;
+    /**
+     * 星级
+     * @remarks 埃洛伊是105
+     */
     Quality: number;
+    /** 武器类型 */
     Weapon: TGACore.Plugins.Hutao.Weapon.WeaponTypeEnum;
+    /** 基础属性 */
     BaseValue: BaseValue;
-    GrowCurves: Array<GrowCurve>;
+    /** 成长曲线 */
+    GrowCurves: Array<TGACore.Plugins.Hutao.Base.Prop>;
+    /** 技能 */
     SkillDepot: SkillDepot;
+    /** 好感信息 */
     FetterInfo: FetterInfo;
+    /** 衣装 */
     Costumes: Array<Costume>;
+    /** 养成材料 ID 列表 */
     CultivationItems: Array<number>;
+    /** 名片信息 */
     NameCard: NameCard;
   };
 
   /**
-   * @description 角色基础属性
+   * 基础属性
    * @since 2.4.0
-   * @interface BaseValue
-   * @property {number} HpBase 生命值
-   * @property {number} AttackBase 攻击力
-   * @property {number} DefenseBase 防御力
    */
-  type BaseValue = { HpBase: number; AttackBase: number; DefenseBase: number };
-
-  /**
-   * @description 角色成长曲线
-   * @since 2.4.0
-   * @interface GrowCurve
-   * @property {number} Type 未知
-   * @property {number} Value 未知
-   */
-  type GrowCurve = { Type: number; Value: number };
+  type BaseValue = {
+    /** 生命值 */
+    HpBase: number;
+    /** 攻击力 */
+    AttackBase: number;
+    /** 防御力 */
+    DefenseBase: number;
+  };
 
   /**
    * @description 角色技能
@@ -73,15 +85,30 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
    * @property {Array<Skill>} Skills 角色技能
    * @property {Skill} EnergySkill 角色元素爆发
    * @property {Array<Skill>} Inherents 角色天赋
-   * @property {Array<Talent>} Talents 角色天赋
+   * @property {Array<Constellation>} Talents 角色天赋
    */
   type SkillDepot = {
+    /**
+     * 荒芒属性
+     * @example
+     * 0 - 不具有
+     * 1 - 荒
+     * 2 - 芒
+     */
     Arkhe: number;
+    /** 普通攻击&元素技能 */
     Skills: Array<Skill>;
+    /**
+     * 特殊技能
+     * @example 魔女的前夜礼
+     */
     SpecialSkills?: Array<Skill>;
+    /** 元素爆发 */
     EnergySkill: Skill;
+    /** 天赋 */
     Inherents: Array<Skill>;
-    Talents: Array<Talent>;
+    /** 命座 */
+    Talents: Array<Constellation>;
   };
 
   /**
@@ -96,175 +123,273 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
    * @property {string} Icon 技能图标
    */
   type Skill = {
+    /** Group ID */
     GroupId: number;
+    /** 参数 */
     Proud: Proud;
+    /** ID */
     Id: number;
+    /** 名称 */
     Name: string;
+    /**
+     * 描述
+     * @remarks htmlText
+     */
     Description: string;
+    /**
+     * 图标
+     * @remarks Skill/
+     */
     Icon: string;
   };
 
   /**
-   * @description 技能参数
+   * 技能参数
    * @since 2.4.0
-   * @interface Proud
-   * @property {Array<string>} Description 技能描述
-   * @property {Array<Parameter>} Parameters 技能参数
-   * @return Proud
    */
-  type Proud = { Description: Array<string>; Parameters: Array<Parameter> };
-
-  /**
-   * @description 技能参数
-   * @since 2.4.0
-   * @interface Parameter
-   * @property {number} Level 技能等级
-   * @property {Array<number>} Parameters 技能参数
-   * @return Parameter
-   */
-  type Parameter = { Level: number; Parameters: Array<number> };
-
-  /**
-   * @description 角色天赋
-   * @since 2.4.0
-   * @interface Talent
-   * @property {number} Id 天赋编号
-   * @property {string} Name 天赋名称
-   * @property {string} Description 天赋描述
-   * @property {string} Icon 天赋图标
-   * @property {TalentExtraLevel} [ExtraLevel] 天赋升级信息
-   * @return Talent
-   */
-  type Talent = {
-    Id: number;
-    Name: string;
-    Description: string;
-    Icon: string;
-    ExtraLevel?: TalentExtraLevel;
+  type Proud = {
+    /**
+     * 描述列表
+     * @example
+     * [
+     *   "一段伤害|{param1:F1P}",
+     *   "二段伤害|{param2:F1P}",
+     *   "三段伤害|{param3:F1P}",
+     *   "四段伤害|{param4:F1P}",
+     *   "五段伤害|{param5:F1P}",
+     *   "瞄准射击|{param6:F1P}",
+     *   "满蓄力瞄准射击|{param7:P}",
+     *   "下坠期间伤害|{param8:F1P}",
+     *   "低空/高空坠地冲击伤害|{param9:P}/{param10:P}"
+     * ]
+     */
+    Description: Array<string>;
+    /**
+     * 参数
+     * @example
+     * [
+     *   {
+     *     "Id": 213101,
+     *     "Level": 1,
+     *     "Parameters": [
+     *       0.3612,
+     *       0.3612,
+     *       0.4644,
+     *       0.473,
+     *       0.5934,
+     *       0.4386,
+     *       1.24,
+     *       0.568288,
+     *       1.136335,
+     *       1.419344
+     *     ]
+     *   },
+     * ]
+     */
+    Parameters: Array<Parameter>;
+    /**
+     * 展示
+     * @remarks 未知用途
+     */
+    Display?: number;
   };
 
   /**
-   * @description 角色天赋升级信息
+   * 技能参数
    * @since 2.4.0
-   * @interface TalentExtraLevel
-   * @property {number} Index 天赋升级索引
-   * @property {number} Level 天赋升级等级
    */
-  type TalentExtraLevel = { Index: number; Level: number };
+  type Parameter = {
+    /** ID */
+    Id: number;
+    /** 等级 */
+    Level: number;
+    /** 参数 */
+    Parameters: Array<number>;
+  };
 
   /**
-   * @description 好感信息
+   * 命之座
    * @since 2.4.0
-   * @interface FetterInfo
-   * @property {string} Title 角色称号
-   * @property {string} Detail 角色简介
-   * @property {number} Association 角色地区
-   * @property {string} Native 角色地区
-   * @property {number} BirthMonth 角色生日-月
-   * @property {number} BirthDay 角色生日-日
-   * @property {string} VisionBefore 角色元素类型
-   * @property {string} VisionAfter 未知
-   * @property {string} VisionOverrideUnlocked 未知
-   * @property {string} ConstellationBefore 角色星座
-   * @property {string} ConstellationAfter 未知
-   * @property {string} CvChinese 角色声优-中文
-   * @property {string} CvJapanese 角色声优-日文
-   * @property {string} CvEnglish 角色声优-英文
-   * @property {string} CvKorean 角色声优-韩文
-   * @property {CookBonus} CookBonus 角色特殊料理
-   * @property {Array<Fetter>} Fetters 角色好感语音
-   * @property {Array<Fetter>} FetterStories 角色好感故事
+   */
+  type Constellation = {
+    /** ID */
+    Id: number;
+    /** 名称 */
+    Name: string;
+    /**
+     * 描述
+     * @remarks htmlText
+     */
+    Description: string;
+    /**
+     * 图标
+     * @remarks Talent/
+     */
+    Icon: string;
+    /** 额外等级加成 */
+    ExtraLevel?: ConstExtraLevel;
+  };
+
+  /**
+   * 命座提供天赋加成
+   * @since 2.4.0
+   */
+  type ConstExtraLevel = {
+    /** 索引 */
+    Index: number;
+    /** 提升等级 */
+    Level: number;
+  };
+
+  /**
+   * 好感信息
+   * @since 2.4.0
    */
   type FetterInfo = {
+    /** 称号 */
     Title: string;
+    /**
+     * 描述
+     * @remarks 与 {@link FullInfo.Description} 一致
+     */
     Detail: string;
+    /**
+     * 地区
+     * @remarks 枚举值
+     */
     Association: number;
+    /** 阵营 */
     Native: string;
+    /** 生日-月 */
     BirthMonth: number;
+    /** 生日-日 */
     BirthDay: number;
+    /** 神之眼 */
     VisionBefore: string;
-    VisionAfter: string;
+    /**
+     * 神之眼-后
+     * @remarks 存在时使用此字段
+     */
+    VisionAfter?: string;
+    /** 神之眼描述（未解锁） */
+    VisionOverrideLocked?: string;
+    /** 神之眼描述 */
     VisionOverrideUnlocked: string;
+    /** 命之座 */
     ConstellationBefore: string;
-    ConstellationAfter: string;
+    /**
+     * 命之座
+     * @remarks 存在时使用此字段
+     */
+    ConstellationAfter?: string;
+    /** 角色声优-中文 */
     CvChinese: string;
+    /** 角色声优-日文 */
     CvJapanese: string;
+    /** 角色声优-英文 */
     CvEnglish: string;
+    /** 角色声优-韩文 */
     CvKorean: string;
-    CookBonus: CookBonus;
-    Fetters: Array<Fetter>;
-    FetterStories: Array<Fetter>;
+    /** 特殊料理 */
+    CookBonus?: CookBonus;
+    /** 角色好感语音 */
+    Fetters: Array<Text>;
+    /** 角色好感故事 */
+    FetterStories: Array<Text>;
   };
 
   /**
-   * @description 角色特殊料理信息
+   * 特殊料理
    * @since 2.4.0
-   * @interface CookBonus
-   * @property {number} OriginItemId 角色特殊料理编号
-   * @property {number} ItemId 角色特殊料理编号
-   * @property {Array<number>} InputList 角色特殊料理材料
    */
-  type CookBonus = { OriginItemId: number; ItemId: number; InputList: Array<number> };
+  type CookBonus = {
+    /**
+     * 原料理 ID
+     * @remarks 见 {@link TGACore.Plugins.Hutao.MaterialItem}
+     */
+    OriginItemId: number;
+    /**
+     * 特殊料理 ID
+     * @remarks 见 {@link TGACore.Plugins.Hutao.MaterialItem}
+     */
+    ItemId: number;
+    /** 原料 ID 列表 */
+    InputList: Array<number>;
+  };
 
   /**
-   * @description 好感项
+   * 文本
    * @since 2.4.0
-   * @interface Fetter
-   * @property {string} Title 语音标题
-   * @property {string} Context 语音内容
    */
-  type Fetter = { Title: string; Context: string };
+  type Text = {
+    /** 标题 */
+    Title: string;
+    /** 内容 */
+    Context: string;
+  };
 
   /**
-   * @description 皮肤基础数据
+   * 皮肤
    * @since 2.4.0
-   * @interface CostumeBase
-   * @property {number} Id 皮肤编号
-   * @property {string} Name 皮肤名称
-   * @property {string} Description 皮肤描述
-   */
-  type CostumeBase = { Id: number; Name: string; Description: string };
-  /**
-   * @description 默认皮肤
-   * @since 2.4.0
-   * @interface CostumeDefault
-   * @extends CostumeBase
-   * @property {true} IsDefault 是否默认皮肤
-   */
-  type CostumeDefault = CostumeBase & { IsDefault: true };
-
-  /**
-   * @description 非默认皮肤
-   * @since 2.4.0
-   * @interface CostumeExtra
-   * @extends CostumeBase
-   * @property {false} IsDefault 是否默认皮肤
-   * @property {string} FrontIcon 非默认皮肤头像
-   * @property {string} SideIcon 非默认皮肤侧面头像
-   */
-  type CostumeExtra = CostumeBase & { IsDefault: false; FrontIcon: string; SideIcon: string };
-
-  /**
-   * @description 皮肤数据
-   * @since 2.4.0
-   * @interface Costume
-   * @property {number} Id 皮肤编号
-   * @property {string} Name 皮肤名称
-   * @property {string} Description 皮肤描述
-   * @property {boolean} IsDefault 是否默认皮肤
-   * @property {string} [FrontIcon] 非默认皮肤头像
-   * @property {string} [SideIcon] 非默认皮肤侧面头像
    */
   type Costume = CostumeDefault | CostumeExtra;
 
   /**
-   * @description 角色名片
+   * 皮肤基础数据
    * @since 2.4.0
-   * @interface NameCard
-   * @property {string} Name 名称
-   * @property {string} Description 描述
-   * @property {string} Icon 图标
-   * @property {string} PicturePrefix 前缀
    */
-  type NameCard = { Name: string; Description: string; Icon: string; PicturePrefix: string };
+  type CostumeBase = {
+    /** ID */
+    Id: number;
+    /** 名称 */
+    Name: string;
+    /** 描述 */
+    Description: string;
+  };
+
+  /**
+   * 默认皮肤
+   * @since 2.4.0
+   */
+  type CostumeDefault = CostumeBase & {
+    /** 是默认皮肤 */
+    IsDefault: true;
+  };
+
+  /**
+   * 非默认皮肤
+   * @since 2.4.0
+   */
+  type CostumeExtra = CostumeBase & {
+    /** 不是默认皮肤 */
+    IsDefault: false;
+    /**
+     * 图标
+     * @remarks AvatarIcon/
+     */
+    FrontIcon: string;
+    /**
+     * 侧边图标
+     * @remarks AvatarIcon/
+     */
+    SideIcon: string;
+  };
+
+  /**
+   * 角色名片
+   * @since 2.4.0
+   */
+  type NameCard = {
+    /** 名称 */
+    Name: string;
+    /** 描述 */
+    Description: string;
+    /**
+     * 图标
+     * @remarks NameCardPic
+     */
+    Icon: string;
+    /** 前缀 */
+    PicturePrefix: string;
+  };
 }

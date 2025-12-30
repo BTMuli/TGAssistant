@@ -48,7 +48,7 @@ for (const param of paramList) {
     Counter.Fail();
     continue;
   }
-  const rawAvatar = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.RawAvatar>(
+  const rawAvatar = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.FullInfo>(
     hutaoTool.enum.file.Avatar,
     param,
   );
