@@ -9,13 +9,17 @@ import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import fetchMysObserver from "@utils/fetchMysObserver.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
-import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
+import { fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
-import sharp from "sharp";
 
-import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
+import { imgCostumeDir, imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
+import {
+  downloadAvatarIcon,
+  downloadCostumeFull,
+  downloadCostumeIcon,
+  downloadCostumeSide,
+} from "./utils.ts";
 
 logger.init();
 Counter.Init("[components][character][download]");
@@ -23,6 +27,7 @@ logger.default.info("[components][character][download] 运行 download.ts");
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
+fileCheckObj(imgCostumeDir);
 fileCheckObj(jsonDetailDir, false);
 
 Counter.Reset(3);
@@ -86,30 +91,27 @@ const yattaRaw: Record<string, TGACore.Plugins.Yatta.Avatar.AvatarItem> = await 
   jsonDetailDir.yatta,
 );
 const yattaAvatar = Object.values(yattaRaw);
-Counter.addTotal(yattaAvatar.length);
 for (const avatar of yattaAvatar) {
   const id = avatar.id.toString().split("-")[0];
-  const savePath = path.join(imgDir.src, `${id}.png`);
-  if (fileCheck(savePath, false)) {
-    logger.console.mark(
-      `[components][character][download] ${avatar.id} ${avatar.name} Icon 已存在，跳过`,
-    );
-    Counter.Skip();
+  const iconSavePath = path.join(imgDir.src, `${id}.png`);
+  await downloadAvatarIcon(avatar, iconSavePath);
+  if (!hutaoTool.check(hutaoTool.enum.file.Avatar, id)) {
+    logger.console.mark(`[components][character] 未检测到 ${id} ${avatar.name} 的胡桃数据，跳过`);
     continue;
   }
-  try {
-    const res = await fetchSgBuffer("AvatarIcon", `${avatar.icon}.png`);
-    await sharp(res).toFile(savePath);
-    logger.default.info(
-      `[components][character][download] ${avatar.id} ${avatar.name} Icon 下载完成`,
-    );
-    Counter.Success();
-  } catch (e) {
-    logger.default.warn(
-      `[components][character][download] ${avatar.id} ${avatar.name} Icon 下载失败`,
-    );
-    logger.default.error(e);
-    Counter.Fail();
+  const hutaoRaw = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.FullInfo>(
+    hutaoTool.enum.file.Avatar,
+    id,
+  );
+  const costumeFilter = hutaoRaw.Costumes.filter((i) => !i.IsDefault);
+  for (const costume of costumeFilter) {
+    const costumFull = costume.FrontIcon.replace("UI_AvatarIcon", "UI_Costume");
+    const iconSavePath = path.join(imgDir.src, `${id}.png`);
+    const sideSavePath = path.join(imgDir.src, `${id}_side.png`);
+    const fullSavePath = path.join(imgDir.src, `${id}_full.png`);
+    await downloadCostumeIcon(costume, iconSavePath);
+    await downloadCostumeSide(costume, sideSavePath);
+    await downloadCostumeFull(costume, costumFull, fullSavePath);
   }
 }
 

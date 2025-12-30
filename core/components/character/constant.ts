@@ -5,7 +5,7 @@
 
 import path from "node:path";
 
-import { getAppDirPath } from "@utils/getBasePaths.ts";
+import { getAppDirPath, getProjDataPath } from "@utils/getBasePaths.ts";
 
 export const imgDir = getAppDirPath("assets", "character");
 export const jsonDir = getAppDirPath("data", "character");
@@ -16,4 +16,8 @@ export const jsonDetailDir = {
   out: path.join(jsonDir.out, "app", "character.json"),
   namecard: path.join(jsonDir.out, "app", "namecard.json"),
   hakushi: path.join(jsonDir.src, "hakushi.json"),
+};
+export const imgCostumeDir = {
+  src: path.join(getProjDataPath("assets"), "src", "costume"),
+  out: path.join(getProjDataPath("assets"), "out", "costume"),
 };
