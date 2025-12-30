@@ -10,10 +10,9 @@ import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
-import sharp from "sharp";
 
-import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
-import { str2utc8 } from "./utils.ts";
+import { imgCostumeDir, imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
+import { convertIcon, str2utc8, transHutaoCostume } from "./utils.ts";
 
 logger.init();
 Counter.Init("[components][character][convert]");
@@ -58,6 +57,7 @@ for (const param of paramList) {
     release: str2utc8(rawAvatar.BeginTime),
     weapon: hutaoTool.enum.transW(rawAvatar.Weapon),
     nameCard: rawAvatar.NameCard.Name,
+    costumes: rawAvatar.Costumes.map(transHutaoCostume),
   };
   converData.push(avatar);
   logger.console.mark(`[components][character][convert] 角色 ${rawAvatar.Id} 转换完成`);
@@ -92,6 +92,7 @@ for (const item of mysRaw) {
         release: "",
         weapon: "单手剑",
         nameCard: "",
+        costumes: [],
       };
       converData.push(character);
       logger.default.info(`[components][character][convert] 添加遗漏角色 ${item.title} 数据`);
@@ -115,6 +116,7 @@ converData.push({
   release: "",
   weapon: "单手剑",
   nameCard: "",
+  costumes: [],
 });
 converData.push({
   id: 10000118,
@@ -128,6 +130,7 @@ converData.push({
   release: "",
   weapon: "单手剑",
   nameCard: "",
+  costumes: [],
 });
 
 // 获取没有 contentId 的角色
@@ -146,23 +149,35 @@ logger.default.info(`[components][character][convert] 第二次处理完成，�
 
 // 处理图片数据
 logger.console.info("[components][character][convert] 第三次处理：处理图片数据");
-Counter.Reset(converData.length);
 for (const item of converData) {
-  const srcPath = path.join(imgDir.src, `${item.id}.png`);
-  const outPath = path.join(imgDir.out, `${item.id}.webp`);
-  if (!fileCheck(srcPath, false)) {
-    logger.default.warn(`[components][character][convert] 角色 ${item.id} 没有图片数据`);
-    Counter.Fail();
-    continue;
+  await convertIcon(
+    path.join(imgDir.src, `${item.id}.png`),
+    path.join(imgDir.out, `${item.id}.webp`),
+    `角色 ${item.id} 图标`,
+  );
+  for (const costume of item.costumes) {
+    if (costume.isDefault) {
+      logger.console.mark(
+        `[components][character] ${costume.id} ${costume.name} 没有图片资源，跳过`,
+      );
+    } else {
+      await convertIcon(
+        path.join(imgCostumeDir.src, `${costume.id}.png`),
+        path.join(imgCostumeDir.out, `${costume.id}.webp`),
+        `衣装 ${costume.id} ${costume.name} 图标`,
+      );
+      await convertIcon(
+        path.join(imgCostumeDir.src, `${costume.id}_side.png`),
+        path.join(imgCostumeDir.out, `${costume.id}_side.webp`),
+        `衣装 ${costume.id} ${costume.name} 侧边图`,
+      );
+      await convertIcon(
+        path.join(imgCostumeDir.src, `${costume.id}_full.png`),
+        path.join(imgCostumeDir.out, `${costume.id}_full.webp`),
+        `衣装 ${costume.id} ${costume.name} 全身图`,
+      );
+    }
   }
-  if (fileCheck(outPath, false)) {
-    logger.console.mark(`[components][character][convert] 角色 ${item.id} 已有图片数据`);
-    Counter.Skip();
-    continue;
-  }
-  await sharp(srcPath).webp().toFile(outPath);
-  logger.console.info(`[components][character][convert] 角色 ${item.id} 图片转换完成`);
-  Counter.Success();
 }
 Counter.End();
 logger.default.info(`[components][character][convert] 第三次处理完成，耗时 ${Counter.getTime()}`);

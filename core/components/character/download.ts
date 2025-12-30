@@ -106,9 +106,9 @@ for (const avatar of yattaAvatar) {
   const costumeFilter = hutaoRaw.Costumes.filter((i) => !i.IsDefault);
   for (const costume of costumeFilter) {
     const costumFull = costume.FrontIcon.replace("UI_AvatarIcon", "UI_Costume");
-    const iconSavePath = path.join(imgDir.src, `${id}.png`);
-    const sideSavePath = path.join(imgDir.src, `${id}_side.png`);
-    const fullSavePath = path.join(imgDir.src, `${id}_full.png`);
+    const iconSavePath = path.join(imgCostumeDir.src, `${costume.Id}.png`);
+    const sideSavePath = path.join(imgCostumeDir.src, `${costume.Id}_side.png`);
+    const fullSavePath = path.join(imgCostumeDir.src, `${costume.Id}_full.png`);
     await downloadCostumeIcon(costume, iconSavePath);
     await downloadCostumeSide(costume, sideSavePath);
     await downloadCostumeFull(costume, costumFull, fullSavePath);

@@ -17,7 +17,7 @@ import sharp from "sharp";
  */
 export function str2utc8(raw: string): string {
   return format(parseISO(raw), "yyyy-MM-dd HH:mm:ss", {
-    in: tz("Aisa/Shanghai"),
+    in: tz("Asia/Shanghai"),
   });
 }
 
@@ -136,4 +136,46 @@ export async function downloadCostumeFull(
     logger.default.error(e);
     Counter.Fail();
   }
+}
+
+/**
+ * 转换角色衣装数据
+ * @since 2.5.0
+ * @param raw - 原始数据
+ * @returns 转换后的数据
+ */
+export function transHutaoCostume(
+  raw: TGACore.Plugins.Hutao.Avatar.Costume,
+): TGACore.Components.Character.Costume {
+  return {
+    id: raw.Id,
+    isDefault: raw.IsDefault,
+    name: raw.Name,
+    desc: raw.Description,
+  };
+}
+
+/**
+ * 转换角色图标数据
+ * @since 2.5.0
+ * @param oriPath - 原始路径
+ * @param outPath - 目标路径
+ * @param label - 描述
+ * @returns 无返回值
+ */
+export async function convertIcon(oriPath: string, outPath: string, label: string): Promise<void> {
+  Counter.addTotal();
+  if (!fileCheck(oriPath, false)) {
+    logger.default.warn(`[components][character] ${label} 资源缺失`);
+    Counter.Fail();
+    return;
+  }
+  if (fileCheck(outPath, false)) {
+    logger.console.mark(`[components][character] ${label} 已转换，跳过`);
+    Counter.Skip();
+    return;
+  }
+  await sharp(oriPath).webp().toFile(outPath);
+  logger.console.info(`[components][character] ${label} 转换成功`);
+  Counter.Success();
 }

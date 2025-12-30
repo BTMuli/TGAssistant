@@ -32,6 +32,19 @@ declare namespace TGACore.Components.Character {
     weapon: string;
     /** 角色名片 */
     nameCard: string;
+    /** 角色衣装信息 */
+    costumes: Array<Costume>;
+  };
+
+  /**
+   * 角色衣装数据-简要
+   * @since 2.5.0
+   */
+  type Costume = {
+    id: number;
+    isDefault: boolean;
+    name: string;
+    desc: string;
   };
 
   /**
