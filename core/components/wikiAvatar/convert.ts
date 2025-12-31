@@ -1,7 +1,6 @@
 /**
- * @file core/components/wikiAvatar/convert.ts
- * @description wikiAvatar 组件转换器
- * @since 2.4.0
+ * wikiAvatar 组件转换器
+ * @since 2.5.0
  */
 
 import path from "node:path";
@@ -88,7 +87,9 @@ function transCharacter(
     area: transArea(raw.FetterInfo.Association),
     brief: {
       camp: raw.FetterInfo.Native,
-      constellation: raw.FetterInfo.ConstellationBefore,
+      constellation: raw.FetterInfo.ConstellationAfter
+        ? raw.FetterInfo.ConstellationAfter
+        : raw.FetterInfo.ConstellationBefore,
       birth: `${raw.FetterInfo.BirthMonth}月${raw.FetterInfo.BirthDay}日`,
       cv: {
         cn: raw.FetterInfo.CvChinese,
@@ -98,6 +99,7 @@ function transCharacter(
       },
     },
     star: raw.Quality === 105 ? 5 : raw.Quality,
+    elePrefix: raw.FetterInfo.VisionOverrideUnlocked,
     element: raw.FetterInfo.VisionBefore,
     weapon: hutaoTool.enum.transW(raw.Weapon),
     materials,

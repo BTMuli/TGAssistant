@@ -67,7 +67,9 @@ declare namespace TGACore.Components.Character {
     brief: WikiBrief;
     /** 角色星级 */
     star: number;
-    /** 角色元素类型 */
+    /** 元素描述 */
+    elePrefix: string;
+    /** 元素类型 */
     element: string;
     /** 角色武器类型 */
     weapon: string;
