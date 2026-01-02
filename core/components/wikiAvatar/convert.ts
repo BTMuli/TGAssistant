@@ -98,7 +98,7 @@ function transCharacter(
         kr: raw.FetterInfo.CvKorean,
       },
     },
-    star: raw.Quality === 105 ? 5 : raw.Quality,
+    star: raw.Quality,
     elePrefix: raw.FetterInfo.VisionOverrideUnlocked,
     element: raw.FetterInfo.VisionBefore,
     weapon: hutaoTool.enum.transW(raw.Weapon),

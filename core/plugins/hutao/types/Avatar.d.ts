@@ -41,10 +41,7 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
     Description: string;
     /** 上线时间 */
     BeginTime: string;
-    /**
-     * 星级
-     * @remarks 埃洛伊是105
-     */
+    /** 星级 */
     Quality: number;
     /** 武器类型 */
     Weapon: TGACore.Plugins.Hutao.Weapon.WeaponTypeEnum;

@@ -136,7 +136,6 @@ for (const avatar of avatarRaw) {
       });
     }
   });
-  const avatarStar = avatar.Quality === 105 ? 5 : avatar.Quality;
   const avatarWeapon = hutaoTool.enum.transW(avatar.Weapon);
   const convertData: TGACore.Components.Calendar.CalendarItem = {
     id: avatar.Id,
@@ -144,7 +143,7 @@ for (const avatar of avatarRaw) {
     dropDays,
     name: avatar.Name,
     itemType: "character",
-    star: avatarStar,
+    star: avatar.Quality,
     weapon: avatarWeapon,
     element: avatar.FetterInfo.VisionBefore,
     release: hakushiRaw[avatar.Id].release,
