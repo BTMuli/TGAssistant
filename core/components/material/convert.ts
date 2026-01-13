@@ -155,10 +155,10 @@ async function transMaterial(
       source.push({ name: item.name, type: item.type, days });
     }
   }
-  // 移除摩拉获取方式
+  // 精简部分材料获取方式
   if (["105", "102", "202"].includes(material.id.toString())) {
     source = source.filter((i) => i.type !== "domain");
-    source.push({ type: "single", name: "秘境获取" });
+    source.push({ name: "秘境获取", type: "single" });
   }
   return {
     id: Number(material.id),

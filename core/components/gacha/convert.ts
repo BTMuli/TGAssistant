@@ -27,7 +27,9 @@ if (!fileCheck(jsonDetailDir.mhy, false) || !hutaoTool.check(hutaoTool.enum.file
 }
 
 Counter.Reset();
-const gachaRaw = hutaoTool.read<TGACore.Plugins.Hutao.Gacha.RawGacha>(hutaoTool.enum.file.Gacha);
+const gachaRaw = hutaoTool
+  .read<TGACore.Plugins.Hutao.Gacha.RawGacha>(hutaoTool.enum.file.Gacha)
+  .sort((a, b) => Number(a.Version) - Number(b.Version) || a.Order - b.Order);
 const postRaw: TGACore.Components.Gacha.MysPosts = await fs.readJSON(jsonDetailDir.mhy);
 
 let gacha: Array<TGACore.Components.Gacha.Pool> = [];
