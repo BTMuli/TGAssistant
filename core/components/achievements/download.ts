@@ -26,7 +26,7 @@ fileCheckObj(imgDir);
 
 // 更新Metadata数据
 logger.console.info("[components][achievement][download] 开始下载 Metadata 成就数据");
-Counter.Reset(3);
+Counter.Reset(4);
 const remoteMeta = await hutaoTool.sync();
 // 更新成就数据
 try {
@@ -35,6 +35,16 @@ try {
   else Counter.Skip();
 } catch (e) {
   logger.default.error("[components][achievement][download] 下载 Metadata 成就数据失败");
+  logger.console.error(`[components][achievement][download] ${e}`);
+  Counter.Fail();
+}
+// 更新成就系列数据
+try {
+  const statAchi = await hutaoTool.update(remoteMeta, hutaoTool.enum.file.AchievementGoal);
+  if (statAchi) Counter.Success();
+  else Counter.Skip();
+} catch (e) {
+  logger.default.error("[components][achievement][download] 下载 Metadata 成就系列数据失败");
   logger.console.error(`[components][achievement][download] ${e}`);
   Counter.Fail();
 }
