@@ -55,11 +55,21 @@ Counter.EndAll();
 
 /**
  * 转换图片
- * @param {string} icon 图片路径
+ * @param {string} iconOri 图片路径
  * @param {string} name 名称
  * @return {Promise<void>}
  */
-async function convertImg(icon: string, name: string): Promise<void> {
+async function convertImg(iconOri: string, name: string): Promise<void> {
+  let icon = iconOri;
+  if (icon === "") {
+    if (name === "套装形录·「橙叶苍藤」") icon = "UI_Beyd_Avatar_Optional_Suit_S0038";
+    else if (name === "套装形录·「遨游远志」") icon = "UI_Beyd_Avatar_Optional_Suit_S0073";
+    else {
+      logger.default.warn(`[components][gachaB][convert] ${name} 图标为空，跳过`);
+      Counter.Skip();
+      return;
+    }
+  }
   const oriPath = path.join(imgDir.src, `${icon}.webp`);
   const savePath = path.join(imgDir.out, `${icon}.webp`);
   if (!fileCheck(oriPath, false)) {

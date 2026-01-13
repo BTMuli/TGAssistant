@@ -46,7 +46,7 @@ for (const param of paramList) {
   const avatarTrans: TGACore.Components.Character.Wiki = transCharacter(avatarRaw);
   const savePath = path.join(jsonOutDir, `${param}.json`);
   await fs.writeJSON(savePath, avatarTrans);
-  logger.default.info(`[components][wikiAvatar][convert] 角色${param}转换完成`);
+  logger.console.info(`[components][wikiAvatar][convert] 角色${param}转换完成`);
   Counter.Success();
 }
 Counter.End();

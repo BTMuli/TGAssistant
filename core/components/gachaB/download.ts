@@ -48,11 +48,21 @@ Counter.Output();
 
 /**
  * 下载图片
- * @param {string} icon 图片名称
+ * @param {string} iconOri 图片名称
  * @param {string} name 名称
  * @return {Promise<void>}
  */
-async function downloadImg(icon: string, name: string): Promise<void> {
+async function downloadImg(iconOri: string, name: string): Promise<void> {
+  let icon = iconOri;
+  if (icon === "") {
+    if (name === "套装形录·「橙叶苍藤」") icon = "UI_Beyd_Avatar_Optional_Suit_S0038";
+    else if (name === "套装形录·「遨游远志」") icon = "UI_Beyd_Avatar_Optional_Suit_S0073";
+    else {
+      logger.default.warn(`[components][gachaB][download] ${name} 图标为空，跳过`);
+      Counter.Skip();
+      return;
+    }
+  }
   const savePath = path.join(imgDir.src, `${icon}.webp`);
   const check = fileCheck(savePath, false);
   if (check) {
