@@ -11,7 +11,14 @@ import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 
-import { imgCostumeDir, imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
+import {
+  AetherCostumes,
+  imgCostumeDir,
+  imgDir,
+  jsonDetailDir,
+  jsonDir,
+  LumineCostumes,
+} from "./constant.ts";
 import { convertIcon, str2utc8, transHutaoCostume } from "./utils.ts";
 
 logger.init();
@@ -92,7 +99,9 @@ for (const item of mysRaw) {
         release: "",
         weapon: "单手剑",
         nameCard: "",
-        costumes: [],
+        costumes: isLumine
+          ? LumineCostumes.map(transHutaoCostume)
+          : AetherCostumes.map(transHutaoCostume),
       };
       converData.push(character);
       logger.default.info(`[components][character][convert] 添加遗漏角色 ${item.title} 数据`);

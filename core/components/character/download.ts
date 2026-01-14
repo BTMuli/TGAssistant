@@ -13,7 +13,14 @@ import { fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
 
-import { imgCostumeDir, imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
+import {
+  AetherCostumes,
+  imgCostumeDir,
+  imgDir,
+  jsonDetailDir,
+  jsonDir,
+  LumineCostumes,
+} from "./constant.ts";
 import {
   downloadAvatarIcon,
   downloadCostumeFull,
@@ -95,15 +102,19 @@ for (const avatar of yattaAvatar) {
   const id = avatar.id.toString().split("-")[0];
   const iconSavePath = path.join(imgDir.src, `${id}.png`);
   await downloadAvatarIcon(avatar, iconSavePath);
-  if (!hutaoTool.check(hutaoTool.enum.file.Avatar, id)) {
-    logger.console.mark(`[components][character] 未检测到 ${id} ${avatar.name} 的胡桃数据，跳过`);
-    continue;
+  let costumeFilter: Array<TGACore.Plugins.Hutao.Avatar.CostumeExtra> = [];
+  if (hutaoTool.check(hutaoTool.enum.file.Avatar, id)) {
+    const hutaoRaw = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.FullInfo>(
+      hutaoTool.enum.file.Avatar,
+      id,
+    );
+    costumeFilter = hutaoRaw.Costumes.filter((i) => !i.IsDefault);
   }
-  const hutaoRaw = hutaoTool.read<TGACore.Plugins.Hutao.Avatar.FullInfo>(
-    hutaoTool.enum.file.Avatar,
-    id,
-  );
-  const costumeFilter = hutaoRaw.Costumes.filter((i) => !i.IsDefault);
+  if (id === "10000005") {
+    costumeFilter = AetherCostumes.filter((i) => !i.IsDefault);
+  } else if (id === "10000007") {
+    costumeFilter = LumineCostumes.filter((i) => !i.IsDefault);
+  }
   for (const costume of costumeFilter) {
     const costumFull = costume.FrontIcon.replace("UI_AvatarIcon", "UI_Costume");
     const iconSavePath = path.join(imgCostumeDir.src, `${costume.Id}.png`);
