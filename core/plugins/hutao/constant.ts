@@ -9,7 +9,7 @@ import { getProjDataPath } from "@core/utils/getBasePaths.ts";
 
 export const jsonDir: Readonly<string> = getProjDataPath("data", "src", "hutao");
 export const avatarDir: Readonly<string> = path.join(jsonDir, "Avatar");
-// 地区列表 TODO:兹白
+// 地区列表
 export const AREA_LIST: ReadonlyArray<string> = [
   "未知",
   "蒙德",
@@ -24,4 +24,5 @@ export const AREA_LIST: ReadonlyArray<string> = [
   "至冬",
   "寰宇劫灭",
   "挪德卡莱",
+  "璃月港",
 ];
