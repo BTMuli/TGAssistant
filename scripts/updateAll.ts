@@ -21,6 +21,7 @@ let dirs = [
   "namecard",
   "gacha",
   "gachaB",
+  "hyperlink",
   "character",
   "weapon",
   "calendar",

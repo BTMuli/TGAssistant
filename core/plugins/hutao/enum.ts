@@ -1,13 +1,11 @@
 /**
- * @file src/core/plugins/hutao/enum.ts
- * @description 一些关于胡桃的枚举
- * @since 2.4.0
+ * 一些关于胡桃的枚举
+ * @since 2.5.0
  */
 
 /**
- * @description Github 文件类型枚举
- * @since 2.4.0
- * @enum TGACore.Plugins.Hutao.Base.GithubFileTypeEnum
+ * Github 文件类型枚举
+ * @since 2.5.0
  */
 export const HutaoGithubFileEnum: typeof TGACore.Plugins.Hutao.Base.GithubFileType = {
   Achievement: "Achievement.json",
@@ -15,6 +13,7 @@ export const HutaoGithubFileEnum: typeof TGACore.Plugins.Hutao.Base.GithubFileTy
   Avatar: "Avatar/",
   Gacha: "GachaEvent.json",
   Meta: "Meta.json",
+  HyperLink: "HyperLinkName.json",
   NameCard: "NameCard.json",
   Weapon: "Weapon.json",
   Material: "Material.json",

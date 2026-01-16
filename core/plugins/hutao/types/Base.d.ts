@@ -1,32 +1,31 @@
 /**
- * @file core/plugins/hutao/types/base.d.ts
- * @description 一些关于胡桃的基础类型声明
- * @since 2.4.0
+ * 一些关于胡桃的基础类型声明
+ * @since 2.5.0
  */
 
 declare namespace TGACore.Plugins.Hutao.Base {
   /**
-   * @description Github 文件路径类型
-   * @since 2.4.0
-   * @const GithubFileType
-   * @enum {string}
-   * @property {string} Achievement 成就
-   * @property {string} AchievementGoal 成就系列
-   * @property {string} Avatar 角色
-   * @property {string} Gacha 祈愿
-   * @property {string} NameCard 名片
-   * @property {string} Material 材料
-   * @property {string} Meta 元数据
-   * @property {string} Weapon 武器
+   * Github 文件路径类型
+   * @since 2.5.0
    */
   const GithubFileType = <const>{
+    /** 成就 */
     Achievement: "Achievement.json",
+    /** 成就系列 */
     AchievementGoal: "AchievementGoal.json",
+    /** 角色 */
     Avatar: "Avatar/",
+    /** 祈愿历史 */
     Gacha: "GachaEvent.json",
-    NameCard: "NameCard.json",
+    /** hyperlink */
+    HyperLink: "HyperLinkName.json",
+    /** 元数据 */
     Meta: "Meta.json",
+    /** 名片 */
+    NameCard: "NameCard.json",
+    /** 武器 */
     Weapon: "Weapon.json",
+    /** 材料 */
     Material: "Material.json",
   };
 

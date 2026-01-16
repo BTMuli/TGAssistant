@@ -43,6 +43,8 @@ declare namespace TGACore.Config {
     gacha,
     /** 千星奇域祈愿 */
     gachaB,
+    /** hyperlink */
+    hyperlink,
     /** 材料 */
     material,
     /** 名片 */
