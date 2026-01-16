@@ -20,7 +20,7 @@ if (!hutaoTool.check(hutaoTool.enum.file.HyperLink)) {
   process.exit(1);
 }
 const hyperRaw = hutaoTool.read<TGACore.Plugins.Hutao.HyperLink.RawHyperLinks>(
-  hutaoTool.enum.file.Achievement,
+  hutaoTool.enum.file.HyperLink,
 );
 const res = hyperRaw.map((i) => ({
   id: i.Id,
