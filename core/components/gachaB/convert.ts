@@ -30,11 +30,17 @@ const convertData: Array<TGACore.Components.Gacha.GachBMeta> = [];
 
 // 处理部件数据
 for (const [id, item] of Object.entries(rawItem)) {
+  const type = getItemType(item.Type);
+  if (type === item.Type) continue;
+  if (type.startsWith("装扮")) {
+    const nameStart = ["部件形录", "套装形录", "男性装扮", "女性装扮"];
+    if (!nameStart.some((i) => item.Name.startsWith(i))) continue;
+  }
   const res: TGACore.Components.Gacha.GachBMeta = {
     id: id,
     name: item.Name,
     icon: item.Icon,
-    type: item.Type,
+    type: type,
     rank: item.Rank,
   };
   convertData.push(res);
@@ -85,4 +91,20 @@ async function convertImg(iconOri: string, name: string): Promise<void> {
   await sharp(oriPath).webp().resize(512, 512).webp().toFile(savePath);
   logger.console.info(`[components][gachaB][convert] ${name} ${icon}.webp 转换成功`);
   Counter.Success();
+}
+
+/**
+ * 获取类型
+ * @param typeStr - 类型
+ * @returns 转换后的类型
+ */
+function getItemType(typeStr: string): string {
+  const typeMap: Record<string, string> = {
+    BEYOND_MATERIAL_COSTUME: "装扮部件",
+    BEYOND_MATERIAL_COSTUME_DRAWING: "装扮形录",
+    BEYOND_MATERIAL_POSE: "互动动作",
+    BEYOND_MATERIAL_EMOJI: "互动表情",
+    BEYOND_MATERIAL_COSTUME_SUIT: "装扮套装",
+  };
+  return typeMap[typeStr] ?? typeStr;
 }

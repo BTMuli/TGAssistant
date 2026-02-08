@@ -4,13 +4,13 @@
  * @since 2.4.0
  */
 import pluginYml from "eslint-plugin-yml";
-import parserYml from "yaml-eslint-parser";
+import * as ymlParser from "yaml-eslint-parser";
 
 const eslintConfigYml = {
   files: ["**/*.yml", "**/*.yaml"],
   plugins: { yml: pluginYml },
   languageOptions: {
-    parser: parserYml,
+    parser: ymlParser,
     parserOptions: { defaultYAMLVersion: "1.2", extraFileExtensions: [".yaml", ".yml"] },
   },
   rules: {
