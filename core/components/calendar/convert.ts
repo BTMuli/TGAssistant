@@ -10,6 +10,7 @@ import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
+import { format, parseISO } from "date-fns";
 import fs from "fs-extra";
 
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
@@ -20,8 +21,7 @@ logger.default.info("[components][calendar][convert] 运行 convert.ts");
 if (
   !fileCheck(jsonDetailDir.domain, false) ||
   !fileCheck(jsonDetailDir.mys, false) ||
-  !hutaoTool.check(hutaoTool.enum.file.Material) ||
-  !fileCheck(jsonDetailDir.hakushi, false)
+  !hutaoTool.check(hutaoTool.enum.file.Material)
 ) {
   logger.default.error("[components][calendar][convert] 日历元数据文件不存在");
   logger.console.info("[components][calendar][convert] 请执行 download.ts");
@@ -55,9 +55,6 @@ const weaponRaw = hutaoTool.read<TGACore.Plugins.Hutao.Weapon.RawWeapon>(
 );
 const materialRaw = hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(
   hutaoTool.enum.file.Material,
-);
-const hakushiRaw: Record<string, TGACore.Plugins.Hakushi.Avatar.AvatarBrief> = await fs.readJson(
-  jsonDetailDir.hakushi,
 );
 
 // 读取角色元数据
@@ -146,7 +143,7 @@ for (const avatar of avatarRaw) {
     star: avatar.Quality,
     weapon: avatarWeapon,
     element: avatar.FetterInfo.VisionBefore,
-    release: hakushiRaw[avatar.Id].release,
+    release: format(parseISO(avatar.BeginTime), "yyyy-MM-dd HH:mm:ss"),
     materials,
     source,
   };
