@@ -13614,7 +13614,7 @@
     "series": 0,
     "order": 2304,
     "name": "事情本应如此发展",
-    "description": "见证魇月的复归。",
+    "description": "见证赝月的复归。",
     "reward": 5,
     "version": "6.3",
     "trigger": { "type": "COMBAT_CONFIG_COMMON" }
@@ -13638,6 +13638,16 @@
     "reward": 5,
     "version": "6.3",
     "trigger": { "type": "COMBAT_CONFIG_COMMON" }
+  },
+  {
+    "id": 82307,
+    "series": 0,
+    "order": 2307,
+    "name": "「月球漫步」",
+    "description": "在蕴光月守宫准备施展「空踏的虚荡」之时，摧毁「月锚岩」打断它的蓄能。",
+    "reward": 5,
+    "version": "6.4",
+    "trigger": { "type": "Unknown" }
   },
   {
     "id": 84000,

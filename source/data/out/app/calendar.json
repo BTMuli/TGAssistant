@@ -935,6 +935,23 @@
     "source": { "index": 1, "area": "蒙德", "name": "沉睡之国" }
   },
   {
+    "id": 10000128,
+    "contentId": 0,
+    "dropDays": [1, 4, 7],
+    "name": "法尔伽",
+    "itemType": "character",
+    "star": 5,
+    "weapon": "双手剑",
+    "element": "风",
+    "release": "2026-02-24 00:00:00",
+    "materials": [
+      { "id": 104301, "name": "「自由」的教导", "star": 2 },
+      { "id": 104302, "name": "「自由」的指引", "star": 3 },
+      { "id": 104303, "name": "「自由」的哲学", "star": 4 }
+    ],
+    "source": { "index": 1, "area": "蒙德", "name": "霜凝祭坛" }
+  },
+  {
     "id": 10000026,
     "contentId": 1498,
     "dropDays": [1, 4, 7],
@@ -2172,6 +2189,22 @@
       { "id": 114004, "name": "高塔孤王的碎梦", "star": 5 }
     ],
     "source": { "index": 1, "area": "蒙德", "name": "水光之城" }
+  },
+  {
+    "id": 12515,
+    "contentId": 0,
+    "dropDays": [2, 5, 7],
+    "name": "狼的武功歌",
+    "itemType": "weapon",
+    "star": 5,
+    "weapon": "双手剑",
+    "materials": [
+      { "id": 114005, "name": "凛风奔狼的始龀", "star": 2 },
+      { "id": 114006, "name": "凛风奔狼的裂齿", "star": 3 },
+      { "id": 114007, "name": "凛风奔狼的断牙", "star": 4 },
+      { "id": 114008, "name": "凛风奔狼的怀乡", "star": 5 }
+    ],
+    "source": { "index": 1, "area": "蒙德", "name": "深没之谷" }
   },
   {
     "id": 12504,
