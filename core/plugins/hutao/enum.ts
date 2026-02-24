@@ -11,6 +11,7 @@ export const HutaoGithubFileEnum: typeof TGACore.Plugins.Hutao.Base.GithubFileTy
   Achievement: "Achievement.json",
   AchievementGoal: "AchievementGoal.json",
   Avatar: "Avatar/",
+  Beyond: "BeyondItem.json",
   Gacha: "GachaEvent.json",
   Meta: "Meta.json",
   HyperLink: "HyperLinkName.json",

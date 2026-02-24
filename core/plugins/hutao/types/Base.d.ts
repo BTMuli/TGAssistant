@@ -15,6 +15,8 @@ declare namespace TGACore.Plugins.Hutao.Base {
     AchievementGoal: "AchievementGoal.json",
     /** 角色 */
     Avatar: "Avatar/",
+    /** 千星奇域 */
+    Beyond: "BeyondItem.json",
     /** 祈愿历史 */
     Gacha: "GachaEvent.json",
     /** hyperlink */

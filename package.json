@@ -36,10 +36,6 @@
   "bugs": {
     "url": "https://github.com/BTMuli/TGAssistent/issues"
   },
-  "overrides": {
-    "@eslint/js": "9.39.2",
-    "eslint": "9.39.2"
-  },
   "dependencies": {
     "@date-fns/tz": "^1.4.1",
     "@yuehaiteam/amos-data": "github:yuehaiteam/amos-data",
@@ -58,7 +54,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "9.39.2",
     "@jest/globals": "^30.2.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/fs-extra": "^11.0.4",
@@ -66,7 +62,7 @@
     "@types/uuid": "^11.0.0",
     "@types/yamljs": "^0.2.34",
     "@typescript/native-preview": "7.0.0-dev.20260223.1",
-    "eslint": "^10.0.1",
+    "eslint": "9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsonc": "^3.1.0",
