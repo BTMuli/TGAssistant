@@ -13647,7 +13647,7 @@
     "description": "在蕴光月守宫准备施展「空踏的虚荡」之时，摧毁「月锚岩」打断它的蓄能。",
     "reward": 5,
     "version": "6.4",
-    "trigger": { "type": "Unknown" }
+    "trigger": { "type": "COMBAT_CONFIG_COMMON" }
   },
   {
     "id": 84000,
