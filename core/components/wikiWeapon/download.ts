@@ -4,6 +4,8 @@
  * @since 2.4.0
  */
 
+import path from "node:path";
+
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
@@ -54,6 +56,10 @@ const yattaWeapon: TGACore.Plugins.Yatta.Weapon.LocalWeaponList = [];
 
 for (const weapon of rawWeapon) {
   let detail: TGACore.Plugins.Yatta.Weapon.LocalWeapon;
+  const savePath = path.join(jsonDir.src, `weapon_${weapon.Id}.json`);
+  if (fs.existsSync(savePath)) {
+    Counter.Skip();
+  }
   try {
     const detailResp = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Weapon.WeaponDetailResponse>(
       `CHS/weapon/${weapon.Id}`,
@@ -85,6 +91,16 @@ for (const weapon of rawWeapon) {
   logger.console.mark(
     `[components][wiki][download][${weapon.Id}] 武器 ${weapon.Name} 数据获取完成`,
   );
+  await fs.writeJSON(savePath, detail);
+}
+
+for (const weapon of rawWeapon) {
+  const savePath = path.join(jsonDir.src, `weapon_${weapon.Id}.json`);
+  if (!fs.existsSync(savePath)) {
+    logger.default.warn(`[components][wiki][download] ${weapon.Id} 数据未下载`);
+    continue;
+  }
+  const detail = fs.readJsonSync(savePath);
   yattaWeapon.push(detail);
 }
 
