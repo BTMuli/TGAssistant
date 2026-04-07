@@ -4,7 +4,7 @@
  */
 import { YattaWeekDayEnum } from "./enum.ts";
 
-const YATTA_API_VERSION = "64F0";
+const YATTA_API_VERSION = "65F1";
 const YATTA_API_URL = "https://gi.yatta.moe/api/v2/";
 const YATTA_SITE_URL = "https://gi.yatta.moe/";
 // const YATTA_ASSET_URL = "https://gi.yatta.moe/assets/UI/";
