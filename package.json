@@ -10,6 +10,7 @@
     "prettier": "prettier --write .",
     "resize": "tsx scripts/resizeImages.ts",
     "auto:update": "tsx ./scripts/updateAll.ts",
+    "move": "tsx scripts/moveSrc.ts",
     "prepare": "husky",
     "install:amos": "pnpm add github:yuehaiteam/amos-data"
   },
