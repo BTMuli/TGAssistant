@@ -1,7 +1,6 @@
 /**
- * @file core/components/gacha/convert.ts
- * @description gacha 组件资源转换
- * @since 2.4.0
+ * gacha 组件资源转换
+ * @since 2.5.1
  */
 
 import process from "node:process";
@@ -46,6 +45,9 @@ for (const item of gachaRaw) {
     up5List: item.UpOrangeList,
     up4List: item.UpPurpleList,
   };
+  if (convert.version === "6.5" && convert.order === 2) {
+    convert.postId = "74965073";
+  }
   gacha.push(convert);
 }
 gacha = gacha.reverse();

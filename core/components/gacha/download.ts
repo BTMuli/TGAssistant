@@ -71,6 +71,37 @@ while (!isLast) {
 await fs.writeJSON(jsonDetailDir.mhy, mhyPosts, { spaces: 2 });
 logger.default.info("[components][gacha][download] 爬取米游社帖子完成");
 
+// 爬取官网新闻
+// const postTitleSet = new Set<string>();
+// for (const post of mhyPosts) postTitleSet.add(post.title);
+// const siteNews: TGACore.Components.Gacha.SiteNews = [];
+// const sitePageLen: Readonly<number> = 50;
+// let iPage: number = 1;
+// isLast = false;
+// while (!isLast) {
+//   const url = `https://act-api-takumi-static.mihoyo.com/content_v2_user/app/16471662a82d418a/getContentList?iChanId=720&iPageSize=${sitePageLen}&iPage=${iPage}&sLangKey=zh-cn`;
+//   const resp = await fetch(url);
+//   const res = <TGACore.Components.Gacha.SiteNewsLResp>await resp.json();
+//   const list = res.data.list;
+//   if (list.length < sitePageLen) isLast = true;
+//   else iPage += 1;
+//   for (const news of list) {
+//     if (postTitleSet.has(news.sTitle) || !/祈愿|概率UP/.test(news.sTitle)) {
+//       logger.console.mark(`[components][gacha][download] ${news.iInfoId} ${news.sTitle}`);
+//       continue;
+//     }
+//     siteNews.push({
+//       newsId: news.iInfoId.toString(),
+//       title: news.sTitle,
+//       time: Math.floor(new Date(news.dtCreateTime).getTime() / 1000).toString(),
+//     });
+//     postTitleSet.add(news.sTitle);
+//     logger.console.info(`[components][gacha][download] ${news.iInfoId} ${news.sTitle}`);
+//   }
+// }
+// await fs.writeJSON(jsonDetailDir.news, siteNews, { spaces: 2 });
+// logger.default.info("[components][gacha][download] 爬取官网新闻完成");
+
 logger.default.info(`[components][gacha][download] 数据更新完成，耗时 ${Counter.getTime()}`);
 Counter.Output();
 logger.console.info("[components][gacha][download] 请执行 convert.ts 转换数据");
