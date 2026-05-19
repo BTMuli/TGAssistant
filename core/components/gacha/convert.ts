@@ -45,8 +45,12 @@ for (const item of gachaRaw) {
     up5List: item.UpOrangeList,
     up4List: item.UpPurpleList,
   };
+  // TODO: 后续考虑建立字典或者更新标题正则
   if (convert.version === "6.5" && convert.order === 2) {
     convert.postId = "74965073";
+  }
+  if (convert.version === "6.6" && convert.order === 1) {
+    convert.postId = "75425444";
   }
   gacha.push(convert);
 }

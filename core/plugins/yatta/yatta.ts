@@ -1,10 +1,10 @@
 /**
  * Yatta 插件主文件
- * @since 2.5.0
+ * @since 2.5.1
  */
 import { YattaWeekDayEnum } from "./enum.ts";
 
-const YATTA_API_VERSION = "65F1";
+const YATTA_API_VERSION = "66F0";
 const YATTA_API_URL = "https://gi.yatta.moe/api/v2/";
 const YATTA_SITE_URL = "https://gi.yatta.moe/";
 // const YATTA_ASSET_URL = "https://gi.yatta.moe/assets/UI/";
@@ -36,13 +36,16 @@ async function fetchJson<T>(relPath: string): Promise<T> {
 
 /**
  * @description 接受数字，返回对应国家字符串
- * @since 2.4.0
+ * @since 2.5.1
  * @function getNationName
  * @param {number} nation 国家编号
  * @returns {string} 国家字符串
  */
 function getNationName(nation: number): string {
-  if (nation >= YATTA_NATION_LIST.length || nation < 0) return "未知";
+  if (nation >= YATTA_NATION_LIST.length || nation < 0) {
+    console.warn(`未知 Nation Idx ${nation}`);
+    return "未知";
+  }
   return YATTA_NATION_LIST[nation];
 }
 
