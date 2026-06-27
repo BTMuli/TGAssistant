@@ -1,7 +1,6 @@
 /**
- * @file scripts/updateAll.ts
- * @description 更新所有数据
- * @since 2.5.0
+ * 更新所有数据
+ * @since 2.6.0
  */
 
 import { spawn, spawnSync } from "child_process";
@@ -27,6 +26,7 @@ let dirs = [
   "calendar",
   "wikiWeapon",
   "wikiAvatar",
+  "wikiRelic",
 ];
 
 const args = process.argv.slice(2);

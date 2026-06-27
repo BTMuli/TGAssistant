@@ -1,12 +1,12 @@
 /**
  * 一些关于胡桃的基础类型声明
- * @since 2.5.0
+ * @since 2.6.0
  */
 
 declare namespace TGACore.Plugins.Hutao.Base {
   /**
    * Github 文件路径类型
-   * @since 2.5.0
+   * @since 2.6.0
    */
   const GithubFileType = <const>{
     /** 成就 */
@@ -25,6 +25,16 @@ declare namespace TGACore.Plugins.Hutao.Base {
     Meta: "Meta.json",
     /** 名片 */
     NameCard: "NameCard.json",
+    /** 圣遗物 */
+    Relic: "Reliquary.json",
+    /** 圣遗物套装 */
+    RelicSet: "ReliquarySet.json",
+    /** 圣遗物主词条 */
+    RelicMain: "ReliquaryMainAffix.json",
+    /** 主词条属性 */
+    RelicMainLv: "ReliquaryMainAffixLevel.json",
+    /** 圣遗物副词条 */
+    RelicSub: "ReliquarySubAffix.json",
     /** 武器 */
     Weapon: "Weapon.json",
     /** 材料 */

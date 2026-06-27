@@ -1,7 +1,6 @@
 /**
- * @file core/plugins/hutao/hutao.ts
- * @description 胡桃插件主文件
- * @since 2.4.0
+ * 胡桃插件主文件
+ * @since 2.6.0
  */
 
 import { getWeaponTypeString, HutaoGithubFileEnum, HutaoWeaponTypeEnum } from "./enum.ts";
@@ -12,6 +11,7 @@ import {
   checkLocalJson,
   getAreaName,
   getAllAvatarId,
+  getSavePath,
 } from "./utils.ts";
 
 const hutaoTool = {
@@ -20,6 +20,7 @@ const hutaoTool = {
   update: updateJson,
   read: readRawJson,
   readIds: getAllAvatarId,
+  path: getSavePath,
   enum: {
     file: HutaoGithubFileEnum,
     weapon: HutaoWeaponTypeEnum,

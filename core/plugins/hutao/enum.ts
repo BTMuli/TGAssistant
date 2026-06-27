@@ -1,11 +1,11 @@
 /**
  * 一些关于胡桃的枚举
- * @since 2.5.0
+ * @since 2.6.0
  */
 
 /**
  * Github 文件类型枚举
- * @since 2.5.0
+ * @since 2.6.0
  */
 export const HutaoGithubFileEnum: typeof TGACore.Plugins.Hutao.Base.GithubFileType = {
   Achievement: "Achievement.json",
@@ -15,9 +15,14 @@ export const HutaoGithubFileEnum: typeof TGACore.Plugins.Hutao.Base.GithubFileTy
   Gacha: "GachaEvent.json",
   Meta: "Meta.json",
   HyperLink: "HyperLinkName.json",
-  NameCard: "NameCard.json",
-  Weapon: "Weapon.json",
   Material: "Material.json",
+  NameCard: "NameCard.json",
+  Relic: "Reliquary.json",
+  RelicSet: "ReliquarySet.json",
+  RelicMain: "ReliquaryMainAffix.json",
+  RelicMainLv: "ReliquaryMainAffixLevel.json",
+  RelicSub: "ReliquarySubAffix.json",
+  Weapon: "Weapon.json",
 };
 
 /**

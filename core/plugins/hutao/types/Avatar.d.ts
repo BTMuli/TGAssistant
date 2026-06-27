@@ -7,7 +7,6 @@
 declare namespace TGACore.Plugins.Hutao.Avatar {
   /**
    * 单角色文件类型
-   *
    * @since 2.4.0
    */
   type FullInfo = {

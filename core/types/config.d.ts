@@ -30,11 +30,13 @@ declare namespace TGACore.Config {
 
   /**
    * 应用数据目录配置文件类型枚举
-   * @since 2.5.0
+   * @since 2.6.0
    */
   enum AppDataDirTypeEnum {
     /** 成就 */
     achievement,
+    /** 圣遗物 */
+    relic,
     /** 素材日历 */
     calendar,
     /** 角色 */

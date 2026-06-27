@@ -1,7 +1,6 @@
 /**
- * @file eslint/tsEslint.js
- * @description TypeScript Eslint配置
- * @since 2.4.0
+ * TypeScript Eslint配置
+ * @since 2.6.0
  */
 import pluginImport from "eslint-plugin-import";
 import pluginPrettier from "eslint-plugin-prettier";
@@ -21,14 +20,14 @@ const eslintConfigTs = {
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-expressions": ["error", { allowShortCircuit: false }],
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "unknown"],
-        "newlines-between": "always",
-        "alphabetize": { order: "asc", caseInsensitive: true },
-      },
-    ],
+    // "import/order": [
+    //   "error",
+    //   {
+    //     "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "unknown"],
+    //     "newlines-between": "always",
+    //     "alphabetize": { order: "asc", caseInsensitive: true },
+    //   },
+    // ],
     "prettier/prettier": "error",
   },
 };

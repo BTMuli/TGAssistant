@@ -38,7 +38,7 @@ function getJsonDownloadUrl(
  * @param {string} [param] 参数，仅当 fileType 为 Avatar 时需要传入角色 ID
  * @return {string} 保存路径
  */
-function getSavePath(
+export function getSavePath(
   fileType: TGACore.Plugins.Hutao.Base.GithubFileTypeEnum,
   param?: string,
 ): string {
