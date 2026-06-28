@@ -48,6 +48,14 @@ declare namespace TGACore.Components.Relic {
     id: number;
     /** 套装名称 */
     name: string;
+    /** 套装图标 */
+    icon: string;
+    /** 最大星级 */
+    maxStar: number;
+    /** 星级列表 */
+    stars: Array<number>;
+    /** 部位列表 */
+    pos: Array<number>;
     /** 效果 */
     affix: Array<SetAffix>;
     /** 子部件 */
@@ -72,6 +80,8 @@ declare namespace TGACore.Components.Relic {
   type SetSuit = {
     /** 星级 */
     star: number;
+    /** 部位 */
+    pos: number;
     /** ID列表 */
     list: Array<number>;
   };

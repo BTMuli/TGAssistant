@@ -77,6 +77,8 @@ Counter.End();
 Counter.Output();
 
 Counter.Reset(6);
+// 跳过的套装
+const SKIP_SET: ReadonlyArray<number> = [15004, 15012];
 
 // 处理MainLv
 logger.default.info(`[components][wikiRelic][convert] 开始处理MainLv数据`);
@@ -121,6 +123,7 @@ const rawRelic = hutaoTool.read<Array<TGACore.Plugins.Hutao.Relic.RelicFull>>(
 const cvtRelicMap: TGACore.Components.Relic.RelicMap = {};
 for (const item of rawRelic) {
   for (const child of item.Ids) {
+    if (SKIP_SET.includes(item.SetId)) continue;
     cvtRelicMap[child] = {
       set: item.SetId,
       star: item.RankLevel,
@@ -137,6 +140,7 @@ Counter.Success();
 logger.default.info(`[components][wikiRelic][convert] 开始处理圣遗物部件`);
 const cvtRelic: TGACore.Components.Relic.RelicFile = [];
 for (const relic of rawRelic) {
+  if (SKIP_SET.includes(relic.SetId)) continue;
   const relicItem: TGACore.Components.Relic.RelicItem = {
     set: relic.SetId,
     pos: relic.EquipType,
@@ -173,6 +177,7 @@ logger.default.info(`[components][wikiRelic][convert] 开始处理套装数据`)
 const rawSet = hutaoTool.read<TGACore.Plugins.Hutao.Relic.RawSet>(hutaoTool.enum.file.RelicSet);
 const cvtSet: TGACore.Components.Relic.SetFile = [];
 for (const set of rawSet) {
+  if (SKIP_SET.includes(set.SetId)) continue;
   const affix: Array<TGACore.Components.Relic.SetAffix> = [];
   for (let i = 0; i < set.NeedNumber.length; i++) {
     affix.push({ cnt: set.NeedNumber[i], desc: set.Descriptions[i] });
@@ -180,11 +185,15 @@ for (const set of rawSet) {
   const suits: Array<TGACore.Components.Relic.SetSuit> = [];
   const filter = rawRelic.filter((i) => i.SetId === set.SetId);
   for (const i of filter) {
-    suits.push({ star: i.RankLevel, list: i.Ids });
+    suits.push({ star: i.RankLevel, list: i.Ids, pos: i.EquipType });
   }
   cvtSet.push({
     id: set.SetId,
     name: set.Name,
+    icon: set.Icon,
+    maxStar: Math.max(...suits.map((i) => i.star)),
+    stars: [...new Set(suits.map((i) => i.star))].sort((a, b) => b - a),
+    pos: [...new Set(suits.map((i) => i.pos))].sort((a, b) => a - b),
     affix: affix,
     suits: suits,
   });
