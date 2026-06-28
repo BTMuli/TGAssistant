@@ -50,6 +50,9 @@ for (const item of hutaoList) {
 const rawYattaRelic = <TGACore.Plugins.Yatta.Relic.LocalRelicSetList>(
   fs.readJSONSync(jsonDetail.yatta)
 );
+// ID-星级对照表
+const yattaMap: Record<number, Array<number>> = {};
+for (const item of rawYattaRelic) yattaMap[item.id] = item.levelList;
 
 logger.default.info(`[components][wikiRelic][convert] 开始处理图像数据`);
 Counter.Reset();
@@ -124,6 +127,7 @@ const cvtRelicMap: TGACore.Components.Relic.RelicMap = {};
 for (const item of rawRelic) {
   for (const child of item.Ids) {
     if (SKIP_SET.includes(item.SetId)) continue;
+    if (!yattaMap[item.SetId].includes(item.RankLevel)) continue;
     cvtRelicMap[child] = {
       set: item.SetId,
       star: item.RankLevel,
@@ -185,14 +189,15 @@ for (const set of rawSet) {
   const suits: Array<TGACore.Components.Relic.SetSuit> = [];
   const filter = rawRelic.filter((i) => i.SetId === set.SetId);
   for (const i of filter) {
+    if (!yattaMap[set.SetId].includes(i.RankLevel)) continue;
     suits.push({ star: i.RankLevel, list: i.Ids, pos: i.EquipType });
   }
   cvtSet.push({
     id: set.SetId,
     name: set.Name,
     icon: set.Icon,
-    maxStar: Math.max(...suits.map((i) => i.star)),
-    stars: [...new Set(suits.map((i) => i.star))].sort((a, b) => b - a),
+    maxStar: Math.max(...yattaMap[set.SetId]),
+    stars: yattaMap[set.SetId].sort((a, b) => b - a),
     pos: [...new Set(suits.map((i) => i.pos))].sort((a, b) => a - b),
     affix: affix,
     suits: suits,

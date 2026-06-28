@@ -3,8 +3,8 @@
     "id": 10001,
     "name": "行者之心",
     "icon": "UI_RelicIcon_10001_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "攻击力提高18%。" },
@@ -42,8 +42,8 @@
     "id": 10002,
     "name": "勇士之心",
     "icon": "UI_RelicIcon_10002_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "攻击力提高18%。" },
@@ -81,8 +81,8 @@
     "id": 10003,
     "name": "守护之心",
     "icon": "UI_RelicIcon_10003_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "防御力提高30%。" },
@@ -120,8 +120,8 @@
     "id": 10004,
     "name": "奇迹",
     "icon": "UI_RelicIcon_10004_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "所有元素抗性提高20%。" },
@@ -162,8 +162,8 @@
     "id": 10005,
     "name": "战狂",
     "icon": "UI_RelicIcon_10005_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "暴击率提高12%。" },
@@ -201,8 +201,8 @@
     "id": 10006,
     "name": "武人",
     "icon": "UI_RelicIcon_10006_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "普通攻击与重击造成的伤害提高15%。" },
@@ -240,8 +240,8 @@
     "id": 10007,
     "name": "教官",
     "icon": "UI_RelicIcon_10007_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "元素精通提高80点。" },
@@ -279,8 +279,8 @@
     "id": 10008,
     "name": "赌徒",
     "icon": "UI_RelicIcon_10008_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "元素战技造成的伤害提升20%。" },
@@ -316,8 +316,8 @@
     "id": 10009,
     "name": "流放者",
     "icon": "UI_RelicIcon_10009_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "元素充能效率提高20%。" },
@@ -358,8 +358,8 @@
     "id": 10010,
     "name": "冒险家",
     "icon": "UI_RelicIcon_10010_4",
-    "maxStar": 4,
-    "stars": [4, 3, 2, 1],
+    "maxStar": 3,
+    "stars": [3, 2, 1],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "生命值上限提高1000点。" },
@@ -392,8 +392,8 @@
     "id": 10011,
     "name": "幸运儿",
     "icon": "UI_RelicIcon_10011_4",
-    "maxStar": 4,
-    "stars": [4, 3, 2, 1],
+    "maxStar": 3,
+    "stars": [3, 2, 1],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "防御力提高100点。" },
@@ -426,8 +426,8 @@
     "id": 10012,
     "name": "学士",
     "icon": "UI_RelicIcon_10012_4",
-    "maxStar": 5,
-    "stars": [5, 4, 3, 2, 1],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "元素充能效率提高20%。" },
@@ -468,8 +468,8 @@
     "id": 10013,
     "name": "游医",
     "icon": "UI_RelicIcon_10013_4",
-    "maxStar": 4,
-    "stars": [4, 3, 2, 1],
+    "maxStar": 3,
+    "stars": [3, 2, 1],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "角色受到的治疗效果提高20%。" },
@@ -503,7 +503,7 @@
     "name": "冰风迷途的勇士",
     "icon": "UI_RelicIcon_14001_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "获得15%冰元素伤害加成。" },
@@ -539,7 +539,7 @@
     "name": "平息鸣雷的尊者",
     "icon": "UI_RelicIcon_14002_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "雷元素抗性提高40%。" },
@@ -568,7 +568,7 @@
     "name": "渡过烈火的贤人",
     "icon": "UI_RelicIcon_14003_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "火元素抗性提高40%。" },
@@ -597,7 +597,7 @@
     "name": "被怜爱的少女",
     "icon": "UI_RelicIcon_14004_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "角色造成的治疗效果提升15%。" },
@@ -649,7 +649,7 @@
     "name": "角斗士的终幕礼",
     "icon": "UI_RelicIcon_15001_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "攻击力提高18%。" },
@@ -714,7 +714,7 @@
     "name": "翠绿之影",
     "icon": "UI_RelicIcon_15002_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "获得15%风元素伤害加成。" },
@@ -774,7 +774,7 @@
     "name": "流浪大地的乐团",
     "icon": "UI_RelicIcon_15003_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "元素精通提高80点。" },
@@ -803,7 +803,7 @@
     "name": "如雷的盛怒",
     "icon": "UI_RelicIcon_15005_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "获得15%雷元素伤害加成。" },
@@ -843,7 +843,7 @@
     "name": "炽烈的炎之魔女",
     "icon": "UI_RelicIcon_15006_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "获得15%火元素伤害加成。" },
@@ -895,7 +895,7 @@
     "name": "昔日宗室之仪",
     "icon": "UI_RelicIcon_15007_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "元素爆发造成的伤害提升20%。" },
@@ -947,7 +947,7 @@
     "name": "染血的骑士道",
     "icon": "UI_RelicIcon_15008_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "造成的物理伤害提高25%。" },
@@ -975,8 +975,8 @@
     "id": 15009,
     "name": "祭火之人",
     "icon": "UI_RelicIcon_15009_3",
-    "maxStar": 5,
-    "stars": [5, 4, 3],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [5],
     "affix": [{ "cnt": 1, "desc": "受到的火元素附着效果的持续时间减少40%。" }],
     "suits": [
@@ -989,8 +989,8 @@
     "id": 15010,
     "name": "祭水之人",
     "icon": "UI_RelicIcon_15010_3",
-    "maxStar": 5,
-    "stars": [5, 4, 3],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [5],
     "affix": [{ "cnt": 1, "desc": "受到的水元素附着效果的持续时间减少40%。" }],
     "suits": [
@@ -1003,8 +1003,8 @@
     "id": 15011,
     "name": "祭雷之人",
     "icon": "UI_RelicIcon_15011_3",
-    "maxStar": 5,
-    "stars": [5, 4, 3],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [5],
     "affix": [{ "cnt": 1, "desc": "受到的雷元素附着效果的持续时间减少40%。" }],
     "suits": [
@@ -1017,8 +1017,8 @@
     "id": 15013,
     "name": "祭冰之人",
     "icon": "UI_RelicIcon_15013_3",
-    "maxStar": 5,
-    "stars": [5, 4, 3],
+    "maxStar": 4,
+    "stars": [4, 3],
     "pos": [5],
     "affix": [{ "cnt": 1, "desc": "受到的冰元素附着效果的持续时间减少40%。" }],
     "suits": [
@@ -1032,7 +1032,7 @@
     "name": "悠古的磐岩",
     "icon": "UI_RelicIcon_15014_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "获得15%岩元素伤害加成。" },
@@ -1064,7 +1064,7 @@
     "name": "逆飞的流星",
     "icon": "UI_RelicIcon_15015_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "护盾强效提高35%。" },
@@ -1093,7 +1093,7 @@
     "name": "沉沦之心",
     "icon": "UI_RelicIcon_15016_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "获得15%水元素伤害加成。" },
@@ -1130,7 +1130,7 @@
     "name": "千岩牢固",
     "icon": "UI_RelicIcon_15017_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "生命值提升20%。" },
@@ -1174,7 +1174,7 @@
     "name": "苍白之火",
     "icon": "UI_RelicIcon_15018_4",
     "maxStar": 5,
-    "stars": [5, 4, 3],
+    "stars": [5, 4],
     "pos": [1, 2, 3, 4, 5],
     "affix": [
       { "cnt": 2, "desc": "造成的物理伤害提高25%。" },
