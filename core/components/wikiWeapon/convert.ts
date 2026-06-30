@@ -103,7 +103,7 @@ const cvtCurve: TGACore.Components.Weapon.WeaponCurve = {};
 for (const item of rawCurve) {
   cvtCurve[item.Level] = item.Curves.map((i) => ({ type: i.Type, addVal: i.Value }));
 }
-fs.writeJSONSync(path.join(jsonDetail.dir, "curve.json"), cvtPromote);
+fs.writeJSONSync(path.join(jsonDetail.dir, "curve.json"), cvtCurve);
 
 logger.default.info(`[components][wikiWeapon][convert] wiki组件转换完成，耗时${Counter.getTime()}`);
 Counter.Output();
