@@ -1,7 +1,6 @@
 /**
- * @file core/components/wikiWeapon/download.ts
- * @description wiki组件下载器
- * @since 2.4.0
+ * wiki组件下载器
+ * @since 2.6.0
  */
 
 import path from "node:path";
@@ -21,7 +20,7 @@ logger.default.info("[components][wiki][download] 运行 download.ts");
 
 fileCheckObj(jsonDir);
 
-Counter.Reset(2);
+Counter.Reset(4);
 
 logger.console.info("[components][wiki][download] 开始下载 Metadata 数据");
 const meta = await hutaoTool.sync();
@@ -32,6 +31,24 @@ try {
   else Counter.Skip();
 } catch (e) {
   logger.default.error(`[components][wiki][download] 更新武器元数据失败`);
+  console.error(e);
+  Counter.Fail();
+}
+try {
+  const weaponStat = await hutaoTool.update(meta, hutaoTool.enum.file.WeaponPromote);
+  if (weaponStat) Counter.Success();
+  else Counter.Skip();
+} catch (e) {
+  logger.default.error(`[components][wiki][download] 更新武器突破元数据失败`);
+  console.error(e);
+  Counter.Fail();
+}
+try {
+  const weaponStat = await hutaoTool.update(meta, hutaoTool.enum.file.WeaponCurve);
+  if (weaponStat) Counter.Success();
+  else Counter.Skip();
+} catch (e) {
+  logger.default.error(`[components][wiki][download] 更新武器升级元数据失败`);
   console.error(e);
   Counter.Fail();
 }
@@ -104,7 +121,7 @@ for (const weapon of rawWeapon) {
   yattaWeapon.push(detail);
 }
 
-await fs.writeJSON(jsonDetail.weapon.src, yattaWeapon, { spaces: 2 });
+await fs.writeJSON(jsonDetail.yatta, yattaWeapon, { spaces: 2 });
 Counter.End();
 
 logger.default.info("[components][wiki][download] download.ts 运行结束");

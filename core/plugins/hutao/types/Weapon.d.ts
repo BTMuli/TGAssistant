@@ -1,16 +1,26 @@
 /**
- * @file core/plugins/hutao/types/Weapon.d.ts
- * @description 胡桃武器类型声明文件
- * @since 2.3.0
+ * 胡桃武器类型声明文件
+ * @since 2.6.0
  */
 
 declare namespace TGACore.Plugins.Hutao.Weapon {
   /**
-   * @description 武器数据返回JSON
-   * @since 2.4.0
-   * @interface RawWeapon
+   * 武器数据返回JSON
+   * @since 2.6.0
    */
   type RawWeapon = Array<Weapon>;
+
+  /**
+   * 武器突破返回JSON
+   * @since 2.6.0
+   */
+  type RawPromote = Array<Promote>;
+
+  /**
+   * 武器升级返回JSON
+   * @since 2.6.0
+   */
+  type RawCurve = Array<Curve>;
 
   /**
    * 武器类型
@@ -94,4 +104,21 @@ declare namespace TGACore.Plugins.Hutao.Weapon {
    * @property {string} Description 副属性描述
    */
   type AffixDesc = { Level: number; Description: string };
+
+  /**
+   * 武器突破
+   * @since 2.6.0
+   */
+  type Promote = TGACore.Plugins.Hutao.AvatarPromote.PromoteItem;
+
+  /**
+   * 武器升级
+   * @since 2.6.0
+   */
+  type Curve = {
+    /** 等级 */
+    Level: number;
+    /** 属性 */
+    Curves: Array<TGACore.Plugins.Hutao.Base.Prop>;
+  };
 }

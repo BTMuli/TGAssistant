@@ -104,7 +104,9 @@ declare namespace TGACore.Components.Relic {
    * @since 2.6.0
    */
   type SubPropItem = {
+    /** 属性值 */
     val: number;
+    /** 属性类型 */
     type: number;
   };
 

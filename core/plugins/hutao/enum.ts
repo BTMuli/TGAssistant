@@ -23,6 +23,8 @@ export const HutaoGithubFileEnum: typeof TGACore.Plugins.Hutao.Base.GithubFileTy
   RelicMainLv: "ReliquaryMainAffixLevel.json",
   RelicSub: "ReliquarySubAffix.json",
   Weapon: "Weapon.json",
+  WeaponCurve: "WeaponCurve.json",
+  WeaponPromote: "WeaponPromote.json",
 };
 
 /**

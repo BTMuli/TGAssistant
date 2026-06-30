@@ -37,6 +37,10 @@ declare namespace TGACore.Plugins.Hutao.Base {
     RelicSub: "ReliquarySubAffix.json",
     /** 武器 */
     Weapon: "Weapon.json",
+    /** 武器升级属性 */
+    WeaponCurve: "WeaponCurve.json",
+    /** 武器突破属性 */
+    WeaponPromote: "WeaponPromote.json",
     /** 材料 */
     Material: "Material.json",
   };
