@@ -1,7 +1,6 @@
 /**
- * @file core/plugins/hutao/constant.ts
- * @description 一些关于胡桃的常量
- * @since 2.4.0
+ * 一些关于胡桃的常量
+ * @since 2.6.0
  */
 import path from "node:path";
 
@@ -25,4 +24,6 @@ export const AREA_LIST: ReadonlyArray<string> = [
   "寰宇劫灭",
   "挪德卡莱",
   "璃月港",
+  "魔女会",
+  "愚人众",
 ];
