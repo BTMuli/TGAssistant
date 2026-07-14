@@ -106,7 +106,6 @@ function transCharacter(
     materials,
     skills,
     constellation: raw.SkillDepot.Talents,
-    // todo: costume 衣装
     // todo: food 料理
     talks: transTalks(raw.FetterInfo.Fetters, raw.Name),
     stories: raw.FetterInfo.FetterStories,

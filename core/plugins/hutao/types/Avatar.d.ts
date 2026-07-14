@@ -205,7 +205,7 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
 
   /**
    * 命之座
-   * @since 2.4.0
+   * @since 2.6.0
    */
   type Constellation = {
     /** ID */
@@ -217,6 +217,10 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
      * @remarks htmlText
      */
     Description: string;
+    /**
+     * 加强后的特殊描述
+     */
+    SpecialDescription?: string;
     /**
      * 图标
      * @remarks Talent/
