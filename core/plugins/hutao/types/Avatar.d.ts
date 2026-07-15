@@ -1,152 +1,182 @@
 /**
- * 角色类型声明文件
- * @remarks Avatar/[id].json
- * @since 2.4.0
+ * 角色类型声明文件。
+ *
+ * @remarks
+ * 对应 `Avatar/[id].json`。
+ *
+ * @since 2.6.0
  */
 
 declare namespace TGACore.Plugins.Hutao.Avatar {
   /**
-   * 单角色文件类型
+   * 角色标签枚举
+   *
+   * @since 2.6.0
+   */
+  enum AvatarTagEnum {
+    /** 无标签 */
+    None,
+    /** 魔导 */
+    HEXENZIRKEL,
+    /** 月兆 */
+    MOONPHASE,
+  }
+
+  /**
+   * 单个角色文件的数据。
+   *
    * @since 2.4.0
    */
   type FullInfo = {
-    /** ID */
+    /** 角色 ID。 */
     Id: number;
     /**
-     * 突破 ID
-     * @remarks 该数据与 {@link TGACore.Plugins.Hutao.AvatarPromote.FullInfo} 有关
+     * 突破 ID。
+     *
+     * @remarks
+     * 该数据与 {@link TGACore.Plugins.Hutao.AvatarPromote.FullInfo} 有关。
      */
     PromoteId: number;
-    /** 排序 */
+    /** 排序值。 */
     Sort: number;
     /**
-     * 身体类型
-     * @remarks 枚举值
+     * 身体类型。
+     *
+     * @remarks
+     * 该字段为枚举值。
      */
     Body: number;
     /**
-     * 头像
-     * @remarks AvatarIcon/
+     * 头像资源名称。
+     *
+     * @remarks
+     * 对应 `AvatarIcon/` 目录中的资源。
      */
     Icon: string;
     /**
-     * 侧面头像
-     * @remarks AvatarIcon/
+     * 侧面头像资源名称。
+     *
+     * @remarks
+     * 对应 `AvatarIcon/` 目录中的资源。
      */
     SideIcon: string;
-    /** 姓名 */
+    /** 角色名称。 */
     Name: string;
-    /** 描述 */
+    /** 角色描述。 */
     Description: string;
-    /** 上线时间 */
+    /** 上线时间。 */
     BeginTime: string;
-    /** 星级 */
+    /** 角色星级。 */
     Quality: number;
-    /** 武器类型 */
+    /** 武器类型。 */
     Weapon: TGACore.Plugins.Hutao.Weapon.WeaponTypeEnum;
-    /** 基础属性 */
+    /** 基础属性。 */
     BaseValue: BaseValue;
-    /** 成长曲线 */
+    /** 成长曲线。 */
     GrowCurves: Array<TGACore.Plugins.Hutao.Base.Prop>;
-    /** 技能 */
+    /** 技能信息。 */
     SkillDepot: SkillDepot;
-    /** 好感信息 */
+    /** 好感信息。 */
     FetterInfo: FetterInfo;
-    /** 衣装 */
+    /** 衣装列表。 */
     Costumes: Array<Costume>;
-    /** 养成材料 ID 列表 */
+    /** 养成材料 ID 列表。 */
     CultivationItems: Array<number>;
-    /** 名片信息 */
+    /** 名片信息。 */
     NameCard: NameCard;
+    /** 游迹信息。 */
+    TraceEffect?: TraceEffect;
+    /** 角色标签列表。 */
+    Tags?: Array<AvatarTagEnum>;
   };
 
   /**
-   * 基础属性
+   * 角色的基础属性。
+   *
    * @since 2.4.0
    */
   type BaseValue = {
-    /** 生命值 */
+    /** 基础生命值。 */
     HpBase: number;
-    /** 攻击力 */
+    /** 基础攻击力。 */
     AttackBase: number;
-    /** 防御力 */
+    /** 基础防御力。 */
     DefenseBase: number;
   };
 
   /**
-   * @description 角色技能
-   * @since 2.4.0
-   * @interface SkillDepot
-   * @property {number} Arkhe 未知
-   * @property {Array<Skill>} Skills 角色技能
-   * @property {Skill} EnergySkill 角色元素爆发
-   * @property {Array<Skill>} Inherents 角色天赋
-   * @property {Array<Constellation>} Talents 角色天赋
+   * 角色的技能集合。
+   *
+   * @since 2.6.0
    */
   type SkillDepot = {
     /**
-     * 荒芒属性
-     * @example
-     * 0 - 不具有
-     * 1 - 荒
-     * 2 - 芒
+     * 荒芒属性。
+     *
+     * @remarks
+     * `0` 表示不具有荒芒属性，`1` 表示荒性，`2` 表示芒性。
      */
     Arkhe: number;
-    /** 普通攻击&元素技能 */
+    /** 普通攻击与元素战技。 */
     Skills: Array<Skill>;
     /**
-     * 特殊技能
-     * @example 魔女的前夜礼
+     * 特殊技能。
+     *
+     * @example
+     * 魔女的前夜礼。
      */
     SpecialSkills?: Array<Skill>;
-    /** 元素爆发 */
+    /** 元素爆发。 */
     EnergySkill: Skill;
-    /** 天赋 */
+    /** 固有天赋。 */
     Inherents: Array<Skill>;
-    /** 命座 */
+    /** 命之座。 */
     Talents: Array<Constellation>;
   };
 
   /**
-   * @description 技能
-   * @since 2.0.0
-   * @interface Skill
-   * @property {number} GroupId 技能组编号
-   * @property {Proud} Proud 技能参数
-   * @property {number} Id 技能编号
-   * @property {string} Name 技能名称
-   * @property {string} Description 技能描述
-   * @property {string} Icon 技能图标
+   * 角色技能。
+   *
+   * @since 2.6.0
    */
   type Skill = {
-    /** Group ID */
+    /** 技能组 ID。 */
     GroupId: number;
-    /** 参数 */
+    /** 技能参数。 */
     Proud: Proud;
-    /** ID */
+    /** 技能 ID。 */
     Id: number;
-    /** 名称 */
+    /** 技能名称。 */
     Name: string;
     /**
-     * 描述
-     * @remarks htmlText
+     * 技能描述。
+     *
+     * @remarks
+     * 内容为 HTML 文本。
      */
     Description: string;
+    /** 技能加强后的特殊描述。 */
+    SpecialDescription?: string;
     /**
-     * 图标
-     * @remarks Skill/
+     * 技能图标资源名称。
+     *
+     * @remarks
+     * 对应 `Skill/` 目录中的资源。
      */
     Icon: string;
   };
 
   /**
-   * 技能参数
-   * @since 2.4.0
+   * 技能参数信息。
+   *
+   * @since 2.6.0
    */
   type Proud = {
     /**
-     * 描述列表
+     * 参数描述列表。
+     *
      * @example
+     * ```json
      * [
      *   "一段伤害|{param1:F1P}",
      *   "二段伤害|{param2:F1P}",
@@ -158,11 +188,14 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
      *   "下坠期间伤害|{param8:F1P}",
      *   "低空/高空坠地冲击伤害|{param9:P}/{param10:P}"
      * ]
+     * ```
      */
-    Description: Array<string>;
+    Descriptions: Array<string>;
     /**
-     * 参数
+     * 各等级的参数列表。
+     *
      * @example
+     * ```json
      * [
      *   {
      *     "Id": 213101,
@@ -179,217 +212,269 @@ declare namespace TGACore.Plugins.Hutao.Avatar {
      *       1.136335,
      *       1.419344
      *     ]
-     *   },
+     *   }
      * ]
+     * ```
      */
     Parameters: Array<Parameter>;
+    /** 普通参数索引列表。 */
+    NormalParameters?: Array<number>;
     /**
-     * 展示
-     * @remarks 未知用途
+     * 展示类型。
+     *
+     * @remarks
+     * 具体用途未知。
      */
     Display?: number;
   };
 
   /**
-   * 技能参数
+   * 单个等级的技能参数。
+   *
    * @since 2.4.0
    */
   type Parameter = {
-    /** ID */
+    /** 参数 ID。 */
     Id: number;
-    /** 等级 */
+    /** 技能等级。 */
     Level: number;
-    /** 参数 */
+    /** 参数值列表。 */
     Parameters: Array<number>;
   };
 
   /**
-   * 命之座
+   * 命之座信息。
+   *
    * @since 2.6.0
    */
   type Constellation = {
-    /** ID */
+    /** 命之座 ID。 */
     Id: number;
-    /** 名称 */
+    /** 命之座名称。 */
     Name: string;
     /**
-     * 描述
-     * @remarks htmlText
+     * 命之座描述。
+     *
+     * @remarks
+     * 内容为 HTML 文本。
      */
     Description: string;
-    /**
-     * 加强后的特殊描述
-     */
+    /** 命之座加强后的特殊描述。 */
     SpecialDescription?: string;
     /**
-     * 图标
-     * @remarks Talent/
+     * 命之座图标资源名称。
+     *
+     * @remarks
+     * 对应 `Talent/` 目录中的资源。
      */
     Icon: string;
-    /** 额外等级加成 */
+    /** 额外技能等级加成。 */
     ExtraLevel?: ConstExtraLevel;
   };
 
   /**
-   * 命座提供天赋加成
+   * 命之座提供的额外技能等级加成。
+   *
    * @since 2.4.0
    */
   type ConstExtraLevel = {
-    /** 索引 */
+    /** 技能索引。 */
     Index: number;
-    /** 提升等级 */
+    /** 提升的等级。 */
     Level: number;
   };
 
   /**
-   * 好感信息
+   * 角色好感信息。
+   *
    * @since 2.4.0
    */
   type FetterInfo = {
-    /** 称号 */
+    /** 角色称号。 */
     Title: string;
     /**
-     * 描述
-     * @remarks 与 {@link FullInfo.Description} 一致
+     * 角色详细描述。
+     *
+     * @remarks
+     * 与 {@link FullInfo.Description} 一致。
      */
     Detail: string;
     /**
-     * 地区
-     * @remarks 枚举值
+     * 所属地区。
+     *
+     * @remarks
+     * 该字段为枚举值。
      */
     Association: number;
-    /** 阵营 */
+    /** 所属阵营。 */
     Native: string;
-    /** 生日-月 */
+    /** 生日月份。 */
     BirthMonth: number;
-    /** 生日-日 */
+    /** 生日日期。 */
     BirthDay: number;
-    /** 神之眼 */
+    /** 神之眼名称。 */
     VisionBefore: string;
     /**
-     * 神之眼-后
-     * @remarks 存在时使用此字段
+     * 神之眼的替代名称。
+     *
+     * @remarks
+     * 字段存在时优先使用该值。
      */
     VisionAfter?: string;
-    /** 神之眼描述（未解锁） */
+    /** 神之眼未解锁时的描述。 */
     VisionOverrideLocked?: string;
-    /** 神之眼描述 */
+    /** 神之眼解锁后的描述。 */
     VisionOverrideUnlocked: string;
-    /** 命之座 */
+    /** 命之座名称。 */
     ConstellationBefore: string;
     /**
-     * 命之座
-     * @remarks 存在时使用此字段
+     * 命之座的替代名称。
+     *
+     * @remarks
+     * 字段存在时优先使用该值。
      */
     ConstellationAfter?: string;
-    /** 角色声优-中文 */
+    /** 中文配音演员。 */
     CvChinese: string;
-    /** 角色声优-日文 */
+    /** 日文配音演员。 */
     CvJapanese: string;
-    /** 角色声优-英文 */
+    /** 英文配音演员。 */
     CvEnglish: string;
-    /** 角色声优-韩文 */
+    /** 韩文配音演员。 */
     CvKorean: string;
-    /** 特殊料理 */
+    /** 特殊料理信息。 */
     CookBonus?: CookBonus;
-    /** 角色好感语音 */
+    /** 角色好感语音文本。 */
     Fetters: Array<Text>;
-    /** 角色好感故事 */
+    /** 角色好感故事文本。 */
     FetterStories: Array<Text>;
   };
 
   /**
-   * 特殊料理
+   * 角色特殊料理信息。
+   *
    * @since 2.4.0
    */
   type CookBonus = {
     /**
-     * 原料理 ID
-     * @remarks 见 {@link TGACore.Plugins.Hutao.MaterialItem}
+     * 原料理 ID。
+     *
+     * @remarks
+     * 参见 {@link TGACore.Plugins.Hutao.MaterialItem}。
      */
     OriginItemId: number;
     /**
-     * 特殊料理 ID
-     * @remarks 见 {@link TGACore.Plugins.Hutao.MaterialItem}
+     * 特殊料理 ID。
+     *
+     * @remarks
+     * 参见 {@link TGACore.Plugins.Hutao.MaterialItem}。
      */
     ItemId: number;
-    /** 原料 ID 列表 */
+    /** 料理原料 ID 列表。 */
     InputList: Array<number>;
   };
 
   /**
-   * 文本
+   * 带标题的文本内容。
+   *
    * @since 2.4.0
    */
   type Text = {
-    /** 标题 */
+    /** 文本标题。 */
     Title: string;
-    /** 内容 */
+    /** 文本内容。 */
     Context: string;
   };
 
   /**
-   * 皮肤
+   * 角色衣装。
+   *
    * @since 2.4.0
    */
   type Costume = CostumeDefault | CostumeExtra;
 
   /**
-   * 皮肤基础数据
+   * 角色衣装的基础数据。
+   *
    * @since 2.4.0
    */
   type CostumeBase = {
-    /** ID */
+    /** 衣装 ID。 */
     Id: number;
-    /** 名称 */
+    /** 衣装名称。 */
     Name: string;
-    /** 描述 */
+    /** 衣装描述。 */
     Description: string;
   };
 
   /**
-   * 默认皮肤
+   * 角色的默认衣装。
+   *
    * @since 2.4.0
    */
   type CostumeDefault = CostumeBase & {
-    /** 是默认皮肤 */
+    /** 是否为默认衣装，固定为 `true`。 */
     IsDefault: true;
   };
 
   /**
-   * 非默认皮肤
+   * 角色的非默认衣装。
+   *
    * @since 2.4.0
    */
   type CostumeExtra = CostumeBase & {
-    /** 不是默认皮肤 */
+    /** 是否为默认衣装，固定为 `false`。 */
     IsDefault: false;
     /**
-     * 图标
-     * @remarks AvatarIcon/
+     * 正面头像资源名称。
+     *
+     * @remarks
+     * 对应 `AvatarIcon/` 目录中的资源。
      */
     FrontIcon: string;
     /**
-     * 侧边图标
-     * @remarks AvatarIcon/
+     * 侧面头像资源名称。
+     *
+     * @remarks
+     * 对应 `AvatarIcon/` 目录中的资源。
      */
     SideIcon: string;
   };
 
   /**
-   * 角色名片
+   * 角色名片信息。
+   *
    * @since 2.4.0
    */
   type NameCard = {
-    /** 名称 */
+    /** 名片名称。 */
     Name: string;
-    /** 描述 */
+    /** 名片描述。 */
     Description: string;
     /**
-     * 图标
-     * @remarks NameCardPic
+     * 名片图标资源名称。
+     *
+     * @remarks
+     * 对应 `NameCardPic/` 目录中的资源。
      */
     Icon: string;
-    /** 前缀 */
+    /** 名片图片资源名称前缀。 */
     PicturePrefix: string;
+  };
+
+  /**
+   * 角色游迹信息。
+   *
+   * @since 2.6.0
+   */
+  type TraceEffect = {
+    /** 游迹 ID。 */
+    Id: number;
+    /** 游迹名称。 */
+    Name: string;
+    /** 游迹描述。 */
+    Description: string;
+    /** 游迹图标资源名称。 */
+    Icon: string;
   };
 }
