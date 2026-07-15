@@ -1,6 +1,6 @@
 /**
  * 角色组件数据转换
- * @since 2.5.0
+ * @since 2.6.0
  */
 import path from "node:path";
 import process from "node:process";
@@ -58,6 +58,7 @@ for (const param of paramList) {
     name: rawAvatar.Name,
     title: rawAvatar.FetterInfo.Title,
     area: hutaoTool.enum.area(rawAvatar.FetterInfo.Association),
+    team: rawAvatar.Tags ?? [0],
     birthday: [rawAvatar.FetterInfo.BirthMonth, rawAvatar.FetterInfo.BirthDay],
     star: rawAvatar.Quality,
     element: rawAvatar.FetterInfo.VisionBefore,
@@ -93,6 +94,7 @@ for (const item of mysRaw) {
         name: isLumine ? `荧·${element}` : `空·${element}`,
         title: "",
         area: "主角",
+        team: [0],
         birthday: [0, 0],
         star: 5,
         element: element,
@@ -119,6 +121,7 @@ converData.push({
   name: "奇偶·男性",
   title: "",
   area: "主角",
+  team: [0],
   birthday: [0, 0],
   star: 105,
   element: "",
@@ -133,6 +136,7 @@ converData.push({
   name: "奇偶·女性",
   title: "",
   area: "主角",
+  team: [0],
   birthday: [0, 0],
   star: 105,
   element: "",

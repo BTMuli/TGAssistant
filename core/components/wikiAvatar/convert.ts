@@ -1,6 +1,6 @@
 /**
  * wikiAvatar 组件转换器
- * @since 2.5.0
+ * @since 2.6.0
  */
 
 import path from "node:path";
@@ -58,7 +58,7 @@ Counter.Output();
 
 /**
  * @description 转换角色数据
- * @since 2.2.0
+ * @since 2.6.0
  * @param raw - 原始数据
  * @returns 转换后的数据
  */
@@ -86,6 +86,7 @@ function transCharacter(
     title: raw.FetterInfo.Title,
     description: raw.Description,
     area: hutao.enum.area(raw.FetterInfo.Association),
+    team: raw.Tags ?? [0],
     brief: {
       camp: raw.FetterInfo.Native,
       constellation: raw.FetterInfo.ConstellationAfter

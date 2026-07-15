@@ -1,12 +1,12 @@
 /**
  * 角色类型定义
- * @since 2.5.0
+ * @since 2.6.0
  */
 
 declare namespace TGACore.Components.Character {
   /**
    * 转换后的数据
-   * @since 2.4.0
+   * @since 2.6.0
    * @remarks App/character.json
    */
   type Character = {
@@ -20,6 +20,8 @@ declare namespace TGACore.Components.Character {
     title: string;
     /** 角色地区 */
     area: string;
+    /** 队伍强化 */
+    team: Array<number>;
     /** 角色生日 */
     birthday: [number, number];
     /** 角色星级 */
@@ -49,7 +51,7 @@ declare namespace TGACore.Components.Character {
 
   /**
    * wiki 数据
-   * @since 2.0.0
+   * @since 2.6.0
    * @remarks WIKI/character/[id].json
    */
   type Wiki = {
@@ -63,6 +65,8 @@ declare namespace TGACore.Components.Character {
     description: string;
     /** 角色地区 */
     area: string;
+    /** 队伍加强 */
+    team: Array<number>;
     /** 角色简介信息 */
     brief: WikiBrief;
     /** 角色星级 */
