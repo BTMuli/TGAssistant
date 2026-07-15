@@ -1,6 +1,6 @@
 /**
  * 使用到的函数
- * @since 2.5.0
+ * @since 2.6.0
  */
 import { tz } from "@date-fns/tz";
 import Counter from "@tools/counter.ts";
@@ -9,6 +9,7 @@ import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
 import { fileCheck } from "@utils/fileCheck.ts";
 import { format, parseISO } from "date-fns";
 import sharp from "sharp";
+import { getAreaName } from "@hutao/utils.ts";
 
 /**
  * 字符串转 utc8 时间
@@ -181,4 +182,19 @@ export async function convertIcon(oriPath: string, outPath: string, label: strin
   await sharp(oriPath).webp().toFile(outPath);
   logger.console.info(`[components][character] ${label} 转换成功`);
   Counter.Success();
+}
+
+/**
+ * @description 传入地区索引，返回对应的地区名称
+ * @since 2.6.0
+ * @param index - 地区索引
+ * @return 地区名称
+ */
+export function getAreaName2(index: number): string {
+  const res = getAreaName(index);
+  if (res === "主角") return "其他";
+  if (res === "璃月港") return "璃月";
+  if (res === "游侠") return "其他";
+  if (res === "寰宇劫灭") return "其他";
+  return res;
 }

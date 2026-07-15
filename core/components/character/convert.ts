@@ -19,7 +19,7 @@ import {
   jsonDir,
   LumineCostumes,
 } from "./constant.ts";
-import { convertIcon, str2utc8, transHutaoCostume } from "./utils.ts";
+import { convertIcon, str2utc8, transHutaoCostume, getAreaName2 } from "./utils.ts";
 
 logger.init();
 Counter.Init("[components][character][convert]");
@@ -57,7 +57,7 @@ for (const param of paramList) {
     contentId: 0,
     name: rawAvatar.Name,
     title: rawAvatar.FetterInfo.Title,
-    area: hutaoTool.enum.area(rawAvatar.FetterInfo.Association),
+    area: getAreaName2(rawAvatar.FetterInfo.Association),
     team: rawAvatar.Tags ?? [0],
     birthday: [rawAvatar.FetterInfo.BirthMonth, rawAvatar.FetterInfo.BirthDay],
     star: rawAvatar.Quality,
@@ -93,7 +93,7 @@ for (const item of mysRaw) {
         contentId: item.content_id,
         name: isLumine ? `荧·${element}` : `空·${element}`,
         title: "",
-        area: "主角",
+        area: "其他",
         team: [0],
         birthday: [0, 0],
         star: 5,
@@ -120,7 +120,7 @@ converData.push({
   contentId: 506960,
   name: "奇偶·男性",
   title: "",
-  area: "主角",
+  area: "其他",
   team: [0],
   birthday: [0, 0],
   star: 105,
@@ -135,7 +135,7 @@ converData.push({
   contentId: 506961,
   name: "奇偶·女性",
   title: "",
-  area: "主角",
+  area: "其他",
   team: [0],
   birthday: [0, 0],
   star: 105,
