@@ -196,5 +196,6 @@ export function getAreaName2(index: number): string {
   if (res === "璃月港") return "璃月";
   if (res === "游侠") return "其他";
   if (res === "寰宇劫灭") return "其他";
+  if (res === "未知") return "其他";
   return res;
 }
