@@ -80,6 +80,7 @@ function transCharacter(
       id: skill.Id,
       name: skill.Name,
       desc: skill.Description,
+      descSp: skill.SpecialDescription,
       icon: skill.Icon,
       maxLv: skill.Proud.Parameters.length === 1 ? 1 : 10,
     }));

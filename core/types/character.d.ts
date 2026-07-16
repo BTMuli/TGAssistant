@@ -115,6 +115,8 @@ declare namespace TGACore.Components.Character {
     name: string;
     /** 技能描述。 */
     desc: string;
+    /** 加强后的特殊描述 */
+    descSp?: string;
     /** 技能图标资源名称。 */
     icon: string;
     /**
