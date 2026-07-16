@@ -72,14 +72,17 @@ function transCharacter(
     ...(raw.SkillDepot?.SpecialSkills ?? []),
     ...raw.SkillDepot.Inherents,
   ];
-  // TODO:对Skill排序
-  let skills: Array<TGACore.Components.Character.WikiSkill> = [];
-  tempSkills.forEach((skill) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { Proud, ...rest } = skill;
-    skills.push(rest);
-  });
-  skills = skills.filter((skill) => skill.Icon !== "");
+  // TODO: 对技能排序
+  const skills: Array<TGACore.Components.Character.WikiSkill> = tempSkills
+    .filter((skill) => skill.Icon !== "")
+    .map((skill) => ({
+      group: skill.GroupId,
+      id: skill.Id,
+      name: skill.Name,
+      desc: skill.Description,
+      icon: skill.Icon,
+      maxLv: skill.Proud.Parameters.length === 1 ? 1 : 10,
+    }));
   return {
     id: raw.Id,
     name: raw.Name,
