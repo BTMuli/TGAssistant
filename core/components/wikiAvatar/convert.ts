@@ -75,15 +75,25 @@ function transCharacter(
   // TODO: 对技能排序
   const skills: Array<TGACore.Components.Character.WikiSkill> = tempSkills
     .filter((skill) => skill.Icon !== "")
-    .map((skill) => ({
-      group: skill.GroupId,
-      id: skill.Id,
-      name: skill.Name,
-      desc: skill.Description,
-      descSp: skill.SpecialDescription,
-      icon: skill.Icon,
-      maxLv: skill.Proud.Parameters.length === 1 ? 1 : 10,
-    }));
+    .map((skill) => {
+      const levelUpTalentIndex =
+        skill.Proud.Parameters.length === 1
+          ? -1
+          : raw.SkillDepot.Talents.findIndex(
+              (talent) =>
+                talent.ExtraLevel?.Index === skill.GroupId % 10 && talent.ExtraLevel.Level === 3,
+            );
+      return {
+        group: skill.GroupId,
+        id: skill.Id,
+        name: skill.Name,
+        desc: skill.Description,
+        descSp: skill.SpecialDescription,
+        icon: skill.Icon,
+        maxLv: skill.Proud.Parameters.length === 1 ? 1 : 10,
+        luc: levelUpTalentIndex === -1 ? null : levelUpTalentIndex + 1,
+      };
+    });
   return {
     id: raw.Id,
     name: raw.Name,
