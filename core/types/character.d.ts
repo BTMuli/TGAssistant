@@ -96,9 +96,29 @@ declare namespace TGACore.Components.Character {
     /** 角色命之座列表。 */
     constellation: Array<TGACore.Plugins.Hutao.Avatar.Constellation>;
     /** 角色闲聊文本。 */
-    talks: Array<TGACore.Plugins.Hutao.Avatar.Text>;
+    talks: Array<TGACore.Components.Character.WikiTalk>;
     /** 角色故事文本。 */
     stories: Array<TGACore.Plugins.Hutao.Avatar.Text>;
+  };
+
+  /**
+   * 角色闲聊分组数据。
+   *
+   * @remarks
+   * 按标题规则合并后的分组，`list` 保存原始文本列表。
+   *
+   * @since 2.6.0
+   */
+  type WikiTalk = {
+    /** 合并后的分组标题。 */
+    group: string;
+    /** 合并前的原始文本列表。 */
+    list: Array<{
+      /** 原始文本标题。 */
+      title: string;
+      /** 原始文本内容。 */
+      talk: string;
+    }>;
   };
 
   /**

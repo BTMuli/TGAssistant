@@ -137,8 +137,8 @@ function transCharacter(
 function transTalks(
   raw: TGACore.Plugins.Hutao.Avatar.Text[],
   name: string,
-): TGACore.Plugins.Hutao.Avatar.Text[] {
-  const res = [];
+): TGACore.Components.Character.WikiTalk[] {
+  const res: Array<TGACore.Plugins.Hutao.Avatar.Text> = [];
   for (const r of raw) {
     const item = JSON.parse(JSON.stringify(r));
     const visionM = "<color=#FFA726>【空视角】</color>\r\n";
@@ -197,6 +197,113 @@ function transTalks(
       }
     }
     res.push(item);
+  }
+  return mergeTalks(res);
+}
+
+/**
+ * 根据标题规则计算合并后的标题。
+ *
+ * @since 2.6.0
+ * @param title - 原始标题
+ * @returns 合并后的标题，无需合并时返回 `undefined`
+ */
+function getMergeTitle(title: string): string | undefined {
+  // 闲聊·xxx → 闲聊
+  if (title.startsWith("闲聊·")) return "闲聊";
+  // 想要了解xxx·xxx → 想要了解xxx
+  const wantMatch = /^想要了解[^·]+·/.exec(title);
+  if (wantMatch) return title.slice(0, title.indexOf("·"));
+  // 收到赠礼·xxx → 收到赠礼
+  if (title.startsWith("收到赠礼·")) return "收到赠礼";
+  // 突破的感受·xxx → 突破的感受
+  if (title.startsWith("突破的感受·")) return "突破的感受";
+  // 冲刺开始·xxx / 冲刺结束·xxx / 元素战技·xxx / 元素爆发·xxx / 打开宝箱·xxx / 打开风之翼·xxx / 下落攻击·xxx / 普通攻击·xxx / 重攻击·xxx / 特殊重攻击·xxx → 动作
+  if (
+    [
+      "冲刺开始",
+      "冲刺结束",
+      "元素战技",
+      "元素爆发",
+      "打开宝箱",
+      "打开风之翼",
+      "下落攻击",
+      "普通攻击",
+      "重攻击",
+      "特殊重攻击",
+    ].some((prefix) => title.startsWith(`${prefix}·`))
+  )
+    return "动作";
+  // 生命值低·xxx / 同伴生命值低·xxx / 普通受击·xxx / 重受击·xxx / 倒下·xxx / 加入队伍·xxx → 队伍
+  if (
+    ["生命值低·", "同伴生命值低·", "普通受击·", "重受击·", "倒下·", "加入队伍·"].some((prefix) =>
+      title.startsWith(prefix),
+    )
+  )
+    return "队伍";
+  // 早上好… / 中午好… / 晚上好… / 晚安… / 初次见面… / 生日… / 生辰… → 问候
+  if (
+    ["早上好", "中午好", "晚上好", "晚安", "初次见面", "生日", "生辰"].some((prefix) =>
+      title.startsWith(prefix),
+    )
+  )
+    return "问候";
+  // 下雨的时候… / 雨过天晴… / 打雷的时候… / 下雪的时候… / 起风的时候… / 在沙漠的时候… / 刮大风了… / 阳光很好… / 晴天的时候… → ...的时候
+  if (
+    [
+      "下雨的时候",
+      "雨过天晴",
+      "打雷的时候",
+      "下雪的时候",
+      "起风的时候",
+      "在沙漠的时候",
+      "刮大风了",
+      "阳光很好",
+      "晴天的时候",
+    ].some((prefix) => title.startsWith(prefix))
+  )
+    return "...的时候";
+  // 关于xxx… / 对xxx… → 关于...
+  if (title.startsWith("关于") || title.startsWith("对")) return "关于...";
+  // xxx的爱好… / xxx的烦恼… / 喜欢的食物… / 讨厌的食物… / 有什么想要分享… / 感兴趣的见闻… → 兴趣
+  if (
+    title.includes("的爱好") ||
+    title.includes("的烦恼") ||
+    title.startsWith("喜欢的食物") ||
+    title.startsWith("讨厌的食物") ||
+    title.startsWith("有什么想要分享") ||
+    title.startsWith("感兴趣的见闻")
+  )
+    return "兴趣";
+  // 其余标题不合并，保持原样输出
+  logger.default.warn(`[components][wikiAvatar][convert] 未知分类 ${title}`);
+  return undefined;
+}
+
+/**
+ * 按标题规则合并对话。
+ *
+ * @since 2.6.0
+ * @param raw - 转换后的对话
+ * @returns 合并后的对话
+ */
+function mergeTalks(
+  raw: Array<TGACore.Plugins.Hutao.Avatar.Text>,
+): Array<TGACore.Components.Character.WikiTalk> {
+  const res: Array<TGACore.Components.Character.WikiTalk> = [];
+  const groupIndex = new Map<string, number>();
+  for (const item of raw) {
+    const groupName = getMergeTitle(item.Title) ?? item.Title;
+    let index = groupIndex.get(groupName);
+    if (index === undefined) {
+      index = res.length;
+      groupIndex.set(groupName, index);
+      res.push({ group: groupName, list: [] });
+    }
+    const group = res[index];
+    if (group !== undefined) {
+      group.list.push({ title: item.Title, talk: item.Context });
+    }
   }
   return res;
 }
