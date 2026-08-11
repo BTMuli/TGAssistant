@@ -13,6 +13,7 @@ declare namespace TGACore.Components.Material {
    * @property {string} name 材料名称
    * @property {string} description 材料描述
    * @property {string} type 材料类型
+   * @property {string} cType 材料归并分类
    * @property {string} star 材料星级
    * @property {Array<Source>} source 材料来源
    * @property {Array<Convert>} change 材料转换
@@ -22,6 +23,7 @@ declare namespace TGACore.Components.Material {
     name: string;
     description: string;
     type: string;
+    cType: string;
     star: number;
     source: Array<Source>;
     convert: Array<Convert>;

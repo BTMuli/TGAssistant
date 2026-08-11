@@ -82,6 +82,39 @@ const KEEP_CONSUMABLE_NAMES: ReadonlySet<string> = new Set([
   "消耗品",
 ]);
 
+const CHARACTER_WEAPON_MATERIAL_TYPES: ReadonlySet<string> = new Set([
+  "角色天赋素材",
+  "角色突破素材",
+  "武器突破素材",
+  "角色培养素材",
+  "角色与武器培养素材",
+]);
+
+const SAME_CTYPE_TYPES: ReadonlySet<string> = new Set([
+  "消耗品",
+  "任务道具",
+  "食物",
+  "圣物匣",
+  "贵重物品",
+  "小道具",
+  "素材",
+  "食材",
+  "冒险道具",
+]);
+
+/**
+ * 获取材料归并分类
+ * @since 2.6.0
+ * @param {string} type 材料原始分类
+ * @return {string} 材料归并分类
+ */
+function getCType(type: string): string {
+  if (type.endsWith("区域特产")) return "区域特产";
+  if (CHARACTER_WEAPON_MATERIAL_TYPES.has(type)) return "角色与武器培养素材";
+  if (SAME_CTYPE_TYPES.has(type)) return type;
+  return "默认";
+}
+
 logger.init();
 Counter.Init("[components][material][convert]");
 logger.default.info("[components][material][convert] 运行 convert.ts");
@@ -200,7 +233,7 @@ for (const item of materialList) {
   const oriPath = path.join(jsonDir.src, `${id}.json`);
   let oriData: TGACore.Plugins.Yatta.Material.MaterialDetail | undefined;
   if (!fileCheck(oriPath, false)) {
-    logger.default.warn(
+    logger.console.warn(
       `[components][material][convert][${id}] Yatta JSON 不存在，使用索引数据继续转换`,
     );
   } else {
@@ -347,11 +380,13 @@ async function transMaterial(
     source = source.filter((i) => i.type !== "domain");
     source.push({ name: "秘境获取", type: "single" });
   }
+  const type = metadata?.TypeDescription ?? data?.type ?? yatta?.type ?? "未知类型";
   return {
     id: materialId,
     name: metadata?.Name ?? data?.name ?? yatta?.name ?? "未知材料",
     description: metadata?.Description ?? data?.description ?? "",
-    type: metadata?.TypeDescription ?? data?.type ?? yatta?.type ?? "未知类型",
+    type,
+    cType: getCType(type),
     star: metadata?.RankLevel ?? data?.rank ?? yatta?.rank ?? 0,
     source,
     convert: converts,
