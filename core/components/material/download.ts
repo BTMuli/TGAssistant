@@ -1,11 +1,11 @@
 /**
- * @file core/components/material/convert.ts
- * @description 材料组件转换
- * @since 2.4.0
+ * 材料组件转换
+ * @since 2.6.0
  */
 
 import path from "node:path";
 
+import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
@@ -37,6 +37,28 @@ try {
   logger.default.error("[components][material][download] 下载 JSON 数据失败");
   logger.console.error(error);
   Counter.Fail();
+}
+
+logger.default.info("[components][material][download] 开始记录 Metadata 类型描述");
+if (!hutaoTool.check(hutaoTool.enum.file.Material)) {
+  logger.default.warn(
+    "[components][material][download] Metadata Material.json 不存在，跳过记录 TypeDescription",
+  );
+} else {
+  try {
+    const rawMetadata = hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(
+      hutaoTool.enum.file.Material,
+    );
+    const typeDescriptions = [...new Set(rawMetadata.map((item) => item.TypeDescription))];
+    await fs.writeJson(path.join(jsonDir.src, "typedesc.json"), typeDescriptions, { spaces: 2 });
+    logger.default.info(
+      `[components][material][download] Metadata 类型描述记录完成，共 ${typeDescriptions.length} 项`,
+    );
+  } catch (e) {
+    logger.default.error("[components][material][download] Metadata 类型描述记录失败");
+    logger.default.error(e);
+    Counter.Fail();
+  }
 }
 
 logger.default.info("[components][material][download] 开始下载材料数据");
