@@ -143,6 +143,7 @@ function transFood(
   const special = materials.find((item) => item.id === raw.ItemId);
   if (origin === undefined || special === undefined) return undefined;
   return {
+    recipeId: raw.OriginItemId,
     origin: { id: origin.id, name: origin.name, star: origin.star },
     special: { id: special.id, name: special.name, star: special.star },
   };

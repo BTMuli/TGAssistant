@@ -1,7 +1,6 @@
 /**
- * @file core/types/material.d.ts
- * @description 材料组件类型定义
- * @since 2.4.0
+ * 材料组件类型定义
+ * @since 2.6.0
  */
 
 declare namespace TGACore.Components.Material {
@@ -37,8 +36,43 @@ declare namespace TGACore.Components.Material {
     effect: Array<string>;
     /** 食物效果图标资源名称。 */
     effectIcon?: string;
-    /** 食物制作所需的食材。 */
+    /** 所属配方组 ID，通常为本体料理 ID。 */
+    recipeId?: number;
+    /** 食物变体类型。 */
+    kind?: WikiFoodKind;
+  };
+
+  /** 食物变体类型。 */
+  type WikiFoodKind = "strange" | "normal" | "delicious" | "special";
+
+  /** 配方组索引数据。 */
+  type WikiFoodRecipe = {
+    /** 配方组 ID，通常为本体料理 ID。 */
+    id: number;
+    /** 配方组共用的食材。 */
     input: Array<WikiFoodInput>;
+    /** 配方组中的料理变体。 */
+    variants: WikiFoodVariants;
+  };
+
+  /** 配方组中的料理变体索引。 */
+  type WikiFoodVariants = {
+    /** 奇怪的料理 ID。 */
+    strange?: number;
+    /** 本体料理 ID。 */
+    normal?: number;
+    /** 美味的料理 ID。 */
+    delicious?: number;
+    /** 角色特殊料理列表。 */
+    special: Array<WikiFoodSpecial>;
+  };
+
+  /** 角色特殊料理与配方组的关联。 */
+  type WikiFoodSpecial = {
+    /** 角色 ID。 */
+    characterId: number;
+    /** 特殊料理 ID。 */
+    foodId: number;
   };
 
   /** 食物制作所需的单项食材。 */
@@ -51,6 +85,20 @@ declare namespace TGACore.Components.Material {
     icon: string;
     /** 食材数量。 */
     count: number;
+  };
+
+  /** 独立输出的书籍卷数据。 */
+  type WikiBook = {
+    /** 书籍卷对应的材料 ID。 */
+    id: number;
+    /** 书籍卷名称。 */
+    name: string;
+    /** 书籍卷描述。 */
+    description: string;
+    /** Yatta 可读内容 ID。 */
+    storyId: string;
+    /** 书籍正文。 */
+    story: string;
   };
 
   /**

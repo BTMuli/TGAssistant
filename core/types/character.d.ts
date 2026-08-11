@@ -109,6 +109,8 @@ declare namespace TGACore.Components.Character {
    * @since 2.6.0
    */
   type WikiFood = {
+    /** 所属配方组 ID，通常为普通料理 ID。 */
+    recipeId: number;
     /** 普通料理。 */
     origin: WikiFoodItem;
     /** 特殊料理。 */

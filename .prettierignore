@@ -13,3 +13,4 @@ tsconfig.json
 qodana.yaml
 # subrepo
 repos/
+source/data/out/WIKI/character/*.json

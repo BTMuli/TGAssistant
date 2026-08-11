@@ -26,6 +26,7 @@ fileCheckObj(imgDir);
 
 let rawMaterial: Array<TGACore.Plugins.Yatta.Material.MaterialItem> = [];
 let rawFood: Array<TGACore.Plugins.Yatta.Food.FoodItem> = [];
+let rawBooks: Array<TGACore.Plugins.Yatta.Book.LocalBook> = [];
 
 logger.default.info("[components][material][download] 开始下载 JSON 数据");
 try {
@@ -79,9 +80,100 @@ if (!hasMetadata) {
   }
 }
 
+logger.default.info("[components][material][download] 开始下载书籍数据");
+try {
+  const res = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Book.BookResponse>("CHS/book");
+  if (res.response !== 200) throw new Error(`Yatta 书籍索引响应异常：${res.response}`);
+  const bookItems = Object.values(res.data.items);
+  const bookList: Array<TGACore.Plugins.Yatta.Book.LocalBook> = [];
+  for (const book of bookItems) {
+    try {
+      const savePath = path.join(jsonDir.src, `book_${book.id}.json`);
+      let detail: TGACore.Plugins.Yatta.Book.BookDetail;
+      let cached: TGACore.Plugins.Yatta.Book.LocalBook | undefined;
+      const cachedData = validJsonFile(savePath) ? await fs.readJson(savePath) : undefined;
+      if (
+        typeof cachedData === "object" &&
+        cachedData !== null &&
+        Array.isArray((<Partial<TGACore.Plugins.Yatta.Book.LocalBook>>cachedData).volume)
+      ) {
+        console.info(`[components][material][download][${book.id}] 读取书籍缓存：${book.name}`);
+        cached = <TGACore.Plugins.Yatta.Book.LocalBook>cachedData;
+        detail = cached;
+      } else {
+        console.info(`[components][material][download][${book.id}] 下载书籍详情：${book.name}`);
+        const detailRes = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Book.DetailResponse>(
+          `CHS/book/${book.id}`,
+        );
+        if (detailRes.response !== 200) {
+          throw new Error(`Yatta 书籍详情响应异常：${detailRes.response}`);
+        }
+        detail = detailRes.data;
+      }
+      const volume: Array<TGACore.Plugins.Yatta.Book.LocalVolume> = [];
+      for (const item of detail.volume) {
+        const cachedVolume = cached?.volume.find((i) => i.id === item.id);
+        let story = cachedVolume?.story ?? "";
+        if (story.length === 0 && item.storyId.length > 0) {
+          try {
+            console.info(`[components][material][download][${item.id}] 下载书籍正文：${item.name}`);
+            const storyRes = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Book.ReadableResponse>(
+              `CHS/readable/Book${item.storyId}`,
+            );
+            if (storyRes.response !== 200) {
+              throw new Error(`Yatta 书籍正文响应异常：${storyRes.response}`);
+            }
+            story = storyRes.data;
+          } catch (e) {
+            logger.default.warn(
+              `[components][material][download][${item.id}] ${item.name} 书籍正文下载失败`,
+            );
+            logger.default.error(e);
+          }
+        } else if (story.length > 0) {
+          console.info(`[components][material][download][${item.id}] 读取正文缓存：${item.name}`);
+        }
+        volume.push({ ...item, icon: book.icon, rank: book.rank, story });
+      }
+      const localBook: TGACore.Plugins.Yatta.Book.LocalBook = { ...detail, ...book, volume };
+      await fs.writeJson(savePath, localBook, { spaces: 2 });
+      bookList.push(localBook);
+      console.info(
+        `[components][material][download][${book.id}] 书籍处理完成：${book.name}，共 ${volume.length} 卷`,
+      );
+    } catch (e) {
+      logger.default.warn(
+        `[components][material][download][${book.id}] ${book.name} 书籍数据下载失败`,
+      );
+      logger.default.error(e);
+    }
+  }
+  rawBooks = bookList;
+  await fs.writeJson(path.join(jsonDir.src, "books.json"), rawBooks, { spaces: 2 });
+  logger.default.info(
+    `[components][material][download] 书籍数据下载完成，共 ${rawBooks.length} 项书籍`,
+  );
+} catch (e) {
+  logger.default.error("[components][material][download] 下载书籍数据失败");
+  logger.default.error(e);
+  const cachedBooksPath = path.join(jsonDir.src, "books.json");
+  if (fileCheck(cachedBooksPath, false)) {
+    try {
+      rawBooks = await fs.readJson(cachedBooksPath);
+      logger.default.warn(
+        `[components][material][download] 使用本地缓存书籍数据，共 ${rawBooks.length} 项书籍`,
+      );
+    } catch (cacheError) {
+      logger.default.error("[components][material][download] 读取本地书籍缓存失败");
+      logger.default.error(cacheError);
+    }
+  }
+}
+
 logger.default.info("[components][material][download] 开始下载材料数据");
-type DownloadItem = { id: number; name: string; icon: string; detailPath: string };
+type DownloadItem = { id: number; name: string; icon: string; detailPath?: string };
 const downloadMap = new Map<number, DownloadItem>();
+const bookIdSet = new Set(rawBooks.flatMap((book) => book.volume.map((volume) => volume.id)));
 for (const item of rawMaterial) {
   downloadMap.set(Number(item.id), {
     id: Number(item.id),
@@ -104,8 +196,28 @@ for (const item of rawMetadata) {
     id: item.Id,
     name: item.Name,
     icon: item.Icon,
-    detailPath: item.TypeDescription === "食物" ? `CHS/food/${item.Id}` : `CHS/material/${item.Id}`,
+    detailPath:
+      item.TypeDescription === "食物"
+        ? `CHS/food/${item.Id}`
+        : bookIdSet.has(item.Id)
+          ? undefined
+          : `CHS/material/${item.Id}`,
   });
+}
+const metadataIdSet = new Set(rawMetadata.map((item) => item.Id));
+const yattaIdSet = new Set(rawMaterial.map((item) => Number(item.id)));
+const foodIdSet = new Set(rawFood.map((item) => item.id));
+for (const book of rawBooks) {
+  for (const volume of book.volume) {
+    if (metadataIdSet.has(volume.id) || yattaIdSet.has(volume.id) || foodIdSet.has(volume.id)) {
+      continue;
+    }
+    downloadMap.set(volume.id, {
+      id: volume.id,
+      name: volume.name,
+      icon: volume.icon,
+    });
+  }
 }
 const downloadList = [...downloadMap.values()];
 Counter.addTotal(downloadList.length * 2);
@@ -139,7 +251,7 @@ for (const item of downloadList) {
     logger.console.mark(`[components][material][download][${item.id}] 图片已存在，跳过下载`);
     Counter.Skip();
   }
-  if (!checkJ) {
+  if (!checkJ && item.detailPath !== undefined) {
     try {
       const res = await yattaTool.fetchJson<
         TGACore.Plugins.Yatta.Material.DetailResponse | TGACore.Plugins.Yatta.Food.DetailResponse
@@ -157,6 +269,11 @@ for (const item of downloadList) {
       logger.default.error(e);
       Counter.Fail();
     }
+  } else if (!checkJ) {
+    logger.console.mark(
+      `[components][material][download][${item.id}] ${item.name} 无 Yatta 材料详情，使用书籍数据`,
+    );
+    Counter.Skip();
   }
   if (!checkI) {
     let buffer: Buffer;
