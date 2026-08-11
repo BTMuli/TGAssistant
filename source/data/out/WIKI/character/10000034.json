@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Noel_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108023,
+      "name": "庄园烤松饼",
+      "star": 2
+    },
+    "special": {
+      "id": 108118,
+      "name": "厚云朵松饼",
+      "star": 2
+    }
+  },
   "description": "「西风骑士团」的可靠女仆，梦想有一天能成为正式的骑士。",
   "elePrefix": "神之眼",
   "element": "岩",

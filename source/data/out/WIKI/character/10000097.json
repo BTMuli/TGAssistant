@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Sethos_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108395,
+      "name": "烤肉卷",
+      "star": 2
+    },
+    "special": {
+      "id": 108679,
+      "name": "烤肉香香香卷",
+      "star": 2
+    }
+  },
   "description": "缄默之殿的继承者。背负着秘密，自沙中而来。",
   "elePrefix": "神之眼",
   "element": "雷",

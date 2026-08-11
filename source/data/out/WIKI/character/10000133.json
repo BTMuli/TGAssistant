@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_MarionetteNew_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108534,
+      "name": "花果三重奏",
+      "star": 3
+    },
+    "special": {
+      "id": 108976,
+      "name": "「茶会多重奏」",
+      "star": 3
+    }
+  },
   "description": "愚人众执行官第七席，「木偶」。以数理解析事象之人，茶会上永不缺席的优雅淑女。",
   "elePrefix": "星之楔",
   "element": "冰",

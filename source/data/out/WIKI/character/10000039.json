@@ -47,6 +47,18 @@
       "Icon": "UI_Talent_S_Diona_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108096,
+      "name": "蒙德烤鱼",
+      "star": 1
+    },
+    "special": {
+      "id": 108134,
+      "name": "绝对不是下酒菜",
+      "star": 1
+    }
+  },
   "description": "遗传了稀薄的「非人」血统的少女，「猫尾酒馆」的超人气调酒师。",
   "elePrefix": "神之眼",
   "element": "冰",

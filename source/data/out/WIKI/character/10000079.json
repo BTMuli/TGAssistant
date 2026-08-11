@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Dehya_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108493,
+      "name": "镀金锅",
+      "star": 3
+    },
+    "special": {
+      "id": 108501,
+      "name": "炽金之锅",
+      "star": 3
+    }
+  },
   "description": "横行须弥沙漠的佣兵组织「镀金旅团」的成员，勇敢而又强大的战士，在「镀金旅团」内部声名赫赫。",
   "elePrefix": "神之眼",
   "element": "火",

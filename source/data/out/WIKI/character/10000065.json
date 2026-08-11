@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Shinobu_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108328,
+      "name": "蛋包饭",
+      "star": 3
+    },
+    "special": {
+      "id": 108388,
+      "name": "蛋包饭圆舞曲",
+      "star": 3
+    }
+  },
   "description": "干练可靠的「荒泷派」的副手——特别注明：干练可靠形容的不是「荒泷派」而是副手。",
   "elePrefix": "神之眼",
   "element": "雷",

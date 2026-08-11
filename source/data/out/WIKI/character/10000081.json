@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Kaveh_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108504,
+      "name": "脆饼珐提",
+      "star": 2
+    },
+    "special": {
+      "id": 108509,
+      "name": "悉心一作",
+      "star": 2
+    }
+  },
   "description": "须弥著名建筑设计师，对太多事物抱有过度关怀心。美学主义者，为现实所困扰。",
   "elePrefix": "神之眼",
   "element": "草",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Candace_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108461,
+      "name": "阿如拌饭",
+      "star": 2
+    },
+    "special": {
+      "id": 108468,
+      "name": "关怀备至",
+      "star": 2
+    }
+  },
   "description": "有着琥珀色左眼的赤王后裔，阿如村的守护者。",
   "elePrefix": "神之眼",
   "element": "水",

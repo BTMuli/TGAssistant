@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Emilie_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108681,
+      "name": "奶油炖鸡",
+      "star": 3
+    },
+    "special": {
+      "id": 108683,
+      "name": "香馥繁味",
+      "star": 3
+    }
+  },
   "description": "枫丹香水设计师，将秘密藏于瓶中之人。",
   "elePrefix": "神之眼",
   "element": "草",

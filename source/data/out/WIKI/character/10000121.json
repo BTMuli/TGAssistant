@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Aino_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108868,
+      "name": "夏槲蛋糕",
+      "star": 3
+    },
+    "special": {
+      "id": 108898,
+      "name": "嘎吱嘎吱甜甜杯",
+      "star": 3
+    }
+  },
   "description": "挪德卡莱的天才机械发明家，喜欢有趣的机械和甜食。",
   "elePrefix": "神之眼",
   "element": "水",

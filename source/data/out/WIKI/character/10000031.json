@@ -52,6 +52,18 @@
       "Icon": "UI_Talent_S_Fischl_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108060,
+      "name": "冷肉拼盘",
+      "star": 3
+    },
+    "special": {
+      "id": 108117,
+      "name": "祝圣交响乐",
+      "star": 3
+    }
+  },
   "description": "自称「断罪之皇女」，与名为奥兹的漆黑夜鸦同行的神秘少女。",
   "elePrefix": "神之眼",
   "element": "雷",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Xilonen_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108725,
+      "name": "巧克力",
+      "star": 3
+    },
+    "special": {
+      "id": 108760,
+      "name": "果味奶糖",
+      "star": 3
+    }
+  },
   "description": "纳茨卡延的铸名师，善于在工作的重担与舒适的生活之间找到平衡点。",
   "elePrefix": "神之眼",
   "element": "岩",

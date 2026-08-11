@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Nahida_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108455,
+      "name": "枣椰蜜糖",
+      "star": 3
+    },
+    "special": {
+      "id": 108474,
+      "name": "哈瓦玛玛兹",
+      "star": 3
+    }
+  },
   "description": "深居净善宫的笼中之鸟，只能在梦中将世界尽收眼底。",
   "elePrefix": "神之心",
   "element": "草",

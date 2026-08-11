@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Yoimiya_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108253,
+      "name": "三彩团子",
+      "star": 3
+    },
+    "special": {
+      "id": 108302,
+      "name": "夏祭游鱼",
+      "star": 3
+    }
+  },
   "description": "「长野原烟花店」店长，「夏祭的女王」，将人们的愿望寄托于烟花中的能工巧匠。",
   "elePrefix": "神之眼",
   "element": "火",

@@ -50,6 +50,18 @@
       "Icon": "UI_Talent_S_Mizuki_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108791,
+      "name": "钱汤馒头",
+      "star": 3
+    },
+    "special": {
+      "id": 108793,
+      "name": "「一梦治愈」",
+      "star": 3
+    }
+  },
   "description": "「秋沙钱汤」的股东，梦貘一族的心理诊疗师，致力于驱散噩梦，为人们带来安宁的心境。",
   "elePrefix": "神之眼",
   "element": "风",

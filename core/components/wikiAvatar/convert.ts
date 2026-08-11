@@ -121,9 +121,30 @@ function transCharacter(
     materials,
     skills,
     constellation: raw.SkillDepot.Talents,
-    // todo: food 料理
+    food: transFood(raw.FetterInfo.CookBonus),
     talks: transTalks(raw.FetterInfo.Fetters, raw.Name),
     stories: raw.FetterInfo.FetterStories,
+  };
+}
+
+/**
+ * 转换角色特殊料理数据。
+ *
+ * @since 2.6.0
+ * @param raw - Metadata 中的特殊料理数据
+ * @returns 转换后的特殊料理数据
+ */
+function transFood(
+  raw: TGACore.Plugins.Hutao.Avatar.CookBonus | undefined,
+): TGACore.Components.Character.WikiFood | undefined {
+  if (raw === undefined) return undefined;
+  const materials = matchMaterials([raw.OriginItemId, raw.ItemId]);
+  const origin = materials.find((item) => item.id === raw.OriginItemId);
+  const special = materials.find((item) => item.id === raw.ItemId);
+  if (origin === undefined || special === undefined) return undefined;
+  return {
+    origin: { id: origin.id, name: origin.name, star: origin.star },
+    special: { id: special.id, name: special.name, star: special.star },
   };
 }
 

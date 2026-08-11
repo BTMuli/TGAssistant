@@ -50,6 +50,18 @@
       "Icon": "UI_Talent_S_Albedo_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108208,
+      "name": "黄油煎鱼",
+      "star": 3
+    },
+    "special": {
+      "id": 108214,
+      "name": "「林之梦」",
+      "star": 3
+    }
+  },
   "description": "西风骑士团首席炼金术士兼调查小队队长，被称做「白垩之子」的天才。",
   "elePrefix": "神之眼",
   "element": "岩",

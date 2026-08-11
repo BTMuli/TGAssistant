@@ -95,10 +95,34 @@ declare namespace TGACore.Components.Character {
     skills: Array<WikiSkill>;
     /** 角色命之座列表。 */
     constellation: Array<TGACore.Plugins.Hutao.Avatar.Constellation>;
+    /** 角色特殊料理信息。 */
+    food?: WikiFood;
     /** 角色闲聊文本。 */
     talks: Array<TGACore.Components.Character.WikiTalk>;
     /** 角色故事文本。 */
     stories: Array<TGACore.Plugins.Hutao.Avatar.Text>;
+  };
+
+  /**
+   * 角色特殊料理数据。
+   *
+   * @since 2.6.0
+   */
+  type WikiFood = {
+    /** 普通料理。 */
+    origin: WikiFoodItem;
+    /** 特殊料理。 */
+    special: WikiFoodItem;
+  };
+
+  /** 角色特殊料理的材料简要数据。 */
+  type WikiFoodItem = {
+    /** 料理 ID。 */
+    id: number;
+    /** 料理名称。 */
+    name: string;
+    /** 料理星级。 */
+    star: number;
   };
 
   /**

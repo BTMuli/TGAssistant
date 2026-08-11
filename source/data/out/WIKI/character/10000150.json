@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Odette_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 132014,
+      "name": "雪原上的雪球花",
+      "star": 3
+    },
+    "special": {
+      "id": 132017,
+      "name": "「湖畔边的雪鹄」",
+      "star": 3
+    }
+  },
   "description": "至冬知名芭蕾舞者，于冰雪中绽放的凛冽之花。",
   "elePrefix": "星之楔",
   "element": "冰",

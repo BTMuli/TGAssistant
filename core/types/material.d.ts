@@ -29,6 +29,30 @@ declare namespace TGACore.Components.Material {
     convert: Array<Convert>;
   };
 
+  /** 独立输出的食物数据。 */
+  type WikiFood = {
+    /** 食物 ID。 */
+    id: number;
+    /** 食物效果描述。 */
+    effect: Array<string>;
+    /** 食物效果图标资源名称。 */
+    effectIcon?: string;
+    /** 食物制作所需的食材。 */
+    input: Array<WikiFoodInput>;
+  };
+
+  /** 食物制作所需的单项食材。 */
+  type WikiFoodInput = {
+    /** 食材 ID。 */
+    id: number;
+    /** 食材名称。 */
+    name: string;
+    /** 食材图标资源名称。 */
+    icon: string;
+    /** 食材数量。 */
+    count: number;
+  };
+
   /**
    * @description 材料来源
    * @since 2.4.0

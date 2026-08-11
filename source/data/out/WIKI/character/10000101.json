@@ -51,6 +51,18 @@
       "Icon": "UI_Talent_S_Kinich_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108743,
+      "name": "火焰炖肉",
+      "star": 3
+    },
+    "special": {
+      "id": 108745,
+      "name": "猎龙者的犒赏",
+      "star": 3
+    }
+  },
   "description": "维茨特兰的猎龙人，精于度量代价。",
   "elePrefix": "神之眼",
   "element": "草",

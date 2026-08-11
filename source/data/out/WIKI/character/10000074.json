@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Layla_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108471,
+      "name": "蔷薇奶糊",
+      "star": 2
+    },
+    "special": {
+      "id": 108473,
+      "name": "安眠奢想",
+      "star": 2
+    }
+  },
   "description": "专攻理论星相学的梨多梵谛学院学生。时常梦游，长期缺觉，饱受睡眠问题困扰。",
   "elePrefix": "神之眼",
   "element": "冰",

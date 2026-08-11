@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Navia_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108617,
+      "name": "缤纷马卡龙",
+      "star": 3
+    },
+    "special": {
+      "id": 108620,
+      "name": "「选你喜欢的！」",
+      "star": 3
+    }
+  },
   "description": "刺玫会现任会长，一位可爱、尽责的好老板。",
   "elePrefix": "神之眼",
   "element": "岩",

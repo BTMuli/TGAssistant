@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Illuga_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108941,
+      "name": "蔬菜罐罐汤",
+      "star": 3
+    },
+    "special": {
+      "id": 108951,
+      "name": "夜守暖汤",
+      "star": 3
+    }
+  },
   "description": "调查分队「魇夜之莺」成员，执灯人最年轻的分队长。",
   "elePrefix": "神之眼",
   "element": "岩",

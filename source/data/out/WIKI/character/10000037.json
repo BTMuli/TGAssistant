@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Ganyu_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108202,
+      "name": "四方和平",
+      "star": 3
+    },
+    "special": {
+      "id": 108213,
+      "name": "盛世太平",
+      "star": 3
+    }
+  },
   "description": "月海亭的秘书，体内流淌着仙兽「麒麟」的血脉。",
   "elePrefix": "神之眼",
   "element": "冰",

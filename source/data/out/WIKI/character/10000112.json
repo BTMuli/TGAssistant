@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Escoffier_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108815,
+      "name": "德波小蛋糕·改良型",
+      "star": 4
+    },
+    "special": {
+      "id": 108820,
+      "name": "德波大蛋糕·绚丽型",
+      "star": 4
+    }
+  },
   "description": "闻名枫丹的前德波大饭店主厨，有着「甜点大校」荣誉的「技术料理」先驱，对烹饪的要求无比严格。",
   "elePrefix": "神之眼",
   "element": "冰",

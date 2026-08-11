@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Alyosha_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 132011,
+      "name": "至冬烤串",
+      "star": 3
+    },
+    "special": {
+      "id": 132016,
+      "name": "「弹无虚发」",
+      "star": 3
+    }
+  },
   "description": "纵横于至冬雪原的「职业猎手」。其冷静的外表下，似乎隐藏着别样炙热的「理想」。",
   "elePrefix": "神之眼",
   "element": "雷",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Lauma_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108859,
+      "name": "今日收获",
+      "star": 3
+    },
+    "special": {
+      "id": 108892,
+      "name": "林间低语",
+      "star": 3
+    }
+  },
   "description": "被月光与森林祝福的圣女，一个诞生在「霜月之子」中的希望。",
   "elePrefix": "月之轮",
   "element": "草",

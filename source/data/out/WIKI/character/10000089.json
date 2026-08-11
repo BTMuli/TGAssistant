@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Furina_02"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108606,
+      "name": "致水神",
+      "star": 3
+    },
+    "special": {
+      "id": 108611,
+      "name": "「普茹斯蒂司」",
+      "star": 3
+    }
+  },
   "description": "审判舞台上的绝对焦点，直至谢幕的掌声响起。",
   "elePrefix": "神之眼",
   "element": "水",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Columbina_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108938,
+      "name": "花果草糖",
+      "star": 3
+    },
+    "special": {
+      "id": 108950,
+      "name": "皎月渺渺",
+      "star": 3
+    }
+  },
   "description": "于挪德卡莱诞生的「月之少女」，亦是归乡的空月。",
   "elePrefix": "三相月临",
   "element": "水",

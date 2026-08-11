@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Chevreuse_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108614,
+      "name": "圈圈圆圆",
+      "star": 3
+    },
+    "special": {
+      "id": 108619,
+      "name": "罪恶·非必要处理型",
+      "star": 3
+    }
+  },
   "description": "时刻恪守着心中「正义」的特巡队队长，手中的铳枪只会指向负罪之人。",
   "elePrefix": "神之眼",
   "element": "火",

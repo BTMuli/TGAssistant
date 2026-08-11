@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Wanderer_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108356,
+      "name": "鳗肉茶泡饭",
+      "star": 3
+    },
+    "special": {
+      "id": 108479,
+      "name": "真味茶泡饭",
+      "star": 3
+    }
+  },
   "description": "身份成谜的流浪人士。衣着打扮像是修验者，言行却并不是修验者应有的模样。",
   "elePrefix": "神之眼",
   "element": "风",

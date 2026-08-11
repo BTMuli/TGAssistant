@@ -51,6 +51,18 @@
       "Icon": "UI_Talent_S_Ifa_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108758,
+      "name": "苦水",
+      "star": 3
+    },
+    "special": {
+      "id": 108821,
+      "name": "「情感支持」",
+      "star": 3
+    }
+  },
   "description": "来自花羽会的兽医，由衷热爱着与人、动物，以及其他生灵为伴的生活。",
   "elePrefix": "神之眼",
   "element": "风",

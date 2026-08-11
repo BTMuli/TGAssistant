@@ -44,6 +44,18 @@
       "Icon": "UI_Talent_S_Aloy_Lock"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108226,
+      "name": "薄荷果冻",
+      "star": 1
+    },
+    "special": {
+      "id": 108339,
+      "name": "饱腹感凝胶",
+      "star": 1
+    }
+  },
   "description": "曾经是流放者，如今则是无比机敏的猎手。随时准备着为了正当之事而挽弓放箭。",
   "elePrefix": "故事5",
   "element": "冰",

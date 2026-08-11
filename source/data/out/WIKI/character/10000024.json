@@ -47,6 +47,18 @@
       "Icon": "UI_Talent_S_Beidou_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108099,
+      "name": "爆炒肉片",
+      "star": 1
+    },
+    "special": {
+      "id": 108138,
+      "name": "炝炒肉片",
+      "star": 1
+    }
+  },
   "description": "武装船队「南十字」的首领，豪快的大姐头。",
   "elePrefix": "神之眼",
   "element": "雷",

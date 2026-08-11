@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Zhongli_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108153,
+      "name": "腌笃鲜",
+      "star": 3
+    },
+    "special": {
+      "id": 108173,
+      "name": "文火慢炖腌笃鲜",
+      "star": 3
+    }
+  },
   "description": "被「往生堂」请来的神秘客人，知识渊博，对各种事物都颇有见地。",
   "elePrefix": "神之心",
   "element": "岩",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Tartaglia_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108050,
+      "name": "嘟嘟莲海鲜羹",
+      "star": 3
+    },
+    "special": {
+      "id": 108175,
+      "name": "极致一钓",
+      "star": 3
+    }
+  },
   "description": "愚人众执行官第十一位，「公子」，其战绩威名远扬。",
   "elePrefix": "邪眼",
   "element": "水",

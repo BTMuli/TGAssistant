@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Chongyun_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108142,
+      "name": "山珍热卤面",
+      "star": 2
+    },
+    "special": {
+      "id": 108144,
+      "name": "山珍凉卤面",
+      "star": 2
+    }
+  },
   "description": "驱邪世家的年轻方士，为压制自身的「纯阳之体」费尽心机。",
   "elePrefix": "神之眼",
   "element": "冰",

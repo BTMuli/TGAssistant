@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Xingqiu_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108105,
+      "name": "水晶虾",
+      "star": 2
+    },
+    "special": {
+      "id": 108136,
+      "name": "江湖百味",
+      "star": 2
+    }
+  },
   "description": "经常能在书摊看到的少年人。手执长剑，胸中常怀侠义之心。",
   "elePrefix": "神之眼",
   "element": "水",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Nefer_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108410,
+      "name": "绿汁脆球",
+      "star": 2
+    },
+    "special": {
+      "id": 108918,
+      "name": "「秘闻交易」",
+      "star": 2
+    }
+  },
   "description": "神通广大的「秘闻馆」之主。",
   "elePrefix": "月之轮",
   "element": "草",

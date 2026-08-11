@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Kachina_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108737,
+      "name": "粒果片片",
+      "star": 2
+    },
+    "special": {
+      "id": 108747,
+      "name": "齐齐整整",
+      "star": 2
+    }
+  },
   "description": "纳茨卡延的年轻战士，受赐古名「乌沙博蒂」。善良执着的少女，在挫折中不断成长。",
   "elePrefix": "神之眼",
   "element": "岩",

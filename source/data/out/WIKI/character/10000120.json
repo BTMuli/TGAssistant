@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Flins_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108862,
+      "name": "烟熏鱼排",
+      "star": 1
+    },
+    "special": {
+      "id": 108895,
+      "name": "长夜燃火",
+      "star": 1
+    }
+  },
   "description": "挪德卡莱的「执灯人」，看守着北方小岛上的灯塔与墓地。一位言行举止极富修养的神秘绅士。",
   "elePrefix": "月之轮",
   "element": "雷",

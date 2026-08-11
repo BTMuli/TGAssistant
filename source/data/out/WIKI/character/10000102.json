@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Mualani_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108740,
+      "name": "炸虾豆球",
+      "star": 3
+    },
+    "special": {
+      "id": 108746,
+      "name": "好运传递",
+      "star": 3
+    }
+  },
   "description": "纳塔远近闻名的向导，水上用品商店的经营者，精通各类水上运动的逐浪客。",
   "elePrefix": "神之眼",
   "element": "水",

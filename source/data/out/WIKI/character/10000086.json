@@ -50,6 +50,18 @@
       "Icon": "UI_Talent_S_Wriothesley_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108577,
+      "name": "香烤肋排",
+      "star": 2
+    },
+    "special": {
+      "id": 108604,
+      "name": "秘烤肋排",
+      "star": 2
+    }
+  },
   "description": "梅洛彼得堡的公爵，隐于漆黑海底的领主。",
   "elePrefix": "神之眼",
   "element": "冰",

@@ -14,6 +14,7 @@ import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDir } from "./constant.ts";
+import { shouldConvertMaterial } from "./filter.ts";
 import fetchMaterialIcon from "./utils.ts";
 
 logger.init();
@@ -24,11 +25,13 @@ fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
 
 let rawMaterial: Array<TGACore.Plugins.Yatta.Material.MaterialItem> = [];
+let rawFood: Array<TGACore.Plugins.Yatta.Food.FoodItem> = [];
 
 logger.default.info("[components][material][download] 开始下载 JSON 数据");
 try {
   const res =
     await yattaTool.fetchJson<TGACore.Plugins.Yatta.Material.MaterialResponse>("CHS/material");
+  if (res.response !== 200) throw new Error(`Yatta 材料索引响应异常：${res.response}`);
   logger.default.info("[components][material][download] JSON 数据下载完成");
   const savePath = path.join(jsonDir.src, "material.json");
   rawMaterial = Object.values(res.data.items);
@@ -39,16 +42,31 @@ try {
   Counter.Fail();
 }
 
+logger.default.info("[components][material][download] 开始下载食物索引数据");
+try {
+  const res = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Food.FoodResponse>("CHS/food");
+  if (res.response !== 200) throw new Error(`Yatta 食物索引响应异常：${res.response}`);
+  rawFood = Object.values(res.data.items);
+  const savePath = path.join(jsonDir.src, "food.json");
+  await fs.writeJson(savePath, rawFood, { spaces: 2 });
+  logger.default.info("[components][material][download] 食物索引数据下载完成");
+} catch (error) {
+  logger.default.error("[components][material][download] 下载食物索引数据失败");
+  logger.console.error(error);
+  Counter.Fail();
+}
+
 logger.default.info("[components][material][download] 开始记录 Metadata 类型描述");
-if (!hutaoTool.check(hutaoTool.enum.file.Material)) {
+const hasMetadata = hutaoTool.check(hutaoTool.enum.file.Material);
+const rawMetadata = hasMetadata
+  ? hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(hutaoTool.enum.file.Material)
+  : [];
+if (!hasMetadata) {
   logger.default.warn(
     "[components][material][download] Metadata Material.json 不存在，跳过记录 TypeDescription",
   );
 } else {
   try {
-    const rawMetadata = hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(
-      hutaoTool.enum.file.Material,
-    );
     const typeDescriptions = [...new Set(rawMetadata.map((item) => item.TypeDescription))];
     await fs.writeJson(path.join(jsonDir.src, "typedesc.json"), typeDescriptions, { spaces: 2 });
     logger.default.info(
@@ -62,11 +80,51 @@ if (!hutaoTool.check(hutaoTool.enum.file.Material)) {
 }
 
 logger.default.info("[components][material][download] 开始下载材料数据");
-Counter.addTotal(rawMaterial.length * 2);
+type DownloadItem = { id: number; name: string; icon: string; detailPath: string };
+const downloadMap = new Map<number, DownloadItem>();
 for (const item of rawMaterial) {
+  downloadMap.set(Number(item.id), {
+    id: Number(item.id),
+    name: item.name,
+    icon: item.icon,
+    detailPath: `CHS/material/${item.id}`,
+  });
+}
+for (const item of rawFood) {
+  downloadMap.set(item.id, {
+    id: item.id,
+    name: item.name,
+    icon: item.icon,
+    detailPath: `CHS/food/${item.id}`,
+  });
+}
+for (const item of rawMetadata) {
+  if (!shouldConvertMaterial(item)) continue;
+  if (item.TypeDescription === "任务道具" && !downloadMap.has(item.Id)) continue;
+  downloadMap.set(item.Id, {
+    id: item.Id,
+    name: item.Name,
+    icon: item.Icon,
+    detailPath: item.TypeDescription === "食物" ? `CHS/food/${item.Id}` : `CHS/material/${item.Id}`,
+  });
+}
+const downloadList = [...downloadMap.values()];
+Counter.addTotal(downloadList.length * 2);
+
+function validJsonFile(filePath: string): boolean {
+  if (!fileCheck(filePath, false)) return false;
+  try {
+    const data = fs.readJsonSync(filePath);
+    return typeof data === "object" && data !== null && !Array.isArray(data);
+  } catch {
+    return false;
+  }
+}
+
+for (const item of downloadList) {
   const savePathJ = path.join(jsonDir.src, `${item.id}.json`);
   const savePathI = path.join(imgDir.src, `${item.id}.png`);
-  const checkJ = fileCheck(savePathJ, false);
+  const checkJ = validJsonFile(savePathJ);
   const checkI = fileCheck(savePathI, false);
   if (checkJ && checkI) {
     logger.console.mark(`[components][material][download][${item.id}] JSON 已存在，跳过下载`);
@@ -84,9 +142,10 @@ for (const item of rawMaterial) {
   }
   if (!checkJ) {
     try {
-      const res = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Material.DetailResponse>(
-        `CHS/material/${item.id}`,
-      );
+      const res = await yattaTool.fetchJson<
+        TGACore.Plugins.Yatta.Material.DetailResponse | TGACore.Plugins.Yatta.Food.DetailResponse
+      >(item.detailPath);
+      if (res.response !== 200) throw new Error(`Yatta 详情响应异常：${res.response}`);
       await fs.writeJson(savePathJ, res.data, { spaces: 2 });
       logger.default.info(
         `[components][material][download][${item.id}] ${item.name} JSON 下载完成`,

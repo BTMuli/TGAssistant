@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Xiao_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108081,
+      "name": "杏仁豆腐",
+      "star": 2
+    },
+    "special": {
+      "id": 108137,
+      "name": "「美梦」",
+      "star": 2
+    }
+  },
   "description": "守护璃月的仙人，「夜叉」。美号「降魔大圣」，妙称「护法夜叉大将」。",
   "elePrefix": "神之眼",
   "element": "风",

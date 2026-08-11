@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Sigewinne_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108671,
+      "name": "泡泡舒芙蕾",
+      "star": 3
+    },
+    "special": {
+      "id": 108673,
+      "name": "膳食均衡餐",
+      "star": 3
+    }
+  },
   "description": "梅洛彼得堡的美露莘护士长，平等地关爱着海底监牢中的每一名罪人。",
   "elePrefix": "神之眼",
   "element": "水",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Collei_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108407,
+      "name": "口袋饼",
+      "star": 3
+    },
+    "special": {
+      "id": 108437,
+      "name": "憧憬",
+      "star": 3
+    }
+  },
   "description": "活跃于道成林的见习巡林员，热情的言行背后是一颗依旧稍显内向的心。",
   "elePrefix": "神之眼",
   "element": "草",

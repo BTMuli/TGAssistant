@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Gaming_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108646,
+      "name": "蜜汁叉烧",
+      "star": 1
+    },
+    "special": {
+      "id": 108664,
+      "name": "得闲饮茶",
+      "star": 1
+    }
+  },
   "description": "剑匣镖局的镖师，威水舞兽队的话事人。",
   "elePrefix": "神之眼",
   "element": "火",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Kokomi_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108325,
+      "name": "鸟蛋寿司",
+      "star": 1
+    },
+    "special": {
+      "id": 108340,
+      "name": "「奇策」",
+      "star": 1
+    }
+  },
   "description": "海祇岛的「现人神巫女」，统管海祇岛各项事宜的少女。",
   "elePrefix": "神之眼",
   "element": "水",

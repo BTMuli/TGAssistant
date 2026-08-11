@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Linnea_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108910,
+      "name": "白灵果派",
+      "star": 3
+    },
+    "special": {
+      "id": 108965,
+      "name": "「树荫下的虹彩」",
+      "star": 3
+    }
+  },
   "description": "冒险家协会挪德卡莱分会顾问，博物学家。",
   "elePrefix": "月之轮",
   "element": "岩",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Liuyun_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108643,
+      "name": "红烧肉圆",
+      "star": 3
+    },
+    "special": {
+      "id": 108663,
+      "name": "四喜圆满",
+      "star": 3
+    }
+  },
   "description": "绝云仙众「三眼五显仙人」之一，雅号「留云借风真君」。擅使机关奇术，心向红尘烟火，正以「闲云」之名行走人间。",
   "elePrefix": "神之眼",
   "element": "风",

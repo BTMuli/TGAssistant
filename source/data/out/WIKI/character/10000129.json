@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Lohen_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108971,
+      "name": "薄荷泡泡糖",
+      "star": 3
+    },
+    "special": {
+      "id": 108975,
+      "name": "解闷泡泡糖",
+      "star": 3
+    }
+  },
   "description": "西风骑士团远程小队副队长，行事不拘一格，钟情于非常规战术的骑士。",
   "elePrefix": "神之眼",
   "element": "冰",

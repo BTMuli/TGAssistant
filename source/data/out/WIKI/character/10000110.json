@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Iansan_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108713,
+      "name": "多彩之森",
+      "star": 2
+    },
+    "special": {
+      "id": 108809,
+      "name": "金牌健康餐",
+      "star": 2
+    }
+  },
   "description": "沃陆之邦健身俱乐部的总教练，闻名纳塔的营养师。",
   "elePrefix": "神之眼",
   "element": "雷",

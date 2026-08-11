@@ -50,6 +50,18 @@
       "Icon": "UI_Talent_S_Cyno_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108419,
+      "name": "米圆塔",
+      "star": 3
+    },
+    "special": {
+      "id": 108467,
+      "name": "决斗之魂",
+      "star": 3
+    }
+  },
   "description": "教令院内负责监管学者们的「大风纪官」。工作时比刹诃伐罗学院制作的「大风机关」更有效率。",
   "elePrefix": "神之眼",
   "element": "雷",

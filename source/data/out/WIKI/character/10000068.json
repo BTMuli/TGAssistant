@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Dori_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108392,
+      "name": "黄油鸡",
+      "star": 3
+    },
+    "special": {
+      "id": 108438,
+      "name": "摩拉急速来",
+      "star": 3
+    }
+  },
   "description": "神出鬼没的旅行百货商人，最喜欢亮闪闪的摩拉。",
   "elePrefix": "神之眼",
   "element": "雷",

@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Tohma_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108277,
+      "name": "味噌汤",
+      "star": 1
+    },
+    "special": {
+      "id": 108354,
+      "name": "「暖意」",
+      "star": 1
+    }
+  },
   "description": "神里家的家政官，活跃在稻妻的「地头蛇」。",
   "elePrefix": "神之眼",
   "element": "火",

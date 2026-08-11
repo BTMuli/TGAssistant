@@ -50,6 +50,18 @@
       "Icon": "UI_Talent_S_Klee_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108002,
+      "name": "渔人吐司",
+      "star": 2
+    },
+    "special": {
+      "id": 108115,
+      "name": "鱼香吐司",
+      "star": 2
+    }
+  },
   "description": "西风骑士团禁闭室的常客，蒙德的爆破大师。人称「逃跑的太阳」。",
   "elePrefix": "神之眼",
   "element": "火",

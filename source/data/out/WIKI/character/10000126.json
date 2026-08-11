@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Zibai_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108935,
+      "name": "香炸春卷",
+      "star": 3
+    },
+    "special": {
+      "id": 108949,
+      "name": "炸春鲜",
+      "star": 3
+    }
+  },
   "description": "璃月传说中的白马仙人，其名为兹白，璃月仙话中最神秘的一位。",
   "elePrefix": "月之轮",
   "element": "岩",

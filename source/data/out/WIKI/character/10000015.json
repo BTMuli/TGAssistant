@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Kaeya_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108012,
+      "name": "野菇鸡肉串",
+      "star": 1
+    },
+    "special": {
+      "id": 108014,
+      "name": "果香串烤",
+      "star": 1
+    }
+  },
   "description": "异国面容的剑斗士，西风骑士团的头脑派人物。",
   "elePrefix": "神之眼",
   "element": "冰",

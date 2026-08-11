@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Citlali_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108719,
+      "name": "塔塔可",
+      "star": 3
+    },
+    "special": {
+      "id": 108789,
+      "name": "「独门秘法」",
+      "star": 3
+    }
+  },
   "description": "烟谜主的大萨满，令所有族人敬畏的黑曜石奶奶。",
   "elePrefix": "神之眼",
   "element": "冰",

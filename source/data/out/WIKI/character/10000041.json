@@ -50,6 +50,18 @@
       "Icon": "UI_Talent_S_Mona_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108029,
+      "name": "满足沙拉",
+      "star": 2
+    },
+    "special": {
+      "id": 108114,
+      "name": "至高的智慧（生活）",
+      "star": 2
+    }
+  },
   "description": "神秘的少女占星术士，声称自己是「伟大的占星术士莫娜」，拥有与名号相符的不俗实力，博学而高傲。",
   "elePrefix": "神之眼",
   "element": "水",

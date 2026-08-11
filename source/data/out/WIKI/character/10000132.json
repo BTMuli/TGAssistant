@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Prune_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108877,
+      "name": "转盘特调",
+      "star": 3
+    },
+    "special": {
+      "id": 108973,
+      "name": "转转特调",
+      "star": 3
+    }
+  },
   "description": "小小的「魔女猎人」。从挪德卡莱跋涉而来，只为了讨伐那位在她口中以大欺小、无恶不作的魔女。",
   "elePrefix": "神之眼",
   "element": "风",

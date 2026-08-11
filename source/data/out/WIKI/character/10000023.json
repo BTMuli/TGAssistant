@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Xiangling_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108075,
+      "name": "水煮黑背鲈",
+      "star": 3
+    },
+    "special": {
+      "id": 108135,
+      "name": "万民堂水煮鱼",
+      "star": 3
+    }
+  },
   "description": "来自璃月，名声在外的少女厨师，对料理之道极具热情，拿手麻辣菜肴堪称一绝。",
   "elePrefix": "神之眼",
   "element": "火",

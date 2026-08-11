@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Olorun_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108722,
+      "name": "酸汁腌鱼",
+      "star": 2
+    },
+    "special": {
+      "id": 108776,
+      "name": "蜜汁腌鱼",
+      "star": 2
+    }
+  },
   "description": "来自烟谜主的年轻人，却与万千生灵一起，生活在原野之中。",
   "elePrefix": "神之眼",
   "element": "雷",

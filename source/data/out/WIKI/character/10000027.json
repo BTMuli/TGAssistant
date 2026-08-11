@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Ningguang_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108093,
+      "name": "摩拉肉",
+      "star": 1
+    },
+    "special": {
+      "id": 108139,
+      "name": "乾坤摩拉肉",
+      "star": 1
+    }
+  },
   "description": "「璃月七星」中的「天权」，其名下财富之多，全大陆鲜有人能望其项背。",
   "elePrefix": "神之眼",
   "element": "岩",

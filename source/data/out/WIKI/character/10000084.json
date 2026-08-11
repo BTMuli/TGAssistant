@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Liney_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108558,
+      "name": "果果软糖",
+      "star": 3
+    },
+    "special": {
+      "id": 108564,
+      "name": "方块戏法",
+      "star": 3
+    }
+  },
   "description": "伶牙俐齿，演技精湛的著名枫丹魔术师，以精妙的手法和言语牵动着观众的心。",
   "elePrefix": "神之眼",
   "element": "火",

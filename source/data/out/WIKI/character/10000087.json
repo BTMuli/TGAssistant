@@ -46,6 +46,18 @@
       "Icon": "UI_Talent_S_Neuvillette_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108592,
+      "name": "百味一缕",
+      "star": 3
+    },
+    "special": {
+      "id": 108603,
+      "name": "「缥雨一滴」",
+      "star": 3
+    }
+  },
   "description": "枫丹的最高审判官，因其无懈可击的「秉公无私」而闻名。",
   "elePrefix": "古龙大权",
   "element": "水",

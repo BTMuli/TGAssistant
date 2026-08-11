@@ -47,6 +47,18 @@
       "Icon": "UI_Talent_S_Razor_04"
     }
   ],
+  "food": {
+    "origin": {
+      "id": 108046,
+      "name": "蒙德土豆饼",
+      "star": 3
+    },
+    "special": {
+      "id": 108048,
+      "name": "爪爪土豆饼",
+      "star": 3
+    }
+  },
   "description": "住在蒙德地区奔狼领，远离城市与人群，和狼一同生活的少年。直觉锐利，身姿迅捷。",
   "elePrefix": "神之眼",
   "element": "雷",
