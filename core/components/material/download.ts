@@ -100,7 +100,6 @@ for (const item of rawFood) {
 }
 for (const item of rawMetadata) {
   if (!shouldConvertMaterial(item)) continue;
-  if (item.TypeDescription === "任务道具" && !downloadMap.has(item.Id)) continue;
   downloadMap.set(item.Id, {
     id: item.Id,
     name: item.Name,

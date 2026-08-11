@@ -94,12 +94,6 @@ const rawList: Array<MaterialEntry> = [];
 for (const metadata of rawMetadata) {
   const yatta = yattaMap.get(metadata.Id);
   const food = foodMap.get(metadata.Id);
-  if (metadata.TypeDescription === "任务道具" && !yatta && !food) {
-    logger.console.mark(
-      `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为任务道具且 Yatta 中不存在，跳过转换`,
-    );
-    continue;
-  }
   if (IGNORE_TYPE_DESCRIPTIONS.has(metadata.TypeDescription)) {
     logger.console.mark(
       `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为 ${metadata.TypeDescription}，跳过转换`,
