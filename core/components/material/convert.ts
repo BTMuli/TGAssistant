@@ -9,13 +9,13 @@ import process from "node:process";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDir, wikiDir } from "./constant.ts";
+import fetchMaterialIcon from "./utils.ts";
 
 const IGNORE_TYPE_DESCRIPTIONS: ReadonlySet<string> = new Set([
   "命之座激活",
@@ -134,9 +134,40 @@ const rawList = rawMetadata
     metadata,
     yatta: yattaMap.get(metadata.Id),
   }));
+const materialImages = new Map<number, string | Buffer>();
+const materialList: typeof rawList = [];
+for (const item of rawList) {
+  const { metadata } = item;
+  const oriPath = path.join(imgDir.src, `${metadata.Id}.png`);
+  const outPath = path.join(imgDir.out, `${metadata.Id}.webp`);
+  if (fileCheck(outPath, false)) {
+    materialList.push(item);
+    continue;
+  }
+  if (fileCheck(oriPath, false)) {
+    materialImages.set(metadata.Id, oriPath);
+    materialList.push(item);
+    continue;
+  }
+  try {
+    materialImages.set(metadata.Id, await fetchMaterialIcon(`${metadata.Icon}.png`));
+    materialList.push(item);
+    logger.console.info(
+      `[components][material][convert][${metadata.Id}] ${metadata.Name} PNG 不存在，已从 Static 获取`,
+    );
+  } catch (e) {
+    logger.default.warn(
+      `[components][material][convert][${metadata.Id}] ${metadata.Name} PNG 不存在，跳过 JSON 转换`,
+    );
+    logger.default.error(
+      `[components][material][convert][${metadata.Id}] ${metadata.Name} 图片获取失败，ItemIcon-Minimum 和 ItemIcon 中均不存在`,
+    );
+    logger.default.error(e);
+  }
+}
 const transJson: Array<TGACore.Components.Material.WikiItem> = [];
 // 转换json
-for (const item of rawList) {
+for (const item of materialList) {
   const { yatta, metadata } = item;
   const oriPath = path.join(jsonDir.src, `${metadata.Id}.json`);
   let oriData: TGACore.Plugins.Yatta.Material.MaterialDetail | undefined;
@@ -166,24 +197,25 @@ logger.default.info(`[components][material][convert] JSON 转换完成，耗时$
 
 // 转换图片
 Counter.Reset(rawList.length);
-for (const item of rawList) {
+Counter.Fail(rawList.length - materialList.length);
+for (const item of materialList) {
   const { metadata } = item;
-  const oriPath = path.join(imgDir.src, `${metadata.Id}.png`);
   const outPath = path.join(imgDir.out, `${metadata.Id}.webp`);
   const name = metadata.Name;
-  if (!fileCheck(oriPath, false)) {
-    logger.default.warn(
-      `[components][material][convert][${metadata.Id}] ${name} PNG 不存在，跳过图片转换`,
-    );
-    Counter.Skip();
-    continue;
-  }
   if (fileCheck(outPath, false)) {
     logger.console.mark(`[components][material][convert][${metadata.Id}] ${name} WEBP 已存在`);
     Counter.Skip();
     continue;
   }
-  await sharp(oriPath).png().resize(256, 256).webp().toFile(outPath);
+  const image = materialImages.get(metadata.Id);
+  if (!image) {
+    logger.default.warn(
+      `[components][material][convert][${metadata.Id}] ${name} 缺少可用图片，跳过图片转换`,
+    );
+    Counter.Skip();
+    continue;
+  }
+  await sharp(image).png().resize(256, 256).webp().toFile(outPath);
   logger.console.info(`[components][material][convert][${metadata.Id}] ${name} WEBP 转换完成`);
 }
 
@@ -229,7 +261,7 @@ async function transMaterial(
             materialData = json.data;
             const savePath = path.join(imgDir.out, `${key}.webp`);
             if (!fileCheck(savePath, false)) {
-              const iconBuffer = await fetchSgBuffer("ItemIcon", `${json.data.icon}.png`);
+              const iconBuffer = await fetchMaterialIcon(`${json.data.icon}.png`);
               await sharp(iconBuffer).png().resize(256, 256).webp().toFile(savePath);
             }
             logger.default.info(

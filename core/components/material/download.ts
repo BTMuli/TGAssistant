@@ -8,13 +8,13 @@ import path from "node:path";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDir } from "./constant.ts";
+import fetchMaterialIcon from "./utils.ts";
 
 logger.init();
 Counter.Init("[components][material][download]");
@@ -101,13 +101,23 @@ for (const item of rawMaterial) {
     }
   }
   if (!checkI) {
+    let buffer: Buffer;
     try {
-      const buffer = await fetchSgBuffer("ItemIcon", `${item.icon}.png`);
+      buffer = await fetchMaterialIcon(`${item.icon}.png`);
+    } catch (e) {
+      logger.default.warn(
+        `[components][material][download][${item.id}] ${item.name} 图片下载失败，ItemIcon-Minimum 和 ItemIcon 中均不存在`,
+      );
+      logger.default.error(e);
+      Counter.Fail();
+      continue;
+    }
+    try {
       await sharp(buffer).toFile(savePathI);
       logger.default.info(`[components][material][download][${item.id}] ${item.name} 图片下载完成`);
       Counter.Success();
     } catch (e) {
-      logger.default.warn(`[components][material][download][${item.id}] ${item.name} 图片下载失败`);
+      logger.default.warn(`[components][material][download][${item.id}] ${item.name} 图片保存失败`);
       logger.default.error(e);
       Counter.Fail();
     }
