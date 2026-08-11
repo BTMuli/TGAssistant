@@ -63,6 +63,40 @@ const tscJsonConfig = {
   },
 };
 
+const characterJsonConfig = {
+  files: ["source/data/out/WIKI/character/**/*.json"],
+  plugins: { jsonc: pluginJsonc },
+  languageOptions: { parser: parserJsonc },
+  rules: {
+    "jsonc/comma-dangle": ["error", "never"],
+    "jsonc/sort-keys": [
+      "error",
+      {
+        pathPattern: "^$",
+        order: [
+          "id",
+          "name",
+          "title",
+          "description",
+          "area",
+          "brief",
+          "star",
+          "elePrefix",
+          "element",
+          "weapon",
+          "materials",
+          "constellation",
+          "skills",
+          "food",
+          "talks",
+          "stories",
+          "team",
+        ],
+      },
+    ],
+  },
+};
+
 const jsoncConfig = {
   files: ["source/data/out/**/*.json", "core/**/*.json"],
   plugins: { jsonc: pluginJsonc },
@@ -74,6 +108,6 @@ const jsoncConfig = {
   },
 };
 
-const eslintConfigJson = [pkgJsonConfig, tscJsonConfig, jsoncConfig];
+const eslintConfigJson = [pkgJsonConfig, tscJsonConfig, jsoncConfig, characterJsonConfig];
 
 export default eslintConfigJson;
