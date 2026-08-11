@@ -24,7 +24,6 @@ const IGNORE_TYPE_DESCRIPTIONS: ReadonlySet<string> = new Set([
   "角色解锁",
   "龙血BUFF",
   "未知武器",
-  "任务道具",
   "任务物品",
   "宝箱",
   "食谱",
@@ -74,8 +73,8 @@ const KEEP_CONSUMABLE_IDS: ReadonlySet<number> = new Set([
   121279,
   // 220001/220002/220032/220057/220086/220103 共鸣石
   220001, 220002, 220032, 220057, 220086, 220103,
-  // 220005 口袋锚点、220006 寻仙的美食家、220007 浓缩树脂、220043 四方八方之网
-  220005, 220006, 220007, 220043,
+  // 220005 口袋锚点、220006 寻仙的美食家、220007 浓缩树脂、220017 放热瓶、220043 四方八方之网
+  220005, 220006, 220007, 220017, 220043,
 ]);
 
 const KEEP_CONSUMABLE_NAMES: ReadonlySet<string> = new Set([
@@ -109,57 +108,85 @@ const rawMetadata = hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(
   hutaoTool.enum.file.Material,
 );
 const metadataMap = new Map(rawMetadata.map((item) => [item.Id, item]));
-const rawList = rawMetadata
-  .filter((metadata) => {
-    if (IGNORE_TYPE_DESCRIPTIONS.has(metadata.TypeDescription)) {
-      logger.console.mark(
-        `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为 ${metadata.TypeDescription}，跳过转换`,
-      );
-      return false;
-    }
-    if (
-      metadata.TypeDescription === "消耗品" &&
-      !KEEP_CONSUMABLE_NAMES.has(metadata.Name) &&
-      !KEEP_CONSUMABLE_IDS.has(metadata.Id)
-    ) {
-      logger.console.mark(
-        `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为消耗品且不在保留列表，跳过转换`,
-      );
-      return false;
-    }
-    return true;
-  })
-  .map((metadata) => ({
-    metadata,
-    yatta: yattaMap.get(metadata.Id),
-  }));
+type MaterialEntry = {
+  metadata: TGACore.Plugins.Hutao.Material.MaterialItem | undefined;
+  yatta: TGACore.Plugins.Yatta.Material.MaterialItem | undefined;
+};
+const rawList: Array<MaterialEntry> = [];
+for (const metadata of rawMetadata) {
+  const yatta = yattaMap.get(metadata.Id);
+  if (metadata.TypeDescription === "任务道具" && !yatta) {
+    logger.console.mark(
+      `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为任务道具且 Yatta 中不存在，跳过转换`,
+    );
+    continue;
+  }
+  if (IGNORE_TYPE_DESCRIPTIONS.has(metadata.TypeDescription)) {
+    logger.console.mark(
+      `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为 ${metadata.TypeDescription}，跳过转换`,
+    );
+    continue;
+  }
+  if (
+    metadata.TypeDescription === "消耗品" &&
+    !KEEP_CONSUMABLE_NAMES.has(metadata.Name) &&
+    !KEEP_CONSUMABLE_IDS.has(metadata.Id)
+  ) {
+    logger.console.mark(
+      `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为消耗品且不在保留列表，跳过转换`,
+    );
+    continue;
+  }
+  rawList.push({ metadata, yatta });
+}
+for (const yatta of rawYatta) {
+  const id = Number(yatta.id);
+  if (metadataMap.has(id)) continue;
+  rawList.push({ metadata: undefined, yatta });
+  logger.console.mark(
+    `[components][material][convert][${id}] ${yatta.name} Metadata 中不存在，使用 Yatta 数据补充`,
+  );
+}
 const materialImages = new Map<number, string | Buffer>();
 const materialList: typeof rawList = [];
 for (const item of rawList) {
-  const { metadata } = item;
-  const oriPath = path.join(imgDir.src, `${metadata.Id}.png`);
-  const outPath = path.join(imgDir.out, `${metadata.Id}.webp`);
+  const { metadata, yatta } = item;
+  const id = metadata?.Id ?? Number(yatta?.id);
+  const name = metadata?.Name ?? yatta?.name ?? "未知材料";
+  const icon = metadata?.Icon ?? yatta?.icon;
+  const oriPath = path.join(imgDir.src, `${id}.png`);
+  const outPath = path.join(imgDir.out, `${id}.webp`);
+  if (!Number.isFinite(id)) {
+    logger.default.error(`[components][material][convert] ${name} 缺少有效 ID，跳过 JSON 转换`);
+    continue;
+  }
   if (fileCheck(outPath, false)) {
     materialList.push(item);
     continue;
   }
   if (fileCheck(oriPath, false)) {
-    materialImages.set(metadata.Id, oriPath);
+    materialImages.set(id, oriPath);
     materialList.push(item);
     continue;
   }
+  if (!icon) {
+    logger.default.error(
+      `[components][material][convert][${id}] ${name} 缺少图标信息，跳过 JSON 转换`,
+    );
+    continue;
+  }
   try {
-    materialImages.set(metadata.Id, await fetchMaterialIcon(`${metadata.Icon}.png`));
+    materialImages.set(id, await fetchMaterialIcon(`${icon}.png`));
     materialList.push(item);
     logger.console.info(
-      `[components][material][convert][${metadata.Id}] ${metadata.Name} PNG 不存在，已从 Static 获取`,
+      `[components][material][convert][${id}] ${name} PNG 不存在，已从 Static 获取`,
     );
   } catch (e) {
     logger.default.warn(
-      `[components][material][convert][${metadata.Id}] ${metadata.Name} PNG 不存在，跳过 JSON 转换`,
+      `[components][material][convert][${id}] ${name} PNG 不存在，跳过 JSON 转换`,
     );
     logger.default.error(
-      `[components][material][convert][${metadata.Id}] ${metadata.Name} 图片获取失败，ItemIcon-Minimum 和 ItemIcon 中均不存在`,
+      `[components][material][convert][${id}] ${name} 图片获取失败，ItemIcon-Minimum 和 ItemIcon 中均不存在`,
     );
     logger.default.error(e);
   }
@@ -168,25 +195,23 @@ const transJson: Array<TGACore.Components.Material.WikiItem> = [];
 // 转换json
 for (const item of materialList) {
   const { yatta, metadata } = item;
-  const oriPath = path.join(jsonDir.src, `${metadata.Id}.json`);
+  const id = metadata?.Id ?? Number(yatta?.id);
+  const name = metadata?.Name ?? yatta?.name ?? "未知材料";
+  const oriPath = path.join(jsonDir.src, `${id}.json`);
   let oriData: TGACore.Plugins.Yatta.Material.MaterialDetail | undefined;
   if (!fileCheck(oriPath, false)) {
     logger.default.warn(
-      `[components][material][convert][${metadata.Id}] Yatta JSON 不存在，使用 Metadata 数据继续转换`,
+      `[components][material][convert][${id}] Yatta JSON 不存在，使用索引数据继续转换`,
     );
   } else {
     oriData = await fs.readJson(oriPath);
   }
   if (!yatta) {
-    logger.default.warn(
-      `[components][material][convert][${metadata.Id}] Yatta 索引中未找到对应材料`,
-    );
+    logger.default.warn(`[components][material][convert][${id}] Yatta 索引中未找到对应材料`);
   }
-  const transData = await transMaterial(metadata, oriData);
+  const transData = await transMaterial(metadata, yatta, oriData);
   transJson.push(transData);
-  logger.console.info(
-    `[components][material][convert][${metadata.Id}] ${metadata.Name} JSON 转换完成`,
-  );
+  logger.console.info(`[components][material][convert][${id}] ${name} JSON 转换完成`);
 }
 Counter.End();
 Counter.Output();
@@ -198,24 +223,25 @@ logger.default.info(`[components][material][convert] JSON 转换完成，耗时$
 Counter.Reset(rawList.length);
 Counter.Fail(rawList.length - materialList.length);
 for (const item of materialList) {
-  const { metadata } = item;
-  const outPath = path.join(imgDir.out, `${metadata.Id}.webp`);
-  const name = metadata.Name;
+  const { metadata, yatta } = item;
+  const id = metadata?.Id ?? Number(yatta?.id);
+  const outPath = path.join(imgDir.out, `${id}.webp`);
+  const name = metadata?.Name ?? yatta?.name ?? "未知材料";
   if (fileCheck(outPath, false)) {
-    logger.console.mark(`[components][material][convert][${metadata.Id}] ${name} WEBP 已存在`);
+    logger.console.mark(`[components][material][convert][${id}] ${name} WEBP 已存在`);
     Counter.Skip();
     continue;
   }
-  const image = materialImages.get(metadata.Id);
+  const image = materialImages.get(id);
   if (!image) {
     logger.default.warn(
-      `[components][material][convert][${metadata.Id}] ${name} 缺少可用图片，跳过图片转换`,
+      `[components][material][convert][${id}] ${name} 缺少可用图片，跳过图片转换`,
     );
     Counter.Skip();
     continue;
   }
   await sharp(image).png().resize(256, 256).webp().toFile(outPath);
-  logger.console.info(`[components][material][convert][${metadata.Id}] ${name} WEBP 转换完成`);
+  logger.console.info(`[components][material][convert][${id}] ${name} WEBP 转换完成`);
 }
 
 Counter.End();
@@ -228,14 +254,17 @@ Counter.EndAll();
 /**
  * @description 转换材料数据
  * @since 2.4.0
- * @param {TGACore.Plugins.Hutao.Material.MaterialItem} metadata Metadata 材料数据
+ * @param {TGACore.Plugins.Hutao.Material.MaterialItem | undefined} metadata Metadata 材料数据
+ * @param {TGACore.Plugins.Yatta.Material.MaterialItem | undefined} yatta Yatta 索引数据
  * @param {TGACore.Plugins.Yatta.Material.MaterialDetail | undefined} data Yatta 材料详情
  * @return {TGACore.Components.Material.WikiItem} 转换后的材料数据
  */
 async function transMaterial(
-  metadata: TGACore.Plugins.Hutao.Material.MaterialItem,
+  metadata: TGACore.Plugins.Hutao.Material.MaterialItem | undefined,
+  yatta: TGACore.Plugins.Yatta.Material.MaterialItem | undefined,
   data: TGACore.Plugins.Yatta.Material.MaterialDetail | undefined,
 ): Promise<TGACore.Components.Material.WikiItem> {
+  const materialId = metadata?.Id ?? Number(yatta?.id);
   // 处理合成
   const converts: Array<TGACore.Components.Material.Convert> = [];
   if (data?.recipe) {
@@ -250,7 +279,7 @@ async function transMaterial(
         let materialData: TGACore.Plugins.Yatta.Material.MaterialDetail | undefined;
         if (!fileCheck(materialJson, false)) {
           logger.default.warn(
-            `[components][material][convert][${metadata.Id}] ${key} JSON 文件不存在，尝试下载`,
+            `[components][material][convert][${materialId}] ${key} JSON 文件不存在，尝试下载`,
           );
           try {
             const json = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Material.DetailResponse>(
@@ -264,11 +293,11 @@ async function transMaterial(
               await sharp(iconBuffer).png().resize(256, 256).webp().toFile(savePath);
             }
             logger.default.info(
-              `[components][material][convert][${metadata.Id}] ${key} 数据补充完成`,
+              `[components][material][convert][${materialId}] ${key} 数据补充完成`,
             );
           } catch (e) {
             logger.default.error(
-              `[components][material][convert][${metadata.Id}] ${key} JSON 下载失败`,
+              `[components][material][convert][${materialId}] ${key} JSON 下载失败`,
             );
             logger.default.error(e);
             if (!metadataData) {
@@ -281,7 +310,7 @@ async function transMaterial(
         }
         if (!metadataData && !materialData) {
           logger.default.warn(
-            `[components][material][convert][${metadata.Id}] ${key} 缺少 Metadata 和 Yatta 数据，跳过`,
+            `[components][material][convert][${materialId}] ${key} 缺少 Metadata 和 Yatta 数据，跳过`,
           );
           continue;
         }
@@ -314,16 +343,16 @@ async function transMaterial(
     }
   }
   // 精简部分材料获取方式
-  if (["105", "102", "202"].includes(metadata.Id.toString())) {
+  if (["105", "102", "202"].includes(materialId.toString())) {
     source = source.filter((i) => i.type !== "domain");
     source.push({ name: "秘境获取", type: "single" });
   }
   return {
-    id: metadata.Id,
-    name: metadata.Name,
-    description: metadata.Description,
-    type: metadata.TypeDescription,
-    star: metadata.RankLevel,
+    id: materialId,
+    name: metadata?.Name ?? data?.name ?? yatta?.name ?? "未知材料",
+    description: metadata?.Description ?? data?.description ?? "",
+    type: metadata?.TypeDescription ?? data?.type ?? yatta?.type ?? "未知类型",
+    star: metadata?.RankLevel ?? data?.rank ?? yatta?.rank ?? 0,
     source,
     convert: converts,
   };
