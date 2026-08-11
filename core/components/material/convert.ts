@@ -27,7 +27,6 @@ const IGNORE_TYPE_DESCRIPTIONS: ReadonlySet<string> = new Set([
   "任务道具",
   "任务物品",
   "宝箱",
-  "食物",
   "食谱",
   "合成产物",
   "纪行经验",
