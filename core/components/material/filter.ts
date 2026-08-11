@@ -38,6 +38,21 @@ export const IGNORE_TYPE_DESCRIPTIONS: ReadonlySet<string> = new Set([
   "摆设图纸",
 ]);
 
+/** 不参与材料处理的占位名称。 */
+export const IGNORE_MATERIAL_NAMES: ReadonlySet<string> = new Set(["？？？"]);
+
+const BOOK_VOLUME_NAME_ALIASES: ReadonlyMap<string, string> = new Map([
+  ["鹮巷物语·六", "鹮巷物语"],
+]);
+
+/** 归一化 Yatta 书籍父名称。 */
+export function normalizeBookVolumeName(name: string): string {
+  const alias = BOOK_VOLUME_NAME_ALIASES.get(name);
+  if (alias !== undefined) return alias;
+  const separatorIndex = name.indexOf("·");
+  return separatorIndex === -1 ? name : name.slice(0, separatorIndex);
+}
+
 export const KEEP_CONSUMABLE_IDS: ReadonlySet<number> = new Set([
   // 100225 狩猎陷阱
   100225,
@@ -69,6 +84,24 @@ export const KEEP_CONSUMABLE_NAMES: ReadonlySet<string> = new Set([
 ]);
 
 /**
+ * 判断书籍卷是否包含可输出的数据。
+ *
+ * 标题为空的卷没有可识别的名称；描述和正文同时为空的卷也没有可展示的内容。
+ *
+ * @param volume 书籍卷数据
+ * @returns 是否保留该书籍卷
+ */
+export function shouldKeepBookVolume(
+  volume: Pick<TGACore.Plugins.Yatta.Book.LocalVolume, "name" | "description" | "story">,
+): boolean {
+  return (
+    !IGNORE_MATERIAL_NAMES.has(volume.name) &&
+    volume.name.trim().length > 0 &&
+    (volume.description.trim().length > 0 || volume.story.trim().length > 0)
+  );
+}
+
+/**
  * 判断 Metadata 材料是否需要进入下载和转换流程。
  *
  * @param metadata Metadata 材料数据
@@ -77,6 +110,7 @@ export const KEEP_CONSUMABLE_NAMES: ReadonlySet<string> = new Set([
 export function shouldConvertMaterial(
   metadata: TGACore.Plugins.Hutao.Material.MaterialItem,
 ): boolean {
+  if (IGNORE_MATERIAL_NAMES.has(metadata.Name)) return false;
   if (IGNORE_TYPE_DESCRIPTIONS.has(metadata.TypeDescription)) return false;
   if (
     metadata.TypeDescription === "消耗品" &&

@@ -93,6 +93,8 @@ declare namespace TGACore.Components.Material {
     id: number;
     /** 书籍卷名称。 */
     name: string;
+    /** 所属书籍名称，用于标识同一书籍的不同卷，Yatta 未提供时省略。 */
+    vol?: string;
     /** 书籍卷描述。 */
     description: string;
     /** Yatta 可读内容 ID。 */

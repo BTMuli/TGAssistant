@@ -35,6 +35,8 @@ declare namespace TGACore.Plugins.Yatta.Book {
 
   /** 带有可读内容和资源信息的本地书籍卷。 */
   type LocalVolume = Volume & {
+    /** 所属书籍名称，Yatta 未提供时省略。 */
+    vol?: string;
     icon: string;
     rank: number;
     story: string;

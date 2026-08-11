@@ -14,7 +14,12 @@ import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDir } from "./constant.ts";
-import { shouldConvertMaterial } from "./filter.ts";
+import {
+  IGNORE_MATERIAL_NAMES,
+  normalizeBookVolumeName,
+  shouldConvertMaterial,
+  shouldKeepBookVolume,
+} from "./filter.ts";
 import fetchMaterialIcon from "./utils.ts";
 
 logger.init();
@@ -133,7 +138,20 @@ try {
         } else if (story.length > 0) {
           console.info(`[components][material][download][${item.id}] 读取正文缓存：${item.name}`);
         }
-        volume.push({ ...item, icon: book.icon, rank: book.rank, story });
+        const localVolume = {
+          ...item,
+          vol: normalizeBookVolumeName(book.name),
+          icon: book.icon,
+          rank: book.rank,
+          story,
+        };
+        if (!shouldKeepBookVolume(localVolume)) {
+          logger.console.mark(
+            `[components][material][download][${item.id}] ${item.name || "未命名"} 书籍卷数据无效，跳过`,
+          );
+          continue;
+        }
+        volume.push(localVolume);
       }
       const localBook: TGACore.Plugins.Yatta.Book.LocalBook = { ...detail, ...book, volume };
       await fs.writeJson(savePath, localBook, { spaces: 2 });
@@ -175,6 +193,7 @@ type DownloadItem = { id: number; name: string; icon: string; detailPath?: strin
 const downloadMap = new Map<number, DownloadItem>();
 const bookIdSet = new Set(rawBooks.flatMap((book) => book.volume.map((volume) => volume.id)));
 for (const item of rawMaterial) {
+  if (IGNORE_MATERIAL_NAMES.has(item.name)) continue;
   downloadMap.set(Number(item.id), {
     id: Number(item.id),
     name: item.name,
@@ -183,6 +202,7 @@ for (const item of rawMaterial) {
   });
 }
 for (const item of rawFood) {
+  if (IGNORE_MATERIAL_NAMES.has(item.name)) continue;
   downloadMap.set(item.id, {
     id: item.id,
     name: item.name,

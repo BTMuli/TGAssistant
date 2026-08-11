@@ -14,7 +14,14 @@ import fs from "fs-extra";
 import sharp from "sharp";
 
 import { imgDir, jsonDir, wikiDir } from "./constant.ts";
-import { IGNORE_TYPE_DESCRIPTIONS, KEEP_CONSUMABLE_IDS, KEEP_CONSUMABLE_NAMES } from "./filter.ts";
+import {
+  IGNORE_TYPE_DESCRIPTIONS,
+  IGNORE_MATERIAL_NAMES,
+  KEEP_CONSUMABLE_IDS,
+  KEEP_CONSUMABLE_NAMES,
+  normalizeBookVolumeName,
+  shouldKeepBookVolume,
+} from "./filter.ts";
 
 const CHARACTER_WEAPON_MATERIAL_TYPES: ReadonlySet<string> = new Set([
   "角色天赋素材",
@@ -91,7 +98,13 @@ if (rawBooks.length === 0) {
 const bookMap = new Map<number, TGACore.Plugins.Yatta.Book.LocalVolume>();
 const bookIdsByIcon = new Map<string, Set<number>>();
 for (const book of rawBooks) {
-  for (const volume of book.volume) {
+  for (const rawVolume of book.volume) {
+    const volumeName = rawVolume.vol?.trim() || book.name.trim();
+    const volume =
+      volumeName.length > 0
+        ? { ...rawVolume, vol: normalizeBookVolumeName(volumeName) }
+        : rawVolume;
+    if (!shouldKeepBookVolume(volume)) continue;
     bookMap.set(volume.id, volume);
     const ids = bookIdsByIcon.get(volume.icon) ?? new Set<number>();
     ids.add(volume.id);
@@ -120,6 +133,12 @@ const rawList: Array<MaterialEntry> = [];
 for (const metadata of rawMetadata) {
   const yatta = yattaMap.get(metadata.Id);
   const food = foodMap.get(metadata.Id);
+  if (IGNORE_MATERIAL_NAMES.has(metadata.Name)) {
+    logger.console.mark(
+      `[components][material][convert][${metadata.Id}] ${metadata.Name} 名称为占位名称，跳过转换`,
+    );
+    continue;
+  }
   if (IGNORE_TYPE_DESCRIPTIONS.has(metadata.TypeDescription)) {
     logger.console.mark(
       `[components][material][convert][${metadata.Id}] ${metadata.Name} 类型为 ${metadata.TypeDescription}，跳过转换`,
@@ -141,6 +160,7 @@ for (const metadata of rawMetadata) {
 for (const yatta of rawYatta) {
   const id = Number(yatta.id);
   if (metadataMap.has(id)) continue;
+  if (IGNORE_MATERIAL_NAMES.has(yatta.name)) continue;
   rawList.push({ metadata: undefined, yatta, food: foodMap.get(id), book: bookMap.get(id) });
   logger.console.mark(
     `[components][material][convert][${id}] ${yatta.name} Metadata 中不存在，使用 Yatta 数据补充`,
@@ -148,6 +168,7 @@ for (const yatta of rawYatta) {
 }
 for (const food of rawFood) {
   if (metadataMap.has(food.id) || yattaMap.has(food.id)) continue;
+  if (IGNORE_MATERIAL_NAMES.has(food.name)) continue;
   rawList.push({ metadata: undefined, yatta: undefined, food, book: bookMap.get(food.id) });
   logger.console.mark(
     `[components][material][convert][${food.id}] ${food.name} Metadata 中不存在，使用 Yatta 食物数据补充`,
@@ -166,6 +187,10 @@ for (const item of rawList) {
   const { metadata, yatta, food, book } = item;
   const id = metadata?.Id ?? Number(yatta?.id ?? food?.id ?? book?.id);
   const name = metadata?.Name ?? yatta?.name ?? food?.name ?? book?.name ?? "未知材料";
+  if (IGNORE_MATERIAL_NAMES.has(name)) {
+    logger.console.mark(`[components][material][convert][${id}] ${name} 名称为占位名称，跳过转换`);
+    continue;
+  }
   const oriPath = path.join(imgDir.src, `${id}.png`);
   const outPath = path.join(imgDir.out, `${id}.webp`);
   if (!Number.isFinite(id)) {
@@ -247,19 +272,22 @@ fileCheck(wikiMaterialDir);
 await fs.writeJson(path.join(wikiMaterialDir, "material.json"), transJson, { spaces: 2 });
 await fs.writeJson(path.join(wikiMaterialDir, "food.json"), foodJson, { spaces: 2 });
 await fs.writeJson(path.join(wikiMaterialDir, "foodRecipe.json"), foodRecipes, { spaces: 2 });
-const bookJson: Array<TGACore.Components.Material.WikiBook> = materialList.flatMap(({ book }) =>
-  book === undefined
-    ? []
-    : [
-        {
-          id: book.id,
-          name: book.name,
-          description: book.description,
-          storyId: book.storyId,
-          story: book.story,
-        },
-      ],
-);
+const bookJson: Array<TGACore.Components.Material.WikiBook> = materialList
+  .flatMap(({ book }) =>
+    book === undefined
+      ? []
+      : [
+          {
+            id: book.id,
+            name: book.name,
+            vol: book.vol === undefined ? undefined : normalizeBookVolumeName(book.vol),
+            description: book.description,
+            storyId: book.storyId,
+            story: book.story,
+          },
+        ],
+  )
+  .sort((a, b) => a.id - b.id);
 await fs.writeJson(path.join(wikiMaterialDir, "books.json"), bookJson, { spaces: 2 });
 logger.default.info(`[components][material][convert] JSON 转换完成，耗时${Counter.getTime()}`);
 
