@@ -326,7 +326,7 @@ function getArrayTotal(array: number[]): string {
 
 /**
  * @description 获取秘境
- * @since 2.4.0
+ * @since 2.6.0
  * @param {TGACore.Plugins.Yatta.DailyDungeon.DomainItem} value 元数据
  * @return {TGACore.Components.Calendar.Source} 秘境
  */
@@ -341,6 +341,7 @@ function getAmberSource(
     5: ["琅诵", "旋韵", "箴铭", "匠理", "机思", "奇械"],
     6: ["空华", "转竟", "旋复", "测度", "究观", "冥见"],
     7: ["墟都", "遗荫", "覆巢", "明辉", "祷颂", "祭月"],
+    8: ["默想", "隐修", "链轨", "铸铁", "共观", "断钢"],
   };
   for (const key of Object.keys(indexMap)) {
     const nameMin = value.name.split("：")[1];

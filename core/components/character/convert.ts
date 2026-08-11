@@ -85,7 +85,7 @@ for (const item of mysRaw) {
   );
   if (index === -1) {
     if (item.title.trim().startsWith("旅行者")) {
-      const lumineList = [4073, 505505, 505498, 505496, 505497, 505504];
+      const lumineList = [4073, 505505, 505498, 505496, 505497, 505504, 509225];
       const element = item.title.trim().split("·").pop() ?? "";
       const isLumine = lumineList.includes(item.content_id);
       const character: TGACore.Components.Character.Character = {

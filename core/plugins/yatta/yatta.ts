@@ -1,10 +1,10 @@
 /**
  * Yatta 插件主文件
- * @since 2.5.1
+ * @since 2.6.0
  */
 import { YattaWeekDayEnum } from "./enum.ts";
 
-const YATTA_API_VERSION = "66F0";
+const YATTA_API_VERSION = "70F0";
 const YATTA_API_URL = "https://gi.yatta.moe/api/v2/";
 const YATTA_SITE_URL = "https://gi.yatta.moe/";
 // const YATTA_ASSET_URL = "https://gi.yatta.moe/assets/UI/";
@@ -18,6 +18,7 @@ const YATTA_NATION_LIST: ReadonlyArray<string> = [
   "枫丹",
   "纳塔",
   "挪德卡莱",
+  "至冬",
 ];
 
 /**
