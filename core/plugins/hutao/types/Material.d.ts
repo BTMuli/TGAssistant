@@ -41,7 +41,7 @@ declare namespace TGACore.Plugins.Hutao.Material {
     TypeDescription: string;
     /**
      * 图标
-     * @remarks ItemIcon/
+     * @remarks ItemIcon-Minimum/
      */
     Icon: string;
   };
