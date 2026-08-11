@@ -8,6 +8,7 @@ import path from "node:path";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
+import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
@@ -93,17 +94,26 @@ async function convertImg(iconOri: string, name: string): Promise<void> {
   }
   const oriPath = path.join(imgDir.src, `${icon}.png`);
   const savePath = path.join(imgDir.out, `${icon}.webp`);
+  let oriIcon: string | Buffer = oriPath;
   if (!fileCheck(oriPath, false)) {
-    logger.default.mark(`[components][gachaB][convert] ${name} ${icon}.png 不存在`);
-    Counter.Fail();
-    return;
+    logger.default.mark(
+      `[components][gachaB][convert] ${name} ${icon}.png 不存在，尝试从 BeydAvatar 查找`,
+    );
+    try {
+      oriIcon = await fetchSgBuffer("BeydAvatar", `${icon}.png`);
+    } catch (error) {
+      logger.default.warn(`[components][gachaB][convert] ${name} ${icon}.png 查找失败`);
+      logger.default.error(error);
+      Counter.Fail();
+      return;
+    }
   }
   if (fileCheck(savePath, false)) {
     logger.console.mark(`[components][gachaB][convert] ${name} ${icon}.webp 已转化，跳过`);
     Counter.Skip();
     return;
   }
-  await sharp(oriPath).webp().resize(512, 512).webp().toFile(savePath);
+  await sharp(oriIcon).webp().resize(512, 512).webp().toFile(savePath);
   logger.console.info(`[components][gachaB][convert] ${name} ${icon}.webp 转换成功`);
   Counter.Success();
 }
