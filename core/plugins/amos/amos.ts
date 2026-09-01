@@ -3,11 +3,18 @@
  * @description amos-data 插件
  * @since 2.4.0
  */
-import { flattenAchievements, parseTrigger } from "./utils.ts";
+import {
+  flattenAchievements,
+  getAchievementCategories,
+  parseAchievementPartials,
+  parseAchievementTrigger,
+} from "./utils.ts";
 
 const amosTool = {
-  flattern: flattenAchievements,
-  parse: parseTrigger,
+  categories: getAchievementCategories,
+  flatten: flattenAchievements,
+  parsePartials: parseAchievementPartials,
+  parseTrigger: parseAchievementTrigger,
 };
 
 export default amosTool;

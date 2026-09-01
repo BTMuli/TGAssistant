@@ -1,0 +1,123 @@
+{
+  "$id": "https://github.com/BTMuli/TGAssistant/schema/achievementCatalog.v2.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "definitions": {
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]+)*$"
+    },
+    "category": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "key",
+        "order",
+        "name",
+        "version",
+        "totalReward",
+        "namecardId",
+        "icon",
+        "achievements"
+      ],
+      "properties": {
+        "id": { "type": "integer", "minimum": 0 },
+        "key": { "type": "string", "minLength": 1 },
+        "order": { "type": "integer", "minimum": 0 },
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "$ref": "#/definitions/version" },
+        "totalReward": { "type": "integer", "minimum": 0 },
+        "namecardId": {
+          "anyOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }]
+        },
+        "icon": { "type": "string", "minLength": 1 },
+        "achievements": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/achievement" }
+        }
+      }
+    },
+    "achievement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "categoryId",
+        "order",
+        "name",
+        "description",
+        "reward",
+        "version",
+        "hidden",
+        "target",
+        "trigger",
+        "partials"
+      ],
+      "properties": {
+        "id": { "type": "integer", "minimum": 0 },
+        "categoryId": { "type": "integer", "minimum": 0 },
+        "order": { "type": "integer", "minimum": 0 },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "reward": { "type": "integer", "minimum": 0 },
+        "version": { "$ref": "#/definitions/version" },
+        "hidden": { "type": "boolean" },
+        "target": { "type": "integer", "minimum": 1 },
+        "preStageId": { "type": "integer", "minimum": 0 },
+        "postStageId": { "type": "integer", "minimum": 0 },
+        "trigger": { "$ref": "#/definitions/trigger" },
+        "partials": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/partial" }
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "tasks"],
+      "properties": {
+        "type": { "type": "string", "minLength": 1 },
+        "tasks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/triggerTask" }
+        }
+      }
+    },
+    "triggerTask": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taskId", "questId", "type", "name"],
+      "properties": {
+        "taskId": { "type": "integer", "minimum": 0 },
+        "questId": { "type": "integer", "minimum": 0 },
+        "type": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 }
+      }
+    },
+    "partial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "name"],
+      "properties": {
+        "id": { "type": "integer", "minimum": 0 },
+        "type": { "enum": ["achievement", "quest", "subquest", "task", "subtask"] },
+        "name": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "gameVersion": { "$ref": "#/definitions/version" },
+    "categories": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/category" }
+    }
+  },
+  "required": ["schemaVersion", "gameVersion", "categories"],
+  "title": "TeyvatGuide Achievement Catalog v2",
+  "type": "object"
+}

@@ -1,7 +1,6 @@
 /**
- * @file core/plugins/amos/types.d.ts
- * @description amos-data 类型定义
- * @since 2.4.0
+ * amos-data 类型定义
+ * @since 2.6.0
  */
 
 declare namespace TGACore.Plugins.Amos {
@@ -88,17 +87,17 @@ declare namespace TGACore.Plugins.Amos {
   type TriggerMeta = Record<string | number, Array<TriggerMetaItem>>;
 
   /**
-   * @description 触发器元数据项
-   * @since 2.4.0
+   * 触发器元数据项
+   * @since 2.6.0
    * @interface TriggerMetaItem
    * @see @yuehaiteam/amos-data/amos/achievements/typing-partial.d.ts
    * @property {number} id 元数据项编号
-   * @property {"quest" | "subquest" | "task" | "subtask"} type 元数据项类型
+   * @property {"achievement" | "quest" | "subquest" | "task" | "subtask"} type 元数据项类型
    * @property {Array<string | number>} name 元数据项名称（文本 ID 或字符串）
    */
   type TriggerMetaItem = {
     id: number;
-    type: "quest" | "subquest" | "task" | "subtask";
+    type: "achievement" | "quest" | "subquest" | "task" | "subtask";
     name: Array<string | number>;
   };
 }

@@ -3,9 +3,27 @@
  * @description amos-data 触发器解析
  * @since 2.4.1
  */
-import amosIndexJson from "@yuehaiteam/amos-data/json/achievements/index.json" assert { type: "json" };
-import amosPartialJson from "@yuehaiteam/amos-data/json/achievements/partial.json" assert { type: "json" };
-import amosTextMapJson from "@yuehaiteam/amos-data/json/TextMap/TextMap-CHS.json" assert { type: "json" };
+import amosIndexJson from "@yuehaiteam/amos-data/json/achievements/index.json" with { type: "json" };
+import amosPartialJson from "@yuehaiteam/amos-data/json/achievements/partial.json" with { type: "json" };
+import amosTextMapJson from "@yuehaiteam/amos-data/json/TextMap/TextMap-CHS.json" with { type: "json" };
+
+const achievementCategories = <Array<TGACore.Plugins.Amos.AchievementCategory>>amosIndexJson;
+const achievementPartials = <TGACore.Plugins.Amos.TriggerMeta>amosPartialJson;
+const textMap = <Record<string, string>>amosTextMapJson;
+
+export type AchievementPartialParseResult = {
+  partials: Array<TGACore.Components.Achievement.AchievementPartial>;
+  errors: Array<Error>;
+};
+
+/**
+ * @description 获取 amos-data 成就分类
+ * @since 2.4.1
+ * @returns {Array<TGACore.Plugins.Amos.AchievementCategory>} 成就分类
+ */
+export function getAchievementCategories(): Array<TGACore.Plugins.Amos.AchievementCategory> {
+  return achievementCategories;
+}
 
 /**
  * @description 将 amos-data 成就数据扁平化
@@ -14,50 +32,23 @@ import amosTextMapJson from "@yuehaiteam/amos-data/json/TextMap/TextMap-CHS.json
  */
 export function flattenAchievements(): Array<TGACore.Plugins.Amos.Achievement> {
   const res: Array<TGACore.Plugins.Amos.Achievement> = [];
-  const totalJson = <Array<TGACore.Plugins.Amos.AchievementCategory>>amosIndexJson;
-  for (const category of totalJson) res.push(...category.achievements);
+  for (const category of achievementCategories) res.push(...category.achievements);
   return res;
 }
 
 /**
- * @description 判断成就是否有任务触发器
+ * @description 读取并校验 TextMap 文本
  * @since 2.4.1
- * @function hasTaskTrigger
- * @param {TGACore.Plugins.Amos.Achievement} achievement 成就数据
- * @return {boolean | Array<TGACore.Plugins.Amos.TriggerMetaItem>} 如果有任务触发器则返回任务触发器数组，否则返回 false
+ * @param {number} textId 文本 ID
+ * @param {string} context 文本用途
+ * @returns {string} 已解析文本
  */
-function hasTaskTrigger(
-  achievement: TGACore.Plugins.Amos.Achievement,
-): boolean | Array<TGACore.Plugins.Amos.TriggerMetaItem> {
-  if (!achievement.trigger.task || achievement.trigger.task.length === 0) return false;
-  const partialJson = <TGACore.Plugins.Amos.TriggerMeta>amosPartialJson;
-  const partial = partialJson[achievement.id];
-  if (partial === undefined || partial === null) return true;
-  return partial;
-}
-
-/**
- * @description 解析任务类型
- * @since 2.4.0
- * @param {string} type 任务类型
- * @return {string} 解析后的任务类型
- */
-function parseTaskType(type: string): string {
-  switch (type) {
-    case "WQ":
-      return "世界任务";
-    case "IQ":
-      return "每日委托";
-    case "AQ":
-    case "MQ":
-      return "魔神任务";
-    case "LQ":
-      return "角色邀约/传说任务";
-    case "":
-      return "";
-    default:
-      return `未知类型:${type}`;
+function parseText(textId: number, context: string): string {
+  const value = textMap[textId.toString()];
+  if (value === undefined || value.trim() === "") {
+    throw new Error(`${context} 缺失文本 ID 为 ${textId} 的非空文本数据`);
   }
+  return value;
 }
 
 /**
@@ -68,14 +59,13 @@ function parseTaskType(type: string): string {
  */
 function parseTask(
   task: TGACore.Plugins.Amos.TriggerTask,
-): TGACore.Components.Achievement.TriggerTask {
-  const textMap = <Record<string, string>>amosTextMapJson;
-  const nameText = textMap[task.name.toString()];
-  if (nameText === undefined || nameText === null) {
-    throw new Error(`缺失文本 ID 为 ${task.name} 的文本数据`);
-  }
-  const typeText = parseTaskType(task.type);
-  return { questId: task.questId, name: nameText, type: typeText };
+): TGACore.Components.Achievement.AchievementTriggerTask {
+  return {
+    taskId: task.taskId,
+    questId: task.questId,
+    type: task.type,
+    name: parseText(task.name, "任务"),
+  };
 }
 
 /**
@@ -86,16 +76,11 @@ function parseTask(
  */
 function parsePartialTask(
   task: TGACore.Plugins.Amos.TriggerMetaItem,
-): TGACore.Components.Achievement.TriggerTask {
-  const textMap = <Record<string, string>>amosTextMapJson;
+): TGACore.Components.Achievement.AchievementPartial {
   let parsedName = "";
   for (const namePart of task.name) {
     if (typeof namePart === "number") {
-      const nameText = textMap[`${namePart}`];
-      if (nameText === undefined || nameText === null) {
-        throw new Error(`缺失文本 ID 为 ${namePart} 的文本数据`);
-      }
-      parsedName += nameText;
+      parsedName += parseText(namePart, "分步项");
       continue;
     }
     if (!namePart.startsWith("/") || !namePart.endsWith("/")) {
@@ -107,7 +92,8 @@ function parsePartialTask(
     if (match && match.length > 1) parsedName = match[1];
     else throw new Error(`正则 ${namePart} 在 ${parsedName} 中未匹配到任何内容，无法提取任务名称`);
   }
-  return { questId: task.id, name: parsedName, type: task.type };
+  if (parsedName.trim() === "") throw new Error("分步项名称解析为空字符串");
+  return { id: task.id, name: parsedName, type: task.type };
 }
 
 /**
@@ -116,31 +102,58 @@ function parsePartialTask(
  * @param {TGACore.Plugins.Amos.Achievement} achievement 成就数据
  * @return {TGACore.Components.Achievement.Trigger} 解析后的成就触发器
  */
-export function parseTrigger(
+export function parseAchievementTrigger(
   achievement: TGACore.Plugins.Amos.Achievement,
-): TGACore.Components.Achievement.Trigger {
-  const hasTask = hasTaskTrigger(achievement);
-  if (!hasTask) return { type: achievement.trigger.type };
-  let taskArr: Array<TGACore.Components.Achievement.TriggerTask> = [];
-  if (achievement.trigger.task && achievement.trigger.task.length > 0) {
-    for (const taskItem of achievement.trigger.task) {
-      const parsedTask = parseTask(taskItem);
-      if (!taskArr.includes(parsedTask)) taskArr.push(parsedTask);
+): TGACore.Components.Achievement.AchievementTrigger {
+  const taskMap = new Map<string, TGACore.Components.Achievement.AchievementTriggerTask>();
+  for (const taskItem of achievement.trigger.task ?? []) {
+    const parsedTask = parseTask(taskItem);
+    const key = `${parsedTask.taskId}:${parsedTask.questId}:${parsedTask.type}`;
+    const existing = taskMap.get(key);
+    if (existing !== undefined && existing.name !== parsedTask.name) {
+      throw new Error(
+        `[plugins][amos][utils][${achievement.id}] 任务 ${key} 存在冲突文本：${existing.name} / ${parsedTask.name}`,
+      );
     }
+    if (existing === undefined) taskMap.set(key, parsedTask);
   }
-  if (Array.isArray(hasTask)) {
-    for (const taskItem of hasTask) {
-      try {
-        taskArr.push(parsePartialTask(taskItem));
-      } catch (e) {
-        console.warn(e);
-        console.warn(
-          `[plugins][amos][utils][${achievement.id}] 解析任务触发器失败: ${JSON.stringify(taskItem)}`,
-        );
-      }
+  return { type: achievement.trigger.type, tasks: Array.from(taskMap.values()) };
+}
+
+/**
+ * @description 解析成就分步项
+ * @since 2.4.1
+ * @param {number} achievementId 成就 ID
+ * @returns {AchievementPartialParseResult} 已解析分步项及无法解析的条目
+ */
+export function parseAchievementPartials(achievementId: number): AchievementPartialParseResult {
+  const partialMap = new Map<string, TGACore.Components.Achievement.AchievementPartial>();
+  const errors: Array<Error> = [];
+  for (const partialItem of achievementPartials[achievementId] ?? []) {
+    let parsedPartial: TGACore.Components.Achievement.AchievementPartial;
+    try {
+      parsedPartial = parsePartialTask(partialItem);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      errors.push(
+        new Error(
+          `[plugins][amos][utils][${achievementId}] 解析分步项失败：${JSON.stringify(partialItem)}；${message}`,
+          { cause: error },
+        ),
+      );
+      continue;
     }
+    const key = `${parsedPartial.type}:${parsedPartial.id}`;
+    const existing = partialMap.get(key);
+    if (existing !== undefined && existing.name !== parsedPartial.name) {
+      errors.push(
+        new Error(
+          `[plugins][amos][utils][${achievementId}] 分步项 ${key} 存在冲突文本：${existing.name} / ${parsedPartial.name}`,
+        ),
+      );
+      continue;
+    }
+    if (existing === undefined) partialMap.set(key, parsedPartial);
   }
-  // 移除type:quest的重复任务
-  taskArr = taskArr.filter((taskItem) => taskItem.type !== "quest");
-  return { type: achievement.trigger.type, task: taskArr };
+  return { partials: Array.from(partialMap.values()), errors };
 }
