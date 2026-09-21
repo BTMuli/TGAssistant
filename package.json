@@ -19,8 +19,11 @@
   },
   "lint-staged": {
     "*.ts": "oxlint",
-    "*.{ts,json,yml}": "eslint --fix",
-    "*.{md,json,yml,ts}": "prettier --write"
+    "*.{ts,json,yml}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.md": "prettier --write"
   },
   "keywords": [
     "BTMuli",
