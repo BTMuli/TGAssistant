@@ -2278,22 +2278,6 @@
     "source": { "index": 8, "area": "至冬", "name": "链轨" }
   },
   {
-    "id": 11521,
-    "contentId": 509223,
-    "dropDays": [3, 6, 7],
-    "name": "星锋剑",
-    "itemType": "weapon",
-    "star": 5,
-    "weapon": "单手剑",
-    "materials": [
-      { "id": 114093, "name": "凛雪帝皇的复生", "star": 2 },
-      { "id": 114094, "name": "凛雪帝皇的庆仪", "star": 3 },
-      { "id": 114095, "name": "凛雪帝皇的悲恤", "star": 4 },
-      { "id": 114096, "name": "凛雪帝皇的辞决", "star": 5 }
-    ],
-    "source": { "index": 8, "area": "至冬", "name": "断钢" }
-  },
-  {
     "id": 12501,
     "contentId": 291,
     "dropDays": [2, 5, 7],

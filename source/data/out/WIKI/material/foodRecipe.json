@@ -9162,7 +9162,12 @@
       }
     ],
     "variants": {
-      "special": [],
+      "special": [
+        {
+          "characterId": 10000143,
+          "foodId": 132037
+        }
+      ],
       "strange": 108994,
       "normal": 108995,
       "delicious": 108996
