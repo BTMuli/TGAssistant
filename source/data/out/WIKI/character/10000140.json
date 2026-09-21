@@ -127,6 +127,11 @@
       "luc": null
     }
   ],
+  "food": {
+    "recipeId": 132034,
+    "origin": { "id": 132034, "name": "莫尔斯果酿", "star": 3 },
+    "special": { "id": 132036, "name": "鳞光咏叹调", "star": 3 }
+  },
   "talks": [
     {
       "group": "问候",

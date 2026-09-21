@@ -16,6 +16,7 @@
   "weapon": "单手剑",
   "materials": [
     { "id": 104154, "name": "自在松石", "star": 5 },
+    { "id": 113092, "name": "游离者的裂甲", "star": 4 },
     { "id": 101277, "name": "金蕨", "star": 0 },
     { "id": 112148, "name": "幻造晶鳞石", "star": 3 },
     { "id": 104373, "name": "「荣光」的哲学", "star": 4 },
@@ -126,6 +127,11 @@
       "luc": null
     }
   ],
+  "food": {
+    "recipeId": 108995,
+    "origin": { "id": 108995, "name": "雪国冷汤", "star": 3 },
+    "special": { "id": 132037, "name": "霜冻冰花汤", "star": 3 }
+  },
   "talks": [
     {
       "group": "问候",

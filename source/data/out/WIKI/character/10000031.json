@@ -135,16 +135,8 @@
   ],
   "food": {
     "recipeId": 108060,
-    "origin": {
-      "id": 108060,
-      "name": "冷肉拼盘",
-      "star": 3
-    },
-    "special": {
-      "id": 108117,
-      "name": "祝圣交响乐",
-      "star": 3
-    }
+    "origin": { "id": 108060, "name": "冷肉拼盘", "star": 3 },
+    "special": { "id": 108117, "name": "祝圣交响乐", "star": 3 }
   },
   "talks": [
     {
