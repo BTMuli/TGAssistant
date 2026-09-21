@@ -3,9 +3,20 @@
  * @since 2.6.0
  */
 
+import path from "node:path";
+
 import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
+import { getProjRootPath } from "@utils/getBasePaths.ts";
+import fs from "fs-extra";
 
 const MATERIAL_ICON_DIRECTORIES: ReadonlyArray<string> = ["ItemIcon-Minimum", "ItemIcon"];
+
+/** 本地静态资源新增图标时，允许立即重试此前返回 404 的图标。 */
+export function hasLocalMaterialIcon(filename: string): boolean {
+  return MATERIAL_ICON_DIRECTORIES.some((directory) =>
+    fs.pathExistsSync(path.join(getProjRootPath(), "repos", "Snap.Static", directory, filename)),
+  );
+}
 
 /**
  * 获取材料图标，按目录优先级依次尝试

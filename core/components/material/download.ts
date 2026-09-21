@@ -21,7 +21,7 @@ import {
   shouldConvertMaterial,
   shouldKeepBookVolume,
 } from "./filter.ts";
-import { fetchMaterialIcon, toMaterialDetail } from "./utils.ts";
+import { fetchMaterialIcon, hasLocalMaterialIcon, toMaterialDetail } from "./utils.ts";
 
 logger.init();
 Counter.Init("[components][material][download]");
@@ -243,6 +243,27 @@ for (const book of rawBooks) {
 const downloadList = [...downloadMap.values()];
 Counter.addTotal(downloadList.length * 2);
 
+// 对远端明确不存在的图标短期缓存，避免每次更新都串行重试同一批 404。
+const missingIconsPath = path.join(jsonDir.src, "missing-icons.json");
+const missingIconTtl = 24 * 60 * 60 * 1000;
+const missingIcons: Record<string, number> = {};
+if (fileCheck(missingIconsPath, false)) {
+  try {
+    const cached = await fs.readJson(missingIconsPath);
+    if (typeof cached === "object" && cached !== null && !Array.isArray(cached)) {
+      for (const [icon, checkedAt] of Object.entries(cached)) {
+        if (typeof checkedAt === "number" && Number.isFinite(checkedAt)) {
+          missingIcons[icon] = checkedAt;
+        }
+      }
+    }
+  } catch (e) {
+    logger.default.warn("[components][material][download] 读取缺失图标缓存失败，重新检查图标");
+    logger.default.error(e);
+  }
+}
+let missingIconsChanged = false;
+
 let nanokaItemsPromise: Promise<TGACore.Plugins.Nanoka.Item.All> | undefined;
 
 async function getNanokaMaterial(
@@ -269,6 +290,13 @@ for (const item of downloadList) {
   const savePathI = path.join(imgDir.src, `${item.id}.png`);
   const checkJ = validJsonFile(savePathJ);
   const checkI = fileCheck(savePathI, false);
+  const checkedAt = missingIcons[item.icon];
+  const skipMissingIcon =
+    !checkI &&
+    checkedAt !== undefined &&
+    Date.now() - checkedAt >= 0 &&
+    Date.now() - checkedAt < missingIconTtl &&
+    !hasLocalMaterialIcon(`${item.icon}.png`);
   if (checkJ && checkI) {
     logger.console.mark(`[components][material][download][${item.id}] JSON 已存在，跳过下载`);
     logger.console.mark(`[components][material][download][${item.id}] 图片已存在，跳过下载`);
@@ -324,10 +352,25 @@ for (const item of downloadList) {
     Counter.Skip();
   }
   if (!checkI) {
+    if (skipMissingIcon) {
+      logger.console.mark(
+        `[components][material][download][${item.id}] ${item.name} 图标近期返回 404，跳过下载`,
+      );
+      Counter.Skip();
+      continue;
+    }
     let buffer: Buffer;
     try {
       buffer = await fetchMaterialIcon(`${item.icon}.png`);
     } catch (e) {
+      if (
+        e instanceof Error &&
+        e.message.startsWith("Nanoka 图标下载失败：") &&
+        e.message.includes("（HTTP 404 ")
+      ) {
+        missingIcons[item.icon] = Date.now();
+        missingIconsChanged = true;
+      }
       logger.default.warn(
         `[components][material][download][${item.id}] ${item.name} 图片下载失败：${e instanceof Error ? e.message : String(e)}`,
       );
@@ -336,6 +379,10 @@ for (const item of downloadList) {
     }
     try {
       await sharp(buffer).toFile(savePathI);
+      if (missingIcons[item.icon] !== undefined) {
+        delete missingIcons[item.icon];
+        missingIconsChanged = true;
+      }
       logger.default.info(`[components][material][download][${item.id}] ${item.name} 图片下载完成`);
       Counter.Success();
     } catch (e) {
@@ -343,6 +390,14 @@ for (const item of downloadList) {
       logger.default.error(e);
       Counter.Fail();
     }
+  }
+}
+if (missingIconsChanged) {
+  try {
+    await fs.writeJson(missingIconsPath, missingIcons, { spaces: 2 });
+  } catch (e) {
+    logger.default.warn("[components][material][download] 保存缺失图标缓存失败");
+    logger.default.error(e);
   }
 }
 Counter.End();
