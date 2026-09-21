@@ -20,6 +20,7 @@
       "@amos/*": ["./core/plugins/amos/*"],
       "@hakushi/*": ["./core/plugins/hakushi/*"],
       "@hutao/*": ["./core/plugins/hutao/*"],
+      "@nanoka/*": ["./core/plugins/nanoka/*"],
       "@yatta/*": ["./core/plugins/yatta/*"],
       "@utils/*": ["./core/utils/*"],
       "@tools/*": ["./core/tools/*"]

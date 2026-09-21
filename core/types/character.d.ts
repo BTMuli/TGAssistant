@@ -100,7 +100,13 @@ declare namespace TGACore.Components.Character {
     /** 角色闲聊文本。 */
     talks: Array<TGACore.Components.Character.WikiTalk>;
     /** 角色故事文本。 */
-    stories: Array<TGACore.Plugins.Hutao.Avatar.Text>;
+    stories: Array<WikiStory>;
+  };
+
+  /** 带解锁条件的角色故事。 */
+  type WikiStory = TGACore.Plugins.Hutao.Avatar.Text & {
+    /** 解锁条件。 */
+    unlock: Array<string>;
   };
 
   /**
@@ -144,6 +150,8 @@ declare namespace TGACore.Components.Character {
       title: string;
       /** 原始文本内容。 */
       talk: string;
+      /** 解锁条件。 */
+      unlock: Array<string>;
     }>;
   };
 

@@ -6,6 +6,7 @@
 import path from "node:path";
 
 import hutaoTool from "@hutao/hutao.ts";
+import nanokaTool from "@nanoka/nanoka.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
@@ -20,7 +21,7 @@ import {
   shouldConvertMaterial,
   shouldKeepBookVolume,
 } from "./filter.ts";
-import fetchMaterialIcon from "./utils.ts";
+import { fetchMaterialIcon, toMaterialDetail } from "./utils.ts";
 
 logger.init();
 Counter.Init("[components][material][download]");
@@ -242,6 +243,17 @@ for (const book of rawBooks) {
 const downloadList = [...downloadMap.values()];
 Counter.addTotal(downloadList.length * 2);
 
+let nanokaItemsPromise: Promise<TGACore.Plugins.Nanoka.Item.All> | undefined;
+
+async function getNanokaMaterial(
+  id: number,
+): Promise<TGACore.Plugins.Yatta.Material.MaterialDetail> {
+  nanokaItemsPromise ??= nanokaTool.fetchItems();
+  const item = (await nanokaItemsPromise)[String(id)];
+  if (item === undefined) throw new Error(`Nanoka 中不存在材料 ${id}`);
+  return toMaterialDetail(item);
+}
+
 function validJsonFile(filePath: string): boolean {
   if (!fileCheck(filePath, false)) return false;
   try {
@@ -273,18 +285,34 @@ for (const item of downloadList) {
   }
   if (!checkJ && item.detailPath !== undefined) {
     try {
-      const res = await yattaTool.fetchJson<
-        TGACore.Plugins.Yatta.Material.DetailResponse | TGACore.Plugins.Yatta.Food.DetailResponse
-      >(item.detailPath);
-      if (res.response !== 200) throw new Error(`Yatta 详情响应异常：${res.response}`);
-      await fs.writeJson(savePathJ, res.data, { spaces: 2 });
+      let detail:
+        TGACore.Plugins.Yatta.Material.MaterialDetail | TGACore.Plugins.Yatta.Food.FoodDetail;
+      let source = "Yatta";
+      try {
+        const res = await yattaTool.fetchJson<
+          TGACore.Plugins.Yatta.Material.DetailResponse | TGACore.Plugins.Yatta.Food.DetailResponse
+        >(item.detailPath);
+        if (res?.response !== 200 || res.data == null) {
+          throw new Error(
+            `Yatta 详情响应异常：${item.detailPath}，返回内容：${String(JSON.stringify(res) ?? res).slice(0, 300)}`,
+          );
+        }
+        detail = res.data;
+      } catch (yattaError) {
+        logger.default.warn(
+          `[components][material][download][${item.id}] ${item.name} Yatta 详情不可用，尝试 Nanoka：${yattaError instanceof Error ? yattaError.message : String(yattaError)}`,
+        );
+        detail = await getNanokaMaterial(item.id);
+        source = "Nanoka";
+      }
+      await fs.writeJson(savePathJ, detail, { spaces: 2 });
       logger.default.info(
-        `[components][material][download][${item.id}] ${item.name} JSON 下载完成`,
+        `[components][material][download][${item.id}] ${item.name} JSON 下载完成（${source}）`,
       );
       Counter.Success();
     } catch (e) {
       logger.default.warn(
-        `[components][material][download][${item.id}] ${item.name} JSON 下载失败`,
+        `[components][material][download][${item.id}] ${item.name} Yatta 和 Nanoka JSON 均不可用`,
       );
       logger.default.error(e);
       Counter.Fail();
@@ -301,9 +329,8 @@ for (const item of downloadList) {
       buffer = await fetchMaterialIcon(`${item.icon}.png`);
     } catch (e) {
       logger.default.warn(
-        `[components][material][download][${item.id}] ${item.name} 图片下载失败，ItemIcon-Minimum 和 ItemIcon 中均不存在`,
+        `[components][material][download][${item.id}] ${item.name} 图片下载失败：${e instanceof Error ? e.message : String(e)}`,
       );
-      logger.default.error(e);
       Counter.Fail();
       continue;
     }

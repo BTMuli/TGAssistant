@@ -1,14 +1,15 @@
 /**
- * @file core/components/wikiAvatar/constant.ts
- * @description 角色Wiki组件常量
- * @since 2.4.0
+ * 角色Wiki组件常量
+ * @since 2.6.0
  */
 
 import path from "node:path";
 
-import { getAppDirPath } from "@utils/getBasePaths.ts";
+import { NANOKA_VER } from "@nanoka/nanoka.ts";
+import { getAppDirPath, getProjDataPath } from "@utils/getBasePaths.ts";
 
 export const jsonOutDir = path.join(getAppDirPath("data", "wiki").out, "WIKI", "character");
+export const nanokaCharacterDir = getProjDataPath("data", "src", "nanoka", NANOKA_VER, "character");
 export const imageDetail = {
   talents: {
     src: getAppDirPath("assets", "talents").src,

@@ -1,6 +1,6 @@
 /**
  * 千星奇域资源下载脚本
- * @since 2.5.0
+ * @since 2.6.0
  */
 
 import path from "node:path";
@@ -9,7 +9,7 @@ import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import fetchMysObserver from "@utils/fetchMysObserver.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
@@ -93,7 +93,7 @@ async function downloadImg(iconOri: string, name: string): Promise<void> {
     return;
   }
   try {
-    const buffer = await fetchSgBuffer("BeydAvatar", `${icon}.png`);
+    const buffer = await fetchIconBuffer("BeydAvatar", `${icon}.png`);
     await sharp(buffer).toFile(savePath);
     logger.default.info(`[components][gachaB][download] ${name} ${icon} 下载成功`);
     Counter.Success();

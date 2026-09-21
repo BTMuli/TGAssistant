@@ -3,7 +3,7 @@
  * @since 2.6.0
  */
 
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 
 const MATERIAL_ICON_DIRECTORIES: ReadonlyArray<string> = ["ItemIcon-Minimum", "ItemIcon"];
 
@@ -13,16 +13,25 @@ const MATERIAL_ICON_DIRECTORIES: ReadonlyArray<string> = ["ItemIcon-Minimum", "I
  * @param {string} filename 图标文件名
  * @return {Promise<Buffer>} 图标数据
  */
-async function fetchMaterialIcon(filename: string): Promise<Buffer> {
-  let lastError: unknown;
-  for (const directory of MATERIAL_ICON_DIRECTORIES) {
-    try {
-      return await fetchSgBuffer(directory, filename);
-    } catch (error) {
-      lastError = error;
-    }
-  }
-  throw lastError;
+export async function fetchMaterialIcon(filename: string): Promise<Buffer> {
+  return fetchIconBuffer(MATERIAL_ICON_DIRECTORIES, filename);
 }
 
-export default fetchMaterialIcon;
+/** 将 Nanoka 物品数据转换为材料组件使用的详情格式。 */
+export function toMaterialDetail(
+  item: TGACore.Plugins.Nanoka.Item.Detail,
+): TGACore.Plugins.Yatta.Material.MaterialDetail {
+  return {
+    name: item.name,
+    description: item.desc,
+    type: item.type,
+    recipe: null,
+    storyId: null,
+    mapMark: false,
+    source: item.source_list.map((name) => ({ name, type: "single" })),
+    additions: null,
+    icon: item.icon,
+    rank: item.rank,
+    route: "",
+  };
+}

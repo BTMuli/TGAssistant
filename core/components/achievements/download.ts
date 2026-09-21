@@ -1,7 +1,6 @@
 /**
- * @file core/components/achievements/download.ts
- * @description 成就组件资源下载
- * @since 2.2.0
+ * 成就组件资源下载
+ * @since 2.6.0
  */
 
 import path from "node:path";
@@ -9,7 +8,7 @@ import path from "node:path";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
@@ -90,7 +89,7 @@ for (const item of seriesRaw) {
     continue;
   }
   try {
-    const buffer = await fetchSgBuffer("AchievementIcon", `${item.Icon}.png`);
+    const buffer = await fetchIconBuffer("AchievementIcon", `${item.Icon}.png`);
     await sharp(buffer).toFile(savePath);
     logger.default.info(`[components][achievement][download] ${item.Icon} 图片下载完成`);
     Counter.Success();

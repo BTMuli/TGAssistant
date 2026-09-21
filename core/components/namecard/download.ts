@@ -1,7 +1,6 @@
 /**
- * @file core components namecard download
- * @description 名片组件资源下载
- * @since 2.4.1
+ * 名片组件资源下载
+ * @since 2.6.0
  */
 
 import path from "node:path";
@@ -10,7 +9,7 @@ import process from "node:process";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import fecthSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
@@ -73,7 +72,7 @@ for (const raw of nameCardRaw) {
       logger.console.mark(`[components][namecard][download][icon] ${raw.Id} 已存在，跳过`);
       Counter.Skip();
     } else {
-      const iconBuffer = await fecthSgBuffer("NameCardIcon", iconName);
+      const iconBuffer = await fetchIconBuffer("NameCardIcon", iconName);
       await sharp(iconBuffer).png().toFile(savePath);
       logger.default.info(`[components][namecard][download][icon] ${raw.Id} 下载成功`);
       Counter.Success();
@@ -94,7 +93,7 @@ for (const raw of nameCardRaw) {
         logger.console.mark(`[components][namecard][download][bg] ${raw.Id} 已存在，跳过`);
         Counter.Skip();
       } else {
-        const bgBuffer = await fecthSgBuffer("NameCardPicAlpha", bgName);
+        const bgBuffer = await fetchIconBuffer("NameCardPicAlpha", bgName);
         await sharp(bgBuffer).png().toFile(savePath);
         logger.default.info(`[components][namecard][download][bg] ${raw.Id} 下载成功`);
         Counter.Success();
@@ -112,7 +111,7 @@ for (const raw of nameCardRaw) {
       logger.console.mark(`[components][namecard][download][profile] ${raw.Id} 已存在，跳过`);
       Counter.Skip();
     } else {
-      const profileBuffer = await fecthSgBuffer("NameCardPic", profileName);
+      const profileBuffer = await fetchIconBuffer("NameCardPic", profileName);
       await sharp(profileBuffer).png().toFile(savePath);
       logger.default.info(`[components][namecard][download][profile] ${raw.Id} 下载成功`);
       Counter.Success();

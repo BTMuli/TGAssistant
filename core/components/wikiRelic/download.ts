@@ -12,7 +12,7 @@ import { imgDir, jsonDetail, jsonDir, SKIP_SET } from "./constant.ts";
 import path from "node:path";
 import fs from "fs-extra";
 import yattaTool from "@yatta/yatta.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import sharp from "sharp";
 
 logger.init();
@@ -162,7 +162,7 @@ for (const relicSet of yattaRelicSet) {
       continue;
     }
     try {
-      const buffer = await fetchSgBuffer("RelicIcon", `${item.icon}.png`);
+      const buffer = await fetchIconBuffer("RelicIcon", `${item.icon}.png`);
       await sharp(buffer).toFile(savePath);
       logger.default.info(`[components][wikiRelic][download] ${item.name} 图片下载完成`);
       Counter.Success();

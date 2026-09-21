@@ -1,7 +1,6 @@
 /**
- * @file core/components/weapon/download.ts
- * @description 武器组件资源下载
- * @since 2.4.0
+ * 武器组件资源下载
+ * @since 2.6.0
  */
 
 import path from "node:path";
@@ -10,7 +9,7 @@ import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import fetchMysObserver from "@utils/fetchMysObserver.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
 import fs from "fs-extra";
@@ -90,7 +89,7 @@ for (const item of amberJson) {
     continue;
   }
   try {
-    const buffer = await fetchSgBuffer("EquipIcon", `${item.icon}.png`);
+    const buffer = await fetchIconBuffer("EquipIcon", `${item.icon}.png`);
     await sharp(buffer).toFile(savePath);
     logger.default.info(`[components][weapon][download] ${item.name} 图片下载完成`);
     Counter.Success();

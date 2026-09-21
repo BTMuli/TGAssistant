@@ -1,19 +1,20 @@
 /**
- * @file core/components/wikiAvatar/download
- * @description 角色Wiki组件资源下载
- * @since 2.4.1
+ * 角色Wiki组件资源下载
+ * @since 2.6.0
  */
 
 import path from "node:path";
 
 import hutaoTool from "@hutao/hutao.ts";
+import nanokaTool from "@nanoka/nanoka.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
+import fs from "fs-extra";
 import sharp from "sharp";
 
-import { imageDetail } from "./constant.ts";
+import { imageDetail, nanokaCharacterDir } from "./constant.ts";
 
 logger.init();
 Counter.Init("[components][wikiAvatar][download]");
@@ -41,6 +42,34 @@ for (const param of paramList) {
     logger.console.error(`[components][wikiAvatar][download][${param}] ${e}`);
     Counter.Fail();
   }
+}
+
+// 缓存 Nanoka 的故事和语音解锁条件，供离线转换使用。
+fileCheck(nanokaCharacterDir);
+Counter.addTotal(paramList.length);
+for (let index = 0; index < paramList.length; index += 5) {
+  await Promise.all(
+    paramList.slice(index, index + 5).map(async (param) => {
+      const savePath = path.join(nanokaCharacterDir, `${param}.json`);
+      if (fileCheck(savePath, false)) {
+        Counter.Skip();
+        return;
+      }
+      try {
+        const detail = await nanokaTool.fetchCharacter(param);
+        const unlockInfo: TGACore.Plugins.Nanoka.Character.UnlockInfo = {
+          stories: detail.chara_info.stories,
+          quotes: detail.chara_info.quotes,
+        };
+        await fs.writeJson(savePath, unlockInfo, { spaces: 2 });
+        Counter.Success();
+      } catch (error) {
+        logger.default.warn(`[components][wikiAvatar][download][${param}] Nanoka 解锁条件下载失败`);
+        logger.default.error(error);
+        Counter.Fail();
+      }
+    }),
+  );
 }
 
 // 下载角色天赋&命座数据
@@ -98,7 +127,7 @@ async function downloadSkill(
   }
   try {
     const staticDir = isDepot ? "Talent" : "Skill";
-    const buffer = await fetchSgBuffer(staticDir, `${skill.Icon}.png`);
+    const buffer = await fetchIconBuffer(staticDir, `${skill.Icon}.png`);
     await sharp(buffer).toFile(savePath);
     logger.default.info(
       `[components][wikiAvatar][download][icon] 天赋 ${skill.Name}(${skill.Id}) 下载完成`,
@@ -134,7 +163,7 @@ async function downloadTalents(
       continue;
     }
     try {
-      const buffer = await fetchSgBuffer("Talent", `${talent.Icon}.png`);
+      const buffer = await fetchIconBuffer("Talent", `${talent.Icon}.png`);
       await sharp(buffer).toFile(savePath);
       logger.default.info(
         `[components][wikiAvatar][download][icon] 命座 ${talent.Icon}(${talent.Id}) 下载完成`,

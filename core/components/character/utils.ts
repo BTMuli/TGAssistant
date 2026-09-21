@@ -5,7 +5,7 @@
 import { tz } from "@date-fns/tz";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck } from "@utils/fileCheck.ts";
 import { format, parseISO } from "date-fns";
 import sharp from "sharp";
@@ -39,7 +39,7 @@ export async function downloadAvatarIcon(
     return;
   }
   try {
-    const res = await fetchSgBuffer("AvatarIcon", `${avatar.icon}.png`);
+    const res = await fetchIconBuffer("AvatarIcon", `${avatar.icon}.png`);
     await sharp(res).toFile(savePath);
     logger.default.info(`[components][character] ${avatar.id} ${avatar.name} Icon 下载完成`);
     Counter.Success();
@@ -68,7 +68,7 @@ export async function downloadCostumeIcon(
     return;
   }
   try {
-    const res = await fetchSgBuffer("AvatarIcon", `${costume.FrontIcon}.png`);
+    const res = await fetchIconBuffer("AvatarIcon", `${costume.FrontIcon}.png`);
     await sharp(res).toFile(savePath);
     logger.default.info(`[components][character] ${costume.Id} ${costume.Name} 图标下载完成`);
     Counter.Success();
@@ -97,7 +97,7 @@ export async function downloadCostumeSide(
     return;
   }
   try {
-    const res = await fetchSgBuffer("AvatarIcon", `${costume.SideIcon}.png`);
+    const res = await fetchIconBuffer("AvatarIcon", `${costume.SideIcon}.png`);
     await sharp(res).toFile(savePath);
     logger.default.info(`[components][character] ${costume.Id} ${costume.Name} 侧边图下载完成`);
     Counter.Success();
@@ -128,7 +128,7 @@ export async function downloadCostumeFull(
     return;
   }
   try {
-    const res = await fetchSgBuffer("Costume", `${iconName}.png`);
+    const res = await fetchIconBuffer("Costume", `${iconName}.png`);
     await sharp(res).toFile(savePath);
     logger.default.info(`[components][character] ${costume.Id} ${costume.Name} 全身图下载完成`);
     Counter.Success();

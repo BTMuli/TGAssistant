@@ -1,6 +1,6 @@
 /**
  * 千星奇域资源转换脚本
- * @since 2.5.0
+ * @since 2.6.0
  */
 
 import path from "node:path";
@@ -8,7 +8,7 @@ import path from "node:path";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import fetchSgBuffer from "@utils/fetchSgBuffer.ts";
+import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
@@ -100,7 +100,7 @@ async function convertImg(iconOri: string, name: string): Promise<void> {
       `[components][gachaB][convert] ${name} ${icon}.png 不存在，尝试从 BeydAvatar 查找`,
     );
     try {
-      oriIcon = await fetchSgBuffer("BeydAvatar", `${icon}.png`);
+      oriIcon = await fetchIconBuffer("BeydAvatar", `${icon}.png`);
     } catch (error) {
       logger.default.warn(`[components][gachaB][convert] ${name} ${icon}.png 查找失败`);
       logger.default.error(error);

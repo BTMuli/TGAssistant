@@ -14,7 +14,7 @@ import { fileCheck } from "core/utils/fileCheck.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
 
-import { imageDetail, jsonOutDir } from "./constant.ts";
+import { imageDetail, jsonOutDir, nanokaCharacterDir } from "./constant.ts";
 
 logger.init();
 logger.default.info("[components][wikiAvatar][convert] 运行 convert.ts");
@@ -37,6 +37,10 @@ for (const param of paramList) {
     hutaoTool.enum.file.Avatar,
     param,
   );
+  const nanokaPath = path.join(nanokaCharacterDir, `${param}.json`);
+  const unlockInfo: TGACore.Plugins.Nanoka.Character.UnlockInfo = fileCheck(nanokaPath, false)
+    ? await fs.readJson(nanokaPath)
+    : { stories: [], quotes: [] };
   // 处理图像
   for (const skill of avatarRaw.SkillDepot.Skills) await convertSkill(skill);
   for (const inherent of avatarRaw.SkillDepot.Inherents) await convertSkill(inherent);
@@ -44,7 +48,7 @@ for (const param of paramList) {
   for (const skill of avatarRaw.SkillDepot?.SpecialSkills ?? []) await convertSkill(skill);
   for (const talent of avatarRaw.SkillDepot.Talents) await convertTalent(talent);
   // 转换数据
-  const avatarTrans: TGACore.Components.Character.Wiki = transCharacter(avatarRaw);
+  const avatarTrans: TGACore.Components.Character.Wiki = transCharacter(avatarRaw, unlockInfo);
   const savePath = path.join(jsonOutDir, `${param}.json`);
   await fs.writeJSON(savePath, avatarTrans);
   logger.console.info(`[components][wikiAvatar][convert] 角色${param}转换完成`);
@@ -64,7 +68,14 @@ Counter.Output();
  */
 function transCharacter(
   raw: TGACore.Plugins.Hutao.Avatar.FullInfo,
+  unlockInfo: TGACore.Plugins.Nanoka.Character.UnlockInfo,
 ): TGACore.Components.Character.Wiki {
+  const storyUnlockByTitle = new Map(
+    unlockInfo.stories.map((story) => [story.title, story.unlock]),
+  );
+  const quoteUnlockByTitle = new Map(
+    unlockInfo.quotes.map((quote) => [quote.title, quote.unlocked]),
+  );
   const materials = matchMaterials(raw.CultivationItems);
   const tempSkills = [
     ...raw.SkillDepot.Skills,
@@ -122,8 +133,11 @@ function transCharacter(
     skills,
     constellation: raw.SkillDepot.Talents,
     food: transFood(raw.FetterInfo.CookBonus),
-    talks: transTalks(raw.FetterInfo.Fetters, raw.Name),
-    stories: raw.FetterInfo.FetterStories,
+    talks: transTalks(raw.FetterInfo.Fetters, raw.Name, quoteUnlockByTitle),
+    stories: raw.FetterInfo.FetterStories.map((story) => ({
+      ...story,
+      unlock: storyUnlockByTitle.get(story.Title) ?? [],
+    })),
   };
 }
 
@@ -159,6 +173,7 @@ function transFood(
 function transTalks(
   raw: TGACore.Plugins.Hutao.Avatar.Text[],
   name: string,
+  quoteUnlockByTitle: Map<string, string[]>,
 ): TGACore.Components.Character.WikiTalk[] {
   const res: Array<TGACore.Plugins.Hutao.Avatar.Text> = [];
   for (const r of raw) {
@@ -220,7 +235,7 @@ function transTalks(
     }
     res.push(item);
   }
-  return mergeTalks(res);
+  return mergeTalks(res, quoteUnlockByTitle);
 }
 
 /**
@@ -311,6 +326,7 @@ function getMergeTitle(title: string): string | undefined {
  */
 function mergeTalks(
   raw: Array<TGACore.Plugins.Hutao.Avatar.Text>,
+  quoteUnlockByTitle: Map<string, string[]>,
 ): Array<TGACore.Components.Character.WikiTalk> {
   const res: Array<TGACore.Components.Character.WikiTalk> = [];
   const groupIndex = new Map<string, number>();
@@ -324,7 +340,11 @@ function mergeTalks(
     }
     const group = res[index];
     if (group !== undefined) {
-      group.list.push({ title: item.Title, talk: item.Context });
+      group.list.push({
+        title: item.Title,
+        talk: item.Context,
+        unlock: quoteUnlockByTitle.get(item.Title) ?? [],
+      });
     }
   }
   return res;
