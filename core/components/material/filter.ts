@@ -36,10 +36,19 @@ export const IGNORE_TYPE_DESCRIPTIONS: ReadonlySet<string> = new Set([
   "头像",
   "摆设套装图纸",
   "摆设图纸",
+  "风之翼",
 ]);
 
 /** 不参与材料处理的占位名称。 */
 export const IGNORE_MATERIAL_NAMES: ReadonlySet<string> = new Set(["？？？"]);
+
+/**
+ * Yatta 材料分类与 Metadata 类型描述的对应关系。
+ *
+ * Yatta 索引使用英文枚举（如 windGlider），与 Metadata 的 TypeDescription 不同，
+ * 需要映射后才能复用同一套过滤规则。
+ */
+const YATTA_TYPE_DESCRIPTION_MAP: ReadonlyMap<string, string> = new Map([["windGlider", "风之翼"]]);
 
 const BOOK_VOLUME_NAME_ALIASES: ReadonlyMap<string, string> = new Map([
   ["鹮巷物语·六", "鹮巷物语"],
@@ -119,4 +128,21 @@ export function shouldConvertMaterial(
   )
     return false;
   return true;
+}
+
+/**
+ * 判断 Yatta 材料索引项是否需要进入下载和转换流程。
+ *
+ * Metadata 中缺失的材料只会通过 Yatta 数据补充，此时没有 TypeDescription 可供判断，
+ * 需要按 Yatta 的英文分类单独过滤。
+ *
+ * @param item Yatta 材料索引项
+ * @returns 是否需要处理
+ */
+export function shouldConvertYattaMaterial(
+  item: Pick<TGACore.Plugins.Yatta.Material.MaterialItem, "name" | "type">,
+): boolean {
+  if (IGNORE_MATERIAL_NAMES.has(item.name)) return false;
+  const typeDescription = YATTA_TYPE_DESCRIPTION_MAP.get(item.type);
+  return typeDescription === undefined || !IGNORE_TYPE_DESCRIPTIONS.has(typeDescription);
 }

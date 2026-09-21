@@ -19,6 +19,7 @@ import {
   IGNORE_MATERIAL_NAMES,
   normalizeBookVolumeName,
   shouldConvertMaterial,
+  shouldConvertYattaMaterial,
   shouldKeepBookVolume,
 } from "./filter.ts";
 import { fetchMaterialIcon, hasLocalMaterialIcon, toMaterialDetail } from "./utils.ts";
@@ -194,7 +195,7 @@ type DownloadItem = { id: number; name: string; icon: string; detailPath?: strin
 const downloadMap = new Map<number, DownloadItem>();
 const bookIdSet = new Set(rawBooks.flatMap((book) => book.volume.map((volume) => volume.id)));
 for (const item of rawMaterial) {
-  if (IGNORE_MATERIAL_NAMES.has(item.name)) continue;
+  if (!shouldConvertYattaMaterial(item)) continue;
   downloadMap.set(Number(item.id), {
     id: Number(item.id),
     name: item.name,

@@ -21,6 +21,7 @@ import {
   KEEP_CONSUMABLE_NAMES,
   normalizeBookVolumeName,
   shouldKeepBookVolume,
+  shouldConvertYattaMaterial,
 } from "./filter.ts";
 
 const CHARACTER_WEAPON_MATERIAL_TYPES: ReadonlySet<string> = new Set([
@@ -160,7 +161,12 @@ for (const metadata of rawMetadata) {
 for (const yatta of rawYatta) {
   const id = Number(yatta.id);
   if (metadataMap.has(id)) continue;
-  if (IGNORE_MATERIAL_NAMES.has(yatta.name)) continue;
+  if (!shouldConvertYattaMaterial(yatta)) {
+    logger.console.mark(
+      `[components][material][convert][${id}] ${yatta.name} 类型为 ${yatta.type}，跳过转换`,
+    );
+    continue;
+  }
   rawList.push({ metadata: undefined, yatta, food: foodMap.get(id), book: bookMap.get(id) });
   logger.console.mark(
     `[components][material][convert][${id}] ${yatta.name} Metadata 中不存在，使用 Yatta 数据补充`,
