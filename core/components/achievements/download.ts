@@ -6,6 +6,7 @@
 import path from "node:path";
 
 import hutaoTool from "@hutao/hutao.ts";
+import nanokaTool from "@nanoka/nanoka.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
@@ -25,7 +26,7 @@ fileCheckObj(imgDir);
 
 // 更新Metadata数据
 logger.console.info("[components][achievement][download] 开始下载 Metadata 成就数据");
-Counter.Reset(4);
+Counter.Reset(5);
 const remoteMeta = await hutaoTool.sync();
 // 更新成就数据
 try {
@@ -67,6 +68,21 @@ try {
   Counter.Success();
 } catch (e) {
   logger.default.error("[components][achievement][download] 下载 Amber 成就数据失败");
+  logger.console.error(`[components][achievement][download] ${e}`);
+  Counter.Fail();
+}
+
+// 更新 Nanoka 补充数据
+logger.console.info("[components][achievement][download] 开始下载 Nanoka 成就数据");
+try {
+  const data = await nanokaTool.fetchJson<TGACore.Plugins.Nanoka.Achievement.All>(
+    "achievement/achievement.json",
+  );
+  await fs.writeJson(jsonDetailDir.nanoka, data, { spaces: 2 });
+  logger.default.info("[components][achievement][download] 下载 Nanoka 成就数据成功");
+  Counter.Success();
+} catch (e) {
+  logger.default.error("[components][achievement][download] 下载 Nanoka 成就数据失败");
   logger.console.error(`[components][achievement][download] ${e}`);
   Counter.Fail();
 }

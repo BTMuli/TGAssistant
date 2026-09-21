@@ -11,6 +11,7 @@ export const jsonDir = getAppDirPath("data", "achievement");
 
 export const jsonDetailDir = {
   catalog: path.join(jsonDir.out, "app", "achievements.json"),
+  nanoka: path.join(jsonDir.src, "nanoka.json"),
   yatta: path.join(jsonDir.src, "yatta.json"),
 };
 
