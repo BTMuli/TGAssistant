@@ -23,7 +23,7 @@ const YATTA_NATION_LIST: ReadonlyArray<string> = [
 
 /**
  * @description 获取 Yatta JSON 数据
- * @since 2.4.0
+ * @since 2.6.0
  * @function fetchJson
  * @template T
  * @param {string} relPath 相对路径
@@ -32,6 +32,9 @@ const YATTA_NATION_LIST: ReadonlyArray<string> = [
 async function fetchJson<T>(relPath: string): Promise<T> {
   const link = `${YATTA_API_URL}${relPath}?vh=${YATTA_API_VERSION}`;
   const resp = await fetch(link, { headers: { referer: YATTA_SITE_URL } });
+  if (!resp.ok) {
+    throw new Error(`Yatta 请求失败：${relPath}（HTTP ${resp.status} ${resp.statusText}）`);
+  }
   return <T>await resp.json();
 }
 
