@@ -8,7 +8,7 @@ import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 
-import { imgDir, jsonDetail, jsonDir } from "./constant.ts";
+import { imgDir, jsonDetail, jsonDir, SKIP_SET } from "./constant.ts";
 import path from "node:path";
 import fs from "fs-extra";
 import yattaTool from "@yatta/yatta.ts";
@@ -76,9 +76,9 @@ try {
 }
 
 // 读取套装元数据
-const rawRelicSet = hutaoTool.read<TGACore.Plugins.Hutao.Relic.RawSet>(
-  hutaoTool.enum.file.RelicSet,
-);
+const rawRelicSet = hutaoTool
+  .read<TGACore.Plugins.Hutao.Relic.RawSet>(hutaoTool.enum.file.RelicSet)
+  .filter((set) => !SKIP_SET.includes(set.SetId));
 
 Counter.addTotal(rawRelicSet.length);
 logger.console.info("[components][wikiRelic][download] 开始下载 Yatta 数据");

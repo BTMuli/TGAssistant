@@ -5,7 +5,7 @@
 
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
-import { imgDir, jsonDetail, jsonDir } from "./constant.ts";
+import { imgDir, jsonDetail, jsonDir, SKIP_SET } from "./constant.ts";
 import fs from "fs-extra";
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
@@ -47,9 +47,9 @@ for (const item of hutaoList) {
 }
 
 // 处理图片
-const rawYattaRelic = <TGACore.Plugins.Yatta.Relic.LocalRelicSetList>(
+const rawYattaRelic = (<TGACore.Plugins.Yatta.Relic.LocalRelicSetList>(
   fs.readJSONSync(jsonDetail.yatta)
-);
+)).filter((set) => !SKIP_SET.includes(set.id));
 // ID-星级对照表
 const yattaMap: Record<number, Array<number>> = {};
 for (const item of rawYattaRelic) yattaMap[item.id] = item.levelList;
@@ -80,9 +80,6 @@ Counter.End();
 Counter.Output();
 
 Counter.Reset(6);
-// 跳过的套装
-const SKIP_SET: ReadonlyArray<number> = [15004, 15012];
-
 // 处理MainLv
 logger.default.info(`[components][wikiRelic][convert] 开始处理MainLv数据`);
 const rawMainLv = hutaoTool.read<TGACore.Plugins.Hutao.Relic.RawMainLv>(
