@@ -46,7 +46,8 @@ Counter.addTotal(rawWeapon.length);
 // 处理武器
 const wikiWeapon: Array<TGACore.Components.Weapon.WikiItem> = [];
 for (const weapon of rawWeapon) {
-  const materials = matchMaterials(weapon.CultivationItems);
+  // 星锋剑无需养成材料，上游的占位材料 ID 不应进入输出。
+  const materials = weapon.Id === 11521 ? [] : matchMaterials(weapon.CultivationItems);
   const yattaFind = rawYatta.find((item) => item.id === weapon.Id);
   if (!yattaFind) {
     logger.default.warn(

@@ -1,6 +1,6 @@
 /**
  * 日历组件数据转换
- * @since 2.5.0
+ * @since 2.6.0
  * @todo 重构处理逻辑
  */
 import process from "node:process";
@@ -154,6 +154,8 @@ for (const avatar of avatarRaw) {
 // 处理 weapon.json 添加 convertData
 logger.console.info("[components][calendar][convert] 处理 weapon.json");
 for (const weapon of weaponRaw) {
+  // 星锋剑无需养成材料，因此没有对应的材料秘境日程。
+  if (weapon.Id === 11521) continue;
   // 获取所需材料
   const total = weapon.CultivationItems.find((item) => convertMaterialSet.has(item));
   if (total === undefined) {
