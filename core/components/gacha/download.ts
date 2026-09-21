@@ -1,7 +1,6 @@
 /**
- * @file core/components/gacha/download.ts
- * @description gacha 组件资源下载
- * @since 2.4.0
+ * gacha 组件资源下载
+ * @since 2.6.0
  */
 
 import hutaoTool from "@hutao/hutao.ts";
@@ -34,7 +33,7 @@ try {
 // 爬取米游社帖子
 const postIdSet = new Set<string>();
 const mhyPosts: TGACore.Components.Gacha.MysPosts = [];
-const skipPost = ["49868038", "7345229", "1748352", "1748347", "11890551", "56991610"];
+const skipPost = ["49868038", "7345229", "1748352", "1748347", "11890551", "56991610", "78299704"];
 let isLast = false;
 let lastId: string = "0";
 while (!isLast) {
