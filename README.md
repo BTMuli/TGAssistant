@@ -2,12 +2,12 @@
 Author: 目棃
 Description: 说明文档
 Date: 2023-05-01
-Update: 2026-08-12
+Update: 2026-09-23
 ---
 
 > 本文档 [`Frontmatter`](https://github.com/BTMuli/MuCli#Frontmatter) 由 [MuCli](https://github.com/BTMuli/Mucli) 自动生成于 `2023-05-01 21:57:11`
 >
-> 更新于 `2026-08-12 02:23:33`
+> 更新于 `2026-09-23 13:26:01`
 
 ![](https://img.shields.io/github/last-commit/BTMuli/TGAssistant?style=for-the-badge) ![](https://img.shields.io/github/license/BTMuli/TGAssistant?style=for-the-badge)
 
