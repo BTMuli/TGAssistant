@@ -64,6 +64,7 @@ Counter.Output();
  * @description 转换角色数据
  * @since 2.6.0
  * @param raw - 原始数据
+ * @param unlockInfo - 解锁条件
  * @returns 转换后的数据
  */
 function transCharacter(
@@ -126,7 +127,7 @@ function transCharacter(
       },
     },
     star: raw.Quality,
-    elePrefix: raw.FetterInfo.VisionOverrideUnlocked,
+    elePrefix: transElep(raw.FetterInfo.VisionOverrideUnlocked, raw.Id),
     element: raw.FetterInfo.VisionBefore,
     weapon: hutaoTool.enum.transW(raw.Weapon),
     materials,
@@ -139,6 +140,32 @@ function transCharacter(
       unlock: storyUnlockByTitle.get(story.Title) ?? [],
     })),
   };
+}
+
+/**
+ * 转换角色元素
+ * @since 2.7.0
+ */
+function transElep(raw: string, id: number): string {
+  // 七神ID
+  const fList = [
+    // 风神-温迪
+    10000022,
+    // 岩神-钟离
+    10000030,
+    // 雷神-雷电将军
+    10000052,
+    // 草神-纳西妲
+    10000073,
+    // 水神-芙宁娜
+    10000089,
+    // 火神-玛薇卡
+    10000106,
+  ];
+  if (fList.includes(id)) {
+    return "神之心";
+  }
+  return raw;
 }
 
 /**
