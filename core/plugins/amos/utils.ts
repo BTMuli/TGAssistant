@@ -1,15 +1,56 @@
 /**
- * @file core/plugins/amos/utils.ts
- * @description amos-data 触发器解析
- * @since 2.4.1
+ * 读取可选的 amos-data 缓存并解析触发器。
+ * @since 2.7.0
  */
-import amosIndexJson from "@yuehaiteam/amos-data/json/achievements/index.json" with { type: "json" };
-import amosPartialJson from "@yuehaiteam/amos-data/json/achievements/partial.json" with { type: "json" };
-import amosTextMapJson from "@yuehaiteam/amos-data/json/TextMap/TextMap-CHS.json" with { type: "json" };
+import { createRequire } from "node:module";
 
-const achievementCategories = <Array<TGACore.Plugins.Amos.AchievementCategory>>amosIndexJson;
-const achievementPartials = <TGACore.Plugins.Amos.TriggerMeta>amosPartialJson;
-const textMap = <Record<string, string>>amosTextMapJson;
+import fs from "fs-extra";
+
+/**
+ * 本地可选包中的原始成就数据。
+ * @since 2.7.0
+ */
+type AmosData = {
+  categories: Array<TGACore.Plugins.Amos.AchievementCategory>;
+  partials: TGACore.Plugins.Amos.TriggerMeta;
+  textMap: Record<string, string>;
+};
+
+const data = readAmosData();
+const achievementCategories = data?.categories ?? [];
+const achievementPartials = data?.partials ?? {};
+const textMap = data?.textMap ?? {};
+
+/**
+ * 读取已安装的可选包；包或数据文件不存在时交由其他来源补充。
+ * @since 2.7.0
+ * @returns 已安装的数据，缺失时为 undefined
+ */
+function readAmosData(): AmosData | undefined {
+  const require = createRequire(import.meta.url);
+  try {
+    return {
+      categories: fs.readJsonSync(
+        require.resolve("@yuehaiteam/amos-data/json/achievements/index.json"),
+      ),
+      partials: fs.readJsonSync(
+        require.resolve("@yuehaiteam/amos-data/json/achievements/partial.json"),
+      ),
+      textMap: fs.readJsonSync(
+        require.resolve("@yuehaiteam/amos-data/json/TextMap/TextMap-CHS.json"),
+      ),
+    };
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      "code" in error &&
+      (error.code === "MODULE_NOT_FOUND" || error.code === "ENOENT")
+    ) {
+      return undefined;
+    }
+    throw error;
+  }
+}
 
 export type AchievementPartialParseResult = {
   partials: Array<TGACore.Components.Achievement.AchievementPartial>;

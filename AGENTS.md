@@ -61,6 +61,7 @@ function matchesProxyBypass(hostname: string, rules: ReadonlyArray<string>): boo
 
 - `pnpm auto:update` 执行 `scripts/updateAll.ts`，依次运行各组件存在的 `download.ts`、`convert.ts`、`update.ts`。无参数或 `all` 更新全部，单个合法数据域限定更新范围；未知领域和多参数组合会在启动任务前报错。它会请求外部数据、写入资源及 JSON，不再自动格式化全仓；只在任务需要更新数据时运行，并在运行前检查工作区状态。子进程失败时跳过同领域后续阶段，继续其他领域，汇总失败并返回非零退出码。组件内部的可选来源降级仍可能正常退出，应继续检查日志和产物差异。
 - material 下载入口先同步 Metadata Material 和角色数据，再读取可选来源；食谱关系不依赖 character 预先运行。Metadata 源来自 `repos/Snap.Metadata/Genshin/CHS/`，同步失败时尝试已有本地缓存，必需材料读取失败会终止该阶段。
+- 成就目录使用 Snap.Metadata 基础数据和 Yatta 分类奖励，优先保留可选 amos-data 提供的隐藏状态、阶段关系、触发任务及分步项，未覆盖的成就由 Nanoka 补充。amos-data 位于 `optionalDependencies`，缺少包、数据文件、成就条目或分类时不阻塞已有其他来源覆盖的数据；可通过 `pnpm install:amos` 显式安装。保留 v2 导出结构、既有分类键及领域校验，新增分类使用 `category_编号`；无来源的任务详情和分步项输出空数组，后置阶段根据前置关系补齐。
 - `pnpm resize` 读取 `source/temp/src/` 的 PNG，在 `source/temp/out/` 生成 WebP。`pnpm move [TeyvatGuide 根目录]` 将输出复制到参数指定的目标，默认使用相邻 `TeyvatGuide` 仓库；写入前输出绝对路径并检查 `src/data`、`public` 目录，不删除目标多余文件。`scripts/genStoreIcons.ts` 会覆盖 `scripts/output/` 中的图标；按需直接运行。
 - `pnpm prettier` 与 `pnpm lint:fix` 都会修改文件，且默认作用于全仓；处理局部任务时优先对目标文件运行 `pnpm exec prettier --check <文件>`、`pnpm exec eslint <文件>`，确需修复时也限定文件范围。
 - `web/utils/readCookie.ts` 会读取本机数据库并写入 `source/data/http/cookie.json`。不得将真实 Cookie、令牌、数据库内容或请求头写入测试、日志、文档和提交内容。

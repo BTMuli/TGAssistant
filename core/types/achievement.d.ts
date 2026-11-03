@@ -1,9 +1,23 @@
 /**
  * 成就类型声明文件
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 declare namespace TGACore.Components.Achievement {
+  /**
+   * 成就目录转换所需的来源数据。
+   * @since 2.7.0
+   */
+  type CatalogSources = {
+    achievements: TGACore.Plugins.Hutao.Achievement.RawAchievement;
+    categories: TGACore.Plugins.Hutao.Achievement.RawAchievementGoal;
+    namecards: TGACore.Plugins.Hutao.NameCard.RawNameCard;
+    yatta: TGACore.Plugins.Yatta.Achievement.AchiRes;
+    nanoka: TGACore.Plugins.Nanoka.Achievement.All;
+    nanokaVersion: string;
+    amos?: ReadonlyArray<TGACore.Plugins.Amos.AchievementSupplement>;
+  };
+
   /**
    * v2 成就目录
    * @since 2.6.0

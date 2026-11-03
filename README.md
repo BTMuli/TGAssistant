@@ -44,6 +44,11 @@ material 会先从 `repos/Snap.Metadata/Genshin/CHS/` 同步材料及角色 Meta
 单独更新与全量更新使用相同的输入准备顺序，食谱关系不依赖预先更新 character。来源不可用时尝试本地缓存，
 必需材料读取失败则终止该阶段。角色与日历的业务时间统一按 `Asia/Shanghai` 输出。
 
+成就目录由 Snap.Metadata、Nanoka、Yatta 及可选的 `amos-data` 合并生成。已安装的 amos 数据继续
+提供隐藏状态、阶段关系、触发任务和分步项，缺少包、数据文件或条目时由 Nanoka 补充；需要时可用
+`pnpm install:amos` 显式安装。继续输出 v2 格式，保留既有分类 `key`，新增分类使用 `category_编号`。
+后置阶段根据前置关系补齐；缺少来源的 `trigger.tasks`、`partials` 保留字段并输出空数组。
+
 ## 复制到 TeyvatGuide
 
 ```sh

@@ -1,9 +1,24 @@
 /**
  * amos-data 类型定义
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 declare namespace TGACore.Plugins.Amos {
+  /**
+   * 可选来源提供的已解析成就补充数据。
+   * @since 2.7.0
+   */
+  type AchievementSupplement = {
+    id: number;
+    categoryId: number;
+    total: number;
+    hidden: boolean;
+    preStage?: number;
+    postStage?: number;
+    trigger: TGACore.Components.Achievement.AchievementTrigger;
+    partials: Array<TGACore.Components.Achievement.AchievementPartial>;
+  };
+
   /**
    * @description 成就系列
    * @since 2.4.0
