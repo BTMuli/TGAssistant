@@ -1,8 +1,21 @@
 /**
- * @file utils getDate.ts
- * @description 获取日期
- * @since 2.0.0
+ * 获取日期并按业务时区转换时间。
+ * @since 2.7.0
  */
+
+import { tz } from "@date-fns/tz";
+import { format, parseISO } from "date-fns";
+
+/**
+ * 按东八区解析并格式化业务时间，无时区输入也按东八区解释。
+ * @since 2.7.0
+ * @param raw - ISO 时间字符串
+ * @returns yyyy-MM-dd HH:mm:ss 格式的东八区时间
+ */
+export function formatUtc8(raw: string): string {
+  const options = { in: tz("Asia/Shanghai") };
+  return format(parseISO(raw, options), "yyyy-MM-dd HH:mm:ss", options);
+}
 
 /**
  * @description 获取当前日期，格式为 YYYY-MM-DD

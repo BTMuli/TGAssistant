@@ -6,6 +6,7 @@
   "type": "module",
   "packageManager": "pnpm@12.16.1",
   "scripts": {
+    "typecheck": "node node_modules/@typescript/native/bin/tsc --project tsconfig.json",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --write .",
@@ -16,7 +17,7 @@
     "install:amos": "pnpm add github:yuehaiteam/amos-data"
   },
   "engines": {
-    "node": ">=22.9.0"
+    "node": ">=26.0.0"
   },
   "lint-staged": {
     "*.ts": "oxlint",

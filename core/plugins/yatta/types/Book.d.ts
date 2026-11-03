@@ -1,11 +1,14 @@
 /**
  * Yatta 书籍数据类型声明文件
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 declare namespace TGACore.Plugins.Yatta.Book {
-  /** 书籍列表响应。 */
-  type BookResponse = TGACore.Plugins.Yatta.Base.Response2<BookItem, Record<string, string>>;
+  /**
+   * 书籍列表响应。
+   * @since 2.7.0
+   */
+  type BookResponse = TGACore.Plugins.Yatta.Base.Response2<BookItem, Record<string, string>, never>;
 
   /** 书籍详情响应。 */
   type DetailResponse = TGACore.Plugins.Yatta.Base.Response<BookDetail>;

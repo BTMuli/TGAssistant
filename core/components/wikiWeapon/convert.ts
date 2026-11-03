@@ -1,6 +1,6 @@
 /**
  * 武器WIKI组件转换器
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 import process from "node:process";
@@ -9,7 +9,7 @@ import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
-import matchMaterials from "@utils/matchMaterials.ts";
+import createMaterialMatcher from "@utils/matchMaterials.ts";
 import fs from "fs-extra";
 
 import { jsonDetail, jsonDir } from "./constant.ts";
@@ -42,6 +42,7 @@ const rawWeapon = hutaoTool.read<TGACore.Plugins.Hutao.Weapon.RawWeapon>(
   hutaoTool.enum.file.Weapon,
 );
 Counter.addTotal(rawWeapon.length);
+const matchMaterials = createMaterialMatcher();
 
 // 处理武器
 const wikiWeapon: Array<TGACore.Components.Weapon.WikiItem> = [];

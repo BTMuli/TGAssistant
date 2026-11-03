@@ -1,6 +1,6 @@
 /**
  * 千星奇域资源转换脚本
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 import path from "node:path";
@@ -21,12 +21,6 @@ logger.default.info(`[gachaB][convert] 执行 convert.ts`);
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
-if (!fileCheck(jsonDetailDir.obc)) {
-  logger.default.error(`[components][gachaB][convert] 物品数据文件不存在`);
-  logger.console.info(`[components][gachaB][convert] 请执行 download.ts`);
-  process.exit(1);
-}
-
 const rawHutao = hutaoTool.read<TGACore.Plugins.Hutao.Beyond.RawBeyondItem>(
   hutaoTool.enum.file.Beyond,
 );

@@ -1,6 +1,6 @@
 /**
- * 材料组件转换
- * @since 2.6.0
+ * 准备材料转换输入并下载材料资源。
+ * @since 2.7.0
  */
 
 import path from "node:path";
@@ -30,6 +30,42 @@ logger.default.info("[components][material][download] 运行 download.ts");
 
 fileCheckObj(jsonDir);
 fileCheckObj(imgDir);
+
+// 材料单独更新和全量更新都先准备 Metadata，再读取角色特殊料理关系。
+logger.default.info("[components][material][download] 开始准备 Metadata 材料和角色数据");
+let meta: Record<string, string>;
+try {
+  meta = await hutaoTool.sync();
+} catch (error) {
+  logger.default.warn("[components][material][download] 同步 Metadata 索引失败，使用本地缓存");
+  logger.default.error(error);
+  meta = hutaoTool.read<Record<string, string>>(hutaoTool.enum.file.Meta);
+}
+try {
+  await hutaoTool.update(meta, hutaoTool.enum.file.Material);
+} catch (error) {
+  logger.default.warn("[components][material][download] 更新 Metadata 材料失败，尝试本地缓存");
+  logger.default.error(error);
+}
+// Material 是必需输入，缺失时由读取错误终止，避免继续下载无法转换的资源。
+const rawMetadata = hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(
+  hutaoTool.enum.file.Material,
+);
+const avatarIds = hutaoTool.readIds(meta);
+Counter.addTotal(avatarIds.length);
+for (const id of avatarIds) {
+  try {
+    const updated = await hutaoTool.update(meta, hutaoTool.enum.file.Avatar, id);
+    if (updated) Counter.Success();
+    else Counter.Skip();
+  } catch (error) {
+    logger.default.warn(
+      `[components][material][download] 角色 ${id} Metadata 更新失败，保留已有料理关系缓存`,
+    );
+    logger.default.error(error);
+    Counter.Fail();
+  }
+}
 
 let rawMaterial: Array<TGACore.Plugins.Yatta.Material.MaterialItem> = [];
 let rawFood: Array<TGACore.Plugins.Yatta.Food.FoodItem> = [];
@@ -65,26 +101,16 @@ try {
 }
 
 logger.default.info("[components][material][download] 开始记录 Metadata 类型描述");
-const hasMetadata = hutaoTool.check(hutaoTool.enum.file.Material);
-const rawMetadata = hasMetadata
-  ? hutaoTool.read<TGACore.Plugins.Hutao.Material.FullInfo>(hutaoTool.enum.file.Material)
-  : [];
-if (!hasMetadata) {
-  logger.default.warn(
-    "[components][material][download] Metadata Material.json 不存在，跳过记录 TypeDescription",
+try {
+  const typeDescriptions = [...new Set(rawMetadata.map((item) => item.TypeDescription))];
+  await fs.writeJson(path.join(jsonDir.src, "typedesc.json"), typeDescriptions, { spaces: 2 });
+  logger.default.info(
+    `[components][material][download] Metadata 类型描述记录完成，共 ${typeDescriptions.length} 项`,
   );
-} else {
-  try {
-    const typeDescriptions = [...new Set(rawMetadata.map((item) => item.TypeDescription))];
-    await fs.writeJson(path.join(jsonDir.src, "typedesc.json"), typeDescriptions, { spaces: 2 });
-    logger.default.info(
-      `[components][material][download] Metadata 类型描述记录完成，共 ${typeDescriptions.length} 项`,
-    );
-  } catch (e) {
-    logger.default.error("[components][material][download] Metadata 类型描述记录失败");
-    logger.default.error(e);
-    Counter.Fail();
-  }
+} catch (error) {
+  logger.default.error("[components][material][download] Metadata 类型描述记录失败");
+  logger.default.error(error);
+  Counter.Fail();
 }
 
 logger.default.info("[components][material][download] 开始下载书籍数据");

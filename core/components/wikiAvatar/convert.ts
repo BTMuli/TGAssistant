@@ -1,6 +1,6 @@
 /**
  * wikiAvatar 组件转换器
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 import path from "node:path";
@@ -9,8 +9,8 @@ import hutaoTool from "@hutao/hutao.ts";
 import hutao from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
-import matchMaterials from "@utils/matchMaterials.ts";
-import { fileCheck } from "core/utils/fileCheck.ts";
+import createMaterialMatcher from "@utils/matchMaterials.ts";
+import { fileCheck } from "@utils/fileCheck.ts";
 import fs from "fs-extra";
 import sharp from "sharp";
 
@@ -23,6 +23,7 @@ logger.default.info("[components][wikiAvatar][convert] 运行 convert.ts");
 fileCheck(jsonOutDir);
 const localMeta = hutaoTool.read<Record<string, string>>(hutaoTool.enum.file.Meta);
 const paramList = hutaoTool.readIds(localMeta);
+const matchMaterials = createMaterialMatcher();
 
 Counter.Reset(paramList.length);
 for (const param of paramList) {

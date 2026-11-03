@@ -1,25 +1,23 @@
 /**
  * 使用到的函数
- * @since 2.6.0
+ * @since 2.7.0
  */
-import { tz } from "@date-fns/tz";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import fetchIconBuffer from "@utils/fetchIconBuffer.ts";
 import { fileCheck } from "@utils/fileCheck.ts";
-import { format, parseISO } from "date-fns";
+import { formatUtc8 } from "@utils/getDate.ts";
 import sharp from "sharp";
 import { getAreaName } from "@hutao/utils.ts";
 
 /**
  * 字符串转 utc8 时间
+ * @since 2.7.0
  * @param raw - 字符串
  * @returns 转换后的时间 yyyy-MM-dd HH:mm:ss
  */
 export function str2utc8(raw: string): string {
-  return format(parseISO(raw), "yyyy-MM-dd HH:mm:ss", {
-    in: tz("Asia/Shanghai"),
-  });
+  return formatUtc8(raw);
 }
 
 /**

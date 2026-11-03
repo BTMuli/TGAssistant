@@ -1,6 +1,6 @@
 /**
  * 角色组件数据转换
- * @since 2.6.0
+ * @since 2.7.0
  */
 import path from "node:path";
 import process from "node:process";
@@ -26,7 +26,7 @@ Counter.Init("[components][character][convert]");
 logger.default.info("[components][character][convert] 运行 convert.ts");
 
 // 前置检查
-if (!fileCheck(jsonDetailDir.mys, false) || !fileCheck(jsonDetailDir.yatta, false)) {
+if (!fileCheck(jsonDetailDir.mys, false)) {
   logger.default.error("[components][character][convert] 角色元数据文件不存在");
   logger.console.info("[components][character][convert] 请执行 download.ts");
   process.exit(1);

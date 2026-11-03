@@ -1,11 +1,14 @@
 /**
  * Yatta 食物数据类型声明文件
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 declare namespace TGACore.Plugins.Yatta.Food {
-  /** 食物列表响应。 */
-  type FoodResponse = TGACore.Plugins.Yatta.Base.Response2<FoodItem, Record<string, string>>;
+  /**
+   * 食物列表响应。
+   * @since 2.7.0
+   */
+  type FoodResponse = TGACore.Plugins.Yatta.Base.Response2<FoodItem, Record<string, string>, never>;
 
   /** 食物详情响应。 */
   type DetailResponse = TGACore.Plugins.Yatta.Base.Response<FoodDetail>;

@@ -1,6 +1,6 @@
 /**
  * wiki组件下载器
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 import path from "node:path";
@@ -76,6 +76,7 @@ for (const weapon of rawWeapon) {
   const savePath = path.join(jsonDir.src, `weapon_${weapon.Id}.json`);
   if (fs.existsSync(savePath)) {
     Counter.Skip();
+    continue;
   }
   try {
     const detailResp = await yattaTool.fetchJson<TGACore.Plugins.Yatta.Weapon.WeaponDetailResponse>(

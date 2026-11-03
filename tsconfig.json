@@ -3,14 +3,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
-    "emitDeclarationOnly": true,
-    "composite": true,
+    "noEmit": true,
     "module": "ESNext",
     "target": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "rootDir": ".",
-    "baseUrl": ".",
     "lib": ["esnext"],
     "skipLibCheck": true,
     "strict": true,
@@ -30,11 +28,10 @@
     "*.json",
     "config/**/*",
     "core/**/*",
-    "scripts/*.ts",
-    "test/**.test.ts",
+    "scripts/**/*.ts",
+    "test/**/*.ts",
     "vitest.config.ts",
     "web/**/*.ts"
   ],
-  "exclude": ["node_modules", ".github"],
-  "ts-node": {"esm": true, "files": true}
+  "exclude": ["node_modules", ".github"]
 }

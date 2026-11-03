@@ -1,6 +1,6 @@
 /**
  * gacha 组件资源转换
- * @since 2.5.1
+ * @since 2.7.0
  */
 
 import process from "node:process";
@@ -28,7 +28,7 @@ if (!fileCheck(jsonDetailDir.mhy, false) || !hutaoTool.check(hutaoTool.enum.file
 Counter.Reset();
 const gachaRaw = hutaoTool
   .read<TGACore.Plugins.Hutao.Gacha.RawGacha>(hutaoTool.enum.file.Gacha)
-  .sort((a, b) => Number(a.Version) - Number(b.Version) || a.Order - b.Order);
+  .sort((a, b) => compareVersions(a.Version, b.Version) || a.Order - b.Order);
 const postRaw: TGACore.Components.Gacha.MysPosts = await fs.readJSON(jsonDetailDir.mhy);
 
 let gacha: Array<TGACore.Components.Gacha.Pool> = [];
@@ -52,13 +52,14 @@ for (const item of gachaRaw) {
   gacha.push(convert);
 }
 gacha = gacha.reverse();
-let curVersion = gacha[0].version;
+let curVersion = gacha[0]?.version;
 for (const post of postRaw) {
   let isFind = false;
   logger.console.info(`[components][gacha][convert] 正在处理帖子 ${post.postId} ${post.title}`);
   let filter = gacha.filter((item) => item.version === curVersion && item.postId === "");
   if (filter.length === 0) {
     const filterNew = gacha.filter((item) => item.postId === "");
+    if (filterNew.length === 0) break;
     curVersion = filterNew[0].version;
     filter = gacha.filter((item) => item.version === curVersion && item.postId === "");
   }
@@ -135,3 +136,20 @@ for (const post of postRaw) {
 await fs.writeJSON(jsonDetailDir.out, gacha.reverse());
 Counter.End();
 logger.default.info(`[components][gacha][convert] gacha 数据转换完成，耗时 ${Counter.getTime()}`);
+
+/**
+ * 按点分数字段比较游戏版本。
+ * @since 2.7.0
+ * @param left - 左侧版本
+ * @param right - 右侧版本
+ * @returns 左侧较小时为负数，相等时为 0，否则为正数
+ */
+function compareVersions(left: string, right: string): number {
+  const leftParts = left.split(".").map(Number);
+  const rightParts = right.split(".").map(Number);
+  for (let index = 0; index < Math.max(leftParts.length, rightParts.length); index++) {
+    const difference = (leftParts[index] ?? 0) - (rightParts[index] ?? 0);
+    if (difference !== 0) return difference;
+  }
+  return 0;
+}

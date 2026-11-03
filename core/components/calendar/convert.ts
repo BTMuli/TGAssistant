@@ -1,6 +1,6 @@
 /**
  * 日历组件数据转换
- * @since 2.6.0
+ * @since 2.7.0
  * @todo 重构处理逻辑
  */
 import process from "node:process";
@@ -10,7 +10,7 @@ import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheck, fileCheckObj } from "@utils/fileCheck.ts";
 import yattaTool from "@yatta/yatta.ts";
-import { format, parseISO } from "date-fns";
+import { formatUtc8 } from "@utils/getDate.ts";
 import fs from "fs-extra";
 
 import { imgDir, jsonDetailDir, jsonDir } from "./constant.ts";
@@ -39,7 +39,7 @@ const convertSource: TGACore.Components.Calendar.Source[] = [];
 const convertSourceSet = new Set<string>();
 
 // 秘境-掉落对照表
-const domainMaterialMap: Record<string, string> = {};
+const domainMaterialMap: Record<string, Set<number>> = {};
 // 秘境-掉落日期对照表，只需要记录最早的日期
 const domainDateMap: Record<string, number[]> = {};
 
@@ -105,7 +105,7 @@ for (const avatar of avatarRaw) {
   // 根据 total 找到对应秘境
   let domain: string | undefined;
   Object.keys(domainMaterialMap).forEach((value) => {
-    if (domainMaterialMap[value].includes(total.toString())) {
+    if (domainMaterialMap[value].has(total)) {
       domain = value;
     }
   });
@@ -143,7 +143,7 @@ for (const avatar of avatarRaw) {
     star: avatar.Quality,
     weapon: avatarWeapon,
     element: avatar.FetterInfo.VisionBefore,
-    release: format(parseISO(avatar.BeginTime), "yyyy-MM-dd HH:mm:ss"),
+    release: formatUtc8(avatar.BeginTime),
     materials,
     source,
   };
@@ -164,7 +164,7 @@ for (const weapon of weaponRaw) {
   // 根据 total 找到对应秘境
   let domain: string | undefined;
   Object.keys(domainMaterialMap).forEach((value) => {
-    if (domainMaterialMap[value].includes(total.toString())) {
+    if (domainMaterialMap[value].has(total)) {
       domain = value;
     }
   });
@@ -266,11 +266,10 @@ logger.default.info("[components][calendar][convert] convert.ts 运行完成");
 Counter.EndAll();
 
 /**
- * @description 处理 amber.json
- * @since 2.4.0
- * @param {TGACore.Plugins.Yatta.DailyDungeon.DomainItem} value 元数据
- * @param {TGACore.Plugins.Yatta.DailyDungeon.WeekKey} week 星期
- * @return {void}
+ * 记录秘境来源、精确的材料 ID 集合和掉落日期。
+ * @since 2.7.0
+ * @param value - 秘境元数据
+ * @param week - 星期
  */
 function measureAmber(
   value: TGACore.Plugins.Yatta.DailyDungeon.DomainItem,
@@ -279,12 +278,13 @@ function measureAmber(
   const domain = value.name.split("：")[1];
   // 分析 source 是否记录
   if (!convertSourceSet.has(value.name)) {
-    const total = getArrayTotal(value.reward);
+    const materials = new Set(value.reward.filter((id) => id > 100000));
     if (domainMaterialMap[domain] === undefined) {
-      domainMaterialMap[domain] = total;
+      domainMaterialMap[domain] = materials;
       logger.console.info(`[components][calendar][convert] 添加秘境 ${domain} 的掉落材料`);
     } else {
-      if (domainMaterialMap[domain] !== total) {
+      const previous = domainMaterialMap[domain];
+      if (previous.size !== materials.size || [...previous].some((id) => !materials.has(id))) {
         throw new Error(`[components][calendar][convert] 秘境 ${domain} 的掉落材料不一致`);
       }
     }
@@ -311,19 +311,6 @@ function measureAmber(
     domainDateMap[domain].push(yattaTool.enum.week[week]);
     logger.console.info(`[components][calendar][convert] 更新秘境 ${domain} 的掉落日期 ${week}`);
   }
-}
-
-/**
- * @description 获取数组中所有大于 1000000 的值的和
- * @since 2.0.0
- * @param {number[]} array 数组
- * @return {number} 和
- */
-function getArrayTotal(array: number[]): string {
-  const res = [];
-  for (const item of array) if (item > 100000) res.push(item);
-  res.sort((a, b) => a - b);
-  return res.join("-");
 }
 
 /**

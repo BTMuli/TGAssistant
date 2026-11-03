@@ -1,6 +1,6 @@
 /**
  * 材料组件转换
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 import path from "node:path";
@@ -273,7 +273,7 @@ for (const food of foodJson) {
 }
 Counter.End();
 Counter.Output();
-const wikiMaterialDir = path.join(wikiDir.out, "Wiki", "material");
+const wikiMaterialDir = path.join(wikiDir.out, "WIKI", "material");
 fileCheck(wikiMaterialDir);
 await fs.writeJson(path.join(wikiMaterialDir, "material.json"), transJson, { spaces: 2 });
 await fs.writeJson(path.join(wikiMaterialDir, "food.json"), foodJson, { spaces: 2 });
