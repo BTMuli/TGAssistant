@@ -7415,5 +7415,54 @@
   {
     "id": 121374,
     "effect": ["立即为选中的角色恢复生命值上限的26%，并在之后的30秒内，每5秒恢复570点生命值。"]
+  },
+  {
+    "id": 132042,
+    "effect": [
+      "队伍中所有角色物理伤害提升<color=#3399CCFF>20%-40%</color>，持续300秒。",
+      "多人游戏时，仅对自己的角色生效。"
+    ],
+    "effectIcon": "UI_Buff_Item_Atk_Add"
+  },
+  {
+    "id": 132045,
+    "effect": [
+      "队伍中所有角色攻击力提高<color=#3399CCFF>160-228</color>点，持续300秒。",
+      "多人游戏时，仅对自己的角色生效。"
+    ],
+    "effectIcon": "UI_Buff_Item_Atk_Add"
+  },
+  {
+    "id": 132048,
+    "effect": ["恢复<color=#3399CCFF>70-100</color>点体力。"],
+    "effectIcon": "UI_Buff_Item_Other_SPAdd"
+  },
+  {
+    "id": 132051,
+    "effect": [
+      "队伍中所有角色暴击率提升<color=#3399CCFF>6%-12%</color>，持续300秒。",
+      "多人游戏时，仅对自己的角色生效。"
+    ],
+    "effectIcon": "UI_Buff_Item_Atk_CritRate"
+  },
+  {
+    "id": 132052,
+    "effect": ["为选中的角色恢复生命值上限的16%，并额外恢复1350点生命值。"],
+    "effectIcon": "UI_Buff_Item_Recovery_HpAdd"
+  },
+  {
+    "id": 132053,
+    "effect": ["立即为选中的角色恢复生命值上限的26%，并在之后的30秒内，每5秒恢复570点生命值。"],
+    "effectIcon": "UI_Buff_Item_Recovery_HpAddAll"
+  },
+  {
+    "id": 132054,
+    "effect": ["好看又好吃，但是几乎没什么用。"],
+    "effectIcon": "UI_Buff_Item_SpecialEffect"
+  },
+  {
+    "id": 132055,
+    "effect": ["好看又好吃，但是几乎没什么用。"],
+    "effectIcon": "UI_Buff_Item_SpecialEffect"
   }
 ]
