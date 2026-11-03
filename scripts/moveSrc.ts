@@ -34,7 +34,7 @@ for (const dirName of assetDirs) {
   const destDir = path.join(targetPublicDir, targetBase, dirName);
 
   await fs.copy(srcDir, destDir, {
-    overwrite: false,
+    overwrite: true,
     errorOnExist: false,
     filter: async (src) => {
       const relativePath = path.relative(localAssetsDir, src);

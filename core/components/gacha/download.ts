@@ -33,7 +33,16 @@ try {
 // 爬取米游社帖子
 const postIdSet = new Set<string>();
 const mhyPosts: TGACore.Components.Gacha.MysPosts = [];
-const skipPost = ["49868038", "7345229", "1748352", "1748347", "11890551", "56991610", "78299704"];
+const skipPost = [
+  "49868038",
+  "7345229",
+  "1748352",
+  "1748347",
+  "11890551",
+  "56991610",
+  "78299704",
+  "79287283",
+];
 let isLast = false;
 let lastId: string = "0";
 while (!isLast) {

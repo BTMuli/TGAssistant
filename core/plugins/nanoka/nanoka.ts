@@ -2,7 +2,7 @@
  * Nanoka 插件主文件
  */
 
-export const NANOKA_VER = "7.1";
+export const NANOKA_VER = "7.2";
 const NANOKA_API_URL = "https://static.nanoka.cc/gi/";
 const NANOKA_ASSETS_URL = "https://static.nanoka.cc/assets/gi/";
 
