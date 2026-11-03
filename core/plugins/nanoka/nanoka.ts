@@ -1,6 +1,8 @@
 /**
  * Nanoka 插件主文件
+ * @since 2.7.0
  */
+import { fetch } from "@utils/request.ts";
 
 export const NANOKA_VER = "7.2";
 const NANOKA_API_URL = "https://static.nanoka.cc/gi/";

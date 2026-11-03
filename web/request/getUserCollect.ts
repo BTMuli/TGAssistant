@@ -1,11 +1,10 @@
 /**
- * @file web/request/getUserCollect.ts
- * @description 获取用户收藏帖子/合集
+ * 获取用户收藏帖子/合集
  * @todo 合集待测试
- * @since 2.2.0
+ * @since 2.7.0
  */
 
-import axios from "axios";
+import axios from "../../core/utils/request.ts";
 
 import { getHeaderPC } from "../utils/getHeader.ts";
 

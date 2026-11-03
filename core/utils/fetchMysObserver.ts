@@ -1,7 +1,9 @@
 /**
  * 米游社观测枢API数据获取工具
- * @since 2.5.0
+ * @since 2.7.0
  */
+import { fetch } from "./request.ts";
+
 const API_URL = "https://api-static.mihoyo.com/common/blackboard/ys_obc/v1/home/content/list";
 
 /**

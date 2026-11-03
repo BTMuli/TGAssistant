@@ -1,10 +1,9 @@
 /**
- * @file web/request/getBiliVideo.ts
- * @description 获取视频播放地址
- * @since 2.0.1
+ * 获取视频播放地址
+ * @since 2.7.0
  */
 
-import axios from "axios";
+import axios from "../../core/utils/request.ts";
 import jsMd5 from "js-md5";
 
 /**

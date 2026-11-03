@@ -21,6 +21,12 @@ Update: 2026-09-23
 
 适应版本：`0.11.3+`
 
+## 网络代理
+
+网络请求统一通过 `core/utils/request.ts` 发出，自动读取 Windows 当前用户启用的手动系统代理及例外列表（含 `<local>`），启动新进程后生效。未配置代理时直连；PAC/WPAD 自动代理暂不支持。
+
+`HTTP_PROXY`、`HTTPS_PROXY`（以及对应的小写变量）和 `ALL_PROXY` 可覆盖系统代理，`NO_PROXY` 可指定额外的直连主机，多个主机用逗号分隔。其他系统使用这些环境变量配置代理。
+
 ## 仓库概况
 
 ![Status](https://repobeats.axiom.co/api/embed/24b7ed9ab5282403bb47ac9cb4223135905caf1a.svg "Repobeats analytics image")

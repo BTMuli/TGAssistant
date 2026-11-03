@@ -1,10 +1,9 @@
 /**
- * @file web request getDeviceFP
- * @description 获取设备指纹
- * @since 2.2.0
+ * 获取设备指纹
+ * @since 2.7.0
  */
 
-import axios from "axios";
+import axios from "../../core/utils/request.ts";
 
 import { getRandomString } from "../utils/getDS.ts";
 import { getMinHeaderMobile } from "../utils/getHeader.ts";

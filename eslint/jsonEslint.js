@@ -1,6 +1,6 @@
 /**
  * JSON 文件的 Eslint 配置
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 import pluginJsonc from "eslint-plugin-jsonc";
@@ -20,6 +20,7 @@ const pkgJsonConfig = {
           "name",
           "version",
           "description",
+          "since",
           "type",
           "packageManager",
           "scripts",

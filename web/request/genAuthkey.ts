@@ -1,10 +1,9 @@
 /**
- * @file web/request/genAuthkey.ts
- * @description 生成 authkey
- * @since 2.0.0
+ * 生成 authkey
+ * @since 2.7.0
  */
 
-import axios from "axios";
+import axios from "../../core/utils/request.ts";
 
 import MysClient from "../constant/mys.ts";
 import { getHeaderPC } from "../utils/getHeader.ts";

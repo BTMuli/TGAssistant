@@ -1,7 +1,9 @@
 /**
  * Yatta 插件主文件
- * @since 2.6.0
+ * @since 2.7.0
  */
+import { fetch } from "@utils/request.ts";
+
 import { YattaWeekDayEnum } from "./enum.ts";
 
 const YATTA_API_VERSION = "72F1";

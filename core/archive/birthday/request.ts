@@ -1,10 +1,9 @@
 /**
- * @file core/archive/birthday/request.ts
- * @description 存档-留影叙佳期-请求
- * @since 2.1.1
+ * 存档-留影叙佳期-请求
+ * @since 2.7.0
  */
 
-import axios from "axios";
+import axios from "@utils/request.ts";
 
 import { TEMP_CK } from "./temp.ts";
 

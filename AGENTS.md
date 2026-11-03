@@ -4,7 +4,7 @@
 
 ## 项目结构与数据流
 
-- 本项目是 TeyvatGuide 的辅助数据工具，使用 Node.js、TypeScript、ES Module 和 pnpm。`package.json` 要求 Node.js `>=22.9.0`，包管理器为 `pnpm@12.5.1`。
+- 本项目是 TeyvatGuide 的辅助数据工具，使用 Node.js、TypeScript、ES Module 和 pnpm。`package.json` 要求 Node.js `>=22.9.0`，包管理器为 `pnpm@12.16.1`。
 - `core/components/<数据域>/` 负责数据处理。常见文件为 `constant.ts`（路径及常量）、`download.ts`（获取原始数据或图片）、`convert.ts`（转换输出）、`utils.ts`（局部工具）；有些数据域还包含 `update.ts`。新增处理流程时先沿用相邻组件的模式。
 - `core/plugins/` 封装上游数据源，`core/utils/` 和 `core/tools/` 提供共享路径、文件、日志与计数工具，`core/types/` 和各插件的 `types/` 保存类型声明。`web/` 是请求与鉴权相关代码，`test/` 是 Vitest 测试。
 - 路径通过 `core/utils/getBasePaths.ts` 统一定位。原始数据通常在 `source/data/src/`，转换结果在 `source/data/out/`；资源文件在 `source/assets/`，临时文件在 `source/temp/`。`source/data/out/` 中有已跟踪的 JSON，改动它们前确认确实需要更新产物。
@@ -13,10 +13,48 @@
 ## 代码与格式约束
 
 - 以 `eslint.config.mjs`、`eslint/` 下的规则和 `.prettierrc.yml` 为准。Prettier 使用双引号、分号、2 空格缩进、100 字符行宽，箭头函数参数始终加括号。
-- TypeScript 断言使用尖括号形式（如 `<Foo>value`）；遵守 `@typescript-eslint/no-import-type-side-effects`、`no-unused-expressions` 等启用规则。不要把 ESLint 中已关闭的规则写成额外要求。
+- TypeScript 断言使用尖括号形式（如 `<Foo>value`）；遵守 `@typescript-eslint/no-import-type-side-effects`、`no-unused-expressions` 等启用规则。不把已关闭或未配置的规则描述为 ESLint 强制要求；新增风格约定见下文。
 - JSON 的顶层键顺序有专门规则：`package.json`、`tsconfig.json` 和 `source/data/out/WIKI/character/**/*.json` 分别受 `eslint/jsonEslint.js` 约束；其他匹配的输出 JSON 与 `core/**/*.json` 顶层键按升序排序，不保留尾随逗号。YAML 使用 2 空格缩进、双引号优先、键排序规则。
-- 保持现有的类型声明、函数文档、日志和错误处理风格。扩展数据结构时检查对应的 `.d.ts`、转换逻辑与下游输出，不要只修改下载端。
+- 保持现有的日志和错误处理风格；类型声明与注释遵循下述约定。扩展数据结构时检查对应的 `.d.ts`、转换逻辑与下游输出，不要只修改下载端。
 - 不手改被忽略的缓存、日志或临时资源：`node_modules/`、`logs/`、`source/data/src/`、`source/data/http/`、`source/assets/`、`source/temp/`、`repos/`。若需要提交转换结果，检查差异中是否混入上游数据的无关波动。
+
+## TypeScript 风格
+
+以下约定参考 TeyvatGuide，并按本仓库目录与配置适配，适用于新增或本次修改的代码。不要为统一风格批量迁移无关历史代码；仓库约定与 ESLint 实际启用的规则应明确区分。
+
+- 数组类型使用 `Array<T>`，只读数组使用 `ReadonlyArray<T>`，不新增 `T[]` 写法。
+- 对象类型优先使用 `type`，不新增 `interface`；确需声明合并时说明理由。
+- 参数与函数返回值写明类型，异步函数使用 `Promise<T>`。优先使用类型注解、泛型和类型收窄，确需断言时使用 `<Foo>value`；常量字面量推导使用 `<const>`，不改写为显式字面量类型断言。
+- 优先使用 `unknown`；仅在第三方边界或现有兼容代码无法准确建模时使用 `any`。这是代码约定，`no-explicit-any` 和 `strict-boolean-expressions` 仍按当前配置保持关闭。
+- 具名业务函数优先使用 `function` 声明；回调、需要词法 `this` 或简短表达式时可使用箭头函数。不保留未使用的变量、参数或导入，不用 `cond && fn()` 等独立短路表达式代替控制流。
+- 跨文件复用的类型先检查已有声明，放入 `core/types/`、所属插件的 `types/` 或 `web/types/`，沿用现有 `TGACore`、`TGWeb` 的 `declare namespace`。单文件局部类型就近定义，不为类型单独新建 `types.ts` 或大写 `Types/` 目录；运行时代码不新增 namespace。
+- 不新增原生 TypeScript `enum`；先复用已有值对象，确需新增时使用常量对象并派生值的联合类型。共享声明放在对应 `.d.ts`，实际值放在所属组件或插件的 `enum.ts`、`constant.ts` 等既有运行时目录；仅在声明空间存在的名称不能当作运行时值使用。
+- 使用 ESM 导入并沿用本项目 `.ts` 扩展名和路径别名。纯类型导入使用 `import type { Foo }`；混合导入可使用 `import { value, type Foo }`。`import/order` 当前未启用，不把排序描述为 lint 强制要求，也不为局部任务批量重排导入。
+
+## 版本与注释元数据
+
+- `package.json.version` 表示发布版本，`package.json.since` 表示本次开发使用的注释版本。新增或更新 `@since` 前先读取 `since`，不使用 `version` 或 TeyvatGuide 的版本号推测；以实际字段为准，不因普通任务自行递增版本。
+- 本项目沿用 `@since <package.json.since>` 格式，例如当前为 `@since 2.7.0`；尖括号是文档占位符，实际注释替换为字段值，不添加 TeyvatGuide 的 `Beta v` 前缀。
+- 新增或修改支持注释的源文件时，补齐或更新文件头的中文说明和 `@since`，包括仅调整格式或导入的文件。范围包括 `.ts`、`.d.ts`、`.js`、`.mjs` 等源码；JSON、锁文件、生成物和二进制文件不为此添加注释。
+- 函数实现或签名发生修改时，无论是否导出，都更新紧邻函数注释中的 `@since`；缺少注释时补充简短中文说明、`@since` 及必要的参数和返回值说明。不要求为每个内联回调单独补齐元数据。
+- 新增或修改 `type` 等类型声明时，将版本标记写在声明自身的注释中；新增、删除、重命名字段或改变字段类型也应更新所属类型的 `@since`，字段注释不能替代类型注释。新增导出的常量也添加简短说明和 `@since`。
+- 新增或重写的注释采用 TSDoc：直接写中文摘要，参数使用 `@param name - 描述`，返回值使用 `@returns 描述`，泛型使用 `@typeParam T - 描述`。类型由 TypeScript 签名表达，不重复写 `{Type}`；不新增冗余的 `@file`、`@description`、`@function`、`@interface` 等标签。
+- 只更新本次涉及的文件头与实际修改的声明，保留无关声明的历史版本。`@since` 不表示首次引入版本，而表示该文件或声明最近一次相关修改的开发版本。当前未接入 `tsdoc/syntax`，注释规范通过人工检查，不宣称已有 lint 校验。
+
+```typescript
+/**
+ * 按主机名匹配代理例外。
+ * @since 2.7.0
+ * @param hostname - 请求主机名
+ * @param rules - 代理例外列表
+ * @returns 是否命中例外
+ */
+function matchesProxyBypass(hostname: string, rules: ReadonlyArray<string>): boolean {
+  return rules.includes(hostname);
+}
+```
+
+示例中的版本只演示格式，实际编写时读取当前 `package.json.since`。
 
 ## 脚本及其副作用
 

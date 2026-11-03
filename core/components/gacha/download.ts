@@ -1,12 +1,13 @@
 /**
  * gacha 组件资源下载
- * @since 2.6.0
+ * @since 2.7.0
  */
 
 import hutaoTool from "@hutao/hutao.ts";
 import Counter from "@tools/counter.ts";
 import logger from "@tools/logger.ts";
 import { fileCheckObj } from "@utils/fileCheck.ts";
+import { fetch } from "@utils/request.ts";
 import fs from "fs-extra";
 
 import { jsonDetailDir, jsonDir } from "./constant.ts";
