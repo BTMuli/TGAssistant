@@ -242,6 +242,9 @@ importers:
       '@typescript/native':
         specifier: npm:typescript@^7.0.2
         version: typescript@7.0.2
+      '@yuehaiteam/amos-data':
+        specifier: github:yuehaiteam/amos-data
+        version: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/478efdf9e37044cc6cc064e474a996727dc3044f
       eslint:
         specifier: 10.14.0
         version: 10.14.0(supports-color@8.1.1)
@@ -290,10 +293,6 @@ importers:
       yaml-eslint-parser:
         specifier: ^2.1.0
         version: 2.1.0
-    optionalDependencies:
-      '@yuehaiteam/amos-data':
-        specifier: github:yuehaiteam/amos-data
-        version: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/785bfb5035384e118a98ad427feb8d3b20d1a88b
 
 packages:
 
@@ -1524,9 +1523,9 @@ packages:
   '@vitest/spy@5.1.0':
     resolution: {integrity: sha512-2DPO5OMHWKrBngC+fCmTQqemNF0gidRhp3lxbBmRhW+M1XJrfgPpqNqWVevXtn2f2ufD5ZaR1B6B641aAlcX5A==}
 
-  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/785bfb5035384e118a98ad427feb8d3b20d1a88b':
-    resolution: {gitHosted: true, integrity: sha512-Ta3YQJOBGngO3jKkB10f3edvcZ3IT9Heq7ERV9b9oKRZ1WtgfmTLncQWUspgcxjxonLG+953HcI3ML77qPR/kA==, tarball: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/785bfb5035384e118a98ad427feb8d3b20d1a88b}
-    version: 1.0.0-CNRELWin7.1.0
+  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/478efdf9e37044cc6cc064e474a996727dc3044f':
+    resolution: {gitHosted: true, integrity: sha512-PS04SsHwAjvzbDFXdLTFzDh3Og+praeCZX2OGboccCouHrO9vIdNKRAiBjv76lzd96OA03z35SaGg5RU0aqQHA==, tarball: https://codeload.github.com/yuehaiteam/amos-data/tar.gz/478efdf9e37044cc6cc064e474a996727dc3044f}
+    version: 1.0.0-CNRELWin7.2.0
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -4364,8 +4363,7 @@ snapshots:
 
   '@vitest/spy@5.1.0': {}
 
-  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/785bfb5035384e118a98ad427feb8d3b20d1a88b':
-    optional: true
+  '@yuehaiteam/amos-data@https://codeload.github.com/yuehaiteam/amos-data/tar.gz/478efdf9e37044cc6cc064e474a996727dc3044f': {}
 
   acorn-jsx@5.3.2(acorn@8.19.0):
     dependencies:

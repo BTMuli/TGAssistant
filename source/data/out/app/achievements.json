@@ -11136,10 +11136,10 @@
           "description": "在见闻笔记中记录了至冬大陆东侧的过往故事。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 6,
           "trigger": {
-            "type": "TRIGGER_WORKER_NOTEBOOK_DATA_VALUE_REACH",
+            "type": "WORKER_NOTEBOOK_DATA_VALUE_REACH",
             "tasks": []
           },
           "partials": []
@@ -11152,10 +11152,10 @@
           "description": "在见闻笔记中记录了新基捷城事件的所有内容。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 47,
           "trigger": {
-            "type": "TRIGGER_WORKER_NOTEBOOK_DATA_VALUE_REACH",
+            "type": "WORKER_NOTEBOOK_DATA_VALUE_REACH",
             "tasks": []
           },
           "partials": []
@@ -11168,10 +11168,10 @@
           "description": "第一次破坏晶矿伴生岩块。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_COMBAT_CONFIG_COMMON",
+            "type": "COMBAT_CONFIG_COMMON",
             "tasks": []
           },
           "partials": []
@@ -11184,10 +11184,10 @@
           "description": "破坏了巨量的晶矿伴生岩块。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -11200,10 +11200,10 @@
           "description": "投掷臻冰造物·矿镐以破坏远处的岩块。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_COMBAT_CONFIG_COMMON",
+            "type": "COMBAT_CONFIG_COMMON",
             "tasks": []
           },
           "partials": []
@@ -11216,10 +11216,10 @@
           "description": "第一次操纵速射机炮。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_COMBAT_CONFIG_COMMON",
+            "type": "COMBAT_CONFIG_COMMON",
             "tasks": []
           },
           "partials": []
@@ -11232,10 +11232,10 @@
           "description": "击败了旧基捷城被侵蚀了的两位守城者。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -11248,10 +11248,10 @@
           "description": "那重新塑造一切的方式也许早有原型…",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -11264,10 +11264,10 @@
           "description": "在新基捷城的市区内快速移动。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -11280,10 +11280,10 @@
           "description": "售卖了所有发掘出的寄卖物…",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -11296,10 +11296,10 @@
           "description": "发现并点亮了所有古代妖精的秘密语。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -11312,11 +11312,18 @@
           "description": "抵达妖精与晶矿的都市——新基捷城。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77248,
+                "type": "WQ",
+                "name": "古老妖精之城"
+              }
+            ]
           },
           "partials": []
         },
@@ -11328,11 +11335,18 @@
           "description": "解决了新基捷城地下水源断流的难题。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77136,
+                "type": "WQ",
+                "name": "不可使一切江河干涸"
+              }
+            ]
           },
           "partials": []
         },
@@ -11344,11 +11358,18 @@
           "description": "乘坐矿车，自影域中成功脱身。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77155,
+                "type": "WQ",
+                "name": "自阴影中脱身"
+              }
+            ]
           },
           "partials": []
         },
@@ -11360,11 +11381,18 @@
           "description": "消除冰原上两条裂谷之中的厄生晶矿。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77146,
+                "type": "WQ",
+                "name": "往日亦是风雪之日"
+              }
+            ]
           },
           "partials": []
         },
@@ -11376,11 +11404,18 @@
           "description": "抵达如翼的山峰之中，巨兽陨骨之底。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77114,
+                "type": "WQ",
+                "name": "憎恨与憎恨者的宝座"
+              }
+            ]
           },
           "partials": []
         },
@@ -11392,11 +11427,18 @@
           "description": "完成「冰宫密令·其二」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_PARENT_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_PARENT_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77686,
+                "type": "WQ",
+                "name": "女皇的棋局·其二"
+              }
+            ]
           },
           "partials": []
         },
@@ -11408,10 +11450,10 @@
           "description": "令晶矿之树得以在暗无天日处成长。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -13092,10 +13134,10 @@
           "description": "在浪涛锚定者处于奋勇状态时，将其击败…",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_COMBAT_CONFIG_COMMON",
+            "type": "COMBAT_CONFIG_COMMON",
             "tasks": []
           },
           "partials": []
@@ -19661,11 +19703,18 @@
           "description": "调查判罚之钉的异动。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7030,
+                "type": "AQ",
+                "name": "如同消融的积雪"
+              }
+            ]
           },
           "partials": []
         },
@@ -19677,11 +19726,18 @@
           "description": "从「无恒预设应答终端」处获取必要的情报。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7031,
+                "type": "AQ",
+                "name": "迈向未来的一步"
+              }
+            ]
           },
           "partials": []
         },
@@ -19693,11 +19749,18 @@
           "description": "完成「坏灭肇始之时」。",
           "reward": 10,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7031,
+                "type": "AQ",
+                "name": "迈向未来的一步"
+              }
+            ]
           },
           "partials": []
         },
@@ -19709,11 +19772,18 @@
           "description": "完成有关「自由」的「僭续试炼」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7029,
+                "type": "AQ",
+                "name": "风和自由"
+              }
+            ]
           },
           "partials": []
         },
@@ -19725,11 +19795,18 @@
           "description": "完成有关「永恒」的「僭续试炼」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7025,
+                "type": "AQ",
+                "name": "雷和永恒"
+              }
+            ]
           },
           "partials": []
         },
@@ -19741,11 +19818,18 @@
           "description": "完成有关「智慧」的「僭续试炼」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7026,
+                "type": "AQ",
+                "name": "草和智慧"
+              }
+            ]
           },
           "partials": []
         },
@@ -19757,11 +19841,18 @@
           "description": "完成有关「战争」的「僭续试炼」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7027,
+                "type": "AQ",
+                "name": "火和战争"
+              }
+            ]
           },
           "partials": []
         },
@@ -19773,11 +19864,18 @@
           "description": "完成有关「慈爱」的「僭续试炼」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7023,
+                "type": "AQ",
+                "name": "僭越者的试炼"
+              }
+            ]
           },
           "partials": []
         },
@@ -19789,11 +19887,18 @@
           "description": "完成「寄自彼岸的昨日」。",
           "reward": 10,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 7028,
+                "type": "AQ",
+                "name": "叩响终幕之门"
+              }
+            ]
           },
           "partials": []
         },
@@ -19821,10 +19926,10 @@
           "description": "呀吼，呀吼，呀吼，呀吼…",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
+            "type": "FINISH_QUEST_AND",
             "tasks": []
           },
           "partials": []
@@ -19837,10 +19942,10 @@
           "description": "拿走你想要的吧，只要你付得起它的价格…",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
+            "type": "FINISH_QUEST_AND",
             "tasks": []
           },
           "partials": []
@@ -19853,11 +19958,18 @@
           "description": "在猜拳游戏中取得最后的胜利。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77278,
+                "type": "WQ",
+                "name": "胜者为王"
+              }
+            ]
           },
           "partials": []
         },
@@ -19869,10 +19981,10 @@
           "description": "将属于每个人的东西，归还给每个人。",
           "reward": 5,
           "version": "7.2",
-          "hidden": false,
+          "hidden": true,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_QUEST_AND",
+            "type": "FINISH_QUEST_AND",
             "tasks": []
           },
           "partials": []
@@ -35395,10 +35507,10 @@
           "description": "点亮至冬区域中，新基捷城、如翼之峰的地图。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_UNLOCK_AREA",
+            "type": "UNLOCK_AREA",
             "tasks": []
           },
           "partials": []
@@ -35411,10 +35523,10 @@
           "description": "解锁至冬区域中，新基捷城、如翼之峰所有传送锚点。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 40,
           "trigger": {
-            "type": "TRIGGER_UNLOCK_TRANS_POINT",
+            "type": "UNLOCK_TRANS_POINT",
             "tasks": []
           },
           "partials": []
@@ -35427,10 +35539,10 @@
           "description": "解除至冬区域中，新基捷城、如翼之峰所有地灵龛的封印。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 3,
           "trigger": {
-            "type": "TRIGGER_UNLOCK_GATE_TEMPLE",
+            "type": "UNLOCK_GATE_TEMPLE",
             "tasks": []
           },
           "partials": []
@@ -35443,10 +35555,10 @@
           "description": "解除至冬区域中，新基捷城、如翼之峰所有影域遗物宝库的封印。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 2,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -35459,14 +35571,14 @@
           "description": "在新基捷城、如翼之峰追随4个仙灵，并点亮仙灵之庭。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 4,
+          "postStageId": 86097,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
-          "partials": [],
-          "postStageId": 86097
+          "partials": []
         },
         {
           "id": 86097,
@@ -35476,15 +35588,15 @@
           "description": "在新基捷城、如翼之峰追随9个仙灵，并点亮仙灵之庭。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 9,
           "preStageId": 86096,
+          "postStageId": 86098,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
-          "partials": [],
-          "postStageId": 86098
+          "partials": []
         },
         {
           "id": 86098,
@@ -35494,11 +35606,11 @@
           "description": "在新基捷城、如翼之峰追随18个仙灵，并点亮仙灵之庭。",
           "reward": 20,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 18,
           "preStageId": 86097,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -35511,14 +35623,14 @@
           "description": "在新基捷城、如翼之峰开启45个宝箱。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 45,
+          "postStageId": 86100,
           "trigger": {
-            "type": "TRIGGER_OPEN_WORLD_CHEST",
+            "type": "OPEN_WORLD_CHEST",
             "tasks": []
           },
-          "partials": [],
-          "postStageId": 86100
+          "partials": []
         },
         {
           "id": 86100,
@@ -35528,15 +35640,15 @@
           "description": "在新基捷城、如翼之峰开启90个宝箱。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 90,
           "preStageId": 86099,
+          "postStageId": 86101,
           "trigger": {
-            "type": "TRIGGER_OPEN_WORLD_CHEST",
+            "type": "OPEN_WORLD_CHEST",
             "tasks": []
           },
-          "partials": [],
-          "postStageId": 86101
+          "partials": []
         },
         {
           "id": 86101,
@@ -35546,11 +35658,11 @@
           "description": "在新基捷城、如翼之峰开启180个宝箱。",
           "reward": 20,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 180,
           "preStageId": 86100,
           "trigger": {
-            "type": "TRIGGER_OPEN_WORLD_CHEST",
+            "type": "OPEN_WORLD_CHEST",
             "tasks": []
           },
           "partials": []
@@ -35563,14 +35675,14 @@
           "description": "在新基捷城、如翼之峰完成3个大世界限时挑战。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 3,
+          "postStageId": 86103,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
-          "partials": [],
-          "postStageId": 86103
+          "partials": []
         },
         {
           "id": 86103,
@@ -35580,15 +35692,15 @@
           "description": "在新基捷城、如翼之峰完成7个大世界限时挑战。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 7,
           "preStageId": 86102,
+          "postStageId": 86104,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
-          "partials": [],
-          "postStageId": 86104
+          "partials": []
         },
         {
           "id": 86104,
@@ -35598,11 +35710,11 @@
           "description": "在新基捷城、如翼之峰完成14个大世界限时挑战。",
           "reward": 20,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 14,
           "preStageId": 86103,
           "trigger": {
-            "type": "TRIGGER_GROUP_NOTIFY",
+            "type": "GROUP_NOTIFY",
             "tasks": []
           },
           "partials": []
@@ -35615,11 +35727,18 @@
           "description": "见证了矮灵王公阿尔维斯与其女斯露德的结局。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_FINISH_PARENT_QUEST_AND",
-            "tasks": []
+            "type": "FINISH_PARENT_QUEST_AND",
+            "tasks": [
+              {
+                "taskId": 0,
+                "questId": 77114,
+                "type": "WQ",
+                "name": "憎恨与憎恨者的宝座"
+              }
+            ]
           },
           "partials": []
         },
@@ -35631,10 +35750,10 @@
           "description": "提升「聚所·特普洛绿洲」的共建等级至满级。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_OFFERING_LEVEL",
+            "type": "OFFERING_LEVEL",
             "tasks": []
           },
           "partials": []
@@ -35647,10 +35766,10 @@
           "description": "提升「聚所·皇家轨道运输局」的共建等级至满级。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_OFFERING_LEVEL",
+            "type": "OFFERING_LEVEL",
             "tasks": []
           },
           "partials": []
@@ -35931,10 +36050,10 @@
           "description": "获得霰弹枪：「索斯卢科的灼炎」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_OBTAIN_ITEM_NUM",
+            "type": "OBTAIN_ITEM_NUM",
             "tasks": []
           },
           "partials": []
@@ -35947,10 +36066,10 @@
           "description": "获得霰弹枪：「艾维萨缇的山狩」。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_OBTAIN_ITEM_NUM",
+            "type": "OBTAIN_ITEM_NUM",
             "tasks": []
           },
           "partials": []
@@ -35963,10 +36082,10 @@
           "description": "在「绝境攻炼」的「交错锤砧」、「重兵固港」与「灾厄旧城」关卡中，每关至少获得1枚攻炼武勋。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 3,
           "trigger": {
-            "type": "TRIGGER_TPS_MERCENARIES_LEVEL_MEDAL_NUM_REACH",
+            "type": "TPS_MERCENARIES_LEVEL_MEDAL_NUM_REACH",
             "tasks": []
           },
           "partials": []
@@ -35979,10 +36098,10 @@
           "description": "为「索斯卢科的灼炎」安装4个配件。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_TPS_WEAPON_ACCESSORY_NUM_REACH",
+            "type": "TPS_WEAPON_ACCESSORY_NUM_REACH",
             "tasks": []
           },
           "partials": []
@@ -35995,10 +36114,10 @@
           "description": "为「艾维萨缇的山狩」安装4个配件。",
           "reward": 10,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_TPS_WEAPON_ACCESSORY_NUM_REACH",
+            "type": "TPS_WEAPON_ACCESSORY_NUM_REACH",
             "tasks": []
           },
           "partials": []
@@ -36011,10 +36130,10 @@
           "description": "使用「索斯卢科的灼炎」，在15秒内连续开火10次。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_COMBAT_CONFIG_COMMON",
+            "type": "COMBAT_CONFIG_COMMON",
             "tasks": []
           },
           "partials": []
@@ -36027,10 +36146,10 @@
           "description": "使用「艾维萨缇的山狩」的重型弹块，命中一名在30米以外的敌人。",
           "reward": 5,
           "version": "7.2",
-          "hidden": true,
+          "hidden": false,
           "target": 1,
           "trigger": {
-            "type": "TRIGGER_COMBAT_CONFIG_COMMON",
+            "type": "COMBAT_CONFIG_COMMON",
             "tasks": []
           },
           "partials": []

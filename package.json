@@ -14,7 +14,7 @@
     "auto:update": "tsx ./scripts/updateAll.ts",
     "move": "tsx scripts/moveSrc.ts",
     "prepare": "husky",
-    "install:amos": "pnpm add --save-optional github:yuehaiteam/amos-data"
+    "install:amos": "pnpm update @yuehaiteam/amos-data"
   },
   "engines": {
     "node": ">=26.0.0"
@@ -61,9 +61,6 @@
     "uuid": "^14.0.3",
     "yamljs": "^0.3.0"
   },
-  "optionalDependencies": {
-    "@yuehaiteam/amos-data": "github:yuehaiteam/amos-data"
-  },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@jest/globals": "^30.5.2",
@@ -72,6 +69,8 @@
     "@types/node": "^26.6.6",
     "@types/uuid": "^11.0.0",
     "@types/yamljs": "^0.2.34",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "@yuehaiteam/amos-data": "github:yuehaiteam/amos-data",
     "eslint": "10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
@@ -84,7 +83,6 @@
     "oxlint": "^1.90.0",
     "prettier": "^3.9.10",
     "tsx": "^4.23.15",
-    "@typescript/native": "npm:typescript@^7.0.2",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "8.72.1",
     "vitest": "^5.1.0",
